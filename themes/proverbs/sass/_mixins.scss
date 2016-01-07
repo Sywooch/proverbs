@@ -1,0 +1,7 @@
+@mixin transition($smooth-transition){
+    -webkit-transition: $smooth-transition;
+   -moz-transition: $smooth-transition;
+    -ms-transition: $smooth-transition;
+     -o-transition: $smooth-transition;
+        transition: $smooth-transition;
+}

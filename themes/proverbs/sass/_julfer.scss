@@ -1,0 +1,92 @@
+/* body { 
+  background: url(../images/bgsimple.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+ */
+.text-centered {
+	text-align: center;
+}
+.non-padded {
+	padding-left: 0;
+	padding-right: 0;
+}
+.google-font {
+	font-family: 'Julius Sans One', sans-serif;
+}
+hr {
+	width: 60%;
+}
+#error-404 {
+	.container {
+		padding: 30px;
+		width: 100%;
+		margin-top: -30px;
+	}
+}
+
+.blue-box {
+	background-color: transparentize(#3a4b55, .6);
+	padding: 10px;
+	position: center;
+}
+.yellow-box {
+	background-color: transparentize(yellow, .6);
+	padding: 10px;
+	
+}
+.red-box {
+	background-color: transparentize(#EB2B36, .6);
+	padding: 10px;
+}
+.green-box {
+	background-color: transparentize(green, .6);
+	padding: 10px;
+}
+h2.error-404-subheading {
+	padding-top: 7px;
+}
+h1.error-404-heading {
+	font-size: 6em;
+}
+.improv-border {
+	padding: 10px;
+	padding-left: 0;
+	padding-right: 0;
+}
+i#error-404-home {
+	color: #333;
+}
+.login {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.login-btn {
+	background-color: transparentize(green, .6);
+	font-color: white;
+}
+/* button {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+} */
+.site-error {
+	background: url(../images/bgsimple.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	
+}
+/* .message {
+	min-height: 0px;
+} */

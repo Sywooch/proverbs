@@ -1,0 +1,406 @@
+@import "compass";
+@import "variables";
+@import "fonts";
+@import "raul";
+@import "julfer";
+@import "mixins";
+
+body {
+    background: white;
+}
+.dsp-table {
+    display: table;
+}
+* {
+    box-sizing: border-box;
+}
+a {
+    &:hover,&:visited {
+    text-decoration: none;
+    }
+}
+.header-offset, .bottom-fix, .page-content-offset {
+    min-height: 54px;
+    width: 100%;
+}
+.btn, .button, .form-control, .site-index .jumbotron, .panel {
+    -webkit-border-radius: 0;
+            border-radius: 0;
+}
+ul.breadcrumb {
+    -webkit-border-radius: 0;
+            border-radius: 0;
+}
+textarea {
+    resize: none;
+}
+.text-centered {
+    text-align: center;
+}
+.form-control, #signupform-verifycode-image {
+    height: 46px;
+}
+.pva-login-mask {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: table-cell;
+    vertical-align: middle;
+    background: $darkergrey;
+}
+.pva-login {
+    width: 100%;
+    height: 100%;
+}
+.pva-form-wrap {
+    //display: table-cell;
+    //vertical-align: middle;
+}
+.pva-form-heading.text-centered {
+    h1 {
+        font-family: 'Roboto Condensed', sans-serif;
+        color: white;
+        font-weight: 300;
+    }
+}
+#loginform-email, #loginform-password, #signupform-username, #signupform-email, #signupform-password, #signupform-verifycode {
+    border: solid 1px lighten($form-border, 5%);
+    background: $form-bg;
+    &:focus {
+        -webkit-box-shadow: none;
+                box-shadow: none;       
+    }
+    &:blur {
+        background: $form-bg;
+    }
+}
+.panel.panel-default.form-login {
+    min-width: 240px;
+    background: fade_out($form-bg, .2);
+    border: solid 1px lighten($form-border, 5%);
+}
+.control-label, .checkbox label {
+    font-weight: normal;
+    color: white;
+}
+.has-success .control-label {
+    color: green;
+}
+.has-error .control-label {
+    color: red;
+}
+.pva-form-terms {
+    font-size: 12px;
+    color: white;
+}
+.panel .panel-heading {
+    background: transparent;
+    border: 0;
+    text-align: center;
+    img {
+        -webkit-box-shadow: $darkergrey;
+                box-shadow: $darkergrey;
+    }
+}
+.input-group-addon {
+    min-width: 50px;
+    border: solid 1px lighten($form-border, 5%);
+    background: transparent;
+    -webkit-border-radius: 0;
+            border-radius: 0;
+}
+.input-group-addon.parents {
+    width: auto;
+    color: red;
+}
+.input-group-addon {
+    border-color: #ddd;
+    border-style: solid;
+    border: 1px 0 1px 1px;
+}
+p.help-block.help-block-error {
+    display: block;
+    visibility: visible;
+    color: red;
+    //margin-bottom: -10px;
+}
+#signupform-verifycode-image {
+    cursor: pointer;
+}
+span#t {
+    font: 'Open Sans';
+}
+.notifications {
+    position: fixed;
+    top: 15px;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+}
+.date-range:after{
+    content: "";
+    background: none;
+}
+.breadcrumb>li:first-child>a {
+    background: url(../images/interface/breadcrumb_home.png) no-repeat 0;
+    padding-left: 16px;
+}
+.page-container, .page-content, .page-header {
+    background: transparent;
+}
+
+.control-label {
+    color: $darkergrey;
+}
+.fa-remove {
+    color: red;
+}
+.page-header {
+    height: 100%;
+    min-height: 100%;
+}
+.sidebar {
+    position: fixed;
+    height: 100%;
+}
+
+.text-centered {
+    text-align: center;
+}
+
+.summary {
+    padding-bottom: 10px;
+}
+.pvcf-logo {
+    text-align: center;
+    img {
+        height: 100px;
+        width: 100px;
+        margin: 15px 15px;
+    }
+}
+.page-title {
+    min-height: 15px;
+}
+.profile-img {
+
+}
+.panel.panel-profile {
+
+}
+.profile-head {
+    text-align: center;
+    padding: 10px;
+    border: solid 1px $milkshake;
+    -webkit-box-shadow: 0 0 20px 0 fade_out(black, .8);
+            box-shadow: 0 0 20px 0 fade_out(black, .8);
+    img {
+        width: 100%;
+        -webkit-border-radius: 100%;
+                border-radius: 100%;
+    }
+    p {
+        margin: auto;
+    }
+}
+.profile-head-mask {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    bottom: 0;
+    height: 50%;
+    width: 100%;
+    padding-right: 15px;
+    padding-bottom: 14px;
+    z-index: 4;
+}
+.profile-head-mask-top, .profile-head-mask-bottom  {
+    width: 100%;
+    height: 100%;
+}
+.profile-head-mask-top {
+    background: fade_out(green, .3);
+}
+.profile-head-mask-bottom {
+    position: relative;
+    top: 0;
+    background: fade_out(red, .3);
+}
+.profile-user-icon {
+    width: 50px;
+    height: 50px;
+    margin: 5px 0;
+    border: 1px solid $jade;
+    border-radius: 100%;
+    i {
+        padding-top: 10px;
+        color: $jade;
+    }
+}
+.profile-data {
+    font-size: 30px;
+}
+#profile-img-wrapper, #profile-details-wrapper {
+    padding-right: 0;
+}
+.table.table-striped.table-bordered.detail-view {
+    tbody {
+        tr > th{
+            width: 150px !important;
+            max-width: 200px !important;
+        }
+    }
+}
+.conversation-wrapper {
+    border: 1px solid $milkshake;
+    margin: 0 15px;
+    //min-height: 500px !important;
+}
+.pagination {
+    margin: 10px 0;
+}
+.message-index, 
+.announcement-index, 
+.applicant-form-index, 
+.cashier-form-index, 
+.student-form-index, 
+.entrance-exam-form-index, 
+.payment-form-index,
+.teacher-form-index,
+.user-form-index,
+.staff-form-index
+{
+    p {
+        a {
+            min-width: 150px;
+        }
+        i {
+            padding: 3px 0;
+        }
+    }
+}
+.form-offset {
+    min-height: 100px;
+}
+.select2-container--krajee .select2-selection--single {
+    height: 46px;
+    -webkit-border-radius: 0;
+            border-radius: 0;
+    padding-top: 12px;
+}
+.select2-container--krajee .select2-search--dropdown .select2-search__field {
+ -webkit-border-radius: 0;
+        border-radius: 0;
+        padding-left: 0;
+}
+.select2-container--krajee .select2-selection--single .select2-selection__arrow {
+    border-left: 1px solid #D5D5D5;
+    height: 45px;
+}
+.select2-container.select2-container--krajee.select2-container--open{
+    
+}
+.select2-search__field {
+    padding-left: -15px;
+}
+.sidebar {
+    //width: 160px;
+}
+.chat {
+    float: right;
+    min-width: 200px;
+    height: 100%;
+    border: 1px solid red;
+    background: transparent;
+    display: block;
+}
+.breadcrumb-line {
+    background: none;
+}
+#announcement {
+    margin-left: 5px 0;
+    padding: 15px;
+    border: 1px solid #D5D5D5;
+    border-radius: 2px;
+}
+.progress {
+    margin-bottom: 20px;
+    -webkit-border-radius: 0;
+            border-radius: 0;
+}
+.progress-bar {
+    background-color: $powder-blue;
+}
+.form-progress {
+    width: 100%;
+    height: 20px;
+    background: $darkergrey;
+    margin-bottom: 15px;
+    #form-progress-inner {
+        min-height: 20px;
+        width: 25%;
+        background: $powder-blue;
+        @include transition($smooth-transition);
+    }
+    #form-progress-overlay {
+        position: relative;
+        min-height: 20px;
+        width: 25%;
+        top: -20px;
+        left: 0;
+        background: url('../images/progress-bg1.png');
+        background-repeat: repeat-x;
+        @include transition($smooth-transition);
+    }
+}
+.nav-tabs {
+    border-bottom: 0;
+}
+.nav .nav-tabs {
+    border: 0;
+}
+.nav-tabs {
+    li {
+        background: $lightergrey;
+    }
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    border-color: $lightergrey;
+}
+.nav-tabs {
+    li {
+        margin: 2px 2px 10px 2px;
+        a {
+            &:hover {
+                border-top-color: $maroonish;
+            }
+        }
+    }
+}
+.red {
+    background: red;
+}
+.tab-content {
+    margin: 10px 1px 0 1px;
+    border: 0;
+}
+.container.form-input-wrapper {
+    width: 100%;
+}
+.applicant-form-create {
+    margin: 0;    
+}
+.breadcrumb-line {
+    margin: 0 0 15px 0;
+}
+.progress {
+    margin-bottom: 15px;
+}
+.dropdown-list, .custom-input-group-addon {
+    width: 100px;
+    padding: 0 5px;
+}
+.fa-one-point-five {
+    font-size: 18px;    
+}

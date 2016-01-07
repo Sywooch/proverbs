@@ -1,0 +1,48 @@
+Message-ID: <6ba8e7886fd1c6fee089d66b2926d218@localhost>
+Date: Wed, 16 Dec 2015 14:22:30 +0800
+Subject: Account activation for PVA Portal
+From: PVA Portal robot <support@proverbs.com>
+To: cashier@cashier.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="_=_swift_v4_1450246950_18bc358c1bd9abe3feaf3c23410c662e_=_"
+
+
+--_=_swift_v4_1450246950_18bc358c1bd9abe3feaf3c23410c662e_=_
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello cashier,
+
+Follow this link to activate your account:
+
+Please,=
+ click here to activate your account.
+
+--_=_swift_v4_1450246950_18bc358c1bd9abe3feaf3c23410c662e_=_
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/=
+xhtml">
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/ht=
+ml; charset=3DUTF-8" />
+    <title></title>
+    </head>
+<body>
+    =
+    Hello cashier,
+
+Follow this link to activate your account:
+
+<a =
+href=3D"http://localhost/proverbs/site/activate-account?token=3DI9efrPA5XIZ=
+EgnLSFXOFirGJbfscs54A_1450246948">Please, click here to activate your accou=
+nt.</a>    </body>
+</html>
+
+
+--_=_swift_v4_1450246950_18bc358c1bd9abe3feaf3c23410c662e_=_--

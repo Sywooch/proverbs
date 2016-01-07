@@ -1,0 +1,658 @@
+/* line 1, ../sass/_raul.scss */
+.row-1 {
+  background-color: red;
+}
+
+/* body { 
+  background: url(../images/bgsimple.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+ */
+/* line 9, ../sass/_julfer.scss */
+.text-centered {
+  text-align: center;
+}
+
+/* line 12, ../sass/_julfer.scss */
+.non-padded {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* line 16, ../sass/_julfer.scss */
+.google-font {
+  font-family: 'Julius Sans One', sans-serif;
+}
+
+/* line 19, ../sass/_julfer.scss */
+hr {
+  width: 60%;
+}
+
+/* line 23, ../sass/_julfer.scss */
+#error-404 .container {
+  padding: 30px;
+  width: 100%;
+  margin-top: -30px;
+}
+
+/* line 30, ../sass/_julfer.scss */
+.blue-box {
+  background-color: rgba(58, 75, 85, 0.4);
+  padding: 10px;
+  position: center;
+}
+
+/* line 35, ../sass/_julfer.scss */
+.yellow-box {
+  background-color: rgba(255, 255, 0, 0.4);
+  padding: 10px;
+}
+
+/* line 40, ../sass/_julfer.scss */
+.red-box {
+  background-color: rgba(235, 43, 54, 0.4);
+  padding: 10px;
+}
+
+/* line 44, ../sass/_julfer.scss */
+.green-box {
+  background-color: rgba(0, 128, 0, 0.4);
+  padding: 10px;
+}
+
+/* line 48, ../sass/_julfer.scss */
+h2.error-404-subheading {
+  padding-top: 7px;
+}
+
+/* line 51, ../sass/_julfer.scss */
+h1.error-404-heading {
+  font-size: 6em;
+}
+
+/* line 54, ../sass/_julfer.scss */
+.improv-border {
+  padding: 10px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* line 59, ../sass/_julfer.scss */
+i#error-404-home {
+  color: #333;
+}
+
+/* line 62, ../sass/_julfer.scss */
+.login {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* line 66, ../sass/_julfer.scss */
+.login-btn {
+  background-color: rgba(0, 128, 0, 0.4);
+  font-color: white;
+}
+
+/* button {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+} */
+/* line 82, ../sass/_julfer.scss */
+.site-error {
+  background: url(../images/bgsimple.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* .message {
+	min-height: 0px;
+} */
+/* line 8, ../sass/style.scss */
+body {
+  background: white;
+}
+
+/* line 11, ../sass/style.scss */
+.dsp-table {
+  display: table;
+}
+
+/* line 14, ../sass/style.scss */
+* {
+  box-sizing: border-box;
+}
+
+/* line 18, ../sass/style.scss */
+a:hover, a:visited {
+  text-decoration: none;
+}
+
+/* line 22, ../sass/style.scss */
+.header-offset, .bottom-fix, .page-content-offset {
+  min-height: 54px;
+  width: 100%;
+}
+
+/* line 26, ../sass/style.scss */
+.btn, .button, .form-control, .site-index .jumbotron, .panel {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 30, ../sass/style.scss */
+ul.breadcrumb {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 34, ../sass/style.scss */
+textarea {
+  resize: none;
+}
+
+/* line 37, ../sass/style.scss */
+.text-centered {
+  text-align: center;
+}
+
+/* line 40, ../sass/style.scss */
+.form-control, #signupform-verifycode-image {
+  height: 46px;
+}
+
+/* line 43, ../sass/style.scss */
+.pva-login-mask {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: table-cell;
+  vertical-align: middle;
+  background: #393939;
+}
+
+/* line 52, ../sass/style.scss */
+.pva-login {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 61, ../sass/style.scss */
+.pva-form-heading.text-centered h1 {
+  font-family: 'Roboto Condensed', sans-serif;
+  color: white;
+  font-weight: 300;
+}
+
+/* line 67, ../sass/style.scss */
+#loginform-email, #loginform-password, #signupform-username, #signupform-email, #signupform-password, #signupform-verifycode {
+  border: solid 1px #4a4648;
+  background: #242528;
+}
+/* line 70, ../sass/style.scss */
+#loginform-email:focus, #loginform-password:focus, #signupform-username:focus, #signupform-email:focus, #signupform-password:focus, #signupform-verifycode:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+/* line 74, ../sass/style.scss */
+#loginform-email:blur, #loginform-password:blur, #signupform-username:blur, #signupform-email:blur, #signupform-password:blur, #signupform-verifycode:blur {
+  background: #242528;
+}
+
+/* line 78, ../sass/style.scss */
+.panel.panel-default.form-login {
+  min-width: 240px;
+  background: rgba(36, 37, 40, 0.8);
+  border: solid 1px #4a4648;
+}
+
+/* line 83, ../sass/style.scss */
+.control-label, .checkbox label {
+  font-weight: normal;
+  color: white;
+}
+
+/* line 87, ../sass/style.scss */
+.has-success .control-label {
+  color: green;
+}
+
+/* line 90, ../sass/style.scss */
+.has-error .control-label {
+  color: red;
+}
+
+/* line 93, ../sass/style.scss */
+.pva-form-terms {
+  font-size: 12px;
+  color: white;
+}
+
+/* line 97, ../sass/style.scss */
+.panel .panel-heading {
+  background: transparent;
+  border: 0;
+  text-align: center;
+}
+/* line 101, ../sass/style.scss */
+.panel .panel-heading img {
+  -webkit-box-shadow: #393939;
+  box-shadow: #393939;
+}
+
+/* line 106, ../sass/style.scss */
+.input-group-addon {
+  min-width: 50px;
+  border: solid 1px #4a4648;
+  background: transparent;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 113, ../sass/style.scss */
+.input-group-addon.parents {
+  width: auto;
+  color: red;
+}
+
+/* line 117, ../sass/style.scss */
+.input-group-addon {
+  border-color: #ddd;
+  border-style: solid;
+  border: 1px 0 1px 1px;
+}
+
+/* line 122, ../sass/style.scss */
+p.help-block.help-block-error {
+  display: block;
+  visibility: visible;
+  color: red;
+}
+
+/* line 128, ../sass/style.scss */
+#signupform-verifycode-image {
+  cursor: pointer;
+}
+
+/* line 131, ../sass/style.scss */
+span#t {
+  font: 'Open Sans';
+}
+
+/* line 134, ../sass/style.scss */
+.notifications {
+  position: fixed;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+}
+
+/* line 141, ../sass/style.scss */
+.date-range:after {
+  content: "";
+  background: none;
+}
+
+/* line 145, ../sass/style.scss */
+.breadcrumb > li:first-child > a {
+  background: url(../images/interface/breadcrumb_home.png) no-repeat 0;
+  padding-left: 16px;
+}
+
+/* line 149, ../sass/style.scss */
+.page-container, .page-content, .page-header {
+  background: transparent;
+}
+
+/* line 153, ../sass/style.scss */
+.control-label {
+  color: #393939;
+}
+
+/* line 156, ../sass/style.scss */
+.fa-remove {
+  color: red;
+}
+
+/* line 159, ../sass/style.scss */
+.page-header {
+  height: 100%;
+  min-height: 100%;
+}
+
+/* line 163, ../sass/style.scss */
+.sidebar {
+  position: fixed;
+  height: 100%;
+}
+
+/* line 168, ../sass/style.scss */
+.text-centered {
+  text-align: center;
+}
+
+/* line 172, ../sass/style.scss */
+.summary {
+  padding-bottom: 10px;
+}
+
+/* line 175, ../sass/style.scss */
+.pvcf-logo {
+  text-align: center;
+}
+/* line 177, ../sass/style.scss */
+.pvcf-logo img {
+  height: 100px;
+  width: 100px;
+  margin: 15px 15px;
+}
+
+/* line 183, ../sass/style.scss */
+.page-title {
+  min-height: 15px;
+}
+
+/* line 192, ../sass/style.scss */
+.profile-head {
+  text-align: center;
+  padding: 10px;
+  border: solid 1px #e5e5e5;
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+/* line 198, ../sass/style.scss */
+.profile-head img {
+  width: 100%;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+}
+/* line 203, ../sass/style.scss */
+.profile-head p {
+  margin: auto;
+}
+
+/* line 207, ../sass/style.scss */
+.profile-head-mask {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  bottom: 0;
+  height: 50%;
+  width: 100%;
+  padding-right: 15px;
+  padding-bottom: 14px;
+  z-index: 4;
+}
+
+/* line 218, ../sass/style.scss */
+.profile-head-mask-top, .profile-head-mask-bottom {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 222, ../sass/style.scss */
+.profile-head-mask-top {
+  background: rgba(0, 128, 0, 0.7);
+}
+
+/* line 225, ../sass/style.scss */
+.profile-head-mask-bottom {
+  position: relative;
+  top: 0;
+  background: rgba(255, 0, 0, 0.7);
+}
+
+/* line 230, ../sass/style.scss */
+.profile-user-icon {
+  width: 50px;
+  height: 50px;
+  margin: 5px 0;
+  border: 1px solid #65B688;
+  border-radius: 100%;
+}
+/* line 236, ../sass/style.scss */
+.profile-user-icon i {
+  padding-top: 10px;
+  color: #65B688;
+}
+
+/* line 241, ../sass/style.scss */
+.profile-data {
+  font-size: 30px;
+}
+
+/* line 244, ../sass/style.scss */
+#profile-img-wrapper, #profile-details-wrapper {
+  padding-right: 0;
+}
+
+/* line 249, ../sass/style.scss */
+.table.table-striped.table-bordered.detail-view tbody tr > th {
+  width: 150px !important;
+  max-width: 200px !important;
+}
+
+/* line 255, ../sass/style.scss */
+.conversation-wrapper {
+  border: 1px solid #e5e5e5;
+  margin: 0 15px;
+}
+
+/* line 260, ../sass/style.scss */
+.pagination {
+  margin: 10px 0;
+}
+
+/* line 275, ../sass/style.scss */
+.message-index p a,
+.announcement-index p a,
+.applicant-form-index p a,
+.cashier-form-index p a,
+.student-form-index p a,
+.entrance-exam-form-index p a,
+.payment-form-index p a,
+.teacher-form-index p a,
+.user-form-index p a,
+.staff-form-index p a {
+  min-width: 150px;
+}
+/* line 278, ../sass/style.scss */
+.message-index p i,
+.announcement-index p i,
+.applicant-form-index p i,
+.cashier-form-index p i,
+.student-form-index p i,
+.entrance-exam-form-index p i,
+.payment-form-index p i,
+.teacher-form-index p i,
+.user-form-index p i,
+.staff-form-index p i {
+  padding: 3px 0;
+}
+
+/* line 283, ../sass/style.scss */
+.form-offset {
+  min-height: 100px;
+}
+
+/* line 286, ../sass/style.scss */
+.select2-container--krajee .select2-selection--single {
+  height: 46px;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  padding-top: 12px;
+}
+
+/* line 292, ../sass/style.scss */
+.select2-container--krajee .select2-search--dropdown .select2-search__field {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+/* line 297, ../sass/style.scss */
+.select2-container--krajee .select2-selection--single .select2-selection__arrow {
+  border-left: 1px solid #D5D5D5;
+  height: 45px;
+}
+
+/* line 304, ../sass/style.scss */
+.select2-search__field {
+  padding-left: -15px;
+}
+
+/* line 310, ../sass/style.scss */
+.chat {
+  float: right;
+  min-width: 200px;
+  height: 100%;
+  border: 1px solid red;
+  background: transparent;
+  display: block;
+}
+
+/* line 318, ../sass/style.scss */
+.breadcrumb-line {
+  background: none;
+}
+
+/* line 321, ../sass/style.scss */
+#announcement {
+  margin-left: 5px 0;
+  padding: 15px;
+  border: 1px solid #D5D5D5;
+  border-radius: 2px;
+}
+
+/* line 327, ../sass/style.scss */
+.progress {
+  margin-bottom: 20px;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 332, ../sass/style.scss */
+.progress-bar {
+  background-color: #4a8bc2;
+}
+
+/* line 335, ../sass/style.scss */
+.form-progress {
+  width: 100%;
+  height: 20px;
+  background: #393939;
+  margin-bottom: 15px;
+}
+/* line 340, ../sass/style.scss */
+.form-progress #form-progress-inner {
+  min-height: 20px;
+  width: 25%;
+  background: #4a8bc2;
+  -webkit-transition: all 1s ease 0s;
+  -moz-transition: all 1s ease 0s;
+  -ms-transition: all 1s ease 0s;
+  -o-transition: all 1s ease 0s;
+  transition: all 1s ease 0s;
+}
+/* line 346, ../sass/style.scss */
+.form-progress #form-progress-overlay {
+  position: relative;
+  min-height: 20px;
+  width: 25%;
+  top: -20px;
+  left: 0;
+  background: url("../images/progress-bg1.png");
+  background-repeat: repeat-x;
+  -webkit-transition: all 1s ease 0s;
+  -moz-transition: all 1s ease 0s;
+  -ms-transition: all 1s ease 0s;
+  -o-transition: all 1s ease 0s;
+  transition: all 1s ease 0s;
+}
+
+/* line 357, ../sass/style.scss */
+.nav-tabs {
+  border-bottom: 0;
+}
+
+/* line 360, ../sass/style.scss */
+.nav .nav-tabs {
+  border: 0;
+}
+
+/* line 364, ../sass/style.scss */
+.nav-tabs li {
+  background: #eee;
+}
+
+/* line 368, ../sass/style.scss */
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border-color: #eee;
+}
+
+/* line 372, ../sass/style.scss */
+.nav-tabs li {
+  margin: 2px 2px 10px 2px;
+}
+/* line 375, ../sass/style.scss */
+.nav-tabs li a:hover {
+  border-top-color: #EE8366;
+}
+
+/* line 381, ../sass/style.scss */
+.red {
+  background: red;
+}
+
+/* line 384, ../sass/style.scss */
+.tab-content {
+  margin: 10px 1px 0 1px;
+  border: 0;
+}
+
+/* line 388, ../sass/style.scss */
+.container.form-input-wrapper {
+  width: 100%;
+}
+
+/* line 391, ../sass/style.scss */
+.applicant-form-create {
+  margin: 0;
+}
+
+/* line 394, ../sass/style.scss */
+.breadcrumb-line {
+  margin: 0 0 15px 0;
+}
+
+/* line 397, ../sass/style.scss */
+.progress {
+  margin-bottom: 15px;
+}
+
+/* line 400, ../sass/style.scss */
+.dropdown-list, .custom-input-group-addon {
+  width: 100px;
+  padding: 0 5px;
+}
+
+/* line 404, ../sass/style.scss */
+.fa-one-point-five {
+  font-size: 18px;
+}
