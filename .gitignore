@@ -1,6 +1,9 @@
 # yii console command
 /yii
 
+#phpintel
+.phpintel
+
 # phpstorm project files
 .idea
 
