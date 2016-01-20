@@ -80,4 +80,15 @@ class ProfileFormSearch extends ProfileForm
 
         return $dataProvider;
     }
+
+    public function getGender($data)
+    {
+        if($data === 0) {
+            $gender = 'Male';
+        } else {
+            $gender = 'Female';
+        }
+        
+        return $gender;
+    }
 }

@@ -47,15 +47,17 @@ textarea {
     top: 0;
     display: table-cell;
     vertical-align: middle;
-    background: $darkergrey;
+    //background: $darkergrey;
+    //background: #44abce;
+    //background: #007fd5;
+    /* background: url('../images/desktop.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+         -o-background-size: cover;
+            background-size: cover; */
 }
 .pva-login {
     width: 100%;
     height: 100%;
-}
-.pva-form-wrap {
-    //display: table-cell;
-    //vertical-align: middle;
 }
 .pva-form-heading.text-centered {
     h1 {
@@ -77,8 +79,10 @@ textarea {
 }
 .panel.panel-default.form-login {
     min-width: 240px;
-    background: fade_out($form-bg, .2);
-    border: solid 1px lighten($form-border, 5%);
+    //background: fade_out($form-bg, .2);
+    //border: solid 1px fade_out(black, .8);
+    border: transparent;
+    background-color: transparentize(#3a4b55, .6);
 }
 .control-label, .checkbox label {
     font-weight: normal;
@@ -93,6 +97,12 @@ textarea {
 .pva-form-terms {
     font-size: 12px;
     color: white;
+    a {
+        color: white;
+        &:hover {
+            color: $darkergrey;
+        }
+    }
 }
 .panel .panel-heading {
     background: transparent;
@@ -106,9 +116,15 @@ textarea {
 .input-group-addon {
     min-width: 50px;
     border: solid 1px lighten($form-border, 5%);
-    background: transparent;
+    background: white;
     -webkit-border-radius: 0;
             border-radius: 0;
+}
+.pull-left.sign-up, .pull-right.forgot-password {
+    a {
+        font-size: 12px;
+        color: white;
+    }
 }
 .input-group-addon.parents {
     width: auto;
@@ -403,4 +419,40 @@ span#t {
 }
 .fa-one-point-five {
     font-size: 18px;    
+}
+.fa-group-addon-field {
+    font-size: 18px;
+}
+
+//LOGIN
+.panel-heading.login-form-heading {
+    background-color: fade_out($form-bg, .4);
+    height: 60px;
+    h2 {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: normal;
+        font-size: 24px;
+        color: white;
+        padding: 14px;
+    }
+}
+.login-form-container {
+    padding-top: 130px;
+}
+
+.blue-box {
+    background-color: rgba(58, 75, 85, 0.6);
+}
+
+.yellow-box {
+  background-color: rgba(255, 255, 0, 0.6);
+  padding: 10px; 
+}
+.green-box {
+  background-color: rgba(0, 128, 0, 0.6);
+  padding: 10px; }
+
+.login-form-group {
+    padding-top: 10px;
+    padding-bottom: 5px;
 }

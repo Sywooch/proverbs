@@ -37,6 +37,7 @@ class AppAsset extends AssetBundle
         'css/style.css',
         'css/jan.css',
         'css/jan-responsive.css',
+        'css/form-background.css'
     ];
 
     public $js = [

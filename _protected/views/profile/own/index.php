@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $searchModel app\models\ProfileFormSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title =  ucfirst($model->username) . '\'s Profile';
+$this->title =  'Profile';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="profile-form-index">
@@ -34,7 +34,10 @@ $this->title =  ucfirst($model->username) . '\'s Profile';
                             'first_name',
                             'middle_name',
                             'last_name',
-                            'gender',
+                            [
+                                'attribute' => 'gender',
+                                'value' => $model->gender === 0 ? 'Male' : 'Female'
+                            ],
                             'birth_date',
                             'email',
                             'address',

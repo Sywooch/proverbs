@@ -24,7 +24,7 @@ class AppController extends Controller
                         'roles' => ['dev', 'master'],
                     ],
                     [
-                        'controllers' => ['admin', 'user'],
+                        'controllers' => ['admin', 'user', 'staff', 'cashier'],
                         'actions' => ['index', 'view', 'update', 'create'],
                         'allow' => true,
                         'roles' => ['admin'],
