@@ -68,13 +68,13 @@ textarea {
 }
 #loginform-email, #loginform-password, #signupform-username, #signupform-email, #signupform-password, #signupform-verifycode {
     border: solid 1px lighten($form-border, 5%);
-    background: $form-bg;
+    background: white;
     &:focus {
         -webkit-box-shadow: none;
                 box-shadow: none;       
     }
     &:blur {
-        background: $form-bg;
+        background: white;
     }
 }
 .panel.panel-default.form-login {
@@ -94,7 +94,7 @@ textarea {
 .has-error .control-label {
     color: red;
 }
-.pva-form-terms {
+.pva-form-terms, .pva-form-registered {
     font-size: 12px;
     color: white;
     a {
@@ -119,6 +119,9 @@ textarea {
     background: white;
     -webkit-border-radius: 0;
             border-radius: 0;
+}
+input .signupform-username {
+    background: white;
 }
 .pull-left.sign-up, .pull-right.forgot-password {
     a {
