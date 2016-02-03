@@ -42,7 +42,7 @@ class AppController extends Controller
                         'roles' => ['teacher'],
                     ],
                     [
-                        'controllers' => ['user'],
+                        'controllers' => ['user', 'enroll'],
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
                         'allow' => true,
                         'roles' => ['cashier'],
@@ -68,7 +68,6 @@ class AppController extends Controller
                 ],
 
             ],
-
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
