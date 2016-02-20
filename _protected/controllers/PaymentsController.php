@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\PaymentForm;
 use app\models\PaymentFormSearch;
+use app\models\StudentForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -46,6 +47,25 @@ class PaymentsController extends Controller
      * @param string $id
      * @return mixed
      */
+
+    public function actionNew($id)
+    {
+        $model = new PaymentForm();
+        $student = $this->findStudent($id);
+        $model->student_id = $student->id;
+        $express = true;
+
+    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('new', [
+                'student' => $student,
+                'model' => $model,
+                'express' => $express,
+            ]);
+        }
+    }
+
     public function actionView($id)
     {
         return $this->render('view', [
@@ -70,7 +90,6 @@ class PaymentsController extends Controller
             ]);
         }
     }
-
     /**
      * Updates an existing Payment model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -114,6 +133,15 @@ class PaymentsController extends Controller
     {
         if (($model = PaymentForm::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findStudent($id)
+    {
+        if ((($student = StudentForm::findOne($id)) !== null)) {
+            return $student;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

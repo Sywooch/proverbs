@@ -280,7 +280,8 @@ span#t {
     margin: 10px 0;
 }
 .message-index, 
-.announcement-index, 
+.announcement-index,
+.enrollment-form-index,
 .applicant-form-index, 
 .cashier-form-index, 
 .student-form-index, 
@@ -458,4 +459,14 @@ span#t {
 .login-form-group {
     padding-top: 10px;
     padding-bottom: 5px;
+}
+.sidebar {
+    -ms-overflow-y: scroll;
+        overflow-y: scroll;
+}
+span.express-form-student {
+    font-size: 14px;
+    padding: 10px 10px 10px 0;
+    text-align: left;
+    line-height: 1.5px;
 }

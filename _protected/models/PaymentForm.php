@@ -37,8 +37,7 @@ class PaymentForm extends \yii\db\ActiveRecord
         return [
             [['student_id', 'type', 'created_at', 'updated_at'], 'integer'],
             [['paid_amount'], 'number'],
-            [['payment_date'], 'safe'],
-            [['student_id'], 'required']
+            [['student_id', 'paid_amount'], 'required']
         ];
     }
 
@@ -52,7 +51,6 @@ class PaymentForm extends \yii\db\ActiveRecord
             'student_id' => 'Student ID',
             'paid_amount' => 'Paid Amount',
             'type' => 'Type',
-            'payment_date' => 'Payment Date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -70,6 +68,22 @@ class PaymentForm extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            } else {
+                $this->touch('updated_at');
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

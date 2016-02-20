@@ -20,7 +20,6 @@ class PaymentFormSearch extends PaymentForm
         return [
             [['id', 'student_id', 'type', 'created_at', 'updated_at'], 'integer'],
             [['paid_amount'], 'number'],
-            [['payment_date'], 'safe'],
         ];
     }
 
@@ -52,9 +51,7 @@ class PaymentFormSearch extends PaymentForm
         $query->andFilterWhere([
             'id' => $this->id,
             'student_id' => $this->student_id,
-            'paid_amount' => $this->paid_amount,
             'type' => $this->type,
-            'payment_date' => $this->payment_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

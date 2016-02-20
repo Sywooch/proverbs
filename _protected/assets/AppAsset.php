@@ -44,6 +44,7 @@ class AppAsset extends AssetBundle
         'js/jquery-ui.min.js',
         'js/bootstrap.min.js',
         'js/pva.js',
+        'js/onchange.js',
     ];
 
     public $depends = [

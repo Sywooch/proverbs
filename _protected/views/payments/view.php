@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
                 'attribute' => 'type',
                 'value' => $model->getType($model->type)
             ],
-            'payment_date:date',
             'created_at:date',
             [
                 'attribute' => 'updated_at',

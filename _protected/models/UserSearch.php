@@ -147,6 +147,7 @@ class UserSearch extends User
 
         return $dataProvider;
     }
+    
     public function searchStaff($params, $pageSize = 10, $role)
     {
         $query = User::find()->joinWith('role')
