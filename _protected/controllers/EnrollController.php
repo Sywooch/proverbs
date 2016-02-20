@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\EnrolledForm;
 use app\models\EnrolledFormSearch;
+use app\models\StudentForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -46,6 +47,26 @@ class EnrollController extends Controller
      * @param string $id
      * @return mixed
      */
+    public function actionNew($id)
+    {
+        $model = new EnrolledForm();
+        $student = $this->findStudent($id);
+        $model->student_id = $student->id;
+        $model->enrollment_status = 0;
+        $model->grade_level_id = $student->grade_level_id;
+        $express = true;
+
+    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('new', [
+                'student' => $student,
+                'model' => $model,
+                'express' => $express,
+            ]);
+        }
+    }
+
     public function actionView($id)
     {
         return $this->render('view', [
@@ -115,6 +136,15 @@ class EnrollController extends Controller
     {
         if (($model = EnrolledForm::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findStudent($id)
+    {
+        if ((($student = StudentForm::findOne($id)) !== null)) {
+            return $student;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

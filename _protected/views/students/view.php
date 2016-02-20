@@ -12,8 +12,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
 <div class="student-form-view">
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Enroll', ['/enroll/new', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
+            'class' => 'pull-right btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
@@ -123,8 +124,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
                 'attribute' => 'good_moral',
                 'value' => $model->getSubmitted($model->good_moral)
             ],
-            'from_school_year',
-            'to_school_year',
+            'previous_school_from_school_year',
+            'previous_school_to_school_year',
             'created_at:date',
             [
                 'attribute' => 'updated_at',

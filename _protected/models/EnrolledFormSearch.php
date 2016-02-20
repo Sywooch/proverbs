@@ -22,7 +22,7 @@ class EnrolledFormSearch extends EnrolledForm
     public function rules()
     {
         return [    
-            [['id', 'status', 'from_school_year', 'to_school_year', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'enrollment_status', 'from_school_year', 'to_school_year', 'created_at', 'updated_at'], 'integer'],
             [['grade_level_id', 'gradeLevel.name', 'student_id', 'student.first_name', 'student.middle_name',  'student.last_name'], 'safe'],
         ];
     }
@@ -63,7 +63,7 @@ class EnrolledFormSearch extends EnrolledForm
             'id' => $this->id,
             'student_id' => $this->student_id,
             'grade_level_id' => $this->grade_level_id,
-            'status' => $this->status,
+            'enrollment_status' => $this->enrollment_status,
             'from_school_year' => $this->from_school_year,
             'to_school_year' => $this->to_school_year,
             'created_at' => $this->created_at,
@@ -84,7 +84,8 @@ class EnrolledFormSearch extends EnrolledForm
             }])
             ->joinWith(['student' => function($query) {
                 $query->from(['studentName' => 'student']);
-            }]);
+            }])
+            ;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -99,10 +100,10 @@ class EnrolledFormSearch extends EnrolledForm
             'desc' => ['gradeLevel.name' => SORT_DESC],
         ];
 
-        $dataProvider->sort->attributes['studentName.first_name'] = [
+/*        $dataProvider->sort->attributes['studentName.first_name'] = [
             'asc' => ['studentName.first_name' => SORT_ASC],
             'desc' => ['studentName.first_name' => SORT_DESC],
-        ];
+        ];*/
 /*
         $dataProvider->sort->attributes['studentName.last_name'] = [
             'asc' => ['studentName.last_name' => SORT_ASC],
@@ -119,21 +120,21 @@ class EnrolledFormSearch extends EnrolledForm
 
         //$query->joinWith('method');
         $query->joinWith('gradeLevelName');
-        $query->joinWith('studentName');
+        //$query->joinWith('studentName');
 
         $query
         ->andFilterWhere([
             'id' => $this->id,
             //'student_id' => $this->student_id,
             //'grade_level_id' => $this->grade_level_id,
-            'status' => $this->status,
+            'enrollment_status' => $this->enrollment_status,
             'from_school_year' => $this->from_school_year,
             'to_school_year' => $this->to_school_year,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ])
         ->andFilterWhere(['like', 'gradeLevelName.name', $this->grade_level_id])
-        ->andFilterWhere(['like', 'studentName.first_name', $this->student_id])
+        //->andFilterWhere(['like', 'studentName.first_name', $this->student_id])
         //->andFilterWhere(['like', 'studentName.last_name', $this->student_id])
         ;
 

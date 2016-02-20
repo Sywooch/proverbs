@@ -28,8 +28,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
             'student_id',
             'paid_amount',
             [
-                'attribute' => 'type',
-                'value' => $model->getType($model->type)
+                'attribute' => 'transaction',
+                'value' => $model->getTransaction($model->transaction)
             ],
             'created_at:date',
             [

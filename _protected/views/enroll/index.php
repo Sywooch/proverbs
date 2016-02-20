@@ -22,8 +22,8 @@ $this->title = 'Enroll';
         'filterModel' => $searchModel,
         'layout'=>"{summary}\n{items}\n{pager}",
         'columns' => [
-            //'student_id',
-            [
+            'student_id',
+            /*[
                 'attribute' => 'student_id',
                 'value' => function($model){
                     return $model->student->first_name;
@@ -31,7 +31,7 @@ $this->title = 'Enroll';
                 'contentOptions'=>function($column) {
                     return ['header' => 'fdadf'];
                 }
-            ],
+            ],*/
             /*[
                 'attribute' => 'student_id',
                 'value' => function($model){
@@ -45,7 +45,7 @@ $this->title = 'Enroll';
                 }
             ],
             [
-                'attribute'=>'status',
+                'attribute'=>'enrollment_status',
                 'filter' => $searchModel->statusList,
                 'value' => function ($data) {
                     return $data->statusName;
@@ -54,8 +54,8 @@ $this->title = 'Enroll';
                     return ['class'=>CssHelper::statusCss($model->statusName)];
                 }
             ],
-            //'from_school_year',
-            //'to_school_year',
+            'from_school_year',
+            'to_school_year',
             //'created_at:date',
             // 'updated_at',
 

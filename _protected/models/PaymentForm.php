@@ -12,8 +12,7 @@ use yii\db\Expression;
  * @property string $id
  * @property string $student_id
  * @property double $paid_amount
- * @property integer $type
- * @property string $payment_date
+ * @property integer $transaction
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -35,7 +34,7 @@ class PaymentForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['student_id', 'type', 'created_at', 'updated_at'], 'integer'],
+            [['student_id', 'transaction', 'created_at', 'updated_at'], 'integer'],
             [['paid_amount'], 'number'],
             [['student_id', 'paid_amount'], 'required']
         ];
@@ -50,7 +49,7 @@ class PaymentForm extends \yii\db\ActiveRecord
             'id' => 'ID',
             'student_id' => 'Student ID',
             'paid_amount' => 'Paid Amount',
-            'type' => 'Type',
+            'transaction' => 'Transaction',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -87,7 +86,7 @@ class PaymentForm extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getType($data)
+    public function getTransaction($data)
     {
         if ($data === 1) {
             return 'Card';
@@ -96,14 +95,14 @@ class PaymentForm extends \yii\db\ActiveRecord
         }
     }    
 
-    public function getPaymentType()
+    public function getTransactionType()
     {
-        $type = [
+        $transaction = [
             self::TYPE_CASH => 'Cash',
             self::TYPE_CARD => 'Card',
         ];
 
-        return $type;
+        return $transaction;
     }
 
     public function getPaymentDate($data) {

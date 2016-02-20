@@ -29,6 +29,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
         'attributes' => [
             'id',
             'student_id',
+            'student.last_name',
+            'student.middle_name',
+            'student.first_name',
             [
                 'attribute' => 'grade_level_id',
                 'value' => $model->gradeLevel->name,
@@ -37,8 +40,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
                 'attribute' => 'status',
                 'value' => $model->getStatus($model->status)
             ],
-            'from_school_year',
-            'to_school_year',
+/*            'previous_school_from_school_year',
+            'previous_school_to_school_year',*/
             'created_at:date',
             [
                 'attribute' => 'updated_at',

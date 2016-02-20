@@ -89,9 +89,13 @@ $this->title = 'Students';
 
             ['class' => 'yii\grid\ActionColumn',
                     'header' => "Options",
-                    'template' => '{view} {update} {delete}',
-                    'options' => ['style' => 'width: 100px; text-align: center; margin: auto;'],
+                    'template' => '{enroll} {view} {update} {delete}',
+                    'options' => ['style' => 'width: 140px; text-align: center; margin: auto;'],
                     'buttons' => [
+                        'enroll' => function ($url, $model, $key) {
+                            return Html::a('', Yii::$app->request->baseUrl . '/enroll/new?id=' . $key, ['title'=>'Enroll', 
+                                'class'=>'fa fa-list-ol fa-2x']);
+                        },
                         'view' => function ($url, $model, $key) {
                             return Html::a('', $url, ['title'=>'View Applicant', 
                                 'class'=>'fa fa-user fa-2x']);

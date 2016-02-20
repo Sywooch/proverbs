@@ -18,7 +18,7 @@ class PaymentFormSearch extends PaymentForm
     public function rules()
     {
         return [
-            [['id', 'student_id', 'type', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'student_id', 'transaction', 'created_at', 'updated_at'], 'integer'],
             [['paid_amount'], 'number'],
         ];
     }
@@ -51,7 +51,7 @@ class PaymentFormSearch extends PaymentForm
         $query->andFilterWhere([
             'id' => $this->id,
             'student_id' => $this->student_id,
-            'type' => $this->type,
+            'transaction' => $this->transaction,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

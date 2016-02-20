@@ -39,8 +39,8 @@ class EnrolledForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['student_id', 'status', 'from_school_year', 'to_school_year', 'created_at', 'updated_at'], 'integer'],
-            [['grade_level_id', 'gradeLevel', 'student', 'student.first_name', 'student.middle_name', 'student.last_name'],'safe'],
+            [['student_id', 'enrollment_status', 'from_school_year', 'to_school_year', 'created_at', 'updated_at'], 'integer'],
+            [['grade_level_id', 'gradeLevel', 'student'],'safe'],
         ];
     }
 
@@ -86,7 +86,7 @@ class EnrolledForm extends \yii\db\ActiveRecord
             'student.last_name' => 'Last Name',
             'gradeLevel' => 'Grade Level',
             'grade_level_id' => 'Grade Level',
-            'status' => 'Status',
+            'enrollment_status' => 'Enrollment Status',
             'from_school_year' => 'From',
             'to_school_year' => 'To',
             'created_at' => 'Date Created',
@@ -120,7 +120,7 @@ class EnrolledForm extends \yii\db\ActiveRecord
         return $this->hasOne(GradeLevel::className(), ['id' => 'grade_level_id']);
     }
 
-    public function getStatus($data)
+    public function getEnrollmentStatus($data)
     {
         if($data === 1){
             return 'Enrolled';
@@ -141,7 +141,7 @@ class EnrolledForm extends \yii\db\ActiveRecord
 
     public function getStatusName($status = null)
     {
-        $status = (empty($status)) ? $this->status : $status ;
+        $status = (empty($status)) ? $this->enrollment_status : $status ;
 
         if ($status === self::STATUS_ENROLLED)
         {

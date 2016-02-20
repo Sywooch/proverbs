@@ -20,16 +20,16 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
             <div class="container form-input-wrapper">
                 <div class="col-lg-1 col-md-1 col-sm-1">
                     <?php
-                        $model->isNewRecord ? $current_date : [$model->from_school_year, $model->to_school_year];
+                        $model->isNewRecord ? $current_date : [$model->previous_school_from_school_year, $model->previous_school_to_school_year];
                         $parsed_date = (int) substr($current_date, 0, 4);
                     ?>
                     <?=
-                        $model->isNewRecord ? $form->field($model, 'from_school_year')->textInput(['value' => $current_date])->label(false) : $form->field($model, 'from_school_year')->textInput()->label(false);
+                        $model->isNewRecord ? $form->field($model, 'previous_school_from_school_year')->textInput(['value' => $current_date])->label(false) : $form->field($model, 'previous_school_from_school_year')->textInput()->label(false);
                     ?>
                 </div>
                 <div class="col-lg-1 col-md-1 col-sm-1">
                     <?=
-                        $model->isNewRecord ? $form->field($model, 'to_school_year')->textInput(['value' => ($parsed_date + 1)])->label(false) : $form->field($model, 'to_school_year')->textInput()->label(false);
+                        $model->isNewRecord ? $form->field($model, 'previous_school_to_school_year')->textInput(['value' => ($parsed_date + 1)])->label(false) : $form->field($model, 'previous_school_to_school_year')->textInput()->label(false);
                     ?>
                 </div>
             </div>

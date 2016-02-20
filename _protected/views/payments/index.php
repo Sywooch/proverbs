@@ -20,11 +20,11 @@ $this->title = 'Payments';
             'attribute' => 'student_id',
             'paid_amount',
             [
-                'attribute' => 'type',
-                'filter' => $searchModel->paymentType,
-                'value' => function($searchModel){if($searchModel->type === 1)return 'Card';return 'Cash';},
+                'attribute' => 'transaction',
+                'filter' => $searchModel->TransactionType,
+                'value' => function($searchModel){if($searchModel->transaction === 1)return 'Card';return 'Cash';},
                 'contentOptions'=>function($model, $key, $index, $column) {
-                    return ['class'=>CssHelper::statusCss($model->paymentType)];
+                    return ['class'=>CssHelper::statusCss($model->TransactionType)];
                 }
             ],
             ['class' => 'yii\grid\ActionColumn',
