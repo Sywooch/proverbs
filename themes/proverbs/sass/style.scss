@@ -359,6 +359,12 @@ span#t {
     border-radius: 100%;
     border: 1px solid gray;
 }
+.message-profile-thumbnail.user {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 1px solid gray;
+}
 .self-thumb {
     float: right;
     padding: 0 30px;
@@ -368,9 +374,22 @@ span#t {
     padding: 0 30px;
 }
 .pre-wrap.user {
-    width: 297px;
-    max-width: 297px;
+    margin-top: -62px;
+    margin-left: -10px;
+    float: right;
+    width: 230px;
+    max-width: 230px;
     height: auto;
+    padding: 0 12px;
+}
+.pre-wrap.user2 {
+    margin-top: -65px;
+    margin-right: -14px;
+    float: right;
+    width: 230px;
+    max-width: 230px;
+    height: auto;
+    padding: 0 12px;
 }
 .pre-wrap.self {
     width: 230px;
@@ -387,7 +406,32 @@ pre.message-separator {
     -webkit-border-radius: 10px;
             border-radius: 10px;
 }
+#toggle-board-menu {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    padding: 12px 15px;
+    margin: auto;
+    border: 0;
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+    background: #546672;
+    -webkit-transition: all ease 1s 0;
+       -moz-transition: all ease 1s 0;
+        -ms-transition: all ease 1s 0;
+         -o-transition: all ease 1s 0;
+            transition: all ease 1s 0;
+    i {
+        color: white;
+    }
+    &:hover {
+        background: fade_out(#546672, .1);
+    }
+}
 #messages {
+    display: none;
     position: fixed;
     bottom: 0;
     right: 25px;
@@ -445,6 +489,17 @@ pre.message-separator {
         }
     }
 }
+#btn-msg-toggle {
+    background: transparent;
+    i {
+        color: white;
+    }
+    &:hover {
+        i {
+            color: fade_out(white, .25);
+        }
+    }
+}
 .btn-write {
     margin: 10px;
     padding: 0;
@@ -452,7 +507,7 @@ pre.message-separator {
     -webkit-border-radius: 1px;
             border-radius: 1px;
     &:hover {
-        background: fade_out(#546672, .2);        
+        //background: fade_out(#546672, .2);        
     }
 }
 .board-message-format {
@@ -486,7 +541,7 @@ small.separator {
     color: $vanilla;
     width: 30px;
     height: 30px;
-    padding: 8px 8px;
+    padding: 6px 8px;
     i {
         text-align: center;
         margin: auto;
@@ -549,11 +604,9 @@ small.separator {
     margin: 0;
     background: $vanilla;
 }
-#write-form-btn {
-
-}
 .breadcrumb-line {
     background: none;
+    border: 0;
 }
 #announcement {
     margin-left: 5px 0;

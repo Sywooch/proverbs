@@ -16,18 +16,18 @@ if($model->user->gender === 1){
     			<div class="row">
     				<div class="self-thumb">'
 						. '<img class="message-profile-thumbnail" src="' . $foto
-						. '" alt="' . $model->postedBy->username . '"><p></p><small class="pull-left">'. $model->postedBy->username . '</small>
+						. '" alt="' . $model->postedBy->username . '"><p></p><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>
     				</div>
     				<div class="pre-wrap self"><pre class="message-separator self">'
 						. Html::encode($model->content)
-    					. '</pre><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>'
+    					. '</pre>'
     				. '</div>'
     				
     			. '</div>
 			</div>'
 			. '<small class="separator"><hr></small>';
 		}
-		//FEMAL USER, NO PROFILE IMG IS NOT THE SAME PERSON AS POSTED BY
+		//FEMALE USER, NO PROFILE IMG IS NOT THE SAME PERSON AS POSTED BY
 		else {
     		$foto = Yii::$app->request->baseUrl . '/uploads/user-thumb/female.png';
 
@@ -36,11 +36,11 @@ if($model->user->gender === 1){
     			<div class="row">
     				<div class="thumb">'
 						. '<img class="message-profile-thumbnail" src="' . $foto
-						. '" alt="' . $model->postedBy->username . '">
+						. '" alt="' . $model->postedBy->username . '"><br/><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>
     				</div>
     				<div class="pre-wrap user"><pre class="message-separator">'
 						. Html::encode($model->content)
-    				. '</pre><small class="pull-right">'. $model->postedBy->username . '</small><br/><small class="pull-right">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small></div>'
+    				. '</pre></div>'
     			. 	'</div>
 			</div>'
 			. '<small class="separator"><hr></small>';
@@ -63,7 +63,7 @@ if($model->user->gender === 1){
     		echo 
     		'<div class="board-message-format">
     			<div class="row">
-    				<div class="pre-wrap"><pre class="message-separator self">'
+    				<div class="pre-wrap self"><pre class="message-separator self">'
 						. Html::encode($model->content)
     					. '</pre><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>'
     				. '</div>
@@ -84,13 +84,13 @@ if($model->user->gender === 1){
     			<div class="row">
     				<div class="thumb">'
 						. '<img class="message-profile-thumbnail" src="' . $foto
-						. '" alt="' . $model->postedBy->username . '">
-						<p></p><small class="pull-left">'. $model->postedBy->username . '</small>
+						. '" alt="' . $model->postedBy->username . '"><p></p><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>
+						</div>
     				</div>
-    				<div class="pre-wrap user"><pre class="message-separator">'
+					<div class="pre-wrap user2"><pre class="message-separator">'
 						. Html::encode($model->content)
-    				. '</pre><br/><small class="pull-right">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small></div>'
-    			. 	'</div>
+    					. '</pre>'
+				. 	'</div>
 			</div>'
 			. '<small class="separator"><hr></small>';
 		}
