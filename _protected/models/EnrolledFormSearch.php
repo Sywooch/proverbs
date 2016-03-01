@@ -16,14 +16,14 @@ class EnrolledFormSearch extends EnrolledForm
     public function attributes()
     {
         // add related fields to searchable attributes
-        return array_merge(parent::attributes(), ['gradeLevel.name', 'student.first_name', 'student.middle_name',  'student.last_name']);
+        return array_merge(parent::attributes(), ['student.first_name', 'student.middle_name',  'student.last_name', 'student.first_name', 'student.middle_name', 'sy.sy', 'section.section_name']);
     }
 
     public function rules()
     {
         return [    
-            [['id', 'enrollment_status', 'from_school_year', 'to_school_year', 'created_at', 'updated_at'], 'integer'],
-            [['grade_level_id', 'gradeLevel.name', 'student_id', 'student.first_name', 'student.middle_name',  'student.last_name'], 'safe'],
+            [['id', 'enrollment_status', 'created_at', 'updated_at', 'student_id', 'grade_level_id', 'section_id'], 'integer'],
+            [['student' ,'student_id', 'student.last_name', 'student.first_name', 'student.middle_name', 'sy_id', 'section', 'section.section_name'], 'safe'],
         ];
     }
 
@@ -64,8 +64,8 @@ class EnrolledFormSearch extends EnrolledForm
             'student_id' => $this->student_id,
             'grade_level_id' => $this->grade_level_id,
             'enrollment_status' => $this->enrollment_status,
-            'from_school_year' => $this->from_school_year,
-            'to_school_year' => $this->to_school_year,
+            'sy_id' => $this->sy_id,
+            'section_id' => $this->section_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
@@ -77,38 +77,33 @@ class EnrolledFormSearch extends EnrolledForm
     {
         $pageSize = 10;
         
-        //'relation name' => function($query){$query->from(['alias table/method' => 'table_name']);}
         $query = EnrolledForm::find()
             ->joinWith(['gradeLevel' => function($query) {
                 $query->from(['gradeLevelName' => 'grade_level']);
             }])
-            ->joinWith(['student' => function($query) {
-                $query->from(['studentName' => 'student']);
+            /*->joinWith(['student' => function($query) {
+                $query->from(['student' => 'student']);
+            }])*/
+            ->joinWith(['sy' => function($query) {
+                $query->from(['sy' => 'school_year']);
             }])
             ;
+            /*->joinWith(['relation name' => function($query) {
+                $query->from(['method' => 'table name']);
+            }])*/
 
+        $dataProvider->sort->attributes['sy_id'] = [
+            'asc' => ['sy_id' => SORT_ASC],
+            'desc' => ['sy_id' => SORT_DESC],
+        ];
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC, 'sy_id'=>SORT_DESC]],
             'pagination' => [
                 'pageSize' => $pageSize,
             ]
         ]);
-
-        $dataProvider->sort->attributes['gradeLevel.name'] = [
-            'asc' => ['gradeLevel.name' => SORT_ASC],
-            'desc' => ['gradeLevel.name' => SORT_DESC],
-        ];
-
-/*        $dataProvider->sort->attributes['studentName.first_name'] = [
-            'asc' => ['studentName.first_name' => SORT_ASC],
-            'desc' => ['studentName.first_name' => SORT_DESC],
-        ];*/
-/*
-        $dataProvider->sort->attributes['studentName.last_name'] = [
-            'asc' => ['studentName.last_name' => SORT_ASC],
-            'desc' => ['studentName.last_name' => SORT_DESC],
-        ];*/
 
         $this->load($params);
 
@@ -119,23 +114,23 @@ class EnrolledFormSearch extends EnrolledForm
         }
 
         //$query->joinWith('method');
-        $query->joinWith('gradeLevelName');
+        //$query->joinWith('gradeLevelName');
         //$query->joinWith('studentName');
 
         $query
         ->andFilterWhere([
             'id' => $this->id,
-            //'student_id' => $this->student_id,
-            //'grade_level_id' => $this->grade_level_id,
+            'student_id' => $this->student_id,
+            'grade_level_id' => $this->grade_level_id,
+            'section_id' => $this->section_id,
             'enrollment_status' => $this->enrollment_status,
-            'from_school_year' => $this->from_school_year,
-            'to_school_year' => $this->to_school_year,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ])
-        ->andFilterWhere(['like', 'gradeLevelName.name', $this->grade_level_id])
-        //->andFilterWhere(['like', 'studentName.first_name', $this->student_id])
-        //->andFilterWhere(['like', 'studentName.last_name', $this->student_id])
+        //->andFilterWhere(['like', 'gradeLevelName.name', $this->grade_level_id])
+        //->andFilterWhere(['like', 'student.last_name', $this->student_id])
+        //->andFilterWhere(['like', 'student.first_name', $this->student_id])
+        ->andFilterWhere(['like', 'sy.sy', $this->sy_id])
         ;
 
         return $dataProvider;

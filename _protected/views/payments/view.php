@@ -12,13 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
 <div class="payment-view">
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
     </p>
 
     <?= DetailView::widget([
@@ -26,6 +19,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
         'attributes' => [
             'id',
             'student_id',
+            'student.last_name',
+            'student.first_name',
+            'student.middle_name',
             'paid_amount',
             [
                 'attribute' => 'transaction',
@@ -38,5 +34,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
             ],
         ],
     ]) ?>
-
+    <br/>
+    <p>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            'class' => 'pull-right btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 </div>

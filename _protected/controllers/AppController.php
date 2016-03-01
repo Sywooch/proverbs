@@ -18,7 +18,7 @@ class AppController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'controllers' => ['master', 'user', 'teachers', 'staff', 'cashier'],
+                        'controllers' => ['master', 'user', 'teachers', 'staff', 'cashier', 'nursery'],
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
                         'allow' => true,
                         'roles' => ['dev', 'master'],
@@ -36,7 +36,7 @@ class AppController extends Controller
                         'roles' => ['principal'],
                     ],
                     [
-                        'controllers' => ['user'],
+                        'controllers' => ['user','teachers'],
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
                         'allow' => true,
                         'roles' => ['teacher'],
@@ -79,4 +79,8 @@ class AppController extends Controller
 
     }
 
+    public function actionBoard()
+    {
+        
+    }
 }

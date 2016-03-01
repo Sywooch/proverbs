@@ -17,7 +17,11 @@ $this->title = 'Payments';
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'attribute' => 'student_id',
+            'attribute' => 
+            'student_id',
+            'student.last_name',
+            'student.first_name',
+            'student.middle_name',
             'paid_amount',
             [
                 'attribute' => 'transaction',
@@ -27,6 +31,7 @@ $this->title = 'Payments';
                     return ['class'=>CssHelper::statusCss($model->TransactionType)];
                 }
             ],
+            //'created_at:date',
             ['class' => 'yii\grid\ActionColumn',
                     'header' => "Options",
                     'template' => '{view} {update} {delete}',

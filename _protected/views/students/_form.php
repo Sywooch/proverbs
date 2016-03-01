@@ -40,7 +40,7 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
                         </div>
                         <div class="row">
                             <div class="container form-input-wrapper">
-                                <div class="col-lg-4 col-md-3 col-sm-`2"><?= $form->field($model, 'first_name', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'First Name']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true]) ?></div>
+                                <div class="col-lg-4 col-md-3 col-sm-12"><?= $form->field($model, 'first_name', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'First Name']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true]) ?></div>
                                 <div class="col-lg-4 col-md-3 col-sm-12"><?= $form->field($model, 'middle_name', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Middle']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true])->textInput(['maxlength' => true]) ?></div>
                                 <div class="col-lg-4 col-md-3 col-sm-12"><?= $form->field($model, 'last_name', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Last Name']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true])->textInput(['maxlength' => true]) ?></div>
                             </div>
@@ -183,7 +183,7 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
                             </div>
                         </div>
                     </div>
-                    <div class="form-group pull-right">
+                    <div class="form-group">
                        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                        <?= Html::a(Yii::t('app', 'Cancel'), ['/students'], ['class' => 'btn btn-default']) ?>
                     </div>

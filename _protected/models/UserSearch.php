@@ -78,6 +78,41 @@ class UserSearch extends User
         return $dataProvider;
     }
 
+    public function searchTeacherList($params)
+    {
+        $query = User::find()->joinWith('role')->where(['item_name' => 'teacher']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['id'=>SORT_ASC]],
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ]
+        ]);
+
+        // make item_name (Role) sortable
+        $dataProvider->sort->attributes['item_name'] = [
+            'asc' => ['item_name' => SORT_ASC],
+            'desc' => ['item_name' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) 
+        {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'status' => $this->status,
+        ]);
+
+        $query->andFilterWhere(['like', 'username', $this->username])
+              ->andFilterWhere(['like', 'email', $this->email])
+              ->andFilterWhere(['like', 'item_name', $this->item_name]);
+
+        return $dataProvider;
+    }
+
     public function searchTeacher($params, $pageSize = 10, $role)
     {
         $query = User::find()->joinWith('role')->where(['item_name' => 'teacher']);

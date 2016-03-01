@@ -9,18 +9,10 @@ $this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 ?>
 <div class="user-view">
-    <div class="pull-right">
-        <?= Html::a(Yii::t('app', 'Back'), ['index'], ['class' => 'btn btn-warning']) ?>
+    <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], [
             'class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this user?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </div>
+    </p>
 
     </h1>
 
@@ -49,5 +41,14 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['
             ],
         ],
     ]) ?>
-
+    <br/>
+    <p>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+            'class' => 'pull-right btn btn-danger',
+            'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this user?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 </div>

@@ -14,7 +14,6 @@ class m160219_064935_create_assessment_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
         
-        //CREATE STUDENTS TABLE
         $this->createTable('{{%assessment}}', [
                 'id' => 'BIGINT(20) AUTO_INCREMENT',
                 'enrolled_id' => $this->bigInteger(20),

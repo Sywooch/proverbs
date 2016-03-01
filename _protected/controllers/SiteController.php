@@ -43,6 +43,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'board' => ['post'],
                 ],
             ],
         ];
@@ -59,6 +60,11 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function actionBoard()
+    {
+        
     }
 
     public function actionIndex()
@@ -116,8 +122,9 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) 
         {
             $role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
-
-            return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/' . $role);
+            
+            return $this->redirect(Yii::$app->request->baseUrl . '/dashboard', ['role' => $role]);
+            //return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/' . $role);
         }
         elseif($model->status === User::STATUS_INACTIVE)
         {

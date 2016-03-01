@@ -147,8 +147,8 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
                             <div class="container form-input-wrapper">
                                 <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'previous_school_grade_level', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData, ['id', 'name'])->label(false) ?></div>
                                 <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'previous_school_average_grade', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'Average Grade']])->label(false)->textInput() ?></div>
-                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'from_school_year', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'From School Year']])->label(false)->textInput() ?></div>
-                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'to_school_year', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'To School Year']])->label(false)->textInput() ?></div>
+                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'previous_school_from_school_year', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'From School Year']])->label(false)->textInput() ?></div>
+                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'previous_school_to_school_year', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'To School Year']])->label(false)->textInput() ?></div>
                             </div>
                         </div>
                         <div class="row">
@@ -183,7 +183,7 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
                             </div>
                         </div>
                     </div>
-                    <div class="form-group pull-right">
+                    <div class="form-group">
                        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                        <?= Html::a(Yii::t('app', 'Cancel'), ['/applicant'], ['class' => 'btn btn-default']) ?>
                     </div>

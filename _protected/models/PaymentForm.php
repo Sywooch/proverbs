@@ -120,6 +120,6 @@ class PaymentForm extends \yii\db\ActiveRecord
 
     public function getStudent()
     {
-        return $this->hasOne(Student::className(), ['id' => 'student_id']);
+        return $this->hasOne(StudentForm::className(), ['id' => 'student_id']);
     }
 }

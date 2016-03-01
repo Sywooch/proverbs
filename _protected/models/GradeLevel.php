@@ -54,4 +54,18 @@ class GradeLevel extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Student::className(), ['grade_level_id' => 'id']);
     }
+
+    public function getAllLevels()
+    {
+        $level = self::find()->all();
+
+        return $level;
+    }
+
+    public function getLevels()
+    {
+        return static::find()
+            ->select(['id'])
+            ->all();
+    }
 }

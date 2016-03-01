@@ -1,9 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 use nesbot\Carbon;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap\ActiveForm;
 //use kartik\field\FieldRange;
 //use kartik\widgets\DatePicker;
 
@@ -25,21 +26,8 @@ use nesbot\Carbon;
 
     <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'gender')->radioList(
-                            ['Male' => 'Male', 'Female' => 'Female'],['separator' => '&nbsp;&nbsp;'],
-                            [
-                                'item' => function($index, $label, $name, $checked, $value) {
-
-                                    $return = '<label class="modal-radio">';
-                                    $return .= '<input type="radio" name="' . $name . '" value="' . $value . '" tabindex="3">';
-                                    $return .= '<i></i>';
-                                    $return .= '<span>' . ucwords($label) . '</span>';
-                                    $return .= '</label>';
-
-                                    return $return;
-                                }
-                            ]
-                        ) ?>
+    <?= $form->field($model, 'gender', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Gender</span></span></span>{input}</div>'])->dropDownList(['0' => 'Male', '1' => 'Female'], ['default' => 'Male'])->label(false) ?>
+    
     <?= $form->field($model, 'birth_date')->widget(DatePicker::className(),['options' => ['class' => ['form-control']] ] )?>
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>

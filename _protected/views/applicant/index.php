@@ -82,9 +82,13 @@ $this->title = 'Applicant';
 
             ['class' => 'yii\grid\ActionColumn',
                     'header' => "Options",
-                    'template' => '{view} {update} {delete}',
-                    'options' => ['style' => 'width: 100px; text-align: center; margin: auto;'],
+                    'template' => '{payment} {view} {update} {delete}',
+                    'options' => ['style' => 'width: 150px; text-align: center; margin: auto;'],
                     'buttons' => [
+                        'payment' => function ($url, $model, $key) {
+                            return Html::a('', Yii::$app->request->baseUrl . '/payments/new?id=' . $key, ['title'=>'New Payment', 
+                                'class'=>'fa fa-dollar fa-2x']);
+                        },
                         'view' => function ($url, $model, $key) {
                             return Html::a('', $url, ['title'=>'View Applicant', 
                                 'class'=>'fa fa-user fa-2x']);

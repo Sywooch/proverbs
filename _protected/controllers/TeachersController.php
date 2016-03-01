@@ -25,11 +25,6 @@ class TeachersController extends AppController
          */
         $pageSize = 11;
 
-        /**
-         * Only theCreator role can see all users.
-         * Lower roles will not be able to see theCreator @see: search(). 
-         * @var boolean
-         */
         $dev = (Yii::$app->user->is('dev')) ? true : false ;
 
         $searchModel = new UserSearch();

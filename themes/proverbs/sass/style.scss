@@ -7,6 +7,7 @@
 
 body {
     background: white;
+    overflow-y: scroll;
 }
 .dsp-table {
     display: table;
@@ -18,6 +19,9 @@ a {
     &:hover,&:visited {
     text-decoration: none;
     }
+}
+pre {
+    border: transparent;
 }
 .header-offset, .bottom-fix, .page-content-offset {
     min-height: 54px;
@@ -113,6 +117,12 @@ textarea {
                 box-shadow: $darkergrey;
     }
 }
+.subject-min-width{
+    width: 120px;
+}
+.input-group-addon.values-min-width {
+    width: 120px;
+}
 .input-group-addon {
     min-width: 50px;
     border: solid 1px lighten($form-border, 5%);
@@ -181,6 +191,7 @@ span#t {
 }
 .sidebar {
     position: fixed;
+    top: 54px;
     height: 100%;
 }
 
@@ -327,13 +338,219 @@ span#t {
 .sidebar {
     //width: 160px;
 }
-.chat {
+#pjax-board {
+    position: absolute;
+    top: -30px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+#refresh-btn {
+    padding-top: 8px;
+    padding-bottom: 6px;
+    padding-left: 7px;
+    margin: 0 auto;
+}
+.message-profile-thumbnail {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: 1px solid gray;
+}
+.self-thumb {
     float: right;
-    min-width: 200px;
-    height: 100%;
-    border: 1px solid red;
+    padding: 0 30px;
+}
+.thumb {
+    float: left;
+    padding: 0 30px;
+}
+.pre-wrap.user {
+    width: 297px;
+    max-width: 297px;
+    height: auto;
+}
+.pre-wrap.self {
+    width: 230px;
+    max-width: 230px;
+    height: auto;
+    padding: 0 12px;
+}
+pre.message-separator.self {
+    background: #65B688;
+    color: white;
+}
+pre.message-separator {
+    background: $milkshake;
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+}
+#messages {
+    position: fixed;
+    bottom: 0;
+    right: 25px;
+    height: 480px;
+    width: 320px;
+    min-height: 480px;
+    min-width: 320px;
+    .panel.panel-default > .panel-heading {
+        border: #3A4B55;
+        -webkit-border-radius: 0;
+                border-radius: 0;
+        background: #3A4B55;
+        margin: 0;
+        padding: 0;
+    }
+    .panel.panel-default > .panel-body {
+        height: 320px;
+        margin: 0;
+        padding: 0;
+    }
+    .panel.panel-default > .panel-footer {
+        height: 130px;
+        padding: 0;
+        margin: 0;
+    }
+}
+#write-form-textarea {
+    padding: 10px;
+    margin: 0;
+    background: white;
+}
+#write-textarea {
+    background: white;
+    width: 100%;
+    height: 60px;
+    resize: none;
+    outline: none;
+}
+#write-button-container {
+    padding: 0 10px 10px 10px;
+}
+#new-board-message {
+    width: 30px;
+    height: 30px;
+    color: white;
+    padding: auto;
+    padding: 5px 0;
+    background: none;
+    border: 0;
+    &:hover {
+        span {
+            i {
+                color: fade_out(white, .25);
+            }
+        }
+    }
+}
+.btn-write {
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+    -webkit-border-radius: 1px;
+            border-radius: 1px;
+    &:hover {
+        background: fade_out(#546672, .2);        
+    }
+}
+.board-message-format {
+    padding: 10px;
+    p:first-child {
+        margin: 0 0 5px 0;
+        padding: 0;
+    }
+    p:nth-child(2) {
+        margin: 0 0 5px 0;
+        padding: 0;
+    }
+}
+small.separator {
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+    hr {
+        width: 95%;
+        padding: 0;
+        margin: 2px auto;
+    }
+}
+
+#btn-msg-container {
+    margin-bottom: 15px;
+}
+.btn-board {
     background: transparent;
-    display: block;
+    border: 0;
+    color: $vanilla;
+    width: 30px;
+    height: 30px;
+    padding: 8px 8px;
+    i {
+        text-align: center;
+        margin: auto;
+    }
+}
+.board {
+    background: transparent;
+    height: 320px;
+    min-width: 100%;
+    -ms-overflow-y: scroll;
+    overflow-y: scroll;
+    -ms-overflow-x: hidden;
+         overflow-x: hidden; 
+}
+
+.board-content {
+    background: #FFF;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    &:hover.board-content::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        visibility: visible;
+    }
+}
+.board-content::-webkit-scrollbar-track {
+    border-radius: 10px;
+    //background-color: fade_out(white, 1);
+    //visibility: hidden;
+}
+.board-content::-webkit-scrollbar-thumb{
+    background-color: #3A4B55;
+    height: 50px;
+    border-radius: 10px;
+    border-style: solid;
+    border: 0;
+}
+.board-content::-webkit-scrollbar
+{
+    width: 14px;
+    background-color: $vanilla;
+}
+.board-write-container {
+    position: relative;
+    bottom: 0;
+    height: 80px;
+    padding: 0;
+    margin: 0;
+}
+.board-write {
+    /* position: absolute;
+    bottom: 0; */
+}
+.input-group.write-group {
+    height: 80px;
+}
+.input-group-addon.addon-submit-btn {
+    padding: 0;
+    padding: 0 6px;
+    margin: 0;
+    background: $vanilla;
+}
+#write-form-btn {
+
 }
 .breadcrumb-line {
     background: none;
@@ -463,6 +680,34 @@ span#t {
 .sidebar {
     -ms-overflow-y: scroll;
         overflow-y: scroll;
+    &:hover.sidebar::-webkit-scrollbar-thumb {
+        background-color: #ee8366;
+        border: solid 3px $darkeractive;
+        border-radius: 10px;
+        visibility: visible;
+    }
+    &:hover.sidebar::-webkit-scrollbar {
+        background-color: $darkeractive;
+    }
+}
+.sidebar::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: fade_out(white, 1);
+    //visibility: hidden;
+}
+.sidebar::-webkit-scrollbar-thumb{
+    height: 50px;
+    border-radius: 10px;
+    border-color: $darkeractive;
+    border-style: solid;
+    border: 1px 1px 1px 10px;
+    visibility: hidden;
+}
+.sidebar::-webkit-scrollbar
+{
+    width: 14px;
+    //background-color: fade_out(#3A4B55, .1);
+    background-color: white;
 }
 span.express-form-student {
     font-size: 14px;

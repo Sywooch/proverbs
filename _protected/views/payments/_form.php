@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
     </div>
     <div class="row">
         <div class="container form-input-wrapper">
-            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'paid_amount',  ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Amount']])->label(false)->textInput() ?></div>
+            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'paid_amount',  ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="">Amount</span></span></span>{input}</div>', 'inputOptions' => ['placeholder' => '0']])->label(false)->textInput() ?></div>
             <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'transaction', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Transaction</span></span></span>{input}</div>'])->dropDownList(['0' => 'Cash', '1' => 'Card'], ['default' => 'Cash'])->label(false) ?></div>
         </div>
     </div>

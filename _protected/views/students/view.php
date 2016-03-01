@@ -12,14 +12,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
 <div class="student-form-view">
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Enroll', ['/enroll/new', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'pull-right btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Payment', ['/payments/new', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Enroll', ['/enroll/new', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -133,5 +127,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
             ],
         ],
     ]) ?>
-
+    <br/>
+    <p>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            'class' => 'pull-right btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 </div>

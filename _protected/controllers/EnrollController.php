@@ -6,6 +6,7 @@ use Yii;
 use app\models\EnrolledForm;
 use app\models\EnrolledFormSearch;
 use app\models\StudentForm;
+use app\models\SchoolYear;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -81,14 +82,16 @@ class EnrollController extends Controller
      */
     public function actionCreate()
     {
+        $sy = new SchoolYear();
         $model = new EnrolledForm();
-        $model->status = 0;
+        $model->enrollment_status = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'sy' => $sy,
             ]);
         }
     }
@@ -103,8 +106,10 @@ class EnrollController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())/* && $model->save()*/) {
+            die('status: ' . $model->enrollment_status);
+            //return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,

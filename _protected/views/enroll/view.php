@@ -15,13 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Payment', ['/payments/new', 'id' => $model->student_id], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -37,11 +31,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
                 'value' => $model->gradeLevel->name,
             ],
             [
-                'attribute' => 'status',
-                'value' => $model->getStatus($model->status)
+                'attribute' => 'enrollment_status',
+                'value' => $model->getEnrollmentStatus($model->enrollment_status)
             ],
-/*            'previous_school_from_school_year',
-            'previous_school_to_school_year',*/
+            'sy.sy',
             'created_at:date',
             [
                 'attribute' => 'updated_at',
@@ -49,5 +42,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
             ],
         ],
     ]) ?>
-
+    <br/>
+    <p>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            'class' => 'pull-right btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 </div>

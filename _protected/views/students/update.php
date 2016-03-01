@@ -12,5 +12,4 @@ $this->params['breadcrumbs'][] = ['label' => 'Student', 'url' => ['index']];
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

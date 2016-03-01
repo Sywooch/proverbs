@@ -89,9 +89,13 @@ $this->title = 'Students';
 
             ['class' => 'yii\grid\ActionColumn',
                     'header' => "Options",
-                    'template' => '{enroll} {view} {update} {delete}',
-                    'options' => ['style' => 'width: 140px; text-align: center; margin: auto;'],
+                    'template' => '{payment} {enroll} {view} {update} {delete}',
+                    'options' => ['style' => 'width: 180px; text-align: center; margin: auto;'],
                     'buttons' => [
+                        'payment' => function ($url, $model, $key) {
+                            return Html::a('', Yii::$app->request->baseUrl . '/payments/new?id=' . $key, ['title'=>'Enroll', 
+                                'class'=>'fa fa-dollar fa-2x']);
+                        },
                         'enroll' => function ($url, $model, $key) {
                             return Html::a('', Yii::$app->request->baseUrl . '/enroll/new?id=' . $key, ['title'=>'Enroll', 
                                 'class'=>'fa fa-list-ol fa-2x']);
@@ -107,7 +111,7 @@ $this->title = 'Students';
                         'delete' => function ($url, $model, $key) {
                             return Html::a('', $url, 
                                 ['title'=>'Delete Applicant', 
-                                    'class'=>'fa fa-times fa-2x fa-remove text-centered',
+                                    'class'=>'fa fa-times fa-2x fa-trash-o text-centered',
                                     'data' => [
                                         'confirm' => Yii::t('app', 'Are you sure you want to delete this applicant?'),
                                         'method' => 'post']

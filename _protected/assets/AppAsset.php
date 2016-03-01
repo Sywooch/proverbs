@@ -37,14 +37,18 @@ class AppAsset extends AssetBundle
         'css/style.css',
         'css/jan.css',
         'css/jan-responsive.css',
-        'css/form-background.css'
+        'css/form-background.css',
+        'css/switchery.css',
     ];
 
     public $js = [
         'js/jquery-ui.min.js',
         'js/bootstrap.min.js',
         'js/pva.js',
-        'js/onchange.js',
+        'js/toggle-message.js',
+        'js/switchery.js',
+        'js/switchery.min.js',
+        'js/switchery-init.js',
     ];
 
     public $depends = [

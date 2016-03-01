@@ -15,15 +15,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?php // echo $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'student_id') ?>
 
-    <?= $form->field($model, 'grade_level_id') ?>
+    <?php // echo $form->field($model, 'grade_level_id') ?>
 
-    <?= $form->field($model, 'semester') ?>
-
-    <?= $form->field($model, 'status') ?>
+    <?php // echo $form->field($model, 'enrollment_status') ?>
 
     <?php // echo $form->field($model, 'from_school_year') ?>
 

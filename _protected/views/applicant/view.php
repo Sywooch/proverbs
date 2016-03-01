@@ -6,19 +6,13 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\ApplicantForm */
 
-$this->title = $model->id;
+$this->title = $model->last_name . ', ' . $model->first_name . ' ' . $model->middle_name;
 $this->params['breadcrumbs'][] = ['label' => 'Applicant', 'url' => ['index']];
 ?>
 <div class="applicant-form-view">
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Payment', ['/payments/new', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -123,8 +117,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Applicant', 'url' => ['index']];
                 'attribute' => 'good_moral',
                 'value' => $model->getSubmitted($model->good_moral)
             ],
-            'from_school_year',
-            'to_school_year',
+            'previous_school_from_school_year',
+            'previous_school_to_school_year',
             'created_at:date',
             [
                 'attribute' => 'updated_at',
@@ -132,5 +126,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Applicant', 'url' => ['index']];
             ],
         ],
     ]) ?>
-
+    <br/>
+    <p>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            'class' => 'pull-right btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 </div>
