@@ -19,7 +19,7 @@ class GradeLevelSearch extends GradeLevel
     {
         return [
             [['id'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -60,7 +60,8 @@ class GradeLevelSearch extends GradeLevel
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            //->andFilterWhere(['like', 'description', $this->description])
+            ;
 
         return $dataProvider;
     }

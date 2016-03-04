@@ -6,17 +6,17 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-
 use yii\widgets\ListView;
 use app\models\Board;
 use app\models\BoardSearch;
+use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
 
 $searchBoardModel = new BoardSearch();
 $dataProviderBoard = $searchBoardModel->searchBoard(Yii::$app->request->queryParams);
+
 AppAsset::register($this);
 ?>
-
 <?php
 $fn = '';
 $un = '';
@@ -53,124 +53,76 @@ $un = '';
     <?php
         if(Yii::$app->user->isGuest){
             echo $content;
+        } elseif(Yii::$app->user->is('parent') === true) {
+            include('header.php');
+            echo '<div class="page-container">';
+            include('sidebar.php');
+            echo '<div class="page-content">' . '<div class="header-offset"></div>';
+            include('page-header.php');
+            echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
+            echo $content;
+            echo '<div class="page-content-offset"></div>';
+            include('footer.php');
+            echo '</div>' . // PAGE-CONTENT
+            '</div>'; // PAGE-CONTAINER
         } else {
             include('header.php');
             echo '<div class="page-container">';
-                include('sidebar.php');
-                echo '<div class="page-content">' . '<div class="header-offset"></div>';
-                include('page-header.php');
-                echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
-                echo $content;
-                echo '<div class="page-content-offset"></div>';
-                include('footer.php');
-                echo '</div>' . // PAGE-CONTENT
-                '</div>'; // PAGE-CONTAINER
-                echo Yii::$app->user->is('parent') === true ? 
-                    '' : 
-                    '<div id="messages">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                            <button id="new-board-message" class="pull-left"><span><i class="fa fa-wechat"></i></span></button>
-                            <a id="btn-msg-toggle" class="btn btn-primary btn-board pull-right" href="#" style="text-align: center; margin: auto;"><i class="fa fa-remove fa-one-point-five"></i></a>
-                            </div>
-                            <div class="panel-body">
-                                <div id="message-content-panel" class="board">
-                                    <div class="board-content">';
-
-                                        Pjax::begin([
-                                            'enablePushState' => false, 
-                                            'enableReplaceState' => true, 
-                                            'timeout' => 2000,
-                                        ]);
-                                        echo Html::a('<span id="refresh-btn" class="btn btn-xs"><i class="fa fa-refresh"></i></span>', [''], ['class' => 'btn btn-lg btn-primary hidden', 'id' => 'pjax-board']);
-                                        echo ListView::widget([
-                                            'dataProvider' => $dataProviderBoard,
-                                            'layout' => '{items} {pager}',
-                                             'itemOptions' => ['class' => 'item'],
-                                            'itemView' => '_messages',
-                                        ]);
-                            
-                                        Pjax::end();
-
-                                echo '</div>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div id="write-form-textarea">
-                                    <textarea id="write-textarea" type="text" class="form-control" style="margin: 0;" rows="1"></textarea>
-                                </div>
-                                <div id="write-button-container">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <button type="submit" id="write-submit-btn" class="btn btn-block btn-primary">SEND</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            include('sidebar.php');
+            echo '<div class="page-content">' . '<div class="header-offset"></div>';
+            include('page-header.php');
+            echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
+            echo $content;
+            echo '<div class="page-content-offset"></div>';
+            include('footer.php');
+            echo '</div>' . // PAGE-CONTENT
+            '</div>'; // PAGE-CONTAINER
+            echo '<div id="messages">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                    <button id="new-board-message" class="pull-left"><span><i class="fa fa-wechat"></i></span></button>
+                    <a id="btn-msg-toggle" class="btn btn-primary btn-board pull-right" href="#" style="text-align: center; margin: auto;"><i class="fa fa-remove fa-one-point-five"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <div id="message-content-panel" class="board">
+                            <div class="board-content">';
+                            //BEGIN GET BOARD MESSAGES
+                            Pjax::begin([
+                                    'enablePushState' => false, 
+                                    'enableReplaceState' => true, 
+                                    'timeout' => 60000,
+                                ]);
+                                echo Html::a('<span id="refresh-btn" class="btn btn-xs"><i class="fa fa-refresh"></i></span>', [''], ['class' => 'btn btn-lg btn-primary hidden', 'id' => 'pjax-board']);
+                                echo ListView::widget([
+                                    'dataProvider' => $dataProviderBoard,
+                                    'layout' => '{items} {pager}',
+                                     'itemOptions' => ['class' => 'item'],
+                                    'itemView' => '_messages',
+                                ]);
+                    
+                                Pjax::end();
+                            //END
+                        echo '</div>
                         </div>
-                    </div>';
-                    echo '<button id="toggle-board-menu"><i class="fa fa-bars fa-2x"></i></button>';
+                    </div>
+                    <div id="write-panel-footer" class="panel-footer" stlye="border: 1px solid blue;">';
+                        $board = new Board();
+                        Pjax::begin(['id' => 'pjax-write']);
+                            $form = ActiveForm::begin(['options' => ['data-pjax' => true ]]);
+                            echo '<div id="write-form-textarea">'
+                                . $form->field($board, 'content', ['inputTemplate' => '{input}<button id="write-board-send" type="submit" class="btn btn-block btn-primary" style="margin-top: 10px;">SEND</button>'])->textarea(['maxlength' => true,'id' => 'write-textarea', 'class' => 'form-control', 'style' => 'margin: 0;', 'rows' => 1])->label(false)
+                            . '</div>';
+                            ActiveForm::end(); 
+                        Pjax::end();
+                    echo '</div>
+                </div>
+            </div>
+            </div>';
+            echo '<button id="toggle-board-menu" class="hvr-pulse"><i class="fa fa-wechat fa-2x"></i></button>';
         }
     ?>
-<?php
-$script = <<< JS
-$(document).ready(function() {
-
-    $('#new-board-message').click(function(){
-            scrollBottom();
-        }
-    );
-
-    function scrollPos()
-    {
-        $("#message-content-panel").scroll(function(){
-            //console.log('value: ' + ($("#message-content-panel").scrollTop() - $("#message-content-panel").offset().top));
-            return $("#message-content-panel").scrollTop() - $("#message-content-panel").offset().top;
-        });
-    }
-
-    function scrollBottom()
-    {
-        $("#message-content-panel").scrollTop($("#message-content-panel")[0].scrollHeight);
-    }
-
-    function reloadLink()
-    {
-        $("#pjax-board").click();
-    }
-
-    function focus()
-    {
-        $(document).on('ready pjax:success', function() {
-
-            var focused = $("#write-textarea").is(":focus");
-            
-            $('#scroll-to-new-post').click(function(){
-                    scrollBottom();
-                }
-            );
-
-            if(focused === true){
-                $('#write-textarea').focus();
-            } else {
-                $('#write-textarea').focus();
-            }
-        });
-    }
-
-    scrollPos();
-    scrollBottom();
-
-    setInterval(function(){
-        reloadLink();
-        focus();
-    }, 10000);
-
-});
-JS;
-$this->registerJs($script);
-?>
     <?php $this->endBody() ?>
+    <?php include('board-script.php');?>
     <?php include('script.php');?>
     <script src="/proverbs/themes/proverbs/js/sweetalert.min.js"></script>
 </body>

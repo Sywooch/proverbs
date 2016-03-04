@@ -30,15 +30,17 @@ class m160223_020543_create_section_advisers_table extends Migration
         $this->addForeignKey('fk_18', '{{%advisory}}', 'teacher_id', '{{%user}}', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk_19', '{{%advisory}}', 'grade_level_id', '{{%grade_level}}', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk_20', '{{%advisory}}', 'sy_id', '{{%school_year}}', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('fk_21', '{{%advisory}}', 'sy_id', '{{%section}}', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('advisory_ibfk_1', '{{%advisory}}', 'section_id', '{{%section}}', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()
     {
+        $this->dropForeignKey('advisory_ibfk_1','{{%advisory}}');
         $this->dropForeignKey('fk_18','{{%advisory}}');
         $this->dropForeignKey('fk_19','{{%advisory}}');
         $this->dropForeignKey('fk_20','{{%advisory}}');
         $this->dropForeignKey('fk_21','{{%advisory}}');
+        $this->dropIndex('advisory_ibfk_1','{{%advisory}}');
         $this->dropIndex('fk_18_idx','{{%advisory}}');
         $this->dropIndex('fk_19_idx','{{%advisory}}');
         $this->dropIndex('fk_20_idx','{{%advisory}}');

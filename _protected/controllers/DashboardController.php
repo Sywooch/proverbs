@@ -33,25 +33,19 @@ class DashboardController extends \yii\web\Controller
         {
             if(empty($board->content) || $board->content === null || trim($board->content) === ''){
                 $board = new Board(); //reset model
+                return $this->render('index',[
+                    'board' => $board,
+                ]);
             } else {
                 $board->save();
                 $board = new Board(); //reset model
+                return $this->render('index',[
+                    'board' => $board,
+                ]);
             }
         }
 
         return $this->render('index',[
-            'board' => $board,
-        ]);
-    }
-
-    public function actionPull()
-    {
-        $searchBoardModel = new BoardSearch();
-        $dataProviderBoard = $searchBoardModel->searchBoard(Yii::$app->request->queryParams);
-
-        return $this->render('index',[
-            'searchBoardModel' => $searchBoardModel,
-            'dataProviderBoard' => $dataProviderBoard,
             'board' => $board,
         ]);
     }

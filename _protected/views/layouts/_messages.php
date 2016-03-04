@@ -3,101 +3,111 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 ?>
 <?php
-if($model->user->gender === 1){
-	//EMPTY PROFILE IMG
-	if(empty($model->user->profile_image) || $model->user->profile_image === null){
-
-		//FEMAL USER, NO PROFILE IMG IS SAME PERSON AS POSTED BY
-		if($model->posted_by === Yii::$app->user->identity->id){
-    		$foto = Yii::$app->request->baseUrl . '/uploads/user-thumb/female.png';
-
-    		echo
-    		'<div class="board-message-format">
-    			<div class="row">
-    				<div class="self-thumb">'
-						. '<img class="message-profile-thumbnail" src="' . $foto
-						. '" alt="' . $model->postedBy->username . '"><p></p><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>
-    				</div>
-    				<div class="pre-wrap self"><pre class="message-separator self">'
-						. Html::encode($model->content)
-    					. '</pre>'
-    				. '</div>'
-    				
-    			. '</div>
-			</div>'
-			. '<small class="separator"><hr></small>';
-		}
-		//FEMALE USER, NO PROFILE IMG IS NOT THE SAME PERSON AS POSTED BY
-		else {
-    		$foto = Yii::$app->request->baseUrl . '/uploads/user-thumb/female.png';
-
-    		echo 
-    		'<div class="board-message-format">
-    			<div class="row">
-    				<div class="thumb">'
-						. '<img class="message-profile-thumbnail" src="' . $foto
-						. '" alt="' . $model->postedBy->username . '"><br/><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>
-    				</div>
-    				<div class="pre-wrap user"><pre class="message-separator">'
-						. Html::encode($model->content)
-    				. '</pre></div>'
-    			. 	'</div>
-			</div>'
-			. '<small class="separator"><hr></small>';
-		}
-	}
-	//FEMALE USER HAS PROFILE IMG
-	else {
-		$foto = Yii::$app->request->baseUrl . '/uploads/user-thumb/female.png';
-	}
-
-//MALE
-} else {
-	//EMPTY PROFILE IMG
-	if(empty($model->user->profile_image) || $model->user->profile_image === null){
-
-		//MALE USER, NO PROFILE IMG IS SAME PERSON AS POSTED BY
-		if($model->posted_by === Yii::$app->user->identity->id){
-    		$foto = Yii::$app->request->baseUrl . '/uploads/user-thumb/male.png';
-
-    		echo 
-    		'<div class="board-message-format">
-    			<div class="row">
-    				<div class="pre-wrap self"><pre class="message-separator self">'
-						. Html::encode($model->content)
-    					. '</pre><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>'
-    				. '</div>
-    				<div class="thumb">'
-						. '<img class="message-profile-thumbnail" src="' . $foto
-						. '" alt="' . $model->postedBy->username . '">
-    				</div>'
-    			. '</div>
-			</div>'
-			. '<small class="separator"><hr></small>';
-		}
-		//MALE USER, NO PROFILE IMG IS NOT THE SAME PERSON AS POSTED BY
-		else {
-    		$foto = Yii::$app->request->baseUrl . '/uploads/user-thumb/male.png';
-
-    		echo 
-    		'<div class="board-message-format">
-    			<div class="row">
-    				<div class="thumb">'
-						. '<img class="message-profile-thumbnail" src="' . $foto
-						. '" alt="' . $model->postedBy->username . '"><p></p><small class="pull-left">'. $model->postedBy->username . '</small><br/><small class="pull-left">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans() . '</small>
-						</div>
-    				</div>
-					<div class="pre-wrap user2"><pre class="message-separator">'
-						. Html::encode($model->content)
-    					. '</pre>'
-				. 	'</div>
-			</div>'
-			. '<small class="separator"><hr></small>';
+	//USER === POSTED_BY
+	if($model->posted_by === Yii::$app->user->id){
+		if($model->postedBy->gender === 0){//MALE
+			//USER HAS PROFILE IMAGE
+			if(!empty($model->postedBy->profile_image) || $model->postedBy->profile_image !== null){
+				echo '<div class="board-message-format-self">
+						<ul>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/profile-img/' .  $model->postedBy->profile_image; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+						</ul>
+					</div>
+					<small class="separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';
+			} else {//USER NO PROFILE IMAGE
+				echo '<div class="board-message-format-self">
+						<ul>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/user-thumb/male.png'; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+						</ul>
+					</div>
+					<small class="separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';
+			}
+		} else {//FEMALE
+			//USER HAS PROFILE IMAGE
+			if(!empty($model->postedBy->profile_image) || $model->postedBy->profile_image !== null){
+				echo '<div class="board-message-format-self">
+						<ul>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/profile-img/' .  $model->postedBy->profile_image; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+						</ul>
+					</div>
+					<small class="separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';
+			} else {//USER NO PROFILE IMAGE
+				echo '<div class="board-message-format-self">
+						<ul>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/user-thumb/female.png'; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+						</ul>
+					</div>
+					<small class="separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';
+			}
 		}
 	}
-	//MALE USER, HAS PROFILE IMG
-	else {
-		$foto = Yii::$app->request->baseUrl . '/uploads/user-thumb/female.png';
+	else {//OTHER USERS
+		if($model->postedBy->gender === 0){//MALE
+			//OTHER USER HAS PROFILE IMAGE
+			if(!empty($model->postedBy->profile_image) || $model->postedBy->profile_image !== null){
+				echo '<div class="board-message-format-user">
+						<ul>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/profile-img/' .  $model->postedBy->profile_image; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+						</ul>
+					</div>
+					<small class="other-separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';				
+			} else {//OTHER MALE USER NO PROFILE IMAGE
+				echo '<div class="board-message-format-user">
+						<ul>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/user-thumb/male.png'; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+						</ul>
+					</div>
+					<small class="other-separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';
+			}			
+		} else {//FEMALE
+			//OTHER USER HAS PROFILE IMAGE
+			if(!empty($model->postedBy->profile_image) || $model->postedBy->profile_image !== null){
+				echo '<div class="board-message-format-user">
+						<ul>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/profile-img/' .  $model->postedBy->profile_image; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+						</ul>
+					</div>
+					<small class="other-separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';				
+			} else {//OTHER FEMALE USER NO PROFILE IMAGE
+				echo '<div class="board-message-format-user">
+						<ul>
+							<li>
+								<img class="message-profile-thumbnail" src="'; echo Yii::$app->request->baseUrl . '/uploads/user-thumb/female.png'; echo '" alt="' . $model->postedBy->username . '">
+								<p><small>' . $model->postedBy->username . '</small></p>
+							</li>
+							<li><pre>' . Html::encode($model->content) . '</pre></li>
+						</ul>
+					</div>
+					<small class="other-separator"><hr><span id="timestamp">' . \Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffForHumans(). '</span></small>';
+			}
+		}
 	}
-}
 ?>

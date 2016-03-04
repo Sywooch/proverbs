@@ -31,6 +31,7 @@ class AppAsset extends AssetBundle
         'css/bootstrap.min.css',
         'css/datepicker.css',
         'css/font-awesome.css',
+        'css/hover-min.css',
         'css/icons.min.css',
         'css/style-dashboard.css',
         'css/sweetalert.css',
@@ -38,7 +39,7 @@ class AppAsset extends AssetBundle
         'css/jan.css',
         'css/jan-responsive.css',
         'css/form-background.css',
-        'css/switchery.css',
+        //'css/switchery.css',
     ];
 
     public $js = [

@@ -31,14 +31,10 @@ return [
      */
     'user.passwordResetTokenExpire' => 3600,
 
-//------------------------//
-// EMAILS
-//------------------------//
+    'brd' => false, //DEFAULT BOARD MESSAGE SETTINGS
+    
+    'sbr' => false, //DEFAULT SIDEBAR SETTINGS
 
-    /**
-     * Email used in contact form.
-     * Users will send you emails to this address.
-     */
     'adminEmail' => 'admin@proverbs.com', 
 
     /**

@@ -35,9 +35,23 @@ class BoardController extends Controller
         $searchModel = new BoardSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $board = new Board();
+        $board->posted_by = Yii::$app->user->id;
+
+        if ($board->load(Yii::$app->request->post()))
+        {
+            if(empty($board->content) || $board->content === null || trim($board->content) === ''){
+                $board = new Board(); //reset model
+            } else {
+                $board->save();
+                $board = new Board(); //reset model
+            }
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'board' => $board,
         ]);
     }
 

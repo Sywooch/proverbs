@@ -31,7 +31,7 @@ class GradeLevel extends \yii\db\ActiveRecord
         return [
             [['id'], 'required'],
             [['id'], 'integer'],
-            [['name', 'description'], 'string', 'max' => 45]
+            [['name'], 'string', 'max' => 45]
         ];
     }
 
@@ -43,7 +43,6 @@ class GradeLevel extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'description' => 'Description',
         ];
     }
 

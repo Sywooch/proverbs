@@ -16,6 +16,8 @@ use yii\helpers\Html;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use Yii;
+use app\models\Board;
+use app\models\BoardSearch;
 
 class SiteController extends Controller
 {
@@ -44,6 +46,7 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                     'board' => ['post'],
+                    'push' => ['post'],
                 ],
             ],
         ];
@@ -60,11 +63,6 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
-    }
-
-    public function actionBoard()
-    {
-        
     }
 
     public function actionIndex()
@@ -108,6 +106,29 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionBoard()
+    {
+        $board = new Board();
+
+        if ($board->load(Yii::$app->request->post()))
+        {
+            if(empty($board->content) || $board->content === null || trim($board->content) === ''){
+                $board = new Board(); //reset model
+                return $this->render('index',[
+                    'board' => $board,
+                ]);
+            } else {
+                $board->save();
+                $board = new Board(); //reset model
+                return $this->render('index',[
+                    'board' => $board,
+                ]);
+            }
+        }
+
+    }
+
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) 
@@ -123,7 +144,7 @@ class SiteController extends Controller
         {
             $role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
             
-            return $this->redirect(Yii::$app->request->baseUrl . '/dashboard', ['role' => $role]);
+            return $this->redirect(Yii::$app->request->baseUrl . '/dashboard');
             //return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/' . $role);
         }
         elseif($model->status === User::STATUS_INACTIVE)
