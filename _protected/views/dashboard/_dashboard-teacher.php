@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ListView;
-use yii\widgets\Pjax;
 $this->title = 'Dashboard';
 ?>
 <div class="row">
@@ -11,7 +11,6 @@ $this->title = 'Dashboard';
 				<h1>Welcome <?= ucfirst(Yii::$app->user->identity->username) ?></h1>
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12">
-				
 			</div>
 		</div>
 	</div>

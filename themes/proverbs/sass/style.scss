@@ -513,7 +513,7 @@ small.other-separator {
     }
 }
 #messages {
-    display: none;
+    //display: none;
     position: fixed;
     bottom: 0;
     right: 25px;
@@ -581,7 +581,13 @@ small.other-separator {
         }
     }
 }
-#btn-msg-toggle {
+#fetch {
+    display: none;
+    float: left;
+    padding: 4px 0;
+    background: red;
+}
+#btn-msg-toggle, #fetch {
     background: transparent;
     i {
         color: white;

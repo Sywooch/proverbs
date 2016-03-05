@@ -763,7 +763,6 @@ small.other-separator hr {
 
 /* line 515, ../sass/style.scss */
 #messages {
-  display: none;
   position: fixed;
   bottom: 0;
   right: 25px;
@@ -846,19 +845,27 @@ small.other-separator hr {
 }
 
 /* line 584, ../sass/style.scss */
-#btn-msg-toggle {
+#fetch {
+  display: none;
+  float: left;
+  padding: 4px 0;
+  background: red;
+}
+
+/* line 590, ../sass/style.scss */
+#btn-msg-toggle, #fetch {
   background: transparent;
 }
-/* line 586, ../sass/style.scss */
-#btn-msg-toggle i {
+/* line 592, ../sass/style.scss */
+#btn-msg-toggle i, #fetch i {
   color: white;
 }
-/* line 590, ../sass/style.scss */
-#btn-msg-toggle:hover i {
+/* line 596, ../sass/style.scss */
+#btn-msg-toggle:hover i, #fetch:hover i {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* line 595, ../sass/style.scss */
+/* line 601, ../sass/style.scss */
 .btn-write {
   margin: 10px;
   padding: 0;
@@ -867,12 +874,12 @@ small.other-separator hr {
   border-radius: 1px;
 }
 
-/* line 606, ../sass/style.scss */
+/* line 612, ../sass/style.scss */
 #btn-msg-container {
   margin-bottom: 15px;
 }
 
-/* line 609, ../sass/style.scss */
+/* line 615, ../sass/style.scss */
 .btn-board {
   background: transparent;
   border: 0;
@@ -881,13 +888,13 @@ small.other-separator hr {
   height: 30px;
   padding: 6px 8px;
 }
-/* line 616, ../sass/style.scss */
+/* line 622, ../sass/style.scss */
 .btn-board i {
   text-align: center;
   margin: auto;
 }
 
-/* line 621, ../sass/style.scss */
+/* line 627, ../sass/style.scss */
 .board {
   background: transparent;
   height: 320px;
@@ -898,24 +905,24 @@ small.other-separator hr {
   overflow-x: hidden;
 }
 
-/* line 631, ../sass/style.scss */
+/* line 637, ../sass/style.scss */
 .board-content {
   padding: 0;
   margin: 0;
   width: 100%;
 }
-/* line 635, ../sass/style.scss */
+/* line 641, ../sass/style.scss */
 .board-content:hover.board-content::-webkit-scrollbar-thumb {
   border-radius: 10px;
   visibility: visible;
 }
 
-/* line 640, ../sass/style.scss */
+/* line 646, ../sass/style.scss */
 .board-content::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
-/* line 645, ../sass/style.scss */
+/* line 651, ../sass/style.scss */
 .board-content::-webkit-scrollbar-thumb {
   background-color: #3A4B55;
   height: 50px;
@@ -924,13 +931,13 @@ small.other-separator hr {
   border: 0;
 }
 
-/* line 652, ../sass/style.scss */
+/* line 658, ../sass/style.scss */
 .board-content::-webkit-scrollbar {
   width: 14px;
   background-color: #e9eaed;
 }
 
-/* line 657, ../sass/style.scss */
+/* line 663, ../sass/style.scss */
 .board-write-container {
   position: relative;
   bottom: 0;
@@ -939,18 +946,18 @@ small.other-separator hr {
   margin: 0;
 }
 
-/* line 664, ../sass/style.scss */
+/* line 670, ../sass/style.scss */
 .board-write {
   /* position: absolute;
   bottom: 0; */
 }
 
-/* line 668, ../sass/style.scss */
+/* line 674, ../sass/style.scss */
 .input-group.write-group {
   height: 80px;
 }
 
-/* line 671, ../sass/style.scss */
+/* line 677, ../sass/style.scss */
 .input-group-addon.addon-submit-btn {
   padding: 0;
   padding: 0 6px;
@@ -958,13 +965,13 @@ small.other-separator hr {
   background: #e9eaed;
 }
 
-/* line 677, ../sass/style.scss */
+/* line 683, ../sass/style.scss */
 .breadcrumb-line {
   background: none;
   border: 0;
 }
 
-/* line 681, ../sass/style.scss */
+/* line 687, ../sass/style.scss */
 #announcement {
   margin-left: 5px 0;
   padding: 15px;
@@ -972,26 +979,26 @@ small.other-separator hr {
   border-radius: 2px;
 }
 
-/* line 687, ../sass/style.scss */
+/* line 693, ../sass/style.scss */
 .progress {
   margin-bottom: 20px;
   -webkit-border-radius: 0;
   border-radius: 0;
 }
 
-/* line 692, ../sass/style.scss */
+/* line 698, ../sass/style.scss */
 .progress-bar {
   background-color: #4a8bc2;
 }
 
-/* line 695, ../sass/style.scss */
+/* line 701, ../sass/style.scss */
 .form-progress {
   width: 100%;
   height: 20px;
   background: #393939;
   margin-bottom: 15px;
 }
-/* line 700, ../sass/style.scss */
+/* line 706, ../sass/style.scss */
 .form-progress #form-progress-inner {
   min-height: 20px;
   width: 25%;
@@ -1002,7 +1009,7 @@ small.other-separator hr {
   -o-transition: all 1s ease 0s;
   transition: all 1s ease 0s;
 }
-/* line 706, ../sass/style.scss */
+/* line 712, ../sass/style.scss */
 .form-progress #form-progress-overlay {
   position: relative;
   min-height: 20px;
@@ -1018,88 +1025,88 @@ small.other-separator hr {
   transition: all 1s ease 0s;
 }
 
-/* line 717, ../sass/style.scss */
+/* line 723, ../sass/style.scss */
 .nav-tabs {
   border-bottom: 0;
 }
 
-/* line 720, ../sass/style.scss */
+/* line 726, ../sass/style.scss */
 .nav .nav-tabs {
   border: 0;
 }
 
-/* line 724, ../sass/style.scss */
+/* line 730, ../sass/style.scss */
 .nav-tabs li {
   background: #eee;
 }
 
-/* line 728, ../sass/style.scss */
+/* line 734, ../sass/style.scss */
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   border-color: #eee;
 }
 
-/* line 732, ../sass/style.scss */
+/* line 738, ../sass/style.scss */
 .nav-tabs li {
   margin: 2px 2px 10px 2px;
 }
-/* line 735, ../sass/style.scss */
+/* line 741, ../sass/style.scss */
 .nav-tabs li a:hover {
   border-top-color: #EE8366;
 }
 
-/* line 741, ../sass/style.scss */
+/* line 747, ../sass/style.scss */
 .red {
   background: red;
 }
 
-/* line 744, ../sass/style.scss */
+/* line 750, ../sass/style.scss */
 .tab-content {
   margin: 10px 1px 0 1px;
   border: 0;
 }
 
-/* line 748, ../sass/style.scss */
+/* line 754, ../sass/style.scss */
 .container.form-input-wrapper {
   width: 100%;
 }
 
-/* line 751, ../sass/style.scss */
+/* line 757, ../sass/style.scss */
 .applicant-form-create {
   margin: 0;
 }
 
-/* line 754, ../sass/style.scss */
+/* line 760, ../sass/style.scss */
 .breadcrumb-line {
   margin: 0 0 15px 0;
 }
 
-/* line 757, ../sass/style.scss */
+/* line 763, ../sass/style.scss */
 .progress {
   margin-bottom: 15px;
 }
 
-/* line 760, ../sass/style.scss */
+/* line 766, ../sass/style.scss */
 .dropdown-list, .custom-input-group-addon {
   width: 100px;
   padding: 0 5px;
 }
 
-/* line 764, ../sass/style.scss */
+/* line 770, ../sass/style.scss */
 .fa-one-point-five {
   font-size: 18px;
 }
 
-/* line 767, ../sass/style.scss */
+/* line 773, ../sass/style.scss */
 .fa-group-addon-field {
   font-size: 18px;
 }
 
-/* line 772, ../sass/style.scss */
+/* line 778, ../sass/style.scss */
 .panel-heading.login-form-heading {
   background-color: rgba(36, 37, 40, 0.6);
   height: 60px;
 }
-/* line 775, ../sass/style.scss */
+/* line 781, ../sass/style.scss */
 .panel-heading.login-form-heading h2 {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: normal;
@@ -1108,58 +1115,58 @@ small.other-separator hr {
   padding: 14px;
 }
 
-/* line 783, ../sass/style.scss */
+/* line 789, ../sass/style.scss */
 .login-form-container {
   padding-top: 130px;
 }
 
-/* line 787, ../sass/style.scss */
+/* line 793, ../sass/style.scss */
 .blue-box {
   background-color: rgba(58, 75, 85, 0.6);
 }
 
-/* line 791, ../sass/style.scss */
+/* line 797, ../sass/style.scss */
 .yellow-box {
   background-color: rgba(255, 255, 0, 0.6);
   padding: 10px;
 }
 
-/* line 795, ../sass/style.scss */
+/* line 801, ../sass/style.scss */
 .green-box {
   background-color: rgba(0, 128, 0, 0.6);
   padding: 10px;
 }
 
-/* line 799, ../sass/style.scss */
+/* line 805, ../sass/style.scss */
 .login-form-group {
   padding-top: 10px;
   padding-bottom: 5px;
 }
 
-/* line 803, ../sass/style.scss */
+/* line 809, ../sass/style.scss */
 .sidebar {
   -ms-overflow-y: scroll;
   overflow-y: scroll;
 }
-/* line 806, ../sass/style.scss */
+/* line 812, ../sass/style.scss */
 .sidebar:hover.sidebar::-webkit-scrollbar-thumb {
   background-color: #ee8366;
   border: solid 3px #2c3a42;
   border-radius: 10px;
   visibility: visible;
 }
-/* line 812, ../sass/style.scss */
+/* line 818, ../sass/style.scss */
 .sidebar:hover.sidebar::-webkit-scrollbar {
   background-color: #2c3a42;
 }
 
-/* line 816, ../sass/style.scss */
+/* line 822, ../sass/style.scss */
 .sidebar::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0);
 }
 
-/* line 821, ../sass/style.scss */
+/* line 827, ../sass/style.scss */
 .sidebar::-webkit-scrollbar-thumb {
   height: 50px;
   border-radius: 10px;
@@ -1169,13 +1176,13 @@ small.other-separator hr {
   visibility: hidden;
 }
 
-/* line 829, ../sass/style.scss */
+/* line 835, ../sass/style.scss */
 .sidebar::-webkit-scrollbar {
   width: 14px;
   background-color: white;
 }
 
-/* line 835, ../sass/style.scss */
+/* line 841, ../sass/style.scss */
 span.express-form-student {
   font-size: 14px;
   padding: 10px 10px 10px 0;

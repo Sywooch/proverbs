@@ -6,8 +6,6 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
-use app\rbac\models\AuthAssignment;
-use app\rbac\models\AuthItem;
 
 class TeacherForm extends \yii\db\ActiveRecord
 {
@@ -99,7 +97,7 @@ class TeacherForm extends \yii\db\ActiveRecord
     public function getRole()
     {
         // User has_one Role via Role.user_id -> id
-        return $this->hasOne(Role::className(), ['user_id' => 'id']);
+        return $this->hasOne(User::className(), ['user_id' => 'id']);
     }
     public function getRoleName()
     {

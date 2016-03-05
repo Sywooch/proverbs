@@ -10,10 +10,7 @@ use yii\widgets\ListView;
 use app\models\Board;
 use app\models\BoardSearch;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\Pjax;
-
-$searchBoardModel = new BoardSearch();
-$dataProviderBoard = $searchBoardModel->searchBoard(Yii::$app->request->queryParams);
+use yii\web\View;
 
 AppAsset::register($this);
 ?>
@@ -81,48 +78,34 @@ $un = '';
                 <div class="panel panel-default">
                     <div class="panel-heading">
                     <button id="new-board-message" class="pull-left"><span><i class="fa fa-wechat"></i></span></button>
+                    <a id="fetch" href="' . Yii::$app->request->baseUrl . '/ajax/fetch' . '" data-on-done="fetch" class="btn btn-primary btn-board"><i class="fa fa-refresh fa-one-point-five"></i></a>
                     <a id="btn-msg-toggle" class="btn btn-primary btn-board pull-right" href="#" style="text-align: center; margin: auto;"><i class="fa fa-remove fa-one-point-five"></i></a>
                     </div>
                     <div class="panel-body">
                         <div id="message-content-panel" class="board">
-                            <div class="board-content">';
-                            //BEGIN GET BOARD MESSAGES
-                            Pjax::begin([
-                                    'enablePushState' => false, 
-                                    'enableReplaceState' => true, 
-                                    'timeout' => 60000,
-                                ]);
-                                echo Html::a('<span id="refresh-btn" class="btn btn-xs"><i class="fa fa-refresh"></i></span>', [''], ['class' => 'btn btn-lg btn-primary hidden', 'id' => 'pjax-board']);
-                                echo ListView::widget([
-                                    'dataProvider' => $dataProviderBoard,
-                                    'layout' => '{items} {pager}',
-                                     'itemOptions' => ['class' => 'item'],
-                                    'itemView' => '_messages',
-                                ]);
-                    
-                                Pjax::end();
-                            //END
+                            <div id="b" class="board-content">';
                         echo '</div>
                         </div>
                     </div>
                     <div id="write-panel-footer" class="panel-footer" stlye="border: 1px solid blue;">';
-                        $board = new Board();
+                        /*$board = new Board();
                         Pjax::begin(['id' => 'pjax-write']);
                             $form = ActiveForm::begin(['options' => ['data-pjax' => true ]]);
                             echo '<div id="write-form-textarea">'
                                 . $form->field($board, 'content', ['inputTemplate' => '{input}<button id="write-board-send" type="submit" class="btn btn-block btn-primary" style="margin-top: 10px;">SEND</button>'])->textarea(['maxlength' => true,'id' => 'write-textarea', 'class' => 'form-control', 'style' => 'margin: 0;', 'rows' => 1])->label(false)
                             . '</div>';
                             ActiveForm::end(); 
-                        Pjax::end();
+                        Pjax::end();*/
                     echo '</div>
                 </div>
-            </div>
-            </div>';
+                </div>
+             </div>';
             echo '<button id="toggle-board-menu" class="hvr-pulse"><i class="fa fa-wechat fa-2x"></i></button>';
         }
     ?>
+    <?php $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY)?>
     <?php $this->endBody() ?>
-    <?php include('board-script.php');?>
+    <?php //include('board-script.php');?>
     <?php include('script.php');?>
     <script src="/proverbs/themes/proverbs/js/sweetalert.min.js"></script>
 </body>
