@@ -47,14 +47,22 @@ function getC(){
     return $count;
 }
 
+function notify(){
+    $('#chat-icon').addClass('animated pulse notify-new-msg');
+}
 
+function resetNotify(){
+    $('#chat-icon').removeClass('animated pulse notify-new-msg');
+}
+function clearWrite(){
+    $('#write-textarea').val('');
+}
 var ajaxCallbacks = {
 
     'fetch': function (response) {
         // This is called by the link attribute 'data-on-done' => 'boardDone'
         //console.dir(response);
         if(getC() === 0){
-
             for(var i = 0; i < response.object.length; i++){
                 //USER === POSTED_BY
                 if(response.object[i].posted_by === response.id.uid){
@@ -97,7 +105,7 @@ var ajaxCallbacks = {
             console.log('after set: ' + getC());
 
         } else if(response.object.length > getC()){
-            console.log('elseif Fetching: ' + getC());
+            console.log('elseif Fetching: ' + getC() + ' ako main');
             for(var j = getC(); j < response.object.length; j++){
                 //USER === POSTED_BY
                 if(response.object[j].posted_by === response.id.uid){
@@ -184,13 +192,15 @@ var ajaxCallbacks = {
     },
 
     'linkFormDone': function (response) {
-        // This is called by the link attribute 'data-on-done' => 'linkFormDone';
-        // the form name is specified via 'data-form-id' => 'link_form'
-        $('#ajax_result_02').html(response.body);
-    }
+        console.log(response.success);
+        if(response.success){
+            clearWrite();
+        } else {
+
+        }
+    },
 
 };
-
 setInterval(function(){
     $('#ajax_link_01').click(); 
-}, 2500);
+}, 3000);

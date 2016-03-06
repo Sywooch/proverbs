@@ -23,9 +23,8 @@ function scrollBottom()
     $("#message-content-panel").scrollTop($("#message-content-panel")[0].scrollHeight);
 }
 
-function reloadLink()
-{
-    $("#pjax-board").click();
+function resetNotify(){
+    $('#chat-icon').removeClass('animated pulse notify-new-msg');
 }
 
 function focus()
@@ -34,7 +33,7 @@ function focus()
 
         var focused = $("#write-textarea").is(":focus");
         
-        $('#scroll-to-new-post').click(function(){
+        $('#new-board-message').click(function(){
                 scrollBottom();
             }
         );
@@ -49,11 +48,6 @@ function focus()
 
 scrollPos();
 scrollBottom();
-
-setInterval(function(){
-    reloadLink();
-    focus();
-}, 5000);
 });
 JS;
 $this->registerJs($script);

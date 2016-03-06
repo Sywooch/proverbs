@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use app\models\User;
 use app\models\Board;
 use app\models\BoardSearch;
+use yii\filters\VerbFilter;
 
 class AjaxController extends Controller
 {
@@ -17,13 +18,27 @@ class AjaxController extends Controller
 	public function init() {
 		parent::init();
 		$this->jsFile = '@app/views/' . $this->id . '/ajax.js';
+		// Publish and register the required JS file
 		Yii::$app->assetManager->publish($this->jsFile);
 		$this->getView()->registerJsFile(
 			Yii::$app->assetManager->getPublishedUrl($this->jsFile),
 			['yii\web\YiiAsset'] // depends
 		);
 	}
-	
+
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'fetch' => ['post'],
+                    'push' => ['post'],
+                ],
+            ],
+        ];
+    }
+
 	public function actionIndex() {
 		//return $this->redirect('../dashboard');
 		return $this->render('ajax');
@@ -68,4 +83,33 @@ class AjaxController extends Controller
 			return $res;
 		}
 	}
+
+    public function actionPush() {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $model = new Board();
+            $model->posted_by = Yii::$app->user->id;
+            $model->content = $_POST['content'];
+            $model->created_at = time();
+
+            if (Yii::$app->request->post())
+            {
+                if(empty($model->content) || $model->content === null || trim($model->content) === ''){
+                    $model = new Board(); //reset model
+                    $status = false;
+                } else {
+                    $model->save();
+                    $status = true;
+                    $model = new Board(); //reset model
+                }
+            }
+
+            $data = array(
+                'success' => $status,
+            );
+
+            return $data;
+        }
+    }
 }

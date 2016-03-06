@@ -73,39 +73,18 @@ $un = '';
             echo '<div class="page-content-offset"></div>';
             include('footer.php');
             echo '</div>' . // PAGE-CONTENT
-            '</div>'; // PAGE-CONTAINER
-            echo '<div id="messages">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                    <button id="new-board-message" class="pull-left"><span><i class="fa fa-wechat"></i></span></button>
-                    <a id="fetch" href="' . Yii::$app->request->baseUrl . '/ajax/fetch' . '" data-on-done="fetch" class="btn btn-primary btn-board"><i class="fa fa-refresh fa-one-point-five"></i></a>
-                    <a id="btn-msg-toggle" class="btn btn-primary btn-board pull-right" href="#" style="text-align: center; margin: auto;"><i class="fa fa-remove fa-one-point-five"></i></a>
-                    </div>
-                    <div class="panel-body">
-                        <div id="message-content-panel" class="board">
-                            <div id="b" class="board-content">';
-                        echo '</div>
-                        </div>
-                    </div>
-                    <div id="write-panel-footer" class="panel-footer" stlye="border: 1px solid blue;">';
-                        /*$board = new Board();
-                        Pjax::begin(['id' => 'pjax-write']);
-                            $form = ActiveForm::begin(['options' => ['data-pjax' => true ]]);
-                            echo '<div id="write-form-textarea">'
-                                . $form->field($board, 'content', ['inputTemplate' => '{input}<button id="write-board-send" type="submit" class="btn btn-block btn-primary" style="margin-top: 10px;">SEND</button>'])->textarea(['maxlength' => true,'id' => 'write-textarea', 'class' => 'form-control', 'style' => 'margin: 0;', 'rows' => 1])->label(false)
-                            . '</div>';
-                            ActiveForm::end(); 
-                        Pjax::end();*/
+            '</div>'; // PAGE-CONTAINERa
+                    !Yii::$app->user->is('parent') ? require('_messages.php') : '';
+                    !Yii::$app->user->is('parent') ? require('_write.php') : '';
                     echo '</div>
                 </div>
                 </div>
              </div>';
-            echo '<button id="toggle-board-menu" class="hvr-pulse"><i class="fa fa-wechat fa-2x"></i></button>';
+            echo '<button id="toggle-board-menu"><i class="fa fa-wechat fa-2x"></i></button>';
         }
     ?>
     <?php $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY)?>
     <?php $this->endBody() ?>
-    <?php //include('board-script.php');?>
     <?php include('script.php');?>
     <script src="/proverbs/themes/proverbs/js/sweetalert.min.js"></script>
 </body>

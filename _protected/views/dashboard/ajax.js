@@ -11,7 +11,6 @@ function handleAjaxLink(e) {
         onAlways = $link.data('onAlways'),
         ajaxRequest;
 
-
     ajaxRequest = $.ajax({
         type: "post",
         dataType: 'json',
@@ -32,29 +31,88 @@ function handleAjaxLink(e) {
     }
 
 }
-
-var $count;
-
+var count = 0, 
+    btn_remove = document.getElementById('btn-msg-toggle'),
+    msgIcon = document.getElementById('toggle-board-menu'),
+    board = document.getElementById('messages'),
+    chatIcon = document.getElementById('new-board-message'),
+    msg_collapsed = true,
+    newMsg = false;
 
 function setC(c){
-    $count = c;
+    count = c;
 }
-
 function getC(){
-    if($count === undefined){
+    if(count === undefined){
         return 0;
     }
-    return $count;
+    return count;
 }
-
+function setNewMsg(n){
+    newMsg = n;
+}
+function getNewMsg(){
+    return newMsg;
+}
+function setMsgCollapsed(m){
+    msg_collapsed = m;
+}
+function getMsgCollapsed(){
+    return msg_collapsed;
+}
+function scrollBottom(){
+    $("#message-content-panel").scrollTop($("#message-content-panel")[0].scrollHeight);
+}
+function notify(){
+    if(getMsgCollapsed()){
+        msgIcon.className += 'animated pulse';
+        msgIcon.style.cssText += 'background-color: #ee8366;';
+    } else {
+        chatIcon.className += 'animated pulse';
+    }
+}
+function resetNotify(){
+    msgIcon.removeAttribute('class');
+    msgIcon.removeAttribute('style');
+    setNewMsg(false);
+}
+function hideMsg(){
+    $('#messages').hide();
+    $('#toggle-board-menu').show();
+}
+function showMsg(){
+    $('#messages').show();
+    $('#toggle-board-menu').hide();
+}
+msgIcon.onclick = function(){
+    if(msg_collapsed){
+        if(getNewMsg()){
+            resetNotify();
+        }
+        showMsg();
+        setMsgCollapsed(false);
+    } else {
+        hideMsg();
+        setMsgCollapsed(true);
+    }
+};
+btn_remove.onclick = function(){
+    if(msg_collapsed){
+        showMsg();
+        setMsgCollapsed(false);
+    } else {
+        if(getNewMsg()){
+            resetNotify();
+        }
+        hideMsg();
+        setMsgCollapsed(true);
+    }
+};
 
 var ajaxCallbacks = {
-
     'fetch': function (response) {
-        // This is called by the link attribute 'data-on-done' => 'boardDone'
-        //console.dir(response);
+        //INITIALIZED
         if(getC() === 0){
-
             for(var i = 0; i < response.object.length; i++){
                 //USER === POSTED_BY
                 if(response.object[i].posted_by === response.id.uid){
@@ -94,10 +152,13 @@ var ajaxCallbacks = {
             }
             //console.log('initial: ' + getC() + ' id:' + response.id.uid);
             setC(response.object.length);
+            scrollBottom();
             console.log('after set: ' + getC());
-
+        //NEW MESSAGE
         } else if(response.object.length > getC()){
             console.log('elseif Fetching: ' + getC());
+            notify();
+            setNewMsg(true);
             for(var j = getC(); j < response.object.length; j++){
                 //USER === POSTED_BY
                 if(response.object[j].posted_by === response.id.uid){
@@ -136,8 +197,9 @@ var ajaxCallbacks = {
                 }
             }
             setC(response.object.length);
+            notify();
             console.log('new set: ' + getC());
-
+        //DELETED MESSAGE
         } else if(response.object.length < getC()){
             $('#b').find('li').remove();
             $('#b').find('small').remove();
@@ -182,13 +244,6 @@ var ajaxCallbacks = {
             setC(response.object.length);
         }
     },
-
-    'linkFormDone': function (response) {
-        // This is called by the link attribute 'data-on-done' => 'linkFormDone';
-        // the form name is specified via 'data-form-id' => 'link_form'
-        $('#ajax_result_02').html(response.body);
-    }
-
 };
 
 setInterval(function(){

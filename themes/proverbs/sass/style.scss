@@ -489,7 +489,7 @@ small.other-separator {
     border: 0;
     -webkit-border-radius: 100%;
             border-radius: 100%;
-    background: $vanilla;
+    background: $darkergrey;
     //border: 1px solid $default-gray;
         -webkit-transition: all ease .5s 0s;
            -moz-transition: all ease .5s 0s;
@@ -497,23 +497,23 @@ small.other-separator {
              -o-transition: all ease .5s 0s;
                 transition: all ease .5s 0s;
     &:hover {
-        background: $default-orange;
+        background: $jade;
         border: 0;
         -webkit-transition: all ease .5s 0s;
            -moz-transition: all ease .5s 0s;
             -ms-transition: all ease .5s 0s;
              -o-transition: all ease .5s 0s;
                 transition: all ease .5s 0s;
-        i {
+        i {            
             color: white;
         }
     }
     i {
-        color: $default-gray;
+        color: white;
     }
 }
 #messages {
-    //display: none;
+    display: none;
     position: fixed;
     bottom: 0;
     right: 25px;
@@ -565,12 +565,17 @@ small.other-separator {
 #write-button-container {
     padding: 0;
 }
+.notify-new-msg {
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+    padding: 4px;
+}
 #new-board-message {
     width: 30px;
     height: 30px;
     color: white;
     padding: auto;
-    padding: 5px 0;
+    padding: 2px 0;
     background: none;
     border: 0;
     &:hover {

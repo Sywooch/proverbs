@@ -15,3 +15,12 @@ $this->title = 'Dashboard';
 		</div>
 	</div>
 </div>
+<?php
+$t = <<< JS
+$(document).ready(function(){
+	//$('#chat-icon').addClass('animated pulse notify-new-msg');
+	//$('#ajax_result_02').html('check');
+});
+JS;
+$this->registerJs($t);
+?>
