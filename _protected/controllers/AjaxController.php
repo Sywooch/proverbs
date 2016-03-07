@@ -65,8 +65,8 @@ class AjaxController extends Controller
 				$username = User::findOne(['id' => $object[$i]['posted_by']])->username;
 				$gender = User::findOne(['id' => $object[$i]['posted_by']])->gender;
 				$profile_image = User::findOne(['id' => $object[$i]['posted_by']])->profile_image;
-
-				$data[$i] = array('value' => ['username' => $username, 'gender' => $gender, 'profile_image' => $profile_image]); //POSTED BY OTHER USER
+				$stamp = \Carbon\Carbon::createFromTimestamp($object[$i]['created_at'], 'Asia/Manila')->diffForHumans();
+				$data[$i] = array('value' => ['username' => $username, 'gender' => $gender, 'profile_image' => $profile_image , 'date' => $stamp]); //POSTED BY OTHER USER
 			}
 
 			return array('object' => $object, 'data' => $data, 'id' => $id, 'foto' => $img, 'base' => $base);

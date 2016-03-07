@@ -43,18 +43,17 @@ class AppAsset extends AssetBundle
         //'css/switchery.css',
     ];
 
-    public $js = [
-        //'js/jquery-1.11.0.min.js',
-        'js/jquery-ui.min.js',
-        'js/bootstrap.min.js',
-        'js/pva.js',
-        'js/toggle-message.js',
-        'js/switchery.js',
-        'js/switchery.min.js',
-        'js/switchery-init.js',
-    ];
-
     public $depends = [
         'yii\web\YiiAsset',
     ];
+
+    public $js = [
+        'js/jquery-ui.min.js',
+        'js/bootstrap.min.js',
+        'js/pva.js',
+/*        'js/switchery.js',
+        'js/switchery.min.js',
+        'js/switchery-init.js',*/
+    ];
+
 }

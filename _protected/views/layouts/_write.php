@@ -11,5 +11,5 @@ echo Html::beginForm('', 'post', ['id' => 'write-form']) .
             </div>
         </div>';
 echo Html::endForm();
-$this->registerJs("$('#write-board-send').click(handleAjaxLink);", View::POS_READY)
+$this->registerJs("$('#write-board-send').click(handleAjaxLink);", View::POS_READY);
 ?>

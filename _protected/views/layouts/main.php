@@ -83,10 +83,10 @@ $un = '';
             echo '<button id="toggle-board-menu"><i class="fa fa-wechat fa-2x"></i></button>';
         }
     ?>
-    <?php $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY)?>
     <?php $this->endBody() ?>
     <?php include('script.php');?>
     <script src="/proverbs/themes/proverbs/js/sweetalert.min.js"></script>
+    <?php $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY)?>
 </body>
 </html>
 <?php $this->endPage() ?>

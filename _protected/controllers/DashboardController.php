@@ -23,7 +23,7 @@ class DashboardController extends Controller
         Yii::$app->assetManager->publish($this->jsFile);
         $this->getView()->registerJsFile(
             Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset'] // depends
+            ['yii\web\YiiAsset']
         );
     }
 

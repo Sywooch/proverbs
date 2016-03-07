@@ -32,10 +32,12 @@ function handleAjaxLink(e) {
 
 }
 var count = 0, 
+    t = 2000,
     btn_remove = document.getElementById('btn-msg-toggle'),
     msgIcon = document.getElementById('toggle-board-menu'),
     board = document.getElementById('messages'),
-    chatIcon = document.getElementById('new-board-message'),
+    write = document.getElementById('write-textarea'),
+    send = document.getElementById('write-board-send'),
     msg_collapsed = true,
     newMsg = false;
 
@@ -60,21 +62,40 @@ function setMsgCollapsed(m){
 function getMsgCollapsed(){
     return msg_collapsed;
 }
+function scrollPos()
+{
+    $("#message-content-panel").scroll(function(){
+        //console.log('value: ' + ($("#message-content-panel").scrollTop() - $("#message-content-panel").offset().top));
+        return $("#message-content-panel").scrollTop() - $("#message-content-panel").offset().top;
+    });
+}
 function scrollBottom(){
     $("#message-content-panel").scrollTop($("#message-content-panel")[0].scrollHeight);
 }
 function notify(){
-    if(getMsgCollapsed()){
-        msgIcon.className += 'animated pulse';
-        msgIcon.style.cssText += 'background-color: #ee8366;';
-    } else {
-        chatIcon.className += 'animated pulse';
+    if(getNewMsg()){
+        if(getMsgCollapsed()){
+            msgIcon.className += 'animated pulse';
+            msgIcon.style.cssText += 'background-color: #ee8366;';
+        } else {
+            if($('#write-textarea').is(':focus')){
+                scrollBottom();
+            }
+            scrollBottom();
+        }
     }
 }
 function resetNotify(){
     msgIcon.removeAttribute('class');
     msgIcon.removeAttribute('style');
     setNewMsg(false);
+
+    if(!msg_collapsed){    
+        $('#toggle-board-menu').hide();
+    }
+}
+function clearWrite(){
+    write.value = "";
 }
 function hideMsg(){
     $('#messages').hide();
@@ -84,13 +105,25 @@ function showMsg(){
     $('#messages').show();
     $('#toggle-board-menu').hide();
 }
+function fetch(){
+    $('#fetch').click();
+}
+send.onclick = function(){
+    setTimeout(function(){ clearWrite(); }, 1);
+};
+write.onclick = function(){
+    if(getNewMsg){
+        resetNotify();
+    }
+};
 msgIcon.onclick = function(){
     if(msg_collapsed){
+        showMsg();
+        setMsgCollapsed(false);
+        scrollBottom();
         if(getNewMsg()){
             resetNotify();
         }
-        showMsg();
-        setMsgCollapsed(false);
     } else {
         hideMsg();
         setMsgCollapsed(true);
@@ -109,6 +142,15 @@ btn_remove.onclick = function(){
     }
 };
 
+document.getElementById("write-textarea").addEventListener("keydown", function(z) {
+    //z.preventDefault();
+    if (z.keyCode == 13 && !z.shiftKey){
+        $('#write-board-send').click();
+        fetch();
+        scrollBottom();
+    }
+}, false);
+
 var ajaxCallbacks = {
     'fetch': function (response) {
         //INITIALIZED
@@ -120,44 +162,48 @@ var ajaxCallbacks = {
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
                         //if(response.data[i].profile_image !== undefined){
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         }
                     } else {//FEMALE
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[i].value.username + '"/><p><small>' + response.data[i].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[i].value.username + '"/><p><small>' + response.data[i].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         }
                     }
                 } else {//OTHER USERS
                     if(response.data[i].value.gender === 0){//MALE
                         //USER HAS PROFILE IMAGE
                         if(response.data[i].value.profile_image !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[i].value.profile_image +'" alt="' + response.object[i].posted_by + '"/><p><small></small></li><li><pre>' + response.object[i].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[i].value.profile_image +'" alt="' + response.object[i].posted_by + '"/><p><small>' + response.data[i].value.username + '</small></p></li><li><pre>' + response.object[i].content + '</pre></li></ul><p><small></small></p></div><small class="other-separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.object[i].posted_by + '"/><p><small></small></li><li><pre>' + response.object[i].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.object[i].posted_by + '"/><p><small>' + response.data[i].value.username + '</small></p></li><li><pre>' + response.object[i].content + '</pre></li></ul><p><small></small></p></div><small class="other-separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         }
                     } else {//FEMALE
                         //USER HAS PROFILE IMAGE
                         if(response.data[i].value.profile_image !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[i].value.profile_image +'" alt="' + response.object[i].posted_by + '"/><p><small></small></li><li><pre>' + response.object[i].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[i].value.profile_image +'" alt="' + response.object[i].posted_by + '"/><p><small>' + response.data[i].value.username + '</small></p></li><li><pre>' + response.object[i].content + '</pre></li></ul><p><small></small></p></div><small class="other-separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[i].value.username + '"/><p><small></small></li><li><pre>' + response.object[i].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[i].value.username + '"/><p><small>' + response.data[i].value.username + '</small></p></li><li><pre>' + response.object[i].content + '</pre></li></ul></div><small class="other-separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         }
                     }
                 }
             }
-            //console.log('initial: ' + getC() + ' id:' + response.id.uid);
             setC(response.object.length);
             scrollBottom();
             console.log('after set: ' + getC());
+        //UPDATE TIMESTAMP
+        } else if(response.object.length === getC()){
+            console.log('No changes: ' + getC());
+            for(var nc = 0; nc < response.object.length; nc++){
+                $('#b').find('small > span').eq(nc).html(response.data[nc].value.date);
+            }
         //NEW MESSAGE
         } else if(response.object.length > getC()){
             console.log('elseif Fetching: ' + getC());
-            notify();
             setNewMsg(true);
             for(var j = getC(); j < response.object.length; j++){
                 //USER === POSTED_BY
@@ -166,38 +212,41 @@ var ajaxCallbacks = {
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
                         //if(response.data[j].profile_image !== undefined){
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[j].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[j].value.username + '"/><p><small>' + response.data[j].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[j].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[j].value.username + '"/><p><small>' + response.data[j].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         }
                     } else {//FEMALE
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[j].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[j].value.username + '"/><p><small>' + response.data[j].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[j].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[j].value.username + '"/><p><small>' + response.data[j].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         }
                     }
                 } else {//OTHER USERS
                     if(response.data[j].value.gender === 0){//MALE
                         //USER HAS PROFILE IMAGE
                         if(response.data[j].value.profile_image !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[j].value.profile_image +'" alt="' + response.object[j].posted_by + '"/><p><small></small></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[j].value.profile_image +'" alt="' + response.object[j].posted_by + '"/><p><small>' + response.data[j].value.username + '</small></p></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="other-separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.object[j].posted_by + '"/><p><small></small></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.object[j].posted_by + '"/><p><small>' + response.data[j].value.username + '</small></p></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="other-separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         }
                     } else {//FEMALE
                         //USER HAS PROFILE IMAGE
                         if(response.data[j].value.profile_image !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[j].value.profile_image +'" alt="' + response.object[j].posted_by + '"/><p><small></small></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[j].value.profile_image +'" alt="' + response.object[j].posted_by + '"/><p><small>' + response.data[j].value.username + '</small></p></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="other-separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[j].value.username + '"/><p><small></small></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[j].value.username + '"/><p><small>' + response.data[j].value.username + '</small></p></li><li><pre>' + response.object[j].content + '</pre></li></ul><p><small></small></p></div><small class="other-separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         }
                     }
                 }
             }
             setC(response.object.length);
             notify();
+            if($("#write-textarea").is(":focus") && getNewMsg()){
+                scrollBottom();
+            }
             console.log('new set: ' + getC());
         //DELETED MESSAGE
         } else if(response.object.length < getC()){
@@ -211,32 +260,32 @@ var ajaxCallbacks = {
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
                         //if(response.data[h].profile_image !== undefined){
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[h].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[h].value.username + '"/><p><small>' + response.data[h].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[h].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[h].value.username + '"/><p><small>' + response.data[h].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         }
                     } else {//FEMALE
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[h].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[h].value.username + '"/><p><small>' + response.data[h].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[h].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[h].value.username + '"/><p><small>' + response.data[h].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         }
                     }
                 } else {//OTHER USERS
                     if(response.data[h].value.gender === 0){//MALE
                         //USER HAS PROFILE IMAGE
                         if(response.data[h].value.profile_image !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[h].value.profile_image +'" alt="' + response.object[h].posted_by + '"/><p><small></small></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[h].value.profile_image +'" alt="' + response.object[h].posted_by + '"/><p><small>' + response.data[h].value.username + '</small></p></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.object[h].posted_by + '"/><p><small></small></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.object[h].posted_by + '"/><p><small>' + response.data[h].value.username + '</small></p></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         }
                     } else {//FEMALE
                         //USER HAS PROFILE IMAGE
                         if(response.data[h].value.profile_image !== (undefined || null)){
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[h].value.profile_image +'" alt="' + response.object[h].posted_by + '"/><p><small></small></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.data[h].value.profile_image +'" alt="' + response.object[h].posted_by + '"/><p><small>' + response.data[h].value.username + '</small></p></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         } else {//USER NO PROFILE IMAGE
-                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[h].value.username + '"/><p><small></small></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
+                            $('#b').append('<div class="board-message-format-user"><ul><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/female.png' + '" alt="' + response.data[h].value.username + '"/><p><small>' + response.data[h].value.username + '</small></p></li><li><pre>' + response.object[h].content + '</pre></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         }
                     }
                 }
@@ -246,6 +295,10 @@ var ajaxCallbacks = {
     },
 };
 
+setTimeout(function(){
+    $('#ui-load-message').hide();
+}, 4000);
+
 setInterval(function(){
-    $('#fetch').click(); 
-}, 5000);
+    fetch();
+}, t);

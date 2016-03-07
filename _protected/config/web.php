@@ -32,7 +32,6 @@ $config = [
         ],
         'assetManager' => [
             'bundles' => [
-                // we will use bootstrap css from our theme
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [], // do not use yii default one
                 ],
@@ -49,6 +48,7 @@ $config = [
                 //         'ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js',
                 //     ]
                 // ],
+                //'yii\web\JqueryAsset' => false,
             ],
         ],
         'cache' => [
