@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 use app\models\GradeLevel;
 use app\models\Section;
 use app\models\Subject;
+use app\models\LearningArea;
 use app\models\TeacherForm;
 use app\models\User;
 use app\models\SchoolYear;
@@ -42,14 +43,34 @@ $subject_list = ArrayHelper::map($subject, 'id' , 'subject_name');
     <div class="row">
         <div class="container form-input-wrapper">
             <div class="col-lg-3 col-md-3 col-sm-12">
+                <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Section</span></span></span>{input}</div>'])->dropDownList($section_list, ['id', 'section_name'])->label(false) ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container form-input-wrapper">
+            <div class="col-lg-3 col-md-3 col-sm-12">
                 <?=
-                    $model->isNewRecord ? 
-                        $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($grade_level_list, ['id', 'name'])->label(false) 
-                        :
-                        $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($grade_level_list, ['id', 'name'])->label(false);
+                $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])
+                    ->dropDownList($grade_level_list,
+                    	[
+				           'onchange'=>'
+				                $.post( "'. Yii::$app->urlManager->createUrl('assign-subject/lists?id=') . '"+$(this).val(), function( data ) {
+				                $( "select#assignedform-subject_id" ).html(data);
+				           });
+				      '])
+                    ->label(false)
                 ?>                    
             </div>
         </div>`
+    </div>
+    <div class="row">
+        <div class="container form-input-wrapper">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <?= $form->field($model, 'subject_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Subject</span></span></span>{input}</div>'])->dropDownList($subject_list, ['subject_id', 'subject_name'])->label(false) ?>
+                <?php //$form->field($model, 'subject_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Subject</span></span></span>{input}</div>'])->dropDownList($subject_list, ['subject_id', 'subject_name'])->label(false) ?>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="container form-input-wrapper">
@@ -58,30 +79,6 @@ $subject_list = ArrayHelper::map($subject, 'id' , 'subject_name');
                         'data' => ArrayHelper::map(User::find()->joinWith('role')->where(['item_name' => 'teacher'])->all(),'id', function($model){return $model->last_name . ', ' . $model->first_name . ' ' . $model->middle_name;}),
                         'language' => 'en',
                         'options' => ['id' => 'auto-suggest','placeholder' => 'Select Teacher'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])->label(false); 
-                ?>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-3 col-md-3 col-sm-12">
-                <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Section</span></span></span>{input}</div>'])->dropDownList($section_list, ['id', 'section_name'])->label(false) ?>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <?= $form->field($model, 'subject_id')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(Subject::find()->all(),'id', function($model){return $model->subject_name;}),
-                        'language' => 'en',
-                        'options' => ['id' => 'auto-suggest3','placeholder' => 'Select Subject'],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],

@@ -22,7 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'section_name',
-            'grade_level_id',
+           [
+                'attribute'=>'grade_level_id',
+                'filter' => $searchModel->levelList,
+                'value' => function ($data) {
+                    return $data->levelName;
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

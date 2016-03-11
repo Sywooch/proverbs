@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\LearningArea;
+use app\models\Subject;
 use app\models\AssignedForm;
 use app\models\AssignedFormSearch;
 use yii\web\Controller;
@@ -14,6 +16,19 @@ use yii\filters\VerbFilter;
  */
 class AssignSubjectController extends Controller
 {
+    public $jsFile;
+
+    public function init() {
+        parent::init();
+
+        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
+        Yii::$app->assetManager->publish($this->jsFile);
+        $this->getView()->registerJsFile(
+            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
+            ['yii\web\YiiAsset']
+        );
+    }
+
     public function behaviors()
     {
         return [
@@ -21,9 +36,26 @@ class AssignSubjectController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'fetch' => ['post'],
+                    'lists' => ['post'],
                 ],
             ],
         ];
+    }
+
+    public function actionLists($id)
+    {
+        $subjects = LearningArea::find()->where(['grade_level_id' => $id])->orderBy('sequence', SORT_ASC)->all();
+        $count = count($subjects);
+        if($subjects > 0){
+            for($x = 0;  $x < $count; $x++){
+                //$name = Subject::find()->where(['id' => $subject->id])->all();
+                echo "<option value='". $subjects[$x]['subject_id'] . "'>"  . $subjects[$x]->subject->subject_name . "</option>";
+            }
+        }
+        else{
+            echo "<option></option>";
+        }
     }
 
     /**

@@ -815,6 +815,17 @@ small.other-separator {
         }
     }
 }
+#header-user-thumb {
+    height: 40px;
+    width: 40px;
+}
+.btn-popover {
+    background: transparent;
+    border: 0;
+    &:hover, &:active {
+        background: transparent;
+    }
+}
 .red {
     background: red;
 }

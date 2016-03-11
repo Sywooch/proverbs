@@ -69,7 +69,7 @@ $this->title = 'Students';
             // 'guardians_phone',
             // 'guardians_mobile',
             // 'student_is_living_with',
-            // 'grade_level_id',
+             'grade_level_id',
             // 'sibling_id',
             // 'entrance_exam_id',
             // 'requirements_id',

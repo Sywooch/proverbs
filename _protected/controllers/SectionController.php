@@ -14,6 +14,19 @@ use yii\filters\VerbFilter;
  */
 class SectionController extends Controller
 {
+    public $jsFile;
+
+    public function init() {
+        parent::init();
+
+        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
+        Yii::$app->assetManager->publish($this->jsFile);
+        $this->getView()->registerJsFile(
+            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
+            ['yii\web\YiiAsset']
+        );
+    }
+    
     public function behaviors()
     {
         return [
@@ -21,6 +34,8 @@ class SectionController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'fetch' => ['post'],
+                    'push' => ['post'],
                 ],
             ],
         ];

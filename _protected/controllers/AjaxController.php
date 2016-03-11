@@ -50,7 +50,7 @@ class AjaxController extends Controller
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			
 			$now = time();
-			$from = $now - (2 * 24 * 60 * 60);
+			$from = $now - (7 * 24 * 60 * 60);
 			$object = Board::find()->where(['between' ,'created_at' , $from, $now])->orderBy(['id' => SORT_ASC])->all();
 			$data = array();
 

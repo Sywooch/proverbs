@@ -11,20 +11,18 @@
             <i class="icon-paragraph-justify2"></i>
         </button>
     </div>
-
-    <ul class="nav navbar-nav navbar-right collapse" id="navbar-icons">
+    <ul id="navbar-icons" class="nav navbar-nav navbar-right collapse">
         <li class="user dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">
-                <img src="/proverbs/themes/proverbs/images/ricmil.jpg">
-                <span><?= ucfirst($un) ?></span>
-                <i class="caret"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-right icons-right">
-                <li><a href="<?= Yii::$app->request->baseUrl . '/profile' ?>"><i class="icon-user"></i> Profile</a></li>
-                <li><a href="#"><i class="icon-bubble4"></i> Messages</a></li>
-                <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
-                <li><a href="<?= Yii::$app->request->baseUrl . '/site/logout' ?>" data-method="post"><i class="icon-exit"></i> Logout</a></li>
-            </ul>
+            <button type="button" class="btn btn-default btn-popover" data-container="body" data-toggle="popover" data-placement="bottom" 
+            data-html="true" data-content="Insert content here">
+            <img id="header-user-thumb" src="/proverbs/themes/proverbs/images/ricmil.jpg"><span><?= ucfirst($un) ?></span><i class="caret"></i>
+            </button>
+    <!--     <ul class="dropdown-menu dropdown-menu-right icons-right">
+        <li><a href="<?= Yii::$app->request->baseUrl . '/profile' ?>"><i class="icon-user"></i> Profile</a></li>
+        <li><a href="#"><i class="icon-bubble4"></i> Messages</a></li>
+        <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
+        <li><a href="<?= Yii::$app->request->baseUrl . '/site/logout' ?>" data-method="post"><i class="icon-exit"></i> Logout</a></li>
+    </ul> -->
         </li>
     </ul>
 </div>

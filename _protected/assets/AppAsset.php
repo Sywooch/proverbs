@@ -50,6 +50,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jquery-ui.min.js',
         'js/bootstrap.min.js',
+        'js/init.js',
         'js/pva.js',
 /*        'js/switchery.js',
         'js/switchery.min.js',

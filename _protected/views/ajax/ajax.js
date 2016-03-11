@@ -60,8 +60,6 @@ function clearWrite(){
 var ajaxCallbacks = {
 
     'fetch': function (response) {
-        // This is called by the link attribute 'data-on-done' => 'boardDone'
-        //console.dir(response);
         if(getC() === 0){
             for(var i = 0; i < response.object.length; i++){
                 //USER === POSTED_BY

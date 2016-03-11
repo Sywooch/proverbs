@@ -65,7 +65,6 @@ function getMsgCollapsed(){
 function scrollPos()
 {
     $("#message-content-panel").scroll(function(){
-        //console.log('value: ' + ($("#message-content-panel").scrollTop() - $("#message-content-panel").offset().top));
         return $("#message-content-panel").scrollTop() - $("#message-content-panel").offset().top;
     });
 }
@@ -161,7 +160,6 @@ var ajaxCallbacks = {
                     if(response.data[i].value.gender === 0){//MALE
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
-                        //if(response.data[i].profile_image !== undefined){
                             $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
                             $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[i].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[i].value.username + '"/></li></ul><p><small></small></p></div><small class="separator"><hr><span id="timestamp">' + response.data[i].value.date + '<span></small>');
@@ -211,7 +209,6 @@ var ajaxCallbacks = {
                     if(response.data[j].value.gender === 0){//MALE
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
-                        //if(response.data[j].profile_image !== undefined){
                             $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[j].value.username + '"/><p><small>' + response.data[j].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
                         } else {//USER NO PROFILE IMAGE
                             $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[j].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[j].value.username + '"/><p><small>' + response.data[j].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp">' + response.data[j].value.date + '<span></small>');
@@ -259,7 +256,6 @@ var ajaxCallbacks = {
                     if(response.data[h].value.gender === 0){//MALE
                         //USER HAS PROFILE IMAGE
                         if(response.foto.uimg !== (undefined || null)){
-                        //if(response.data[h].profile_image !== undefined){
                             $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/profile-img/' + response.foto.uimg + '" alt="' + response.data[h].value.username + '"/><p><small>' + response.data[h].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp"><span></small>');
                         } else {//USER NO PROFILE IMAGE
                             $('#b').append('<div class="board-message-format-self"><ul><li><pre>' + response.object[h].content + '</pre></li><li><img class="message-profile-thumbnail" src="' + response.base.url + '/proverbs/uploads/user-thumb/male.png' + '" alt="' + response.data[h].value.username + '"/><p><small>' + response.data[h].value.username + '</small></p></li></ul></div><small class="separator"><hr><span id="timestamp"><span></small>');

@@ -12,11 +12,7 @@ $this->title = 'Announcements';
 <div class="announcement-index">
     <p>
         <?= Html::a('<i class="fa fa-plus"></i> New Announcement', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a("Refresh", ['ajax'], ['class' => 'btn btn-lg btn-primary pull-right', 'id' => 'data']) ?>
     </p>
-    <?php Pjax::begin([
-        'enablePushState' => false
-        ])?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -59,14 +55,4 @@ $this->title = 'Announcements';
             ],
         ],
     ]); ?>
-    <?php Pjax::end()?>
 </div>
-<?php
-$script = <<< JS
-$.pjax.reload({container:'#idofyourpjaxwidget'});
-$(document).ready(function() {
-    setInterval(function(){ $("#data").click(); }, 5000);
-});
-JS;
-$this->registerJs($script);
-?>
