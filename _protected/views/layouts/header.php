@@ -13,16 +13,20 @@
     </div>
     <ul id="navbar-icons" class="nav navbar-nav navbar-right collapse">
         <li class="user dropdown">
-            <button type="button" class="btn btn-default btn-popover" data-container="body" data-toggle="popover" data-placement="bottom" 
-            data-html="true" data-content="Insert content here">
-            <img id="header-user-thumb" src="/proverbs/themes/proverbs/images/ricmil.jpg"><span><?= ucfirst($un) ?></span><i class="caret"></i>
-            </button>
-    <!--     <ul class="dropdown-menu dropdown-menu-right icons-right">
-        <li><a href="<?= Yii::$app->request->baseUrl . '/profile' ?>"><i class="icon-user"></i> Profile</a></li>
-        <li><a href="#"><i class="icon-bubble4"></i> Messages</a></li>
-        <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
-        <li><a href="<?= Yii::$app->request->baseUrl . '/site/logout' ?>" data-method="post"><i class="icon-exit"></i> Logout</a></li>
-    </ul> -->
+            <a href="#" class="dropdown-toggle btn-popover" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" 
+                data-content="
+                    <div id='user-dropdown-options'>
+                        <ul>
+                            <li><a href='<?= Yii::$app->request->baseUrl . '/profile' ?>'><i class='icon-user'></i> Profile</a></li>
+                            <li><a href='<?= Yii::$app->request->baseUrl . '/board' ?>'><i class='icon-bubble4'></i> Messages</a></li>
+                            <li><a href='#'><i class='icon-cog'></i> Settings</a></li>
+                            <li><a href='<?= Yii::$app->request->baseUrl . '/site/logout' ?>' data-method='post'><i class='icon-exit'></i> Logout</a></li>
+                        </ul>
+                    </div>">
+                <img id="" src="/proverbs/themes/proverbs/images/ricmil.jpg">
+                <span><?= ucfirst($un) ?></span>
+                <span><i class="caret"></i></span>
+            </a>
         </li>
     </ul>
 </div>

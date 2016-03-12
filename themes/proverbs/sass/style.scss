@@ -815,6 +815,22 @@ small.other-separator {
         }
     }
 }
+.popover > .arrow{
+    border-top-color: red;
+}
+.popover-content {
+    border-top: 1px solid $vanilla;
+}
+#user-dropdown-options {
+    width: 120px;
+    ul {
+        padding: 0;
+    }
+    ul li {
+        margin: 10px 0;
+        list-style-type: none;
+    }
+}
 #header-user-thumb {
     height: 40px;
     width: 40px;
