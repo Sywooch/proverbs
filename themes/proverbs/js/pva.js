@@ -1,18 +1,10 @@
-
-/* ========================================================
-*
-* Londinium - premium responsive admin template
-*
-* ========================================================
-*
-* File: application.js;
-* Description: General plugins and layout settings.
-* Version: 1.0
-*
-* ======================================================== */
+$('#dropdown-caret').click(function(){
+	$('#dropdown-care > i').toggleClass('open');
+});
 
 $(function() {
 	$('.page-content').wrapInner('<div class="page-content-inner"></div>');
+
 
 	//OFF CANVAS
 	$(document).on('click', '.offcanvas', function () {

@@ -17,8 +17,7 @@ class m160219_064935_create_assessment_table extends Migration
         $this->createTable('{{%assessment}}', [
                 'id' => 'BIGINT(20) AUTO_INCREMENT',
                 'enrolled_id' => $this->bigInteger(20),
-                'total_tuition' => $this->float(),
-                'balance' => $this->float(),
+                'tuition_id' => $this->smallInteger(3),
                 'created_at' => $this->integer()->notNull(),
                 'updated_at' => $this->integer()->notNull(),
                 'PRIMARY KEY (id)'
@@ -26,12 +25,16 @@ class m160219_064935_create_assessment_table extends Migration
 
         $this->createIndex('fk_13_idx', '{{%assessment}}', 'enrolled_id');
         $this->addForeignKey('fk_13', '{{%assessment}}', 'enrolled_id', '{{%enrolled}}', 'id', 'CASCADE', 'CASCADE');
+        $this->createIndex('fk_13b_idx', '{{%assessment}}', 'tuition_id');
+        $this->addForeignKey('fk_13b', '{{%assessment}}', 'tuition_id', '{{%tuition}}', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()
     {
         $this->dropForeignKey('fk_13','{{%assessment}}');
         $this->dropIndex('fk_13_idx','{{%assessment}}');
+        $this->dropForeignKey('fk_13b','{{%assessment}}');
+        $this->dropIndex('fk_13b_idx','{{%assessment}}');
         $this->dropTable('{{%assessment}}');
     }
 }

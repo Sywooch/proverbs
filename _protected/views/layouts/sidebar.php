@@ -9,7 +9,7 @@ if (!Yii::$app->user->isGuest)
 		<ul class="navigation">
 			<li <?= Yii::$app->controller->id === 'dashboard' ? 'class="active"' : ''?>><a href="<?= Yii::$app->controller->id === '/dashboard' ? '#' : Yii::$app->request->baseUrl . '/dashboard'?>"><span>Dashboard </span> <i class="icon-screen2"></i></a></li>
 			<li <?= Yii::$app->controller->id === 'board' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/board'?>"><span>Message Board</span> <i class="icon-bars"></i></a></li>
-			<li <?= Yii::$app->controller->id === 'assessment' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/assessment'?>"><span>Assessment</span> <i class="icon-bars"></i></a></li>
+			<li <?= Yii::$app->controller->id === 'assessment-form' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/assessment-form'?>"><span>Assessment</span> <i class="icon-bars"></i></a></li>
 			<li <?= Yii::$app->controller->id === 'class-adviser' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/class-adviser'?>"><span>Classs Adviser</span> <i class="icon-paragraph-justify2"></i></a></li>
 			<li <?= Yii::$app->controller->id === 'assign-subject' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/assign-subject'?>"><span>Assign Subjects</span> <i class="icon-paragraph-justify2"></i></a></li>
 			<li <?= Yii::$app->controller->id === 'section' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/section'?>"><span>Section</span> <i class="icon-paragraph-justify2"></i></a></li>

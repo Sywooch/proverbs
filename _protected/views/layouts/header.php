@@ -13,19 +13,19 @@
     </div>
     <ul id="navbar-icons" class="nav navbar-nav navbar-right collapse">
         <li class="user dropdown">
-            <a href="#" class="dropdown-toggle btn-popover" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" 
+            <a href="#" class="dropdown-toggle btn-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" 
                 data-content="
                     <div id='user-dropdown-options'>
                         <ul>
-                            <li><a href='<?= Yii::$app->request->baseUrl . '/profile' ?>'><i class='icon-user'></i> Profile</a></li>
-                            <li><a href='<?= Yii::$app->request->baseUrl . '/board' ?>'><i class='icon-bubble4'></i> Messages</a></li>
-                            <li><a href='#'><i class='icon-cog'></i> Settings</a></li>
-                            <li><a href='<?= Yii::$app->request->baseUrl . '/site/logout' ?>' data-method='post'><i class='icon-exit'></i> Logout</a></li>
+                            <li><a href='<?= Yii::$app->request->baseUrl . '/dashboard' ?>'>Dashboard <i class='icon-cog'></i></a></li>
+                            <li><a href='<?= Yii::$app->request->baseUrl . '/profile' ?>'>Profile <i class='icon-user'></i></a></li>
+                            <li><a href='<?= Yii::$app->request->baseUrl . '/board' ?>'>Messages <i class='icon-bubble4'></i></a></li>
+                            <li><a href='<?= Yii::$app->request->baseUrl . '/site/logout' ?>' data-method='post'>Logout <i class='icon-exit'></i></a></li>
                         </ul>
                     </div>">
                 <img id="" src="/proverbs/themes/proverbs/images/ricmil.jpg">
                 <span><?= ucfirst($un) ?></span>
-                <span><i class="caret"></i></span>
+                <span id="dropdown-caret"><i class="caret open"></i></span>
             </a>
         </li>
     </ul>

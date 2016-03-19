@@ -51,7 +51,6 @@ class EnrollController extends Controller
     {
         $searchModel = new EnrolledFormSearch();
         $dataProvider = $searchModel->searchEnrolled(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -121,9 +120,9 @@ class EnrollController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())/* && $model->save()*/) {
-            die('status: ' . $model->enrollment_status);
-            //return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //die('status: ' . $model->enrollment_status);
+            return $this->redirect(['view', 'id' => $model->id]);
             return $this->redirect('index');
         } else {
             return $this->render('update', [
