@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\LearningArea;
 use app\models\Subject;
+use app\models\Section;
 use app\models\AssignedForm;
 use app\models\AssignedFormSearch;
 use yii\web\Controller;
@@ -38,9 +39,19 @@ class AssignSubjectController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'lists' => ['post'],
+                    'section' => ['post'],
                 ],
             ],
         ];
+    }
+
+    public function actionSection($id)
+    {
+        $section = Section::find()->where(['grade_level_id' => $id])/*->orderBy(['section_name', SORT_ASC])*/->all();
+        
+        foreach ($section as $item) {
+            echo '<option value="' . $item->id . '">' . $item->section_name . '</option>';
+        }
     }
 
     public function actionLists($id)

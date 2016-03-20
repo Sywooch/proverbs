@@ -43,26 +43,33 @@ $subject_list = ArrayHelper::map($subject, 'id' , 'subject_name');
     <div class="row">
         <div class="container form-input-wrapper">
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Section</span></span></span>{input}</div>'])->dropDownList($section_list, ['id', 'section_name'])->label(false) ?>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-3 col-md-3 col-sm-12">
                 <?=
                 $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])
                     ->dropDownList($grade_level_list,
                     	[
 				           'onchange'=>'
-				                $.post( "'. Yii::$app->urlManager->createUrl('assign-subject/lists?id=') . '"+$(this).val(), function( data ) {
-				                $( "select#assignedform-subject_id" ).html(data);
+                                $.post( "'. Yii::$app->urlManager->createUrl('assign-subject/lists?id=') . '"+$(this).val(), function( data ) {
+                                $( "select#assignedform-subject_id" ).html(data);
+				                
+                                $.post( "'. Yii::$app->urlManager->createUrl('assign-subject/section?id=') . '"+parseInt($("#assignedform-grade_level_id").val()), function( data ) {
+                                    $("#assignedform-section_id").find("option").remove();
+                                    $("#assignedform-section_id").each(function(){
+                                        $(this).append(data);
+                                    });
+                                });
 				           });
 				      '])
                     ->label(false)
                 ?>                    
             </div>
         </div>`
+    </div>
+    <div class="row">
+        <div class="container form-input-wrapper">
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Section</span></span></span>{input}</div>'])->dropDownList($section_list, ['id', 'section_name'])->label(false) ?>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="container form-input-wrapper">

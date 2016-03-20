@@ -5,6 +5,9 @@ namespace app\controllers;
 use Yii;
 use app\models\EnrolledForm;
 use app\models\EnrolledFormSearch;
+use app\models\AssessmentForm;
+use app\models\Tuition;
+use app\models\Section;
 use app\models\StudentForm;
 use app\models\SchoolYear;
 use yii\web\Controller;
@@ -38,6 +41,9 @@ class EnrollController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'section' => ['post'],
+                    'findTuitionId' => ['post'],
+                    'gradeLevel' => ['post'],
                 ],
             ],
         ];
@@ -80,7 +86,7 @@ class EnrollController extends Controller
                 'express' => $express,
             ]);
         }
-    }
+    }   
 
     public function actionView($id)
     {
@@ -101,6 +107,14 @@ class EnrollController extends Controller
         $model->enrollment_status = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $tuition = Tuition::find()->where(['grade_level_id' => $model->grade_level_id])->orderBy(['id' => SORT_DESC])->all();
+            $tuition_id = $tuition[0]['id'];
+            
+            $assessment = new AssessmentForm();
+            $assessment->enrolled_id = $model->id;
+            $assessment->tuition_id = $tuition_id;
+            $assessment->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -110,6 +124,23 @@ class EnrollController extends Controller
         }
     }
 
+    public function actionGradeLevel($id)
+    {
+        $student = StudentForm::find()->where(['id' => $id])->all();
+        
+        foreach ($student as $item) {
+            return $item->grade_level_id;
+        }
+    }
+
+    public function actionSection($id)
+    {
+        $section = Section::find()->where(['grade_level_id' => $id])/*->orderBy(['section_name', SORT_ASC])*/->all();
+
+        foreach ($section as $item) {
+            echo '<option value="' . $item->id . '">' . $item->section_name . '</option>';
+        }
+    }
     /**
      * Updates an existing EnrolledForm model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -138,8 +169,9 @@ class EnrollController extends Controller
      * @return mixed
      */
     public function actionDelete($id)
-    {
+    {        
         $this->findModel($id)->delete();
+        $this->deleteAssessment($id);
 
         return $this->redirect(['index']);
     }
@@ -151,6 +183,19 @@ class EnrollController extends Controller
      * @return EnrolledForm the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+    protected function deleteAssessment($id)
+    {
+        if (($assessment = AssessmentForm::find()->where(['enrolled_id' => $id])->all()) !== null) {
+            \Yii::$app
+                ->db
+                ->createCommand()
+                ->delete('assessment', ['enrolled_id' => $id])
+                ->execute();
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
     protected function findModel($id)
     {
         if (($model = EnrolledForm::findOne($id)) !== null) {

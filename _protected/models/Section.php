@@ -16,11 +16,9 @@ use Yii;
  */
 class Section extends \yii\db\ActiveRecord
 {
-    const L0 = 0;
     const L1 = 1;
     const L2 = 2;
     const L3 = 3;
-    const L4 = 4;
     const L10 = 10;
     const L20 = 20;
     const L30 = 30;
@@ -84,11 +82,9 @@ class Section extends \yii\db\ActiveRecord
     public function getLevelList()
     {
         $levelArray = [
-            self::L0 => 'Not Applicable',
             self::L1 => 'Nursery',
             self::L2 => 'Kinder 1',
             self::L3 => 'Kinder 2',
-            self::L4 => 'SPED',
             self::L10 => 'Grade 1',
             self::L20 => 'Grade 2',
             self::L30 => 'Grade 3',
@@ -98,7 +94,7 @@ class Section extends \yii\db\ActiveRecord
             self::L70 => 'Grade 7',
             self::L80 => 'Grade 8',
             self::L90 => 'Grade 9',
-            self::L10 => 'Grade 10',
+            self::L100 => 'Grade 10',
             self::L111 => 'Grade 11 1st Semester',
             self::L110 => 'Grade 11 2nd Semester',
             self::L120 => 'Grade 12 1st Semester',
@@ -141,16 +137,12 @@ class Section extends \yii\db\ActiveRecord
             return "Grade 2";
         } elseif($grade_level === self::L10){
             return "Grade 1";
-        } elseif($grade_level === self::L4){
-            return "SPED";
         } elseif($grade_level === self::L3){
             return "Kinder 2";
         } elseif($grade_level === self::L2){
             return "Kinder 1";
         } elseif($grade_level === self::L1){
             return "Nursery";
-        } elseif($grade_level === self::L0){
-            return "Not Applicable";
         }
     }
 }

@@ -98,9 +98,13 @@ $this->title = 'Enroll';
 
             ['class' => 'yii\grid\ActionColumn',
                     'header' => "Options",
-                    'template' => '{payment} {view} {update} {delete}',
-                    'options' => ['style' => 'width: 120px; text-align: center; margin: auto;'],
+                    'template' => '{assessment} {payment} {view} {update} {delete}',
+                    'options' => ['style' => 'width: 180px; text-align: center; margin: auto;'],
                     'buttons' => [
+                        'assessment' => function ($url, $model, $key) {
+                            return Html::a('', Yii::$app->request->baseUrl . '/assessment/new?eid=' . $model->id, ['title'=>'Assessment', 
+                                'class'=>'fa fa-bar-chart-o fa-2x']);
+                        },
                         'payment' => function ($url, $model, $key) {
                             return Html::a('', Yii::$app->request->baseUrl . '/payments/new?id=' . $model->student_id, ['title'=>'New Payment', 
                                 'class'=>'fa fa-dollar fa-2x']);
@@ -118,7 +122,7 @@ $this->title = 'Enroll';
                                 ['title'=>'Delete Applicant', 
                                     'class'=>'fa fa-trash-o fa-2x fa-remove text-centered',
                                     'data' => [
-                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this payment?'),
+                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                                         'method' => 'post']
                 ]);
                     }

@@ -39,29 +39,20 @@ $listData_teachers = ArrayHelper::map($teachers, 'id' , 'last_name');
     <div class="row">
         <div class="container form-input-wrapper">
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData_grade_level, ['id', 'name'])->label(false) ?>
+                <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData_grade_level, [
+                    'onchange' => "
+                        $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#classadviserform-grade_level_id').val()), function(data){
+                            $('#classadviserform-section_id').find('option').remove();
+                            $('#classadviserform-section_id').each(function(){
+                                $(this).append(data);
+                            });
+                        });
+                    ",
+                ])
+                ->label(false) ?>
             </div>
     		<div class="col-lg-3 col-md-3 col-sm-12">
-                <?= $model->isNewRecord ?
-                    $form->field($model, 'section_id')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(Section::find()->orderBy(['section_name' => SORT_ASC])->all(),'id', function($model){return $model->section_name;}),
-                        'language' => 'en',
-                        'options' => ['id' => 'auto-suggest','placeholder' => 'Select Section'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])->label(false) 
-                    : 
-                    $form->field($model, 'section_id')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(Section::find()->orderBy(['section_name' => SORT_ASC])->all(),'id', function($model){return $model->section_name;}),
-                        'language' => 'en',
-                        'options' => ['id' => 'auto-suggest','placeholder' => 'Select Section'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])->label(false) 
-                    ;
-                ?>
+                <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">School Year</span></span></span>{input}</div>'])->dropDownList($listData_section, ['id', 'section_name'])->label(false) ?>
 			</div>
 		</div>
 	</div>

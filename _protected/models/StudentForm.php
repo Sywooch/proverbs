@@ -317,8 +317,6 @@ class StudentForm extends \yii\db\ActiveRecord
             return 'Kinder 1';
         } elseif ($data === 1) {
             return 'Nursery';
-        } elseif ($data === 0) {
-            return 'Not Applicable';
         }
     }
 

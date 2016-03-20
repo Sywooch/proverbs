@@ -99,7 +99,8 @@ class SectionSearch extends Section
             'pagination' => [
                 'pageSize' => $pageSize,
             ]
-        ]);
+        ])
+        ;
         
         $this->load($params);
 
@@ -112,9 +113,12 @@ class SectionSearch extends Section
         $query->andFilterWhere([
             'id' => $this->id,
             'grade_level_id' => $this->grade_level_id,
-        ]);
+        ])
+        ;
 
-        $query->andFilterWhere(['like', 'section_name', $this->section_name]);
+        $query->andFilterWhere(['like', 'section_name', $this->section_name])
+            
+        ;
 
         return $dataProvider;
     }

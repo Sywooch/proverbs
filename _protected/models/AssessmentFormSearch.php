@@ -19,6 +19,7 @@ class AssessmentFormSearch extends AssessmentForm
     {
         return [
             [['id', 'enrolled_id', 'tuition_id', 'created_at', 'updated_at'], 'integer'],
+            [['sibling_discount', 'book_discount', 'honor_discount', 'total_assessed', 'balance'], 'number'],
         ];
     }
 
@@ -58,6 +59,43 @@ class AssessmentFormSearch extends AssessmentForm
             'id' => $this->id,
             'enrolled_id' => $this->enrolled_id,
             'tuition_id' => $this->tuition_id,
+            'sibling_discount' => $this->sibling_discount,
+            'book_discount' => $this->book_discount,
+            'honor_discount' => $this->honor_discount,
+            'total_assessed' => $this->total_assessed,
+            'balance' => $this->balance,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ]);
+
+        return $dataProvider;
+    }
+
+    public function searchAssessment($params)
+    {
+        $query = AssessmentForm::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'enrolled_id' => $this->enrolled_id,
+            'tuition_id' => $this->tuition_id,
+            'sibling_discount' => $this->sibling_discount,
+            'book_discount' => $this->book_discount,
+            'honor_discount' => $this->honor_discount,
+            'total_assessed' => $this->total_assessed,
+            'balance' => $this->balance,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

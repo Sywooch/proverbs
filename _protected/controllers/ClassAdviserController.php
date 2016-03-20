@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\rbac\models\Role;
 use app\models\User;
+use app\models\Section;
 /**
  * ClassAdviserController implements the CRUD actions for ClassAdviserForm model.
  */
@@ -37,6 +38,7 @@ class ClassAdviserController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'section' => ['post'],
                 ],
             ],
         ];
@@ -71,6 +73,15 @@ class ClassAdviserController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    public function actionSection($id)
+    {
+        $section = Section::find()->where(['grade_level_id' => $id])/*->orderBy(['section_name', SORT_ASC])*/->all();
+        
+        foreach ($section as $item) {
+            echo '<option value="' . $item->id . '">' . $item->section_name . '</option>';
+        }
     }
 
     /**

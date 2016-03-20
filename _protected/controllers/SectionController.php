@@ -48,7 +48,7 @@ class SectionController extends Controller
     public function actionIndex()
     {
         $searchModel = new SectionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchSection(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -15,7 +15,7 @@ use app\models\SchoolYear;
 $current_date = date('Y');
 $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
 $section = Section::find()->all();
-$grade_level = GradeLevel::find()->all();
+$grade_level = GradeLevel::find()->where(['!=', 'id', 0])->all();
 
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 $listData2 = ArrayHelper::map($school_year, 'id' , 'sy');
@@ -49,20 +49,21 @@ $state = false;
                             'pluginOptions' => [
                                 'allowClear' => true
                             ],
-                        ])->label(false); 
-                    ?>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="container form-input-wrapper">
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <?= $form->field($model, 'section_id')->widget(Select2::classname(), [
-                            'data' => ArrayHelper::map(Section::find()->all(),'id', function($model){return $model->section_name;}),
-                            'language' => 'en',
-                            'options' => ['id' => 'auto-suggest2','placeholder' => 'Select Section'],
-                            'pluginOptions' => [
-                                'allowClear' => true
+                            'pluginEvents' => [
+                                'change' => "
+                                    function(){
+                                        $.post('". Yii::$app->urlManager->createUrl('enroll/grade-level?id=') . "'+parseInt($('#auto-suggest').val()), function(data){
+                                            $('select#enrolledform-grade_level_id').val(data);
+
+                                            $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
+                                                $('#enrolledform-section_id').find('option').remove();
+                                                $('#enrolledform-section_id').each(function(){
+                                                    $(this).append(data);
+                                                });
+                                            });
+                                        });
+                                    }
+                                ",
                             ],
                         ])->label(false); 
                     ?>
@@ -72,14 +73,27 @@ $state = false;
         <div class="row">
             <div class="container form-input-wrapper">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <?=
-                        $model->isNewRecord ? 
-                            $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData, ['id', 'name'])->label(false) 
-                            :
-                            $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData, ['id', 'name'])->label(false);
-                    ?>                    
+                    <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData,
+                    [
+                        'onchange' => "
+                            $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
+                                $('#enrolledform-section_id').find('option').remove();
+                                $('#enrolledform-section_id').each(function(){
+                                    $(this).append(data);
+                                });
+                            });
+                        ",
+                    ])
+                    ->label(false) ?>                    
                 </div>
             </div>`
+        </div>
+        <div class="row">
+            <div class="container form-input-wrapper">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">School Year</span></span></span>{input}</div>'])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
