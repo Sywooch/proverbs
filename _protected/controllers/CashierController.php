@@ -2,21 +2,46 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\User;
 use app\models\UserSearch;
 use app\rbac\models\Role;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
-use Yii;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class CashierController extends AppController
 {
-    /**
-     * Lists all User models.
-     *
-     * @return string
-     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index' , 'create', 'view', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         /**

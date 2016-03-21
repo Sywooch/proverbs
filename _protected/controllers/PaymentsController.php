@@ -9,6 +9,7 @@ use app\models\StudentForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PaymentsController implements the CRUD actions for Payment model.
@@ -31,6 +32,22 @@ class PaymentsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index' , 'create', 'view', 'update', 'new'],
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

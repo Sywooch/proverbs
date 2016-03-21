@@ -68,7 +68,7 @@ $un = '';
             include('sidebar.php');
             echo '<div class="page-content">' . '<div class="header-offset"></div>';
             include('page-header.php');
-            echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
+            echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['homeLink' => ['label' => 'Dashboard', 'url' => Yii::$app->request->baseUrl . '/dashboard'],'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
             echo $content;
             echo '<div class="page-content-offset"></div>';
             include('footer.php');

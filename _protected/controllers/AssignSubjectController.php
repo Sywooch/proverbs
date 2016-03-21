@@ -33,6 +33,22 @@ class AssignSubjectController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index' , 'create', 'view', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

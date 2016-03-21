@@ -38,7 +38,7 @@ $this->title =  'Profile';
                                 'attribute' => 'gender',
                                 'value' => $model->gender === 0 ? 'Male' : 'Female'
                             ],
-                            'birth_date',
+                            'birth_date:date',
                             'email',
                             'address',
                             'phone',

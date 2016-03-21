@@ -31,6 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'enrolled_id',
             'tuition_id',
+            'sibling_discount',
+            'book_discount',
+            'honor_discount',
+            'total_assessed',
+            'balance',
+
             'created_at:date',
             [
                 'attribute' => 'updated_at',

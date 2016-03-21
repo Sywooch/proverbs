@@ -104,9 +104,11 @@ class EnrollController extends Controller
     {
         $sy = new SchoolYear();
         $model = new EnrolledForm();
+        $assessment = new AssessmentForm();
         $model->enrollment_status = 0;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false) /* && $assessment->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $assessment]) */) {
+            die('ye');
             $tuition = Tuition::find()->where(['grade_level_id' => $model->grade_level_id])->orderBy(['id' => SORT_DESC])->all();
             $tuition_id = $tuition[0]['id'];
             
@@ -119,6 +121,7 @@ class EnrollController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'assessment' => $assessment,
                 'sy' => $sy,
             ]);
         }

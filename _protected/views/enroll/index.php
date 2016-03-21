@@ -102,7 +102,7 @@ $this->title = 'Enroll';
                     'options' => ['style' => 'width: 180px; text-align: center; margin: auto;'],
                     'buttons' => [
                         'assessment' => function ($url, $model, $key) {
-                            return Html::a('', Yii::$app->request->baseUrl . '/assessment/new?eid=' . $model->id, ['title'=>'Assessment', 
+                            return Html::a('', Yii::$app->request->baseUrl . '/assessment/view?id=' . $model->id, ['title'=>'Assessment', 
                                 'class'=>'fa fa-bar-chart-o fa-2x']);
                         },
                         'payment' => function ($url, $model, $key) {

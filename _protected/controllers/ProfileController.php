@@ -7,6 +7,7 @@ use app\models\ProfileForm;
 use app\models\ProfileFormSearch;
 use yii\behaviors\TimeStampBehavior;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -31,7 +32,22 @@ class ProfileController extends Controller
     public function behaviors()
     {
         return [
-			'class' => TimestampBehavior::className(),
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index' , 'create', 'view', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

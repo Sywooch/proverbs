@@ -8,15 +8,53 @@ use app\rbac\models\Role;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use Yii;
 
 class TeachersController extends AppController
 {
-    /**
-     * Lists all User models.
-     *
-     * @return string
-     */
+    public $jsFile;
+
+    public function init() {
+        parent::init();
+
+        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
+        Yii::$app->assetManager->publish($this->jsFile);
+        $this->getView()->registerJsFile(
+            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
+            ['yii\web\YiiAsset']
+        );
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index' , 'create', 'view', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         /**

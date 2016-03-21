@@ -1,25 +1,24 @@
 <?php
-	if(Yii::$app->user->is('admin')){
-		include('_dashboard-admin.php');
+	if(Yii::$app->authManager->getRole(Yii::$app->user->identity->id)->name === 'dev'){
+		echo $this->render('_dashboard-dev');
 
-	} elseif(Yii::$app->user->is('cashier')){
-		include('_dashboard-cashier.php');
+	} elseif(Yii::$app->authManager->getRole(Yii::$app->user->identity->id)->name === 'master'){
+		echo $this->render('_dashboard-master');
 
-	} elseif(Yii::$app->user->is('dev')){
-		include('_dashboard-dev.php');
+	} elseif(Yii::$app->authManager->getRole(Yii::$app->user->identity->id)->name === 'staff'){
+		echo $this->render('_dashboard-staff');
 
-	} elseif(Yii::$app->user->is('master')){
-		include('_dashboard-master.php');
+	} elseif(Yii::$app->authManager->getRole(Yii::$app->user->identity->id)->name === 'admin'){
+		echo $this->render('_dashboard-admin');
 
-	} elseif(Yii::$app->user->is('staff')){
-		include('_dashboard-staff.php');
+	} elseif(Yii::$app->authManager->getRole(Yii::$app->user->identity->id)->name === 'cashier'){
+		echo $this->render('_dashboard-cashier');
 
-	} elseif(Yii::$app->user->is('parent')){
-		include('_dashboard-parent.php');
+	} elseif(Yii::$app->authManager->getRole(Yii::$app->user->identity->id)->name === 'parent'){
+		echo $this->render('_dashboard-parent');
 
-	} elseif(Yii::$app->user->is('teacher')){
-		include('_dashboard-teacher.php');
+	} elseif(Yii::$app->authManager->getRole(Yii::$app->user->identity->id)->name === 'teacher'){
+		echo $this->render('_dashboard-teacher');
 
 	}
-
 ?>

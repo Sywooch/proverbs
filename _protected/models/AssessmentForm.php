@@ -34,9 +34,9 @@ class AssessmentForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['enrolled_id', 'tuition_id', 'created_at', 'updated_at'], 'integer'],
+            [['enrolled_id', 'tuition_id', 'has_sibling_discount', 'has_book_discount', 'has_honor_discount', 'created_at', 'updated_at'], 'integer'],
             [['sibling_discount', 'book_discount', 'honor_discount', 'total_assessed', 'balance'], 'number'],
-            [['tuition_id'], 'required']
+            [['enrolled_id', 'tuition_id'], 'required']
         ];
     }
 
@@ -76,6 +76,9 @@ class AssessmentForm extends \yii\db\ActiveRecord
             'id' => 'ID',
             'enrolled_id' => 'Enrolled ID',
             'tuition_id' => 'Tuition ID',
+            'has_sibling_discount' => 'Has Sibling Discount',
+            'has_book_discount' => 'Has Book Discount',
+            'has_honor_discount' => 'Has Honor Discount',
             'sibling_discount' => 'Sibling Discount',
             'book_discount' => 'Book Discount',
             'honor_discount' => 'Honor Discount',

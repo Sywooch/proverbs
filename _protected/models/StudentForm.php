@@ -103,82 +103,63 @@ class StudentForm extends \yii\db\ActiveRecord
         ];
     }
 
-    public function beforeSave($insert)
-    {
-        $date = $this->birth_date;
+    public function formatDate($date){
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+        if(strpos($date, '/') !== false){
+
+            $m = trim(substr($date, 0, 2));
+            $d = trim(substr($date, 3, 2));
+            $Y = substr($date, 6, 4);
+            $this->birth_date = $Y . '-' . $m . '-' . $d;
+            $date = $this->birth_date;
+
+            return $date;
+        }
+
+        if(strpos($date, ',') !== false){
+            if(strlen($date) === 12){
+                $m = trim(substr($date, 0, 3));
+
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = trim(substr($date, 4, 2));
+                        $Y = substr($date, 8, 4);
+                        $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
+                        $date = $this->birth_date;
+
+                        return $date;
+                    }
+                }
+            } else {
+                $m = trim(substr($date, 0, 3));
+                
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = substr($date, 4, 1);
+                        $Y = substr($date, 7, 4);
+                        $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
+                        $date = $this->birth_date;
+
+                        return $date;
+                    }
+                }
+            }
+        }
+
+    }
+
+    public function beforeSave($insert)
+    {
         if (parent::beforeSave($insert)) {
-
-            if($this->isNewRecord){ // CREATE
-                if(strstr($date, '/')){
-                    $m = trim(substr($date, 0, 2));
-                    $d = trim(substr($date, 3, 2));
-                    $Y = substr($date, 6, 4);
-                    $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                    return true;
-                } else {
-                    if(strlen($date) === 12){
-                        $m = trim(substr($date, 0, 3));
-
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = trim(substr($date, 4, 2));
-                                $Y = substr($date, 8, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    } else {
-                        $m = trim(substr($date, 0, 3));
-                        
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = substr($date, 4, 1);
-                                $Y = substr($date, 7, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    }
-                }
-            } else { // UPDATE
-                if(strstr($date, '/')){
-                    $m = trim(substr($date, 0, 2));
-                    $d = trim(substr($date, 3, 2));
-                    $Y = substr($date, 6, 4);
-
-                    $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                    return true;
-                } else {
-                    if(strlen($date) === 12){
-                        $m = trim(substr($date, 0, 3));
-
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = trim(substr($date, 4, 2));
-                                $Y = substr($date, 8, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    } else {
-                        $m = trim(substr($date, 0, 3));
-                        
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = substr($date, 4, 1);
-                                $Y = substr($date, 7, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    }
-                }
+            if($this->isNewRecord){
+                $this->formatDate($date);
+                return true;
+            } else {
+                $this->formatDate($date);
+                return true;
             }
         } else {
             return false;

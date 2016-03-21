@@ -11,6 +11,7 @@ use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use Yii;
 
 class StaffController extends AppController
@@ -32,6 +33,22 @@ class StaffController extends AppController
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index' , 'create', 'view', 'update'],
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

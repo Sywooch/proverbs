@@ -2,11 +2,10 @@
 
 namespace app\models;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\models\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use Yii;
-
 /**
  * This is the model class for table "announcement".
  *
@@ -20,9 +19,19 @@ use Yii;
  */
 class Announcement extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+/*    public $jsFile;
+
+    public function init() {
+        parent::init();
+
+        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
+        Yii::$app->assetManager->publish($this->jsFile);
+        $this->getView()->registerJsFile(
+            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
+            ['yii\web\YiiAsset']
+        );
+    }*/
+
     public static function tableName()
     {
         return 'announcement';
@@ -58,11 +67,11 @@ class Announcement extends \yii\db\ActiveRecord
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    'attributes' => [
+                        \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                        \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
-            ],
+            ]
         ];
     }
 

@@ -67,14 +67,10 @@ class SiteController extends Controller
 
     public function actionIndex()
     {   
-        if (!Yii::$app->user->isGuest)
-            $role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
-
         if (Yii::$app->user->isGuest) 
             return $this->redirect('site/login');
 
-        return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/' . $role);
-
+        return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/dashboard');
     }
 
     public function actionAbout()
@@ -143,9 +139,8 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) 
         {
             $role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
-            
+
             return $this->redirect(Yii::$app->request->baseUrl . '/dashboard');
-            //return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/' . $role);
         }
         elseif($model->status === User::STATUS_INACTIVE)
         {

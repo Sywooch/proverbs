@@ -8,9 +8,16 @@ use yii\web\Response;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use app\models\User;
 use app\models\Board;
 use app\models\BoardSearch;
+use app\models\StudentForm;
+use app\models\Announcement;
+use app\models\PaymentForm;
+use app\models\ApplicantForm;
+use app\models\EnrolledForm;
+use app\models\SchoolYear;
 
 class DashboardController extends Controller
 {
@@ -30,6 +37,22 @@ class DashboardController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index' , 'create', 'view', 'update', 'new'],
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -52,5 +75,42 @@ class DashboardController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function countStudents(){
+        $count = count(StudentForm::find()->where(['status' => 1])->all());
+
+        return $count;
+    }
+
+    public function countUsers(){
+        $count = count(User::find()->all());
+
+        return $count;
+    }
+
+    public function countAnnouncement(){
+        $count = count(Announcement::find()->all());
+
+        return $count;
+    }
+
+    public function countBoard(){
+        $count = count(Board::find()->all());
+
+        return $count;
+    }
+
+    public function countApplicant(){
+        $count = count(ApplicantForm::find()->where(['status' => 2])->all());
+        
+        return $count;
+    }
+
+    public function countCurrentEnrolled(){
+        $latest = (int) SchoolYear::find()->orderBy(['id' => SORT_DESC])->all()[0]['id'];
+        $count = count(EnrolledForm::find()->where(['sy_id' => $latest])->all());
+        
+        return $count;
     }
 }

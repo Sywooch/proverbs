@@ -23,8 +23,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            'id',
             'enrolled_id',
-            //'tuition_id',
+            'tuition_id',
+            /*
+            'has_sibling_discount',
+            'has_book_discount',
+            'has_honor_discount',
+            'sibling_discount',
+            'book_discount',
+            'honor_discount',*/
+            'total_assessed',
+            'balance',
             //'created_at',
             //'updated_at',
 
