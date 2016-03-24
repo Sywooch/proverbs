@@ -55,8 +55,11 @@ class EnrollController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new EnrolledFormSearch();
+        $searchModel->sy_id = $this->latestSY();
         $dataProvider = $searchModel->searchEnrolled(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -78,6 +81,7 @@ class EnrollController extends Controller
         $express = true;
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('new', [
@@ -107,16 +111,7 @@ class EnrollController extends Controller
         $assessment = new AssessmentForm();
         $model->enrollment_status = 0;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save(false) /* && $assessment->load(Yii::$app->request->post()) && Model::validateMultiple([$model, $assessment]) */) {
-            die('ye');
-            $tuition = Tuition::find()->where(['grade_level_id' => $model->grade_level_id])->orderBy(['id' => SORT_DESC])->all();
-            $tuition_id = $tuition[0]['id'];
-            
-            $assessment = new AssessmentForm();
-            $assessment->enrolled_id = $model->id;
-            $assessment->tuition_id = $tuition_id;
-            $assessment->save();
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -157,7 +152,7 @@ class EnrollController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //die('status: ' . $model->enrollment_status);
             return $this->redirect(['view', 'id' => $model->id]);
-            return $this->redirect('index');
+            //return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -196,6 +191,41 @@ class EnrollController extends Controller
                 ->execute();
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function checkAssessment($id)
+    {
+        if($this->findAssessment($id) !== null){
+
+            return $this->findAssessment($id);
+        } else {
+
+            return null;
+        }
+    }
+
+    protected function findAssessment($id)
+    {
+        $model = AssessmentForm::find()->where(['enrolled_id' => $id])->all();
+
+        if (!empty($model)) {
+
+            return $model;
+        } else {
+
+            return null;
+        }
+    }
+
+    protected function latestSY()
+    {   
+        if ((EnrolledForm::find()->orderBy(['id' => SORT_ASC])->all()[0]->sy->sy) !== null) {
+
+            return EnrolledForm::find()->orderBy(['id' => SORT_ASC])->all()[0]->sy->sy;
+        } else {
+
+            return null;
         }
     }
 

@@ -53,10 +53,9 @@ class LoginForm extends Model
 
             if (!$user || !$user->validatePassword($this->password)) 
             {
-                // if scenario is 'lwe' we use email, otherwise we use username
                 $field = ($this->scenario === 'lwe') ? 'email' : 'username' ;
 
-                $this->addError($attribute, 'Incorrect '.$field.' or password.');
+                $this->addError($attribute, 'Oh snap! Incorrect password.');
             }
         }
     }

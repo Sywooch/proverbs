@@ -134,8 +134,11 @@ class AssessmentController extends Controller
             $tuition_detail = Tuition::find()->where(['grade_level_id' => $grade_level_id])->orderBy(['id' => SORT_DESC])->all();
             
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                //die(var_dump($_POST));
+
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
+
                 return $this->render('new', [
                     'model' => $model,
                     'student' => $student,

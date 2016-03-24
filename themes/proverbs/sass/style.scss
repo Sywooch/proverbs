@@ -45,24 +45,24 @@ textarea {
     height: 46px;
 }
 .pva-login-mask {
-    width: 100%;
-    height: 100%;
-    left: 0;
+    width: 100vw;
+    height: 100vh;
     top: 0;
+    left: 0;
     display: table-cell;
     vertical-align: middle;
-    //background: $darkergrey;
+    background: darken($default-gray, 10%);
+    margin: auto;
+    text-align: center;
     //background: #44abce;
     //background: #007fd5;
-    /* background: url('../images/desktop.jpg') no-repeat center center fixed;
+    //background: url('../images/desktop.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
          -o-background-size: cover;
-            background-size: cover; */
-}
-.pva-login {
-    width: 100%;
-    height: 100%;
-}
+            background-size: cover;
+    -ms-overflow-y: hidden;
+        overflow-y: hidden;
+    }
 .pva-form-heading.text-centered {
     h1 {
         font-family: 'Roboto Condensed', sans-serif;
@@ -71,7 +71,8 @@ textarea {
     }
 }
 #loginform-email, #loginform-password, #signupform-username, #signupform-email, #signupform-password, #signupform-verifycode {
-    border: solid 1px lighten($form-border, 5%);
+    //border: solid 1px lighten($form-border, 5%);
+    border: transparent;
     background: white;
     &:focus {
         -webkit-box-shadow: none;
@@ -81,12 +82,135 @@ textarea {
         background: white;
     }
 }
+.pva-form {
+    margin: auto;
+    text-align: center;
+    display: table;
+}
+.pva-form-wrap {
+    width: 320px;
+    min-width: 320px;
+}
+.back-circle {
+    border: 1px solid $jade;
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+}
+.slide-in-left {
+    margin-right: 0;
+    -webkit-transition: all ease 1s 0s;
+       -moz-transition: all ease 1s 0s;
+        -ms-transition: all ease 1s 0s;
+         -o-transition: all ease 1s 0s;
+            transition: all ease 1s 0s;
+}
+.slide-in-right {
+    margin-right: -100px;
+    -webkit-transition: all ease 1s 0s;
+       -moz-transition: all ease 1s 0s;
+        -ms-transition: all ease 1s 0s;
+         -o-transition: all ease 1s 0s;
+            transition: all ease 1s 0s;
+}
+#span-login-nav {
+    .i-back-btn {
+        cursor: pointer;
+        height: 20px;
+        width: 20px;
+        padding: 0;
+        color: white;
+        -webkit-transition: all ease 1s 0.5s;
+           -moz-transition: all ease 1s 0.5s;
+            -ms-transition: all ease 1s 0.5s;
+             -o-transition: all ease 1s 0.5s;
+                transition: all ease 1s 0.5s;
+    }
+}
+.checkbox {
+    label {
+        margin-left: -222px;
+        color: red;
+    }
+   #remember-checkbox {
+        margin-left: 100px;
+        margin-bottom: 0;
+    }
+}
+.form-group.field-loginform-rememberme {
+    margin-left: -30px;
+    margin-bottom: 0;
+}
 .panel.panel-default.form-login {
-    min-width: 240px;
-    //background: fade_out($form-bg, .2);
-    //border: solid 1px fade_out(black, .8);
+    min-width: 320px;
+    background: transparent;
     border: transparent;
-    background-color: transparentize(#3a4b55, .6);
+    .panel-body {
+        max-height: 367px;
+        padding: 0;
+        margin: 0;
+    }
+}
+#check-email {
+    -ms-overflow-x: hidden;
+        overflow-x: hidden;
+    -ms-overflow-y: hidden;
+        overflow-y: hidden;
+}
+#slide-form {
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    max-width: 640px;
+    min-width: 640px;
+    min-height: 102px;
+    max-height: 156px;
+    -webkit-transition: all ease 1s 0.5s;
+       -moz-transition: all ease 1s 0.5s;
+        -ms-transition: all ease 1s 0.5s;
+         -o-transition: all ease 1s 0.5s;
+            transition: all ease 1s 0.5s;
+}
+.mail, .pwd {
+    max-width: 320px;
+}
+.mail {
+    margin-right: 10px;
+}
+.pwd {
+    position: relative;
+    top: -122px;
+    right: -330px;
+    //margin-top: -4px;
+}
+.pva-border {
+    -webkit-border-radius: 2px;
+            border-radius: 2px;
+}
+#user-check-img-wrap {
+    margin: auto;
+    background: $jade;
+    height: 180px !important;
+    width: 180px !important;
+    min-height: 180px !important;
+    min-width: 180px !important;
+    text-align: center;
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+}
+#user-check-img {
+    height: 180px;
+    width: 180px;
+    margin: auto;
+    text-align: center;
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
+}
+#msg-mail-check {
+    height: 20px;
+    line-height: 100%;
+    margin: 10px;
 }
 .control-label, .checkbox label {
     font-weight: normal;

@@ -75,7 +75,7 @@ $state = false;
                     ])->label(false) ?>
                 </div>       
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">School Year</span></span></span>{input}</div>'])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
+                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Section</span></span></span>{input}</div>'])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">

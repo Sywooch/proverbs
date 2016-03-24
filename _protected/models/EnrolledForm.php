@@ -139,6 +139,11 @@ class EnrolledForm extends \yii\db\ActiveRecord
         return $this->hasOne(SchoolYear::className(), ['id' => 'sy_id']);
     }
 
+    public function getSyName($id)
+    {
+        return $this->hasOne(SchoolYear::className(), ['id' => $id]);
+    }
+
     public function getSyItem()
     {
         return $this->hasOne(SchoolYear::className(), ['sy_id' => 'id']);

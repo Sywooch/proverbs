@@ -36,24 +36,28 @@ use app\models\GradeLevel;
 	    <?php $form = ActiveForm::begin(); ?>
 	    <?= $form->field($model, 'tuition_id', ['inputTemplate' => '{input}', 'inputOptions' => ['class' => 'hidden']])->textInput()->label(false) ?>
 		<div class="col-lg-4 col-md-4 col-sm-12">
-		<table class="table table-striped table-bordered detail-view">
-			<tbody>
-				<th>Grade Level</th><td><span class="pull-right"><?= $grade_level ?></span></td></tr>
-				<tr><th>Enrollment</th><td><span class="pull-right"><?= $enrollment ?></span></td></tr>
-				<tr><th>Admission</th><td><span class="pull-right"><?= $admission ?></span></td></tr>
-				<tr><th>Tuition</th><td><span class="pull-right"><?= $tuition_fee ?></span></td></tr>
-				<tr><th>Miscellaneous</th><td><span class="pull-right"><?= $misc_fee ?></span></td></tr>
-				<tr><th>Ancillary</th><td><span class="pull-right"><?= $ancillary ?></span></td></tr>
-				<tr><th>Yearly</th><td><span class="pull-right"><?= $yearly ?></span></td></tr>
-				<tr><th>Monthly</th><td><span class="pull-right"><?= $monthly ?></span></td></tr>
-				<tr><th>Books</th><td><span class="pull-right"><?= $books ?></span></td></tr>
-			</tbody>
-		</table>
-		<p></p>
+			<table class="table table-striped table-bordered detail-view">
+				<tbody>
+					<th>Grade Level</th><td><span class="pull-right"><?= $grade_level ?></span></td></tr>
+					<tr><th>Enrollment</th><td><span class="pull-right"><?= $enrollment ?></span></td></tr>
+					<tr><th>Admission</th><td><span class="pull-right"><?= $admission ?></span></td></tr>
+					<tr><th>Tuition</th><td><span class="pull-right"><?= $tuition_fee ?></span></td></tr>
+					<tr><th>Miscellaneous</th><td><span class="pull-right"><?= $misc_fee ?></span></td></tr>
+					<tr><th>Ancillary</th><td><span class="pull-right"><?= $ancillary ?></span></td></tr>
+					<tr><th>Yearly</th><td><span class="pull-right"><?= $yearly ?></span></td></tr>
+					<tr><th>Monthly</th><td><span class="pull-right"><?= $monthly ?></span></td></tr>
+					<tr><th>Books</th><td><span class="pull-right"><?= $books ?></span></td></tr>
+				</tbody>
+			</table>
+			<p></p>
 		    <div class="form-group">
 		        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 		    </div>
 		</div>
+
 	    <?php ActiveForm::end(); ?>
+	    <div class="col-lg-8 col-md-8 col-sm-12">
+			
+	    </div>
 	</div>
 </div>

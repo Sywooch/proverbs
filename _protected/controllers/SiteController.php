@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\Response;
 use Yii;
 use app\models\Board;
 use app\models\BoardSearch;
@@ -47,6 +48,7 @@ class SiteController extends Controller
                     'logout' => ['post'],
                     'board' => ['post'],
                     'push' => ['post'],
+                    'mail-check' => ['post'],
                 ],
             ],
         ];
@@ -63,6 +65,51 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function actionMailCheck($email){
+        $attempt = 0;
+
+        if(Yii::$app->request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            if(empty(trim($email))){
+                $attempt = 0;
+                $object = (object) array('code' => 0, 'attempt' => $attempt);
+
+                return $object;
+            } else {
+                if(!empty(strpos($email, '@'))){
+                    $query = User::find()->where(['email' => $email])->all();
+                    
+                    if(!empty($query) && $email === $query[0]['email']){
+
+                        if(!empty($query[0]['profile_image']) || $query[0]['profile_image'] !== null){
+                            $foto = Yii::$app->request->baseUrl . '/uploads/profile-img/' . $query[0]['profile_image'];
+                            $object = (object) array('code' => 200, 'attempt' => $attempt, 'username' => $query[0]['username'], 'foto' => $foto);
+
+                            return $object;
+                        } else {
+                            $foto = Yii::$app->request->baseUrl .'/uploads/ui/user.png';
+                            $object = (object) array('code' => 200, 'attempt' => $attempt, 'username' => $query[0]['username'], 'foto' => $foto);
+
+                            return $object;
+                        }
+
+                    } else{
+                        $object = (object) array('code' => 404, 'attempt' => $attempt);
+
+                        return $object;
+                    }
+                } else {
+                        $object = (object) array('code' => 505, 'attempt' => $attempt);
+
+                        return $object;
+                }
+            }
+        } else {
+
+        }
     }
 
     public function actionIndex()

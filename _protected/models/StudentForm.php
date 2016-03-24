@@ -155,10 +155,10 @@ class StudentForm extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if($this->isNewRecord){
-                $this->formatDate($date);
+                $this->formatDate($this->birth_date);
                 return true;
             } else {
-                $this->formatDate($date);
+                $this->formatDate($this->birth_date);
                 return true;
             }
         } else {
@@ -266,10 +266,14 @@ class StudentForm extends \yii\db\ActiveRecord
 
     public function getGradeLevelId($data)
     {
-        if($data === 120){
-            return 'K2';
+        if($data === 121){
+            return 'Grade 11 2nd Semester';
+        } elseif ($data === 120) {
+            return 'Grade 12 1st Semester';
+        } elseif ($data === 111) {
+            return 'Grade 11 2nd Semester';
         } elseif ($data === 110) {
-            return 'K1';
+            return 'Grade 11 1st Semester';
         } elseif ($data === 100) {
             return 'Grade 10';
         } elseif ($data === 90) {

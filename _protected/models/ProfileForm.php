@@ -134,10 +134,10 @@ class ProfileForm extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if($this->isNewRecord){
-                $this->formatDate($date);
+                $this->formatDate($this->birth_date);
                 return true;
             } else {
-                $this->formatDate($date);
+                $this->formatDate($this->birth_date);
                 return true;
             }
         } else {

@@ -69,7 +69,12 @@ $this->title = 'Students';
             // 'guardians_phone',
             // 'guardians_mobile',
             // 'student_is_living_with',
-             'grade_level_id',
+            [
+                'attribute' => 'grade_level_id',
+                'value' => function($model){
+                    return $model->getGradeLevelId($model->grade_level_id);
+                }
+            ],
             // 'sibling_id',
             // 'entrance_exam_id',
             // 'requirements_id',
@@ -101,11 +106,11 @@ $this->title = 'Students';
                                 'class'=>'fa fa-list-ol fa-2x']);
                         },
                         'view' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'View Applicant', 
+                            return Html::a('', $url, ['title'=>'View Student', 
                                 'class'=>'fa fa-user fa-2x']);
                         },
                         'update' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'Update Applicant', 
+                            return Html::a('', $url, ['title'=>'Update Student', 
                                 'class'=>'fa fa-edit fa-2x']);
                         },
                         'delete' => function ($url, $model, $key) {
@@ -113,7 +118,7 @@ $this->title = 'Students';
                                 ['title'=>'Delete Applicant', 
                                     'class'=>'fa fa-times fa-2x fa-trash-o text-centered',
                                     'data' => [
-                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this applicant?'),
+                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this student?'),
                                         'method' => 'post']
                 ]);
                     }

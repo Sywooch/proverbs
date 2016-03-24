@@ -4,24 +4,28 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\helpers\CssHelper;
 use app\models\GradeLevel;
+use app\models\EnrolledForm;
+use app\models\EnrolledFormSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EnrolledFormSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $gradeLevel = GradeLevel::find()->select('id')->all();
 $this->title = 'Enroll';
+$breadcrumbs[] = ['label' => 'index', 'url' => 'dfa'];
+//$breadcrumbs[] = $this->title;
 ?>
 <div class="enrollment-form-index">
     <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
         <?= Html::a('<i class="fa fa-plus"></i> New Enrollment Form', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'layout'=>"{summary}\n{items}\n{pager}",
         'columns' => [
+            //'id',
             'student_id',
             'student.last_name',
             'student.first_name',
@@ -96,14 +100,20 @@ $this->title = 'Enroll';
             //'created_at:date',
             // 'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn',
+            [
+                'class' => 'yii\grid\ActionColumn',
                     'header' => "Options",
                     'template' => '{assessment} {payment} {view} {update} {delete}',
                     'options' => ['style' => 'width: 180px; text-align: center; margin: auto;'],
                     'buttons' => [
                         'assessment' => function ($url, $model, $key) {
-                            return Html::a('', Yii::$app->request->baseUrl . '/assessment/view?id=' . $model->id, ['title'=>'Assessment', 
-                                'class'=>'fa fa-bar-chart-o fa-2x']);
+                            if(Yii::$app->controller->checkAssessment($key) !== null){
+                                return Html::a('', Yii::$app->request->baseUrl . '/assessment/view?id=' . Yii::$app->controller->checkAssessment($key)[0]['id'], ['title'=>'Assessment', 
+                                    'class'=>'fa fa-bar-chart-o fa-2x']);
+                            } else {
+                                return Html::a('', Yii::$app->request->baseUrl . '/assessment/new?eid=' . $model->id, ['title'=>'Assessment', 
+                                    'class'=>'fa fa-clipboard fa-2x']);
+                            }
                         },
                         'payment' => function ($url, $model, $key) {
                             return Html::a('', Yii::$app->request->baseUrl . '/payments/new?id=' . $model->student_id, ['title'=>'New Payment', 
