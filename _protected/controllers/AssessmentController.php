@@ -99,18 +99,20 @@ class AssessmentController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new AssessmentForm();
+    public function actionCreate(){
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model = new AssessmentForm();
+        throw new NotFoundHttpException('The requested page does not exist.');
+        
+        /*if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
-        }
+        }*/
     }
+
     public function actionCalc($data){
         if(Yii::$app->request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -141,12 +143,12 @@ class AssessmentController extends Controller
                 $object->sub = number_format($yearly + $books, 2);
                 $object->yra = number_format($yearly, 2);
                 $object->bkt = number_format($books, 2);
-                $object->sdt = $object->dri . " % x " . number_format($object->tff, 2) . ' = ' . number_format(($object->dri/100 * $object->tff), 2);
-                $object->sbv = $object->dri/100 * $object->tff;
+                $object->sdt = $object->dri . " % x " . number_format($object->tff, 2) . ' = ' . number_format(round($object->dri/100 * $object->tff, 2, PHP_ROUND_HALF_UP), 2);
+                $object->sbv = round(($object->dri/100 * $object->tff), 2, PHP_ROUND_HALF_UP);
                 $object->tdf = number_format($discount, 2);
 
-                $object->ttl = $total;
-                $object->bal = $total;
+                $object->ttl = round($total, 2, PHP_ROUND_HALF_UP);
+                $object->bal = round($total, 2, PHP_ROUND_HALF_UP);
 
                 return $object;
             } else {
@@ -156,7 +158,7 @@ class AssessmentController extends Controller
                 $object->bki = (int) $object->bki;
                 $object->hri = (int) $object->hri;
 
-                $object->sbv = (float) 0;
+                $object->sbv = (float) $object->sbv;
                 $object->bkv = (float) $object->bkv;
                 $object->hrv = (float) $object->hrv;
                 $object->bkt = (float) $object->bkt;
@@ -239,8 +241,7 @@ class AssessmentController extends Controller
         }
     }
 
-    public function actionNew($eid)
-    {
+    public function actionNew($eid){
         $eid = (int) $eid;
         $id = EnrolledForm::findOne($eid);
 
@@ -259,9 +260,6 @@ class AssessmentController extends Controller
 
             if(!empty($tuition)){
                 $array = $tuition;
-                /*for($i = 0; $i < count($tuition); $i++) {
-                    $array[$i] = $tuition[$i];
-                }*/
             } else {
                 throw new NotFoundHttpException('Oops, Something went wrong.');
             }
@@ -269,12 +267,6 @@ class AssessmentController extends Controller
             //$tuition_detail = Tuition::find()->where(['grade_level_id' => $grade_level_id])->orderBy(['id' => SORT_DESC])->all();
             
             if ($model->load(Yii::$app->request->post()) && $model->save() ){
-                
-                //die(print_r($_POST));
-                /*if($model->has_sibling_discount === 0){
-                    $student->has_sibling_enrolled = 0;
-                    $student->save();
-                }*/
 
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -298,6 +290,8 @@ class AssessmentController extends Controller
      */
     public function actionUpdate($id)
     {
+        $sbm = new SiblingDiscount;
+        $sbd = SiblingDiscount::find()->all();
         $model = $this->findModel($id);
 
         $eid = (int) $model->enrolled_id;
@@ -316,7 +310,7 @@ class AssessmentController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
+            
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
 
@@ -326,6 +320,8 @@ class AssessmentController extends Controller
                 'student' => $student,
                 'tuition' => $tuition,
                 'tid' => $tid,
+                'sbm' => $sbm,
+                'sbd' => $sbd,
             ]);
         }
     }

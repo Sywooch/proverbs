@@ -73,7 +73,7 @@ if($student->student_has_sibling_enrolled === 0) {
 			<table class="table table-striped table-bordered detail-view">
 				<tbody>
 					<tr><td style="width: 180px;"><label>Sibling Discount</label><p><small id="td-sb-discount-value"></small></p></td>
-						<td><?= $form->field($model, 'sibling_discount')->textInput(['class' => 'form-control text-align-right', 'value' => $sb === 0 ? $sb : 1])->label(false) ?></td>
+						<td><?= $form->field($model, 'sibling_discount')->textInput(['class' => 'form-control text-align-right'])->label(false) ?></td>
 					</tr>
 					<tr>
 						<td><label>Book Discount</label><p><small id="td-book-discount-value"></small></p></td>

@@ -8,10 +8,6 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Dropdown;
 use app\models\Tuition;
 use app\models\GradeLevel;
-use app\models\SiblingDiscount;
-
-$sbm = new SiblingDiscount;
-$sbd = SiblingDiscount::find()->all();
 
 if(!empty($array)) {
     if($model->isNewRecord){
@@ -53,7 +49,6 @@ if(!empty($array)) {
         $monthly        = number_format($array[0]['monthly'], 2);
         $yearly         = number_format($array[0]['yearly'], 2);
         $books          = number_format($array[0]['books'], 2);
-
     }
 } else {
     $grade_level    = 0;
@@ -70,11 +65,18 @@ if(!empty($array)) {
 if($model->isNewRecord){
     if($student->student_has_sibling_enrolled === 0) {
         $sb = 0;
-    }else {
+    } else {
+        $sb = 1;
+    }
+} else {
+    if($model->has_sibling_discount === 0) {
+        $sb = 0;
+    } else {
         $sb = 1;
     }
 }
 ?>
+
 <div class="assessment-form">
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'tuition_id', ['inputTemplate' => '{input}', 'inputOptions' => ['class' => 'hidden']])->label(false) ?>
@@ -101,11 +103,7 @@ if($model->isNewRecord){
                         <p><small id="td-sb-discount-value"></small></p>
                         <p><small id="td-sibling-discount-value"></small></p>
                         </td>
-                        <td><?= $model->isNewRecord ?
-                            $form->field($model, 'sibling_discount')->textInput(['class' => 'form-control text-align-right', 'value' => $sb === 0 ? $sb : 1])->label(false)
-                            :
-                            $form->field($model, 'sibling_discount')->textInput(['class' => 'form-control text-align-right'])->label(false)
-                        ?>
+                        <td><?= $form->field($model, 'sibling_discount')->textInput(['class' => 'form-control text-align-right', 'value' => $sb])->label(false)?>
                         </td>
                     </tr>
                     <tr>
@@ -151,19 +149,11 @@ if($model->isNewRecord){
                     <td>
                         <p>
                             <div id="sibling">
-                                <?= 
-                                    $model->isNewRecord ?                               
-                                        $sb === 1 ? 
-                                            $form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => $sb ])->label(false) 
-                                            :
-                                            $form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => $sb])->label(false)
-                                        :
-                                        $form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox()->label(false)
-                                ?>
+                                <?= $form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => $sb])->label(false) ?>
                             </div>
                             <div id="select-discount">
                             <?= Html::activeDropDownList($sbm, 'id', 
-                                ArrayHelper::map(SiblingDiscount::find()->asArray()->all(), 'id' , 'percentage_value'), 
+                                ArrayHelper::map(app\models\SiblingDiscount::find()->asArray()->all(), 'id' , 'percentage_value'), 
                                 ['class'=>'form-control', 'name' => 'sibling_discount']) ?>
                             </div>
                         </p>
@@ -233,7 +223,7 @@ $ttl = json_encode(0);
 $bal = json_encode(0);
 
 if($model->isNewRecord){
-$sbd = <<< JS
+$dis = <<< JS
 $(document).ready(function(){
     var tff = $tff; 
     var tdf = $tdf;
@@ -389,9 +379,9 @@ $(document).ready(function(){
     }
 });
 JS;
-$this->registerJs($sbd);
+$this->registerJs($dis);
 } else {
-$sbd = <<< JS
+$dis = <<< JS
 $(document).ready(function(){
     var tff = $tff; 
     var tdf = $tdf;
@@ -572,13 +562,13 @@ $(document).ready(function(){
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 c(data);
             }
         });     
     }
 });
 JS;
-$this->registerJs($sbd);    
+$this->registerJs($dis);    
 }
 ?>

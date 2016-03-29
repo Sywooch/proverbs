@@ -68,6 +68,18 @@ class AssessmentForm extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        if(!$this->isNewRecord){
+            $student = \app\models\StudentForm::findOne((int) $this->enrolled->student_id);
+            if($this->has_sibling_discount !== $student->student_has_sibling_enrolled){
+                $student->student_has_sibling_enrolled = $this->has_sibling_discount;
+                $student->save();
+            }
+        }
+    }
     /**
      * @inheritdoc
      */
@@ -95,7 +107,7 @@ class AssessmentForm extends \yii\db\ActiveRecord
      */
     public function getEnrolled()
     {
-        return $this->hasOne(Enrolled::className(), ['id' => 'enrolled_id']);
+        return $this->hasOne(EnrolledForm::className(), ['id' => 'enrolled_id']);
     }
 
     /**
