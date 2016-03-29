@@ -6,10 +6,12 @@ use Yii;
 use app\models\EnrolledForm;
 use app\models\StudentForm;
 use app\models\Tuition;
+use app\models\SiblingDiscount;
 use app\models\AssessmentForm;
 use app\models\AssessmentFormSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
@@ -54,6 +56,9 @@ class AssessmentController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'sbd' => ['post'],
+                    'dlist' => ['post'],
+                    'calc' => ['post'],
                 ],
             ],
         ];
@@ -106,12 +111,139 @@ class AssessmentController extends Controller
             ]);
         }
     }
+    public function actionCalc($data){
+        if(Yii::$app->request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+
+            if((int) $object->sbi === 1){
+
+                $object->dri = (int) $object->dri;
+                $object->sbi = (int) $object->sbi;
+                $object->bki = (int) $object->bki;
+                $object->hri = (int) $object->hri;
+
+                $object->sbv = (float) $object->sbv;
+                $object->bkv = (float) $object->bkv;
+                $object->hrv = (float) $object->hrv;
+                $object->bkt = (float) $object->bkt;
+                $object->bal = (float) $object->bal;
+
+                $total       = (float) $object->ttl;
+                $balance     = $total;
+                $books       = (float) $object->bkt;
+                $yearly      = (float) $object->yra;
+
+                $discount    = $object->dri/100 * $object->tff + ($object->bki === 1 ? $object->bkv : 0)  + ($object->hri === 1 ? $object->hrv : 0);
+                $total = $yearly + $books - $discount;
+                
+                $object->sub = number_format($yearly + $books, 2);
+                $object->yra = number_format($yearly, 2);
+                $object->bkt = number_format($books, 2);
+                $object->sdt = $object->dri . " % x " . number_format($object->tff, 2) . ' = ' . number_format(($object->dri/100 * $object->tff), 2);
+                $object->sbv = $object->dri/100 * $object->tff;
+                $object->tdf = number_format($discount, 2);
+
+                $object->ttl = $total;
+                $object->bal = $total;
+
+                return $object;
+            } else {
+
+                $object->dri = (int) $object->dri;
+                $object->sbi = (int) $object->sbi;
+                $object->bki = (int) $object->bki;
+                $object->hri = (int) $object->hri;
+
+                $object->sbv = (float) 0;
+                $object->bkv = (float) $object->bkv;
+                $object->hrv = (float) $object->hrv;
+                $object->bkt = (float) $object->bkt;
+
+                $total       = (float) $object->ttl;
+                $books       = (float) $object->bkt;
+                $yearly      = (float) $object->yra;
+
+                $discount    = ($object->bki === 1 ? $object->bkv : 0)  + ($object->hri === 1 ? $object->hrv : 0);
+                $total       = $yearly + $books - $discount;
+
+                $object->sub = number_format($yearly + $books, 2);
+                $object->yra = number_format($yearly, 2);
+                $object->bkt = number_format($books, 2);
+                $object->sdt = "0";
+                $object->sbv = 0;
+
+                $object->tdf = number_format($discount, 2);
+
+                $object->ttl = $total;
+                $object->bal = $total;
+
+                return $object;
+            }
+
+            return $object;
+
+        } else {
+            throw new NotFoundHttpException('Oops, Something went wrong.');
+        }
+    }
+
+    public function actionSbd($cd, $id, $t, $sb, $bd, $hd){
+        $cd = (int) $cd;
+        $id = (int) $id;
+        
+        if($cd === 0){
+            $value = 1;
+        } else {
+            $value = 0;
+            //$id = SiblingDiscount::find()->where(['id'=> $id])->all();
+        }
+
+        if($id === 0){
+            $calc = $percent . ' x ' . $tuition . ' = ' . 0;
+            $td = (float) $bd + (float) $hd;
+        } else {
+            $tuition = number_format($t, 2);
+            $td = (float) $sd + (float) $bd + (float) $hd;
+            $calc = $percent . ' x ' . $tuition . ' = ' . number_format(($p/100 * $t), 2);
+            
+        }
+
+
+        $data = (object) array('value' => $value, 'id' => $id, 'calc' => $calc , 'sb' => $sb, 'bd' => $bd, 'hd' => $hd, 'td' => $td);
+
+        return $data;
+    }
+
+    public function actionDlist($id, $t, $bd, $hd){
+
+        if(Yii::$app->request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $id = SiblingDiscount::find()->where(['id'=> $id])->all();
+            $p = $id[0]['percentage_value'];
+            $percent = $id[0]['percentage_value'] . '%';
+            $tuition = number_format($t, 2);
+
+            $calc = $percent . ' x ' . $tuition . ' = ' . number_format(($p/100 * $t), 2);
+            
+            $sb = round($p/100 * $t, 3);
+            $bd = (float) $bd;
+            $hd = (float) $hd;
+            $td = $sb + $bd + $hd;
+
+            $data = (object) array('id' => $id, 'calc' => $calc , 'sb' => $sb, 'bd' => $bd, 'hd' => $hd, 'td' => $td);
+
+            return $data;
+        }
+    }
 
     public function actionNew($eid)
     {
         $eid = (int) $eid;
         $id = EnrolledForm::findOne($eid);
-    
+
         if($id !== null){
             $model = new AssessmentForm();
             $student_id = (int) $id->student_id;
@@ -121,6 +253,9 @@ class AssessmentController extends Controller
             $model->enrolled_id = $eid;
             $tid = (int) $tuition[0]['id'];
             $model->tuition_id = $tid;
+            $model->has_sibling_discount = (int) $model->has_sibling_discount;
+            $model->has_book_discount = (int) $model->has_book_discount;
+            $model->has_honor_discount = (int) $model->has_honor_discount;
 
             if(!empty($tuition)){
                 $array = $tuition;
@@ -131,14 +266,18 @@ class AssessmentController extends Controller
                 throw new NotFoundHttpException('Oops, Something went wrong.');
             }
 
-            $tuition_detail = Tuition::find()->where(['grade_level_id' => $grade_level_id])->orderBy(['id' => SORT_DESC])->all();
+            //$tuition_detail = Tuition::find()->where(['grade_level_id' => $grade_level_id])->orderBy(['id' => SORT_DESC])->all();
             
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                //die(var_dump($_POST));
+            if ($model->load(Yii::$app->request->post()) && $model->save() ){
+                
+                //die(print_r($_POST));
+                /*if($model->has_sibling_discount === 0){
+                    $student->has_sibling_enrolled = 0;
+                    $student->save();
+                }*/
 
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-
                 return $this->render('new', [
                     'model' => $model,
                     'student' => $student,
@@ -161,11 +300,32 @@ class AssessmentController extends Controller
     {
         $model = $this->findModel($id);
 
+        $eid = (int) $model->enrolled_id;
+        $id = EnrolledForm::findOne($eid);
+
+        $student_id = (int) $id->student_id;
+        $grade_level_id = (int) $id->grade_level_id;
+        $student = StudentForm::findOne($student_id);
+        $tuition = Tuition::find()->where(['grade_level_id' => $grade_level_id])->orderBy(['id' => SORT_DESC])->all();
+        $tid = (int) $tuition[0]['id'];
+
+        if(!empty($tuition)){
+            $array = $tuition;
+        } else {
+            throw new NotFoundHttpException('Oops, Something went wrong.');
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+
             return $this->render('update', [
                 'model' => $model,
+                'array' => $array,
+                'student' => $student,
+                'tuition' => $tuition,
+                'tid' => $tid,
             ]);
         }
     }

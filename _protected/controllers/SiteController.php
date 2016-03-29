@@ -90,7 +90,7 @@ class SiteController extends Controller
 
                             return $object;
                         } else {
-                            $foto = Yii::$app->request->baseUrl .'/uploads/ui/user.png';
+                            $foto = Yii::$app->request->baseUrl .'/uploads/ui/user-blue.png';
                             $object = (object) array('code' => 200, 'attempt' => $attempt, 'username' => $query[0]['username'], 'foto' => $foto);
 
                             return $object;
@@ -107,8 +107,6 @@ class SiteController extends Controller
                         return $object;
                 }
             }
-        } else {
-
         }
     }
 
@@ -185,7 +183,8 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) 
         {
-            $role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
+            //$role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
+            //die(var_dump($_POST));
 
             return $this->redirect(Yii::$app->request->baseUrl . '/dashboard');
         }

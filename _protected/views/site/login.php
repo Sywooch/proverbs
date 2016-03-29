@@ -16,7 +16,7 @@ $this->title = Yii::t('app', 'Login');
                 <div class="panel panel-default form-login">
                     <div class="panel-body">
                         <div id="user-check-img-wrap">
-                            <img id="user-check-img" class="animated2" src="<?= Yii::$app->request->baseUrl . '/themes/proverbs/images/user-default.png'?>" alt="user">
+                            <img id="user-check-img" class="animated2" src="<?= Yii::$app->request->baseUrl . '/themes/proverbs/images/user-default.png'?>" alt="user" data-img="false">
                         </div>
                         <p></p>
                         <span id="span-login-nav"><i id="back" class="fa fa-arrow-left fa-one-point-five i-back-btn invisible slide-in-right"></i></span>
@@ -24,7 +24,7 @@ $this->title = Yii::t('app', 'Login');
                         <div id="check-email">
                             <div id="slide-form">
                                 <div id="slide-mail" class="animated">
-                                    <div class="row" style="margin: 0; padding: 0;">
+                                    <div id="slide-content" class="row" style="margin: 0; padding: 0;">
                                         <div class="mail">
                                             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
                                             <?php if ($model->scenario === 'lwe'): ?>
@@ -32,20 +32,25 @@ $this->title = Yii::t('app', 'Login');
                                             <?php else: ?>
                                             <?= $form->field($model, 'username',['inputTemplate' => '{input}','inputOptions' => ['class' => 'form-control pva-border', 'placeholder' => 'Username']])->label(false) ?>
                                             <?php endif ?>
-                                            <p></p>
-                                            <button type="button" href="#" id="btn-mail-check" class="btn btn-primary btn-block pva-border" style="height: 46px; background: #337AB7;">NEXT</button>
-                                            <p></p>
                                         </div>
                                         <div class="pwd">
-                                                <?= $form->field($model, 'password',['inputTemplate' => '{input}','inputOptions' => ['class' => 'form-control pva-border', 'placeholder' => 'Password']])->passwordInput()->label(false) ?>
-                                                <div class="form-group"><?= Html::submitButton(Yii::t('app', 'LOGIN'), ['id' => 'btn-login-submit', 'class' => 'btn btn-primary btn-block pva-border', 'name' => 'login-button', 'style' => 'background: #337AB7; min-height: 46px;', 'disabled'=> 'disabled']) ?></div>
-                                                <?= $form->field($model, 'rememberMe')->checkbox(['id' => 'remember-checkbox' ,'class' => ''])->label() ?>
-                                            <?php ActiveForm::end(); ?>
+                                            <?= $form->field($model, 'password',['inputTemplate' => '{input}','inputOptions' => ['class' => 'form-control pva-border hidden', 'placeholder' => 'Password']])->passwordInput()->label(false) ?>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
+                            </div>
+                            <div class="slide-btn">
+                                <button type="button" href="#" id="btn-mail-check" class="btn btn-primary btn-block pva-border" style="height: 46px; background: #337AB7;">NEXT</button>
+                            </div>
+                            <div id="remember-checkbox-wrap" class="checkbox" style="right: -320px;">
+                                <label for="remember-checkbox">
+                                    Remember me &nbsp;
+                                    <input type="hidden" name="LoginForm[rememberMe]" value="0">
+                                    <input type="checkbox" id="remember-checkbox" class="" name="LoginForm[rememberMe]" value="1" checked>
+                                </label>
                             </div>
                         </div>
+                        <?php ActiveForm::end(); ?>
                         <p id="msg-mail-check" style="color: white; font-size: 16px;"></p>
                     </div>
                 </div>
@@ -59,7 +64,21 @@ if(Yii::$app->request->url === '/proverbs/site/login'){
 
 if(!empty($model->errors)){
     $msg = $model->errors['password'][0];
-    $this->registerJs("$('#msg-mail-check').html('" . $msg . "');");
+    $u = new app\models\User;
+    $query = $u::find()->where(['email' => $model->email])->all();
+
+    if(!empty($query)){
+
+        if(!empty($query[0]['profile_image']) || $query[0]['profihttp://localhost/proverbs/themes/proverbs/images/user-default.pngle_image'] !== null){
+
+            $foto = Yii::$app->request->baseUrl . '/uploads/profile-img/' . $query[0]['profile_image'];
+            $this->registerJs("$('#msg-mail-check').html('" . $msg . "'); $('#user-check-img').attr('src','" . $foto . "'); $('#user-check-img').attr('data-img','true');");
+        } else {
+
+            $foto = Yii::$app->request->baseUrl .'/uploads/ui/user-blue.png';
+            $this->registerJs("$('#msg-mail-check').html('" . $msg . "'); $('#user-check-img').attr('src','" . $foto . "'); $('#user-check-img').attr('data-img','false');");
+        }
+    }
 }
 
 $mailcheck = <<< JS
@@ -71,36 +90,54 @@ $mailcheck = <<< JS
         var email = $('#input-mail-check');
         var fmail = $('#loginform-email');
         var back = $('#back');
+        var imgWrap = $('#user-check-img-wrap');
         var img = $('#user-check-img');
+        var pwd = $('#loginform-password');
+        var chkbox = $('#remember-checkbox');
         var sb = false;
-
-        function slideLeft(){
-            $('#slide-form').attr('style', 'left: -330px;');
-            $('#btn-login-submit').removeAttr('disabled');
-
-            back.removeClass('invisible').removeClass('slide-in-right').addClass('slide-in-left');
-            back.removeClass('fa-arrow-right').addClass('fa-arrow-left');
-        }
 
         function reset(){
             $('#msg-mail-check').html('');
             img.removeClass('grow');
         }
 
+        function slideLeft(){
+            $('#slide-form').attr('style', 'left: -330px;');
+            $('#remember-checkbox-wrap').removeAttr('style').attr('style', 'right: 0;');
+            back.removeClass('invisible').removeClass('slide-in-right').addClass('slide-in-left');
+            back.removeClass('fa-arrow-right').addClass('fa-arrow-left');
+            img.removeClass('shrink');
+        }
+
+
         function slideRight(){
             $('#slide-form').attr('style', 'left: 0;');
-            $('#btn-login-submit').attr('disabled','disabled');
-
+            $('#remember-checkbox-wrap').removeAttr('style').attr('style', 'right: -320px;');
             back.addClass('invisible').removeClass('slide-in-left').addClass('slide-in-right');
             back.removeClass('fa-arrow-left').addClass('fa-arrow-right');
+            img.addClass('shrink');
         }
 
         function showBackButton(){
             $('#back').removeClass('invisible').removeClass('slide-in-left');
         }
 
+        function showPwdChkbox(){
+            pwd.removeClass('hidden');
+            chkbox.removeClass('hidden');
+        }
+
+        function hidePwdChkbox(){
+            pwd.addClass('hidden');
+            chkbox.addClass('hidden');
+        }
+
         function changeImg(data){
             img.removeAttr('src').attr('src', data);
+        }
+
+        function dataImg(data){
+            img.attr('data-img', data);
         }
 
         function changeImgBg(data){
@@ -111,40 +148,63 @@ $mailcheck = <<< JS
             }
         }
 
+        function changeBtnType(data,text){
+            setTimeout(function(){
+                btn.attr('type', data);
+                btn.html(text);
+            }, 1000);
+        }
+
         function hi(data){
             msg.html('Hi ' + data + '!');
         }
 
+        $(email).keypress(function(key){
+            if (key.keyCode == 13 && !key.shiftKey){
+                btn.click();
+            }
+        });
+
         back.click(function(){
             if(!sb){
                 slideLeft();
+                changeBtnType(data='submit', text='LOGIN');
                 sb = true;
             } else{
                 slideRight();
+                setTimeout(function(){
+                    hidePwdChkbox();
+                }, 2000);
+                changeBtnType(data='button', text='NEXT');
                 sb = false;
+                msg.html('');
             }
         });
 
         btn.click(function(){
             reset();
-            $.post('mail-check?email=' + email.val(), function(data){
-                if(data.code === 0){
-                    changeImgBg(false);
-                    $('#msg-mail-check').html('Please enter your email address.');
-                } else if(data.code === 404) {
-                    changeImgBg(false);
-                    msg.html('Email address could not be found.');
-                } else if(data.code === 500) {
-                    changeImgBg(false);
-                    msg.html('Oops! Not a valid email address.');
-                } else if(data.code === 200){
-                    hi(data.username);
-                    changeImgBg(true);
-                    changeImg(data.foto);
-                    back.click();
-                    console.log('');
-                }
-            });
+            if(btn.attr('type') === 'button'){
+                $.post('mail-check?email=' + email.val(), function(data){
+                    if(data.code === 0){
+                        changeImgBg(false);
+                        $('#msg-mail-check').html('Please enter your email address.');
+                    } else if(data.code === 404) {
+                        changeImgBg(false);
+                        msg.html('Email address could not be found.');
+                    } else if(data.code === 500) {
+                        changeImgBg(false);
+                        msg.html('Oops! Not a valid email address.');
+                    } else if(data.code === 200){
+                        showPwdChkbox();
+                        hi(data.username);
+                        changeImgBg(true);
+                        dataImg(true);
+                        changeImg(data.foto);
+                        back.click();
+                        changeBtnType(data = 'submit',text='LOGIN');
+                    }
+                });
+            }
         });
     });
 JS;

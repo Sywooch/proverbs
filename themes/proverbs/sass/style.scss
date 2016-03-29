@@ -23,6 +23,12 @@ a {
 pre {
     border: transparent;
 }
+.default-label {
+    color: #333;
+}
+.text-align-right {
+    text-align: right;
+}
 .header-offset, .bottom-fix, .page-content-offset {
     min-height: 54px;
     width: 100%;
@@ -52,6 +58,7 @@ textarea {
     display: table-cell;
     vertical-align: middle;
     background: darken($default-gray, 10%);
+    //background: $softgrey;
     margin: auto;
     text-align: center;
     //background: #44abce;
@@ -92,9 +99,13 @@ textarea {
     min-width: 320px;
 }
 .back-circle {
-    border: 1px solid $jade;
+    border: 1px solid #e1e1e1;
     -webkit-border-radius: 100%;
             border-radius: 100%;
+}
+i#back {
+    //padding-top: 10px;
+    color: white;
 }
 .slide-in-left {
     margin-right: 0;
@@ -126,19 +137,20 @@ textarea {
                 transition: all ease 1s 0.5s;
     }
 }
-.checkbox {
+#remember-checkbox-wrap {
+    position: relative;
+    top: 0;
+    max-width: 320px;
+    -webkit-transition: all ease 1s 0.5s;
+       -moz-transition: all ease 1s 0.5s;
+        -ms-transition: all ease 1s 0.5s;
+         -o-transition: all ease 1s 0.5s;
+            transition: all ease 1s 0.5s;
+    text-align: left;
     label {
-        margin-left: -222px;
-        color: red;
+        display: inline;
+        margin-left: -20px;
     }
-   #remember-checkbox {
-        margin-left: 100px;
-        margin-bottom: 0;
-    }
-}
-.form-group.field-loginform-rememberme {
-    margin-left: -30px;
-    margin-bottom: 0;
 }
 .panel.panel-default.form-login {
     min-width: 320px;
@@ -164,15 +176,19 @@ textarea {
     margin: 0;
     max-width: 640px;
     min-width: 640px;
-    min-height: 102px;
-    max-height: 156px;
     -webkit-transition: all ease 1s 0.5s;
        -moz-transition: all ease 1s 0.5s;
         -ms-transition: all ease 1s 0.5s;
          -o-transition: all ease 1s 0.5s;
             transition: all ease 1s 0.5s;
+    #slide-content {
+        max-height: 56px;
+    }
 }
-.mail, .pwd {
+.pwd {
+    min-height: 46px;
+}
+.mail, .pwd, .slide-btn {
     max-width: 320px;
 }
 .mail {
@@ -180,9 +196,15 @@ textarea {
 }
 .pwd {
     position: relative;
-    top: -122px;
+    top: -66px;
+    //top: -122px;
     right: -330px;
-    //margin-top: -4px;
+    -webkit-transition: all ease 1s 0.5s;
+       -moz-transition: all ease 1s 0.5s;
+        -ms-transition: all ease 1s 0.5s;
+         -o-transition: all ease 1s 0.5s;
+            transition: all ease 1s 0.5s;
+
 }
 .pva-border {
     -webkit-border-radius: 2px;
@@ -190,7 +212,7 @@ textarea {
 }
 #user-check-img-wrap {
     margin: auto;
-    background: $jade;
+    background: $midgrey;
     height: 180px !important;
     width: 180px !important;
     min-height: 180px !important;
@@ -198,6 +220,11 @@ textarea {
     text-align: center;
     -webkit-border-radius: 100%;
             border-radius: 100%;
+    background: url(../images/user-default.png);
+    -webkit-background-size: contain;
+         -o-background-size: contain;
+            background-size: contain;
+    background-color: $midgrey;
 }
 #user-check-img {
     height: 180px;
@@ -206,6 +233,11 @@ textarea {
     text-align: center;
     -webkit-border-radius: 100%;
             border-radius: 100%;
+    -webkit-transition: all ease 1s 0s;
+       -moz-transition: all ease 1s 0s;
+        -ms-transition: all ease 1s 0s;
+         -o-transition: all ease 1s 0s;
+            transition: all ease 1s 0s;
 }
 #msg-mail-check {
     height: 20px;
@@ -780,7 +812,6 @@ small.other-separator {
     display: none;
     float: left;
     padding: 4px 0;
-    background: red;
 }
 #btn-msg-toggle, #fetch {
     background: transparent;
@@ -1114,4 +1145,49 @@ span.express-form-student {
     padding: 10px 10px 10px 0;
     text-align: left;
     line-height: 1.5px;
+}
+#select-discount {
+    width: 50px;
+}
+.sibling-label {
+    color: #333;
+}
+#th-balance {
+    text-align: center;
+}
+.td-sibling {
+    display: table-cell;
+    width: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+#td-block {
+    span:nth-child(2){
+    }
+    span:nth-child(3){
+        border-top: 1px solid #e5e5e5;
+        padding-top: 2px;
+    }
+    span {
+        display: block;
+    }
+}
+#sibling {
+    max-height: 20px;
+    padding: 0;
+    margin: 0;
+}
+.form-group.field-assessmentform-has_sibling_discount > div.checkbox > label, .form-group.field-assessmentform-has_book_discount > div.checkbox > label, .form-group.field-assessmentform-has_honor_discount > div.checkbox > label {
+    margin-left: -20px;
+}
+.td-form-control {
+    height: 46px;
+    outline: none;
+    border: 1px solid $milkshake;
+    text-align: right;
+    margin-top: 15px;
+}
+#select-sibling-discount {
+    margin: 0;
+    padding: 0;
 }

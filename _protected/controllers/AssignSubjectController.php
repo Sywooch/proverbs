@@ -11,6 +11,7 @@ use app\models\AssignedFormSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * AssignSubjectController implements the CRUD actions for AssignedForm model.

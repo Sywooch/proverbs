@@ -86,7 +86,7 @@ $un = '';
     <?php $this->endBody() ?>
     <?php include('script.php');?>
     <script src="/proverbs/themes/proverbs/js/sweetalert.min.js"></script>
-    <?php if(!Yii::$app->request->url === '/proverbs/site/login'){
+    <?php if(Yii::$app->request->url !== '/proverbs/site/login'){
             $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY);
         }
     ?>

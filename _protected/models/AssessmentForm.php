@@ -36,7 +36,7 @@ class AssessmentForm extends \yii\db\ActiveRecord
         return [
             [['enrolled_id', 'tuition_id', 'has_sibling_discount', 'has_book_discount', 'has_honor_discount', 'created_at', 'updated_at'], 'integer'],
             [['sibling_discount', 'book_discount', 'honor_discount', 'total_assessed', 'balance'], 'number'],
-            [['enrolled_id', 'tuition_id'], 'required']
+            [['enrolled_id', 'tuition_id', 'total_assessed', 'balance'], 'required']
         ];
     }
 
@@ -59,6 +59,7 @@ class AssessmentForm extends \yii\db\ActiveRecord
             if($this->isNewRecord){
                 $this->created_at = time();
                 $this->updated_at = time();
+                $this->has_sibling_discount = 1;
             } else {
                 $this->touch('updated_at');
             }

@@ -192,16 +192,16 @@ var ajaxCallbacks = {
             }
             setC(response.object.length);
             scrollBottom();
-            console.log('after set: ' + getC());
+            //console.log('after set: ' + getC());
         //UPDATE TIMESTAMP
         } else if(response.object.length === getC()){
-            console.log('No changes: ' + getC());
+            //console.log('No changes: ' + getC());
             for(var nc = 0; nc < response.object.length; nc++){
                 $('#b').find('small > span').eq(nc).html(response.data[nc].value.date);
             }
         //NEW MESSAGE
         } else if(response.object.length > getC()){
-            console.log('elseif Fetching: ' + getC());
+            //console.log('elseif Fetching: ' + getC());
             setNewMsg(true);
             for(var j = getC(); j < response.object.length; j++){
                 //USER === POSTED_BY
@@ -244,12 +244,12 @@ var ajaxCallbacks = {
             if($("#write-textarea").is(":focus") && getNewMsg()){
                 scrollBottom();
             }
-            console.log('new set: ' + getC());
+            //console.log('new set: ' + getC());
         //DELETED MESSAGE
         } else if(response.object.length < getC()){
             $('#b').find('li').remove();
             $('#b').find('small').remove();
-            console.log('else Fetching: ' + getC());
+            //console.log('else Fetching: ' + getC());
             for(var h = 0; h < response.object.length; h++){
                 //USER === POSTED_BY
                 if(response.object[h].posted_by === response.id.uid){

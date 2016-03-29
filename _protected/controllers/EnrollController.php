@@ -222,7 +222,7 @@ class EnrollController extends Controller
     {   
         if ((EnrolledForm::find()->orderBy(['id' => SORT_ASC])->all()[0]->sy->sy) !== null) {
 
-            return EnrolledForm::find()->orderBy(['id' => SORT_ASC])->all()[0]->sy->sy;
+            return EnrolledForm::find()->orderBy(['id' => SORT_DESC])->all()[0]->sy->sy;
         } else {
 
             return null;
