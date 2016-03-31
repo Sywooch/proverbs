@@ -26,8 +26,8 @@ use app\models\SchoolYear;
  */
 class EnrolledForm extends \yii\db\ActiveRecord
 {
-    const STATUS_PENDING = 0;
-    const STATUS_ENROLLED = 1;
+    const STATUS_PENDING = 1;
+    const STATUS_ENROLLED = 0;
     const L0 = 0;
     const L1 = 1;
     const L2 = 2;
@@ -156,7 +156,7 @@ class EnrolledForm extends \yii\db\ActiveRecord
 
     public function getEnrollmentStatus($data)
     {
-        if($data === 1){
+        if($data === 0){
             return 'Enrolled';
         } else {
             return 'Pending';

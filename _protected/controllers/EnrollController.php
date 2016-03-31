@@ -150,9 +150,7 @@ class EnrollController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //die('status: ' . $model->enrollment_status);
-            return $this->redirect(['view', 'id' => $model->id]);
-            //return $this->redirect('index');
+            return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,

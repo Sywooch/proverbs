@@ -26,7 +26,7 @@ $this->title = 'Payments';
             [
                 'attribute' => 'transaction',
                 'filter' => $searchModel->TransactionType,
-                'value' => function($searchModel){if($searchModel->transaction === 1)return 'Card';return 'Cash';},
+                'value' => function($searchModel){if($searchModel->transaction === 1)return 'Cash';return 'Card';},
                 'contentOptions'=>function($model, $key, $index, $column) {
                     return ['class'=>CssHelper::statusCss($model->TransactionType)];
                 }

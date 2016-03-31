@@ -35,12 +35,11 @@ class AppAsset extends AssetBundle
         'css/hover-min.css',
         'css/icons.min.css',
         'css/style-dashboard.css',
-        'css/sweetalert.css',
         'css/style.css',
         'css/jan.css',
         'css/jan-responsive.css',
         'css/form-background.css',
-        //'css/switchery.css',
+        'css/switchery.css',
     ];
 
     public $depends = [
@@ -52,9 +51,9 @@ class AppAsset extends AssetBundle
         'js/bootstrap.min.js',
         'js/init.js',
         'js/pva.js',
-/*        'js/switchery.js',
+        //'js/switchery.js',
         'js/switchery.min.js',
-        'js/switchery-init.js',*/
+        'js/switchery-init.js',
     ];
 
 }

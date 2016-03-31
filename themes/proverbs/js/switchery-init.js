@@ -89,3 +89,9 @@ var switchery = new Switchery(small, { size: 'small', color: '#8f67b1', secondar
 var large = document.querySelector('.js-switch-large');
 var switchery = new Switchery(large, { size: 'large' });
 
+var large = document.querySelector('.js-switch-large-red');
+var switchery = new Switchery(large, { size: 'large', color: '#e55957', secondaryColor: '#e8e8e8' });
+
+var large = document.querySelector('.js-switch-large-green');
+var switchery = new Switchery(large, { size: 'large', color: '#79d4a7', secondaryColor: '#e8e8e8' });
+

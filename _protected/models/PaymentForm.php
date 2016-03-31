@@ -20,8 +20,8 @@ use yii\db\Expression;
  */
 class PaymentForm extends \yii\db\ActiveRecord
 {
-    const TYPE_CASH = 0;
-    const TYPE_CARD = 1;
+    const TYPE_CASH = 1;
+    const TYPE_CARD = 0;
 
     public static function tableName()
     {
@@ -89,9 +89,9 @@ class PaymentForm extends \yii\db\ActiveRecord
     public function getTransaction($data)
     {
         if ($data === 1) {
-            return 'Card';
-        } else {
             return 'Cash';
+        } else {
+            return 'Card';
         }
     }    
 
