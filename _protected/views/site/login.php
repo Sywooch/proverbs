@@ -44,7 +44,7 @@ $this->title = Yii::t('app', 'Login');
                             </div>
                             <div id="remember-checkbox-wrap" class="checkbox" style="right: -320px;">
                                 <label for="remember-checkbox">
-                                    Remember me &nbsp;
+                                    Stay logged in &nbsp;
                                     <input type="hidden" name="LoginForm[rememberMe]" value="0">
                                     <input type="checkbox" id="remember-checkbox" class="js-switch" name="LoginForm[rememberMe]" value="0" checked>
                                 </label>

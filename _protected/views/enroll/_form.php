@@ -21,178 +21,152 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 $listData2 = ArrayHelper::map($school_year, 'id' , 'sy');
 $listData3 = ArrayHelper::map($section, 'id' , 'section_name');
 $state = false;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="enrollment-form">
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <?=
-                    $form->field($model, 'enrollment_status', ['inputTemplate' => '<label style="color: #555; padding-right: 15px;">Enrolled</label>{input}'])
-                        ->checkbox($options = ['id' => 'ies', 'class' => 'js-sw js-switch-small-green es', 
-                            'value' => $model->isNewRecord ? 1 : $model->enrollment_status,
-                            'data-switchery' => true,
-                        ])->label(false);
-                ?>
+        <div class="row">
+            <p></p>
+            <div class="col-lg-2 col-md-2 col-12">
+                <div class="form-group">
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Save', ['class' => $model->isNewRecord ? 'btn btn-success btn-block' : 'btn btn-primary btn-block']) ?>
+                    <?= Html::a(Yii::t('app', 'Cancel'), ['/enroll'], ['class' => 'btn btn-default btn-block']) ?>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="container form-input-wrapper">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <?= $form->field($model, 'sy_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">School Year</span></span></span>{input}</div>'])->dropDownList($listData2, ['id', 'sy'])->label(false) ?>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                
-                    <?= $form->field($model, 'student_id')->widget(Select2::classname(), [
-                            'data' => ArrayHelper::map(StudentForm::find()->all(),'id', function($model){return $model->id . ' ' . $model->last_name . ', ' . $model->first_name . ' ' . $model->middle_name;}),
-                            'language' => 'en',
-                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student'],
-                            'pluginOptions' => [
-                                'allowClear' => true
-                            ],
-                            'pluginEvents' => [
-                                'change' => "
-                                    function(){
-                                        $.post('". Yii::$app->urlManager->createUrl('enroll/grade-level?id=') . "'+parseInt($('#auto-suggest').val()), function(data){
-                                            $('select#enrolledform-grade_level_id').val(data);
+            <div class="col-lg-7 col-md-7 col-12">
+                <div id="enrollment-form-wrap" class="panel panel-default">
+                    <div  class="panel-body">
+                        <div class="container form-input-wrapper">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="enroll-profile-img-wrap">
+                                        <img src="<?= Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png' ?>" alt="student">
+                                    </div>
+                                    <?= $form->field($model, 'student_id')->widget(Select2::classname(), [
+                                            'data' => ArrayHelper::map(StudentForm::find()->all(),'id', function($model){return $model->id . ' ' . $model->last_name . ', ' . $model->first_name . ' ' . $model->middle_name;}),
+                                            'language' => 'en',
+                                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student'],
+                                            'pluginOptions' => [
+                                                'allowClear' => true
+                                            ],
+                                            'pluginEvents' => [
+                                                'change' => "
+                                                    function(){
+                                                        $.post('". Yii::$app->urlManager->createUrl('enroll/grade-level?id=') . "'+parseInt($('#auto-suggest').val()), function(data){
+                                                            $('select#enrolledform-grade_level_id').val(data);
 
-                                            $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
-                                                $('#enrolledform-section_id').find('option').remove();
-                                                $('#enrolledform-section_id').each(function(){
-                                                    $(this).append(data);
+                                                            $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
+                                                                $('#enrolledform-section_id').find('option').remove();
+                                                                $('#enrolledform-section_id').each(function(){
+                                                                    $(this).append(data);
+                                                                });
+                                                            });
+                                                        });
+                                                    }
+                                                ",
+                                            ],
+                                        ])->label(false); 
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-12">
+                <div id="enrollment-form-wrap" class="panel panel-default">
+                    <div  class="panel-body">
+                        <div class="container form-input-wrapper">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <?= $form->field($model, 'enrollment_status', ['inputTemplate' => '<div style="margin-top: -7px;"><label style="padding: 0; color: #555;"><strong>Enrolled</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->enrollment_status])->label(false) ?>
+                                        <?= $form->field($model, 'sy_id', ['inputTemplate' => '<div class="input-div-wrap"><label>School Year</label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData2, ['id', 'sy'])->label(false) ?>
+                                        <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-div-wrap"><label>Grade Level</label></label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData,
+                                        [
+                                            'onchange' => "
+                                                $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
+                                                    $('#enrolledform-section_id').find('option').remove();
+                                                    $('#enrolledform-section_id').each(function(){
+                                                        $(this).append(data);
+                                                    });
                                                 });
-                                            });
-                                        });
-                                    }
-                                ",
-                            ],
-                        ])->label(false); 
-                    ?>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData,
-                    [
-                        'onchange' => "
-                            $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
-                                $('#enrolledform-section_id').find('option').remove();
-                                $('#enrolledform-section_id').each(function(){
-                                    $(this).append(data);
-                                });
-                            });
-                        ",
-                    ])->label(false) ?>
-                </div>       
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Section</span></span></span>{input}</div>'])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                        <?= Html::a(Yii::t('app', 'Cancel'), ['/enroll'], ['class' => 'btn btn-default']) ?>
+                                            ",
+                                        ])->label(false) ?>
+                                        <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-div-wrap" style="margin-bottom: 30px;"><label>Section</label></label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     <?php ActiveForm::end(); ?>
 </div>
-
 <?php
-if($model->isNewRecord){
 $sw = <<< JS
 $(document).ready(function(){
-    var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    switches.forEach(function(html) {
-      var switchery = new Switchery(html);
-    });
-
     var hash = '#';
     var blank = '';
 
-    function iload(object){
-        if(object.value !== object.previousElementSibling){
-            object.previousElementSibling.value = object.value;
+    function syncValue(elem){
+        if(elem.defaultValue !== elem.previousElementSibling.defaultValue){
+            elem.previousElementSibling.defaultValue = elem.defaultValue;
         }
     }
 
-    $('input.js-sw').each(function(){
-        var elem = $(this).attr('class').split(' ').pop();
-        var temp = '.' + $(this).attr('class').split(' ').pop();
+    function changeState(elem){
+        if(parseInt(elem.defaultValue) === 1){
+            elem.checked = false;
+            $(elem).attr('checked', false);
+            elem.previousElementSibling.defaultValue = 1;
+        } else {
+            elem.checked = true;
+            $(elem).attr('checked', true);
+            elem.previousElementSibling.defaultValue = 0;
+        }
+    }
+    
+    if (Array.prototype.forEach) {
+        var i = 0;
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         
-        var elem = document.querySelector(temp);
-        
-        iload(elem);
+        elems.forEach(function(html) {
+            syncValue(elems[i]);
+            changeState(elems[i]);
+            var switchery = new Switchery(html, {size: 'small', speed: '0.2s'});
 
-        elem.onchange = function() { 
-            if(elem.checked){
-                $(hash + elem.id).val(0);
-                $(hash + elem.id).prev().val(0);
-            } else {
-                $(hash + elem.id).val(1);
-                $(hash + elem.id).prev().val(1);
-            }
-        };
-    });
+            elems[i].onchange = function() { 
+                if(this.checked){
+                    this.defaultValue = 0;
+                    changeState(this);
+                }else {
+                    this.defaultValue = 1;
+                    changeState(this);
+                }
+            };
+            i++;
+        });
+    } else {
+        var i = 0;
+        var elems = document.querySelectorAll('.js-switch');
+
+        for (i ; i < elems.length; i++) {
+            syncValue(elems[i]);
+            changeState(elems[i]);
+            var switchery = new Switchery(elems[i], {size: 'small', speed: '0.2s'});
+
+            elems[i].onchange = function() { 
+                if(this.checked){
+                    this.defaultValue = 0;
+                    changeState(this);
+                }else {
+                    this.defaultValue = 1;
+                    changeState(this);
+                }
+            };
+        }
+    }
 });
 JS;
 $this->registerJs($sw);
-} else {
-$swu = <<< JS
-$(document).ready(function(){
-    var switches_update = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    switches_update.forEach(function(html) {
-      var switches_update = new Switchery(html);
-    });
-
-    var hash = '#';
-    var blank = '';
-
-    function syncValue(object){
-        if(object.value !== object.previousElementSibling){
-            object.previousElementSibling.value = object.value;
-        }
-    }
-
-    function changeState(object){
-        if(parseInt(object.value) === 1) {
-            if (typeof $(hash + object.id).attr('checked') !== typeof undefined && $(hash + object.id).attr('checked') !== false) {
-                $(hash + object.id).removeAttr('checked').removeAttr('data-switchery');
-                object.checked = false;
-                $(object.nextElementSibling).click();
-                $(object.nextElementSibling).click();
-            }
-        } else {
-            $(hash + object.id).attr('checked', true);
-            $(hash + object.id).attr('data-switchery', true);
-            object.checked = true;
-            $(object.nextElementSibling).click().click();
-        }
-    }
-
-    $('input.js-sw').each(function(){
-        var elem = $(this).attr('class').split(' ').pop();
-        var temp = '.' + $(this).attr('class').split(' ').pop();
-        var elem = document.querySelector(temp);
-        
-        syncValue(elem);
-        changeState(elem);
-
-        elem.onchange = function() { 
-            if(elem.checked){
-                $(hash + elem.id).val(0);
-                $(hash + elem.id).prev().val(0);
-            } else {
-                $(hash + elem.id).val(1);
-                $(hash + elem.id).prev().val(1);
-            }
-        };
-    });
-});
-JS;
-$this->registerJs($swu);
-}
 ?>

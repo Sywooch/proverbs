@@ -1139,12 +1139,12 @@ small.other-separator {
 }
 .sidebar::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: transparent;
+    visibility: hidden;
 }
 .sidebar::-webkit-scrollbar-thumb{
     height: 50px;
     border-radius: 10px;
-    border-color: $darkeractive;
+    border-color: red;
     border-style: solid;
     border: 1px 1px 1px 10px;
     visibility: hidden;
@@ -1152,7 +1152,7 @@ small.other-separator {
 .sidebar::-webkit-scrollbar
 {
     width: 14px;
-    background-color: transparent;
+    visibility: hidden;
 }
 span.express-form-student {
     font-size: 14px;
@@ -1283,6 +1283,19 @@ span.express-form-student {
         @include rounded-border(100%);
     }
 }
+#enroll-profile-img-wrap {
+    text-align: center;
+    margin: auto;
+    padding-top: 2px;
+    padding-bottom: 20px;
+    img {
+        height: 200px;
+        width: 200px;
+        background: $softgrey;
+        border: 4px solid white;
+        //@include rounded-border(100%);
+    }
+}
 .bg-red {
     background: red;
 }
@@ -1319,6 +1332,10 @@ select.form-control.pva-form-control {
     position: absolute;
     top: 0;
 }
+#enrollment-form-wrap {
+    @include rounded-border(2px);
+}
+
 @media (max-width: 767px){
     .breadcrumb {
         text-align: left;

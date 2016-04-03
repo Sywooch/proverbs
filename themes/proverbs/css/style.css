@@ -1561,14 +1561,14 @@ small.other-separator hr {
 /* line 1140, ../sass/style.scss */
 .sidebar::-webkit-scrollbar-track {
   border-radius: 10px;
-  background-color: transparent;
+  visibility: hidden;
 }
 
 /* line 1144, ../sass/style.scss */
 .sidebar::-webkit-scrollbar-thumb {
   height: 50px;
   border-radius: 10px;
-  border-color: #2c3a42;
+  border-color: red;
   border-style: solid;
   border: 1px 1px 1px 10px;
   visibility: hidden;
@@ -1577,7 +1577,7 @@ small.other-separator hr {
 /* line 1152, ../sass/style.scss */
 .sidebar::-webkit-scrollbar {
   width: 14px;
-  background-color: transparent;
+  visibility: hidden;
 }
 
 /* line 1157, ../sass/style.scss */
@@ -1734,31 +1734,46 @@ span.express-form-student {
 }
 
 /* line 1286, ../sass/style.scss */
+#enroll-profile-img-wrap {
+  text-align: center;
+  margin: auto;
+  padding-top: 2px;
+  padding-bottom: 20px;
+}
+/* line 1291, ../sass/style.scss */
+#enroll-profile-img-wrap img {
+  height: 200px;
+  width: 200px;
+  background: #f7f7f7;
+  border: 4px solid white;
+}
+
+/* line 1299, ../sass/style.scss */
 .bg-red {
   background: red;
 }
 
-/* line 1289, ../sass/style.scss */
+/* line 1302, ../sass/style.scss */
 .bg-blue {
   background: blue;
 }
 
-/* line 1292, ../sass/style.scss */
+/* line 1305, ../sass/style.scss */
 .bg-orange {
   background: orange;
 }
 
-/* line 1295, ../sass/style.scss */
+/* line 1308, ../sass/style.scss */
 .bg-purple {
   background: purple;
 }
 
-/* line 1299, ../sass/style.scss */
+/* line 1312, ../sass/style.scss */
 .input-div-wrap label {
   font-weight: bold;
 }
 
-/* line 1303, ../sass/style.scss */
+/* line 1316, ../sass/style.scss */
 .form-control.pva-form-control {
   height: 28px;
   border-top: 0;
@@ -1768,25 +1783,32 @@ span.express-form-student {
   padding-left: 0;
 }
 
-/* line 1311, ../sass/style.scss */
+/* line 1324, ../sass/style.scss */
 select.form-control.pva-form-control {
   padding-top: 0;
 }
 
-/* line 1314, ../sass/style.scss */
+/* line 1327, ../sass/style.scss */
 .hr-form-separator {
   width: 100%;
   border: 1px 0 0 0 solid #3d3a3b;
 }
 
-/* line 1318, ../sass/style.scss */
+/* line 1331, ../sass/style.scss */
 #student-status-sw-wrap {
   position: absolute;
   top: 0;
 }
 
+/* line 1335, ../sass/style.scss */
+#enrollment-form-wrap {
+  border-style: solid;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+
 @media (max-width: 767px) {
-  /* line 1323, ../sass/style.scss */
+  /* line 1340, ../sass/style.scss */
   .breadcrumb {
     text-align: left;
     background: transparent;

@@ -6,12 +6,7 @@ use app\models\GradeLevel;
 use yii\helpers\ArrayHelper;
 $grade_level = GradeLevel::find()->all();
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
-if($model->isNewRecord){
-    $this->title = "New";
-} else {
-    $this->title = $model->id;
-}
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = "New";
 ?>
 <p></p>
 <div class="row">
@@ -20,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-10 col-md-10 col-sm-12">
             <div class="row">
                 <div class="tab-content" style="margin-bottom: 15px;">
-                    <div role="tabpanel" class="tab-pane active" id="step1" style="min-height: 300px;">
+                    <div role="tabpanel" class="tab-pane" id="step1" style="min-height: 300px;">
                         <div class="row">
                             <div id="student-profile-offset-bg">&nbsp;</div>
                             <div class="col-lg-3 col-md-3 col-sm-12">
@@ -88,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="step2">
+                    <div role="tabpanel" class="tab-pane active" id="step2">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <h4><strong>Parents Information</strong></h4>
@@ -119,11 +114,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-12">
                                     <div class="container form-input-wrapper">
-                                        <label><strong>Deceased</strong></label>
-                                        <?= $form->field($model, 'father_is', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Father</label></td><td>{input}</td></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->father_is])->label(false) ?>
-                                        <?= $form->field($model, 'mother_is', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Mother</label></td><td>{input}</td><tr><td><div style="min-width: 100%; min-height: 24px;"></div></td></tr></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->mother_is])->label(false) ?>
                                         <?= $form->field($model, 'parents_are', ['inputTemplate' => '<div class="input-div-wrap"><label>Parents are </label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList(['0' => 'Together', '1' => 'Separated', '2' => 'Widowed', '3' => 'Single', '4' => 'Marriage Anulled'], ['default' => 'Together'])->label(false) ?>
                                         <?= $form->field($model, 'student_is_living_with', ['inputTemplate' => '<div class="input-div-wrap"><label>Student is living with </label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList(['0' => 'Both Parents', '1' => 'Father', '2' => 'Mother', '3' => 'Guardian'], ['default' => 'both Parents'])->label(false) ?>
+                                        <div style="padding-bottom: 0px;">
+                                            <label><strong>If Deceased</strong></label>
+                                        </div>
+                                            <?= $form->field($model, 'father_is', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Father</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->father_is])->label(false) ?>
+                                            <?= $form->field($model, 'mother_is', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Mother</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->mother_is])->label(false) ?>
                                     </div>
                                 </div>
                             </div>
@@ -195,20 +192,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="container form-input-wrapper">
-                                    <div id="student-reqs" class="col-lg-2 col-md-2 col-sm-12">
-                                        <?= $form->field($model, 'student_photo', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Student\'s Photo</label></td><td>{input}</td></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_photo])->label(false) ?>
-                                        <?= $form->field($model, 'guardians_photo', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Guardians\' Photo</label></td><td>{input}</td></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->guardians_photo])->label(false) ?>
-                                        <?= $form->field($model, 'report_card', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Birth Certificate</label></td><td>{input}</td></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->report_card])->label(false) ?>
-                                        <?= $form->field($model, 'birth_certificate', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Report Card</label></td><td>{input}</td></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->birth_certificate])->label(false) ?>
-                                        <?= $form->field($model, 'good_moral', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Good Moral</label></td><td>{input}</td></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->good_moral])->label(false) ?>
+                                    <div id="student-reqs" class="col-lg-12 col-md-12 col-sm-12">
+                                        <?= $form->field($model, 'student_photo', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Student\'s Photo</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_photo])->label(false) ?>
+                                        <?= $form->field($model, 'guardians_photo', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Guardian\'s Photo</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->guardians_photo])->label(false) ?>
+                                        <?= $form->field($model, 'report_card', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Birth Certificate</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->report_card])->label(false) ?>
+                                        <?= $form->field($model, 'birth_certificate', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Report Card</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->birth_certificate])->label(false) ?>
+                                        <?= $form->field($model, 'good_moral', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Good Moral</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->good_moral])->label(false) ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="container form-input-wrapper">
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <?= $form->field($model, 'status', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Active</label></td><td>{input}</td></tr></table'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->status])->label(false) ?>
-                                        <?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<table><tr class="tr-sw"><td><label style="padding: 0;">Siblings Enrolled</label></td><td>{input}</td></tr></table>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled])->label(false) ?>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <?= $form->field($model, 'status', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Active</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->status])->label(false) ?>
+                                        <?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Siblings Enrolled</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled])->label(false) ?>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +225,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </ul>
                 <p>
                     <div class="form-group">
-                       <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-block' : 'btn btn-primary btn-block']) ?>
+                       <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Save', ['class' => $model->isNewRecord ? 'btn btn-success btn-block' : 'btn btn-primary btn-block']) ?>
                        <?= Html::a(Yii::t('app', 'Cancel'), ['/students'], ['class' => 'btn btn-default btn-block']) ?>
                     </div>
                 </p>

@@ -7,6 +7,7 @@ use yii\helpers\Html;
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Student', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-form-update">
     <?= $this->render('_form', [
