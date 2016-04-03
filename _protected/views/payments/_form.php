@@ -13,9 +13,9 @@ use yii\bootstrap\ActiveForm;
     <div class="row">
         <div class="container form-input-wrapper">
             <?= $form->field($model, 'transaction', ['inputTemplate' => '<label style="color: #555; padding-right: 15px;">Card</label>{input}'])
-                ->checkbox($options = ['id' => 'it', 'class' => 'js-sw js-switch-small-green tsw', 
+                ->checkbox($options = ['class' => 'js-switch', 
                 'value' => $model->isNewRecord ? 1 : $model->transaction,
-                'data-switchery' => true, 
+                'data-switchery' => true,
                 ])->label(false) 
             ?>
          </div>
@@ -52,10 +52,9 @@ use yii\bootstrap\ActiveForm;
 if($model->isNewRecord){
 $sw = <<< JS
 $(document).ready(function(){
-    var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    switches.forEach(function(html) {
-      var switchery = new Switchery(html);
+    $('input[type=checkbox]').filter('.js-switch').filter(
+            'input:not([data-switchery=true])').each(function() {
+        var switches = new Switchery(this, options);
     });
 
     var hash = '#';

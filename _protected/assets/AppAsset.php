@@ -51,9 +51,7 @@ class AppAsset extends AssetBundle
         'js/bootstrap.min.js',
         'js/init.js',
         'js/pva.js',
-        //'js/switchery.js',
         'js/switchery.min.js',
-        'js/switchery-init.js',
     ];
 
 }

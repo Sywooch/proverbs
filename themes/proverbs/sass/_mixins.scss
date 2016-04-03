@@ -5,3 +5,13 @@
      -o-transition: $smooth-transition;
         transition: $smooth-transition;
 }
+
+@mixin rounded-border($radius){
+	border-style: solid;
+    -webkit-border-radius: $radius;
+            border-radius: $radius;
+}
+@mixin border-color($color){
+    -webkit-border-radius: $color;
+            border-radius: $color;
+}

@@ -6,7 +6,8 @@
 @import "mixins";
 
 body {
-    background: white;
+    min-width: 320px;
+    background: $softgrey;
     overflow-y: scroll;
 }
 .dsp-table {
@@ -29,9 +30,10 @@ pre {
 .text-align-right {
     text-align: right;
 }
-.header-offset, .bottom-fix, .page-content-offset {
-    min-height: 54px;
+#header-offset, .bottom-fix, .page-content-offset {
+    min-height: 59px;
     width: 100%;
+    min-width: 320px;
 }
 .btn, .button, .form-control, .site-index .jumbotron, .panel {
     -webkit-border-radius: 0;
@@ -871,8 +873,6 @@ small.other-separator {
 }
 .board-content::-webkit-scrollbar-track {
     border-radius: 10px;
-    //background-color: fade_out(white, 1);
-    //visibility: hidden;
 }
 .board-content::-webkit-scrollbar-thumb{
     background-color: #3A4B55;
@@ -905,10 +905,6 @@ small.other-separator {
     padding: 0 6px;
     margin: 0;
     background: $vanilla;
-}
-.breadcrumb-line {
-    background: none;
-    border: 0;
 }
 #announcement {
     margin-left: 5px 0;
@@ -953,19 +949,40 @@ small.other-separator {
     border: 0;
 }
 .nav-tabs {
-    li {
-        background: $lightergrey;
-    }
+    @include rounded-border(2px);
+    border: 1px solid $vanilla;
+    padding-bottom: 1px;
+}
+.nav-tabs>li.active > a:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 6px solid #ffffff;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+.nav-tabs>li.active > a:after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 15px;
+  border-left: 5px solid #eaeaea;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-    border-color: $lightergrey;
+    border: 1px solid transparent;
+    border-right: 1px solid $vanilla;
+}
+.nav-tabs> li:last-child.active {
+    background: red;
 }
 .nav-tabs {
     li {
-        margin: 2px 2px 10px 2px;
         a {
             &:hover {
-                border-top-color: $maroonish;
+                border: 1px solid transparent;
             }
         }
     }
@@ -1050,17 +1067,16 @@ small.other-separator {
     background: red;
 }
 .tab-content {
-    margin: 10px 1px 0 1px;
-    border: 0;
+    border: 1px solid $lightergrey;
+    padding: 10px;
+    -webkit-border-radius: 4px;
+            border-radius: 4px;
 }
 .container.form-input-wrapper {
     width: 100%;
 }
 .applicant-form-create {
     margin: 0;    
-}
-.breadcrumb-line {
-    margin: 0 0 15px 0;
 }
 .progress {
     margin-bottom: 15px;
@@ -1123,8 +1139,7 @@ small.other-separator {
 }
 .sidebar::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: fade_out(white, 1);
-    //visibility: hidden;
+    background-color: transparent;
 }
 .sidebar::-webkit-scrollbar-thumb{
     height: 50px;
@@ -1137,8 +1152,7 @@ small.other-separator {
 .sidebar::-webkit-scrollbar
 {
     width: 14px;
-    //background-color: fade_out(#3A4B55, .1);
-    background-color: white;
+    background-color: transparent;
 }
 span.express-form-student {
     font-size: 14px;
@@ -1191,9 +1205,126 @@ span.express-form-student {
     margin: 0;
     padding: 0;
 }
-.form-control.form-uline {
+.tr-sw {
+    td:first-child {
+        min-width: 150px;
+        label {
+            color: #555;
+        }
+    }
+    td:last-child {
+        float: right;
+    }
+}
+.tr-sw.student-profile {
+    background: blue;
+    td:first-child {
+        //min-width: 150px;
+        label {
+            color: #555;
+        }
+    }
+    td:last-child {
+        //float: right;
+        //background: red;
+        //padding-left: -15px;
+    }
+}
+.bg-none {
+    background: transparent;
+}
+.bg-white {
+    background: white;
+}
+.tablist-a {
+    //max-height: 60px;
+}
+#st-form {
+    min-height: 400px;
+}
+.breadcrumb-line {
+    background: none;
+    border: 0;
+    text-align: center;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+.pd-lr-0 {
+    padding-left: 0;
+    padding-right: 0;
+}
+#student-profile-offset-bg {
+    background: $wow-vanilla;
+    //background: $default-orange;
+    //background: darken($softgrey, 2%);
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-left: 5px;
+    height: 66px;
+    width: 100%;
+    border-bottom: 1px solid $lightergrey;
+    //border-top-left-radius: 4px;
+    //border-top-right-radius: 4px;
+}
+#student-profile-img-wrap {
+    float: left;
+    margin: auto;
+    height: 106px;
+    width: 106px;
+    padding: 0 0 0 35px;
+    -webkit-border-radius: 2px;
+            border-radius: 2px;
+    img {
+        height: 106px;
+        width: 106px;
+        background: $softgrey;
+        border: 4px solid white;
+        @include rounded-border(100%);
+    }
+}
+.bg-red {
+    background: red;
+}
+.bg-blue {
+    background: blue;
+}
+.bg-orange {
+    background: orange;
+}
+.bg-purple {
+    background: purple;
+}
+.input-div-wrap {
+    label {
+        font-weight: bold;
+    }
+}
+.form-control.pva-form-control {
+    height: 28px;
     border-top: 0;
     border-right: 0;
+    border-bottom: 1px solid $vanilla;
     border-left: 0;
-    border-bottom: 1px solid #vanilla;
+    padding-left: 0;
+}
+select.form-control.pva-form-control {
+    padding-top: 0;
+}
+.hr-form-separator {
+    width: 100%;
+    border: 1px 0 0 0 solid $form-border;
+}
+#student-status-sw-wrap {
+    position: absolute;
+    top: 0;
+}
+@media (max-width: 767px){
+    .breadcrumb {
+        text-align: left;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        margin-bottom: 10px;
+    }
 }

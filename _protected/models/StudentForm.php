@@ -222,17 +222,17 @@ class StudentForm extends \yii\db\ActiveRecord
 
     public function getMotherIs($data) { //0:Living 1:Deceased
         if($data === 1){
-            return 'Deceased';
-        } else {
             return 'Living';
+        } else {
+            return 'Deceased';
         }
     }
 
     public function getFatherIs($data) { //0:Living 1:Deceased
         if($data === 1){
-            return 'Deceased';
-        } else {
             return 'Living';
+        } else {
+            return 'Deceased';
         }
     }
 
@@ -307,17 +307,17 @@ class StudentForm extends \yii\db\ActiveRecord
 
     public function getHasSiblingEnrolled($data) {
         if($data === 1){
-            return 'Yes';
+            return 'None';
         } else {
-            return 'No';
+            return 'Yes';
         }
     }
 
     public function getSubmitted($data) { //0:Not Submitted 1:Submitted
         if($data === 1){
-            return 'Submitted';
-        } else {
             return 'Not Submitted';
+        } else {
+            return 'Submitted';
         }
     }
     /**

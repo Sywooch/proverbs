@@ -35,7 +35,14 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
                                 <?= $model->isNewRecord ? '' : '<div class="col-lg-3 col-md-3 col-sm-12">' . $form->field($model, 'id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">ID</span></span></span>{input}</div>'])->label(false) . '</div>' ?>
                                 <?= $model->isNewRecord ? '' : '<div class="col-lg-3 col-md-3 col-sm-12">' . $form->field($model, 'status', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Status</span></span></span>{input}</div>'])->dropDownList(['0' => 'Inactive', '1' => 'Active', '2' => 'Applicant'], ['default' => 'Applicant'])->label(false) . '</div>' ?>
                                 <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData, ['id', 'name'])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Has Sibling Enrolled</span></span></span>{input}</div>'])->dropDownList(['0' => 'No', '1' => 'Yes'], ['default' => 'No'])->label(false) ?></div>
+                                <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<label style="color: #555; padding-right: 15px;">Sibling</label>{input}'])->checkbox($options = [
+                                        'id' => 'iss', 'class' => 'js-switch js-switch-small-green ss', 
+                                        'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled,
+                                        'data-switcher' => true
+                                        ])->label(false) 
+                                    ?>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -192,3 +199,100 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
             <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php
+if($model->isNewRecord){
+$sw = <<< JS
+$(document).ready(function(){
+    var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+    switches.forEach(function(html) {
+      var switchery = new Switchery(html);
+    });
+
+    var hash = '#';
+    var blank = '';
+
+    function iload(object){
+        if(object.value !== object.previousElementSibling){
+            object.previousElementSibling.value = object.value;
+        }
+    }
+
+    $('input.js-sw').each(function(){
+        var elem = $(this).attr('class').split(' ').pop();
+        var temp = '.' + $(this).attr('class').split(' ').pop();
+        
+        var elem = document.querySelector(temp);
+        
+        iload(elem);
+
+        elem.onchange = function() { 
+            if(elem.checked){
+                $(hash + elem.id).val(0);
+                $(hash + elem.id).prev().val(0);
+            } else {
+                $(hash + elem.id).val(1);
+                $(hash + elem.id).prev().val(1);
+            }
+        };
+    });
+});
+JS;
+$this->registerJs($sw);
+} else {
+$swu = <<< JS
+$(document).ready(function(){
+    var switches_update = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+    switches_update.forEach(function(html) {
+      var switches_update = new Switchery(html);
+    });
+
+    var hash = '#';
+    var blank = '';
+
+    function syncValue(object){
+        if(object.value !== object.previousElementSibling){
+            object.previousElementSibling.value = object.value;
+        }
+    }
+
+    function changeState(object){
+        if(parseInt(object.value) === 1) {
+            if (typeof $(hash + object.id).attr('checked') !== typeof undefined && $(hash + object.id).attr('checked') !== false) {
+                $(hash + object.id).removeAttr('checked').removeAttr('data-switchery');
+                object.checked = false;
+                $(object.nextElementSibling).click();
+                $(object.nextElementSibling).click();
+            }
+        } else {
+            $(hash + object.id).attr('checked', true);
+            $(hash + object.id).attr('data-switchery', true);
+            object.checked = true;
+            $(object.nextElementSibling).click().click();
+        }
+    }
+
+    $('input.js-sw').each(function(){
+        var elem = $(this).attr('class').split(' ').pop();
+        var temp = '.' + $(this).attr('class').split(' ').pop();
+        var elem = document.querySelector(temp);
+        
+        syncValue(elem);
+        changeState(elem);
+
+        elem.onchange = function() { 
+            if(elem.checked){
+                $(hash + elem.id).val(0);
+                $(hash + elem.id).prev().val(0);
+            } else {
+                $(hash + elem.id).val(1);
+                $(hash + elem.id).prev().val(1);
+            }
+        };
+    });
+});
+JS;
+$this->registerJs($swu);
+}
+?>
