@@ -15,7 +15,7 @@ $this->title = "New";
         <div class="col-lg-10 col-md-10 col-sm-12">
             <div class="row">
                 <div class="tab-content" style="margin-bottom: 15px;">
-                    <div role="tabpanel" class="tab-pane" id="step1" style="min-height: 300px;">
+                    <div role="tabpanel" class="tab-pane active" id="step1" style="min-height: 300px;">
                         <div class="row">
                             <div id="student-profile-offset-bg">&nbsp;</div>
                             <div class="col-lg-3 col-md-3 col-sm-12">
@@ -83,7 +83,7 @@ $this->title = "New";
                         </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane active" id="step2">
+                    <div role="tabpanel" class="tab-pane" id="step2">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <h4><strong>Parents Information</strong></h4>
