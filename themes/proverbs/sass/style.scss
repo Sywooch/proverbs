@@ -1279,16 +1279,33 @@ span.express-form-student {
         @include rounded-border(100%);
     }
 }
+#enroll-student-profile-image-bg {
+    height: 200px;
+    width: 200px;
+    @include rounded-border(100%);
+    border: 4px solid white;
+}
 #enroll-profile-img-wrap {
+    //padding: 4px;
     text-align: center;
     margin: auto;
-    padding-top: 2px;
-    padding-bottom: 20px;
+    height: 200px;
+    width: 200px;
+    @include rounded-border(100%);
+    border: 0;
+    background: #d8d8d8;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     img {
+        position: relative;
+        top: -200px;
+        left: 0;
         height: 200px;
         width: 200px;
-        background: $softgrey;
+        @include rounded-border(100%);
         border: 4px solid white;
+        background: $vanilla;
     }
 }
 .bg-red {
@@ -1327,51 +1344,62 @@ select.form-control.pva-form-control {
     position: absolute;
     top: 0;
 }
-.enroll-profile-img-bg {
+#enroll-profile-write-wrap {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    padding-right: 32px;
-    div {
-        height: 50%;
-        background: white;
-        border: 0;
-    }
+    bottom: 50px;
+    //left: 30px;
+    right: 30px;
 }
+
 #enroll-profile-name {
     padding: 20px 0;
     padding-bottom: 0;
     font-weight: 700;
 }
-.diagonal-stripe {
-background-color: #fff; 
-background-image: 
-linear-gradient(90deg, transparent 79px, #abced4 79px, transparent 0px, transparent 81px),
-linear-gradient(#eee .1em, transparent .1em);
-background-size: 100% 1.2em;
+.horizontal-stripe {
+    background-color: #fff; 
+    background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, transparent 0px, transparent 81px), linear-gradient($vanilla .1em, transparent .1em);
+    background-size: 100% 1.5em;
+}
+.smooth {
+    -webkit-transition: all ease 2s 0s;
+       -moz-transition: all ease 2s 0s;
+        -ms-transition: all ease 2s 0s;
+         -o-transition: all ease 2s 0s;
+            transition: all ease 2s 0s;
 }
 #enrollment-form-wrap {
     padding: 0;
     @include rounded-border(2px);
-    .panel-body {
-
-    }
+    
 }
-#enroll-profile-img-wrap {
-    @include rounded-border(2px);
-    padding: 0;
-    border: 1px solid #eee;
-    height: 200px;    
-    width: 200px;
-    img {
-        padding: 0;
+
+#enroll-profile-details {
+    .row {
+        padding: 10px 0;
         margin: 0;
-        height: 100%;    
-        width: 100%;
     }
 }
-#profile-photo {
+.enroll-profile-info-wrap table {
+    tr {
+        vertical-align: middle;
+        td {
+            padding-right: 20px;
+        }
+        td:first-child {
+        }
+        td:last-child {
 
+        }
+    }
+}
+#enroll-profile-address {
+    text-align: left;
+    font-size: 12px;
+}
+#ui-profile-info-icon {
+    height: 32px;
+    width: 32px;
 }
 @media (max-width: 767px){
     .breadcrumb {

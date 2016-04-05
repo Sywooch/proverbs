@@ -7,12 +7,13 @@ use app\models\EnrolledForm;
 use app\models\EnrolledFormSearch;
 use app\models\AssessmentForm;
 use app\models\Tuition;
-use app\models\Section;
 use app\models\StudentForm;
+use app\models\Section;
 use app\models\SchoolYear;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * EnrollController implements the CRUD actions for EnrolledForm model.
@@ -41,6 +42,7 @@ class EnrollController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'card' => ['post'],
                     'section' => ['post'],
                     'findTuitionId' => ['post'],
                     'gradeLevel' => ['post'],
@@ -119,6 +121,45 @@ class EnrollController extends Controller
                 'assessment' => $assessment,
                 'sy' => $sy,
             ]);
+        }
+    }
+
+    public function actionCard($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $id = $object->sid;
+            $student = $this->findStudent($id);
+            $sped = (int) $student->sped;
+            $level = $student->gradeLevel->name;
+            $bdate = $student->birth_date;
+            $date = strtotime($bdate);
+            $y = date('Y', $date);
+            $m = date('m', $date);
+            $d = date('d', $date);
+            $age = \Carbon\Carbon::createFromDate($y, $m, $d)->age;
+            $bday = \Carbon\Carbon::create($y, $m, $d)->toFormattedDateString();
+
+            if(!empty($student->students_profile_image)){
+                $img = Yii::$app->request->baseUrl . '/uploads/students/' . $student->students_profile_image;
+            }else {
+                $img = 'empty';
+            }
+
+            $data = array(
+                    'sid'=> $student->id, 
+                    'name' => implode(' ', [$student->first_name, $student->middle_name, $student->last_name]),
+                    'nick' => ucfirst($student->nickname),
+                    'addr' => $student->address,
+                    'bday' => $bday,
+                    'age' => $age,
+                    'level' => $level,
+                    'spd' => $sped,
+                    'img' => $img,
+                );
+
+            return $data;
         }
     }
 

@@ -41,39 +41,67 @@ use yii\bootstrap\ActiveForm;
 <?php
 $sw = <<< JS
 $(document).ready(function(){
-    var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    switches.forEach(function(html) {
-      var switchery = new Switchery(html);
-    });
-
     var hash = '#';
     var blank = '';
 
-    function syncValue(object){
-        if(object.value !== object.previousElementSibling){
-            object.previousElementSibling.value = object.value;
+    function syncValue(elem){
+        if(elem.defaultValue !== elem.previousElementSibling.defaultValue){
+            elem.previousElementSibling.defaultValue = elem.defaultValue;
         }
     }
 
-    $('input.js-sw').each(function(){
-        var elem = $(this).attr('class').split(' ').pop();
-        var temp = '.' + $(this).attr('class').split(' ').pop();
+    function changeState(elem){
+        if(parseInt(elem.defaultValue) === 1){
+            elem.checked = false;
+            $(elem).attr('checked', false);
+            elem.previousElementSibling.defaultValue = 1;
+        } else {
+            elem.checked = true;
+            $(elem).attr('checked', true);
+            elem.previousElementSibling.defaultValue = 0;
+        }
+    }
+    
+    if (Array.prototype.forEach) {
+        var i = 0;
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         
-        var elem = document.querySelector(temp);
-        
-        syncValue(elem);
+        elems.forEach(function(html) {
+            syncValue(elems[i]);
+            changeState(elems[i]);
+            var switchery = new Switchery(html, {size: 'small', speed: '0.2s'});
 
-        elem.onchange = function() { 
-            if(elem.checked){
-                $(hash + elem.id).val(0);
-                $(hash + elem.id).prev().val(0);
-            } else {
-                $(hash + elem.id).val(1);
-                $(hash + elem.id).prev().val(1);
-            }
-        };
-    });
+            elems[i].onchange = function() { 
+                if(this.checked){
+                    this.defaultValue = 0;
+                    changeState(this);
+                }else {
+                    this.defaultValue = 1;
+                    changeState(this);
+                }
+            };
+            i++;
+        });
+    } else {
+        var i = 0;
+        var elems = document.querySelectorAll('.js-switch');
+
+        for (i ; i < elems.length; i++) {
+            syncValue(elems[i]);
+            changeState(elems[i]);
+            var switchery = new Switchery(elems[i], {size: 'small', speed: '0.2s'});
+
+            elems[i].onchange = function() { 
+                if(this.checked){
+                    this.defaultValue = 0;
+                    changeState(this);
+                }else {
+                    this.defaultValue = 1;
+                    changeState(this);
+                }
+            };
+        }
+    }
 });
 JS;
 $this->registerJs($sw);

@@ -1734,46 +1734,70 @@ span.express-form-student {
 }
 
 /* line 1282, ../sass/style.scss */
-#enroll-profile-img-wrap {
-  text-align: center;
-  margin: auto;
-  padding-top: 2px;
-  padding-bottom: 20px;
-}
-/* line 1287, ../sass/style.scss */
-#enroll-profile-img-wrap img {
+#enroll-student-profile-image-bg {
   height: 200px;
   width: 200px;
-  background: #f7f7f7;
+  border-style: solid;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
   border: 4px solid white;
 }
 
-/* line 1294, ../sass/style.scss */
+/* line 1288, ../sass/style.scss */
+#enroll-profile-img-wrap {
+  text-align: center;
+  margin: auto;
+  height: 200px;
+  width: 200px;
+  border-style: solid;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  border: 0;
+  background: #d8d8d8;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+}
+/* line 1300, ../sass/style.scss */
+#enroll-profile-img-wrap img {
+  position: relative;
+  top: -200px;
+  left: 0;
+  height: 200px;
+  width: 200px;
+  border-style: solid;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  border: 4px solid white;
+  background: #e9eaed;
+}
+
+/* line 1311, ../sass/style.scss */
 .bg-red {
   background: red;
 }
 
-/* line 1297, ../sass/style.scss */
+/* line 1314, ../sass/style.scss */
 .bg-blue {
   background: blue;
 }
 
-/* line 1300, ../sass/style.scss */
+/* line 1317, ../sass/style.scss */
 .bg-orange {
   background: orange;
 }
 
-/* line 1303, ../sass/style.scss */
+/* line 1320, ../sass/style.scss */
 .bg-purple {
   background: purple;
 }
 
-/* line 1307, ../sass/style.scss */
+/* line 1324, ../sass/style.scss */
 .input-div-wrap label {
   font-weight: bold;
 }
 
-/* line 1311, ../sass/style.scss */
+/* line 1328, ../sass/style.scss */
 .form-control.pva-form-control {
   height: 28px;
   border-top: 0;
@@ -1783,52 +1807,54 @@ span.express-form-student {
   padding-left: 0;
 }
 
-/* line 1319, ../sass/style.scss */
+/* line 1336, ../sass/style.scss */
 select.form-control.pva-form-control {
   padding-top: 0;
 }
 
-/* line 1322, ../sass/style.scss */
+/* line 1339, ../sass/style.scss */
 .hr-form-separator {
   width: 100%;
   border: 1px 0 0 0 solid #3d3a3b;
 }
 
-/* line 1326, ../sass/style.scss */
+/* line 1343, ../sass/style.scss */
 #student-status-sw-wrap {
   position: absolute;
   top: 0;
 }
 
-/* line 1330, ../sass/style.scss */
-.enroll-profile-img-bg {
+/* line 1347, ../sass/style.scss */
+#enroll-profile-write-wrap {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  padding-right: 32px;
-}
-/* line 1335, ../sass/style.scss */
-.enroll-profile-img-bg div {
-  height: 50%;
-  background: white;
-  border: 0;
+  bottom: 50px;
+  right: 30px;
 }
 
-/* line 1341, ../sass/style.scss */
+/* line 1354, ../sass/style.scss */
 #enroll-profile-name {
   padding: 20px 0;
   padding-bottom: 0;
   font-weight: 700;
 }
 
-/* line 1346, ../sass/style.scss */
-.diagonal-stripe {
+/* line 1359, ../sass/style.scss */
+.horizontal-stripe {
   background-color: #fff;
-  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 79px, #abced4 79px, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 81px), linear-gradient(#eeeeee 0.1em, rgba(0, 0, 0, 0) 0.1em);
-  background-size: 100% 1.2em;
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 79px, #abced4 79px, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 81px), linear-gradient(#e9eaed 0.1em, rgba(0, 0, 0, 0) 0.1em);
+  background-size: 100% 1.5em;
 }
 
-/* line 1353, ../sass/style.scss */
+/* line 1364, ../sass/style.scss */
+.smooth {
+  -webkit-transition: all ease 2s 0s;
+  -moz-transition: all ease 2s 0s;
+  -ms-transition: all ease 2s 0s;
+  -o-transition: all ease 2s 0s;
+  transition: all ease 2s 0s;
+}
+
+/* line 1371, ../sass/style.scss */
 #enrollment-form-wrap {
   padding: 0;
   border-style: solid;
@@ -1836,26 +1862,35 @@ select.form-control.pva-form-control {
   border-radius: 2px;
 }
 
-/* line 1360, ../sass/style.scss */
-#enroll-profile-img-wrap {
-  border-style: solid;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  padding: 0;
-  border: 1px solid #eee;
-  height: 200px;
-  width: 200px;
-}
-/* line 1366, ../sass/style.scss */
-#enroll-profile-img-wrap img {
-  padding: 0;
+/* line 1378, ../sass/style.scss */
+#enroll-profile-details .row {
+  padding: 10px 0;
   margin: 0;
-  height: 100%;
-  width: 100%;
+}
+
+/* line 1384, ../sass/style.scss */
+.enroll-profile-info-wrap table tr {
+  vertical-align: middle;
+}
+/* line 1386, ../sass/style.scss */
+.enroll-profile-info-wrap table tr td {
+  padding-right: 20px;
+}
+
+/* line 1396, ../sass/style.scss */
+#enroll-profile-address {
+  text-align: left;
+  font-size: 12px;
+}
+
+/* line 1400, ../sass/style.scss */
+#ui-profile-info-icon {
+  height: 32px;
+  width: 32px;
 }
 
 @media (max-width: 767px) {
-  /* line 1377, ../sass/style.scss */
+  /* line 1405, ../sass/style.scss */
   .breadcrumb {
     text-align: left;
     background: transparent;
