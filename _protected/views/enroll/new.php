@@ -10,7 +10,8 @@ $this->title = 'New';
 $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
 ?>
 <div class="enrollment-form">
-    <?= $this->render('_form', [
+    <?= $this->render('_form-express', [
         'model' => $model,
+        'student' => $student
     ]) ?>
 </div>

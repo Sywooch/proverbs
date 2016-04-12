@@ -14,7 +14,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
-
+use app\models\GradeLevel;
+use yii\helpers\ArrayHelper;
 /**
  * EnrollController implements the CRUD actions for EnrolledForm model.
  */
@@ -57,14 +58,20 @@ class EnrollController extends Controller
      */
     public function actionIndex()
     {
-
+        $grade_level = GradeLevel::find()->all();
+        $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
+        $listData = ArrayHelper::map($grade_level, 'id' , 'name');
+        $listData2 = ArrayHelper::map($school_year, 'id' , 'sy');
         $searchModel = new EnrolledFormSearch();
-        $searchModel->sy_id = $this->latestSY();
+        $searchModel->enrollment_status = 0;
+        $searchModel->sy_id = $this->findLatestSy();
         $dataProvider = $searchModel->searchEnrolled(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'listData' => $listData,
+            'listData2' => $listData2,
         ]);
     }
 
@@ -129,6 +136,7 @@ class EnrollController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             
             $object = json_decode($data);
+            
             $id = $object->sid;
             $student = $this->findStudent($id);
             $sped = (int) $student->sped;
@@ -149,8 +157,9 @@ class EnrollController extends Controller
 
             $data = array(
                     'sid'=> $student->id, 
-                    'name' => implode(' ', [$student->first_name, $student->middle_name, $student->last_name]),
-                    'nick' => ucfirst($student->nickname),
+                    'act'=> (int) $student->status,
+                    'name' =>  implode(' ', [$student->first_name, $student->middle_name, $student->last_name]),
+                    'nick' => ucfirst('\'' . $student->nickname . '\''),
                     'addr' => $student->address,
                     'bday' => $bday,
                     'age' => $age,
@@ -174,10 +183,12 @@ class EnrollController extends Controller
 
     public function actionSection($id)
     {
-        $section = Section::find()->where(['grade_level_id' => $id])/*->orderBy(['section_name', SORT_ASC])*/->all();
+        if(!Yii::$app->user->isGuest){
+            $section = Section::find()->where(['grade_level_id' => $id])/*->orderBy(['section_name', SORT_ASC])*/->all();
 
-        foreach ($section as $item) {
-            echo '<option value="' . $item->id . '">' . $item->section_name . '</option>';
+            foreach ($section as $item) {
+                echo '<option value="' . $item->id . '">' . $item->section_name . '</option>';
+            }
         }
     }
     /**
@@ -189,12 +200,15 @@ class EnrollController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $student = $this->findStudent($model->student_id);
+        //$model->student_id = $student->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'student' => $student,
             ]);
         }
     }
@@ -257,15 +271,11 @@ class EnrollController extends Controller
         }
     }
 
-    protected function latestSY()
+    protected function findLatestSy()
     {   
-        if ((EnrolledForm::find()->orderBy(['id' => SORT_ASC])->all()[0]->sy->sy) !== null) {
+        $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
 
-            return EnrolledForm::find()->orderBy(['id' => SORT_DESC])->all()[0]->sy->sy;
-        } else {
-
-            return null;
-        }
+        return $school_year[0]->sy;
     }
 
     protected function findModel($id)

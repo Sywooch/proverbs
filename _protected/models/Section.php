@@ -61,7 +61,7 @@ class Section extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'section_name' => 'Section Name',
-            'grade_level_id' => 'Grade Level ID',
+            'grade_level_id' => 'Grade Level',
             //'grade_level.name' => 'Grade Level',
         ];
     }
@@ -95,12 +95,25 @@ class Section extends \yii\db\ActiveRecord
             self::L80 => 'Grade 8',
             self::L90 => 'Grade 9',
             self::L100 => 'Grade 10',
-            self::L111 => 'Grade 11 1st Semester',
-            self::L110 => 'Grade 11 2nd Semester',
-            self::L120 => 'Grade 12 1st Semester',
-            self::L121 => 'Grade 12 2nd Semester',
+            self::L111 => 'Grade 11 1st Sem',
+            self::L110 => 'Grade 11 2nd Sem',
+            self::L120 => 'Grade 12 1st Sem',
+            self::L121 => 'Grade 12 2nd Sem',
         ];
         
+        return $levelArray;
+    }
+
+    public function getGradeList()
+    {
+        $grade_level = GradeLevel::find()->orderBy(['id' => SORT_ASC])->all();
+        
+        $levelArray = [null => null];
+
+        for($i = 0; $i < count($grade_level); $i++){
+            $levelArray[$grade_level[$i]->id] = $grade_level[$i]->name;
+        }  
+
         return $levelArray;
     }
 
@@ -110,13 +123,49 @@ class Section extends \yii\db\ActiveRecord
         $grade_level = (empty($grade_level)) ? $this->grade_level_id : $grade_level ;
 
         if ($grade_level === self::L121){
-            return "Grade 12 2nd Semester";
-        } elseif($grade_level === self::L121){
-            return "Grade 12 1st Semester";
+            return "G12 B";
+        } elseif($grade_level === self::L120){
+            return "G12 A";
         } elseif($grade_level === self::L111){
-            return "Grade 11 2nd Semester";
+            return "G11 B";
         } elseif($grade_level === self::L110){
-            return "Grade 11 1st Semester";
+            return "G11 A";
+        } elseif($grade_level === self::L100){
+            return "G10";
+        } elseif($grade_level === self::L90){
+            return "G9";
+        } elseif($grade_level === self::L80){
+            return "G8";
+        } elseif($grade_level === self::L70){
+            return "G7";
+        } elseif($grade_level === self::L60){
+            return "G6";
+        } elseif($grade_level === self::L50){
+            return "G5";
+        } elseif($grade_level === self::L40){
+            return "G4";
+        } elseif($grade_level === self::L30){
+            return "G3";
+        } elseif($grade_level === self::L20){
+            return "G2";
+        } elseif($grade_level === self::L10){
+            return "G1";
+        } elseif($grade_level === self::L3){
+            return "K2";
+        } elseif($grade_level === self::L2){
+            return "K1";
+        } elseif($grade_level === self::L1){
+            return "N";
+        }
+
+        /*if ($grade_level === self::L121){
+            return "Grade 12 2nd Sem";
+        } elseif($grade_level === self::L121){
+            return "Grade 12 1st Sem";
+        } elseif($grade_level === self::L111){
+            return "Grade 11 2nd Sem";
+        } elseif($grade_level === self::L110){
+            return "Grade 11 1st Sem";
         } elseif($grade_level === self::L100){
             return "Grade 10";
         } elseif($grade_level === self::L90){
@@ -143,6 +192,6 @@ class Section extends \yii\db\ActiveRecord
             return "Kinder 1";
         } elseif($grade_level === self::L1){
             return "Nursery";
-        }
+        }*/
     }
 }

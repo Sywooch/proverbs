@@ -9,6 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' 
 <div class="enrolled-form-update">
     <?= $this->render('_form', [
         'model' => $model,
+        'student' => $student
     ]) ?>
 
 </div>

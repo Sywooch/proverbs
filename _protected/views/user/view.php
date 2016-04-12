@@ -8,21 +8,15 @@ use yii\widgets\DetailView;
 $this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 ?>
+<p></p>
 <div class="user-view">
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], [
-            'class' => 'btn btn-primary']) ?>
-    </p>
-
-    </h1>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            //'id',
+            'id',
             'username',
-            'email:email',
-            //'password_hash',
+            'email:email',          
+            'password_hash',
             [
                 'attribute'=>'status',
                 'value' => $model->getStatusName(),

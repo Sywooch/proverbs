@@ -26,13 +26,13 @@ use app\models\SchoolYear;
  */
 class EnrolledForm extends \yii\db\ActiveRecord
 {
+    const STATUS_NULL = null;
     const STATUS_PENDING = 1;
     const STATUS_ENROLLED = 0;
-    const L0 = 0;
+    const N = null;
     const L1 = 1;
     const L2 = 2;
     const L3 = 3;
-    const L4 = 4;
     const L10 = 10;
     const L20 = 20;
     const L30 = 30;
@@ -166,6 +166,7 @@ class EnrolledForm extends \yii\db\ActiveRecord
     public function getStatusList()
     {
         $statusArray = [
+            self::STATUS_NULL => null,
             self::STATUS_PENDING => 'Pending',
             self::STATUS_ENROLLED => 'Enrolled',
         ];
@@ -177,11 +178,10 @@ class EnrolledForm extends \yii\db\ActiveRecord
     public function getLevelList()
     {
         $levelArray = [
-            self::L0 => 'Not Applicable',
+            self::N => null,
             self::L1 => 'Nursery',
             self::L2 => 'Kinder 1',
             self::L3 => 'Kinder 2',
-            self::L4 => 'SPED',
             self::L10 => 'Grade 1',
             self::L20 => 'Grade 2',
             self::L30 => 'Grade 3',
@@ -191,11 +191,11 @@ class EnrolledForm extends \yii\db\ActiveRecord
             self::L70 => 'Grade 7',
             self::L80 => 'Grade 8',
             self::L90 => 'Grade 9',
-            self::L10 => 'Grade 10',
-            self::L111 => 'Grade 11 1st Semester',
-            self::L110 => 'Grade 11 2nd Semester',
-            self::L120 => 'Grade 12 1st Semester',
-            self::L121 => 'Grade 12 2nd Semester',
+            self::L100 => 'Grade 10',
+            self::L111 => 'Grade 11 1st Sem',
+            self::L110 => 'Grade 11 2nd Sem',
+            self::L120 => 'Grade 12 1st Sem',
+            self::L121 => 'Grade 12 2nd Sem',
         ];
         
         return $levelArray;
@@ -204,7 +204,6 @@ class EnrolledForm extends \yii\db\ActiveRecord
     public function getStatusName($status = null)
     {
         $status = (empty($status)) ? $this->enrollment_status : $status ;
-
         if ($status === self::STATUS_ENROLLED)
         {
             return "Enrolled";
@@ -215,18 +214,31 @@ class EnrolledForm extends \yii\db\ActiveRecord
         }
     }
 
+    public function getSyList(){
+        
+        $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
+        
+        $array = [null => null];
+        
+        for($i = 0; $i < count($school_year); $i++){
+            $array[$school_year[$i]->sy] = $school_year[$i]->sy;
+        }        
+        
+        return $array;
+    }
+
     public function getLevelName($grade_level = null)
     {
         $grade_level = (empty($grade_level)) ? $this->grade_level_id : $grade_level ;
 
         if ($grade_level === self::L121){
-            return "Grade 12 2nd Semester";
-        } elseif($grade_level === self::L121){
-            return "Grade 12 1st Semester";
+            return "Grade 12 2nd Sem";
+        } elseif($grade_level === self::L120){
+            return "Grade 12 1st Sem";
         } elseif($grade_level === self::L111){
-            return "Grade 11 2nd Semester";
+            return "Grade 11 2nd Sem";
         } elseif($grade_level === self::L110){
-            return "Grade 11 1st Semester";
+            return "Grade 11 1st Sem";
         } elseif($grade_level === self::L100){
             return "Grade 10";
         } elseif($grade_level === self::L90){
@@ -247,16 +259,12 @@ class EnrolledForm extends \yii\db\ActiveRecord
             return "Grade 2";
         } elseif($grade_level === self::L10){
             return "Grade 1";
-        } elseif($grade_level === self::L4){
-            return "SPED";
         } elseif($grade_level === self::L3){
             return "Kinder 2";
         } elseif($grade_level === self::L2){
             return "Kinder 1";
         } elseif($grade_level === self::L1){
             return "Nursery";
-        } elseif($grade_level === self::L0){
-            return "Not Applicable";
         }
     }
 

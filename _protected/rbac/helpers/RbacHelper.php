@@ -12,22 +12,23 @@ class RbacHelper
         Role::deleteAll(['user_id' => $id]);
 
         $usersCount = User::find()->count();
-
         $auth = Yii::$app->authManager;
 
         // FIRST USER
-        if ($usersCount == 1)
+        if ($usersCount === 1)
         {
-            $role = $auth->getRole('dev');
+            $role = 'dev';
             $auth->assign($role, $id);
+            
+            return $role;
         } 
         else 
         {
-            $role = $auth->getRole('parent');
+            $role = 'parent';
             $auth->assign($role, $id);
+            
+            return $role;
         }
-
-        return $role->name;
+        
     }
 }
-

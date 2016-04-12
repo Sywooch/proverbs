@@ -22,7 +22,6 @@ use app\models\BoardSearch;
 
 class SiteController extends Controller
 {
-
     public function behaviors()
     {
         return [
@@ -49,6 +48,7 @@ class SiteController extends Controller
                     'board' => ['post'],
                     'push' => ['post'],
                     'mail-check' => ['post'],
+                    'cred-check' => ['post'],
                 ],
             ],
         ];
@@ -96,7 +96,7 @@ class SiteController extends Controller
                             return $object;
                         }
 
-                    } else{
+                    } else{ 
                         $object = (object) array('code' => 404, 'attempt' => $attempt);
 
                         return $object;
@@ -106,6 +106,45 @@ class SiteController extends Controller
 
                         return $object;
                 }
+            }
+        }
+    }
+
+    public function actionCred($data) {
+        if(Yii::$app->request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $object = json_decode($data);        
+
+            if( empty(trim($object->username)) && empty(trim($object->email)) ){
+                $data = 
+                    [
+                        'usn' => 'null',
+                        'email' => 'null',
+                        'code' => 0,
+                        'msg' => 'Username and Email cannot be blank'
+                    ];
+
+                return $data;
+            } elseif( empty(trim($object->username)) ){
+                $data = 
+                    [
+                        'usn' => 'null',
+                        'email' => 'null',
+                        'code' => 10,
+                        'msg' => $empty_username
+                    ];
+
+                return $data;
+            } elseif( empty(trim($object->email)) ){
+                $data = 
+                    [
+                        'usn' => $object->username,
+                        'email' => 'null',
+                        'code' => 20,
+                        'msg' => $empty_email
+                    ];
+                return $data;
             }
         }
     }
@@ -122,6 +161,7 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
 
     public function actionContact()
     {
@@ -183,8 +223,6 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) 
         {
-            //$role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
-            //die(var_dump($_POST));
 
             return $this->redirect(Yii::$app->request->baseUrl . '/dashboard');
         }
@@ -268,33 +306,20 @@ class SiteController extends Controller
     {  
         $rna = Yii::$app->params['rna'];
         $model = $rna ? new SignupForm(['scenario' => 'rna']) : new SignupForm();
-
         if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
             if ($user = $model->signup()) 
             {
-                if ($user->status === User::STATUS_ACTIVE)
-                {
-                    if (Yii::$app->getUser()->login($user)) 
-                    {
-                        return $this->goHome();
-                    }
-                }
-                else 
-                {
-                    $this->signupWithActivation($model, $user);
-                    return $this->redirect('login');
-                }            
+                $this->signupWithActivation($model, $user);
+                return $this->redirect('login');       
             }
             else
             {
                 Yii::$app->session->setFlash('error', 
                     Yii::t('app', 'We couldn\'t sign you up, please contact us.'));
-
                 Yii::error('Signup failed! 
                     User '.Html::encode($user->username).' could not sign up.
                     Possible causes: something strange happened while saving user in database.');
-
                 return $this->refresh();
             }
         }
@@ -316,7 +341,6 @@ class SiteController extends Controller
         {
             Yii::$app->session->setFlash('error', 
                 Yii::t('app', 'We couldn\'t send you account activation email, please contact us.'));
-
             Yii::error('Oops, something went wrong. Signup failed! 
                 User '.Html::encode($user->username).' could not sign up.
                 Possible causes: verification email could not be sent.');
@@ -333,21 +357,20 @@ class SiteController extends Controller
         {
             throw new BadRequestHttpException($e->getMessage());
         }
-
         if ($user->activateAccount()) 
         {
             Yii::$app->session->setFlash('success', 
                 Yii::t('app', 'Account activated successfully! You can now log in.').' '.
-                Yii::t('app', 'Thank you').' '. Html::encode($user->username).' '.
+                Yii::t('app', 'Thank you').' '. Html::encode(ucfirst($user->username)).' '.
                 Yii::t('app', 'for joining us!'));
         }
         else
         {
             Yii::$app->session->setFlash('error', 
                 Html::encode($user->username).
-                Yii::t('app', 'your account could not be activated, please contact us!'));
+                Yii::t('app', 'Your account could not be activated, please contact us!'));
         }
-
         return $this->redirect('login');
     }
 }
+

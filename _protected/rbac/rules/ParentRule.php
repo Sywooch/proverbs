@@ -19,6 +19,6 @@ class ParentRule extends Rule
      */
     public function execute($user, $item, $params)
     {
-        return isset($params['auth_rule']) ? $params['auth_rule']->name == $user : false;
+        return isset($params['auth_rule']) ? $params['auth_rule']->name === $user : false;
     }
 }

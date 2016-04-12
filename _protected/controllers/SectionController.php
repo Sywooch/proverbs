@@ -9,7 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-
+use app\models\GradeLevel;
+use yii\helpers\ArrayHelper;
 /**
  * SectionController implements the CRUD actions for Section model.
  */
@@ -64,19 +65,24 @@ class SectionController extends Controller
      */
     public function actionIndex()
     {
+        $model = Section::find()->orderBy(['section_name' => SORT_ASC])->all();
+        $grade_level = GradeLevel::find()->all();
+        $listData = ArrayHelper::map($grade_level, 'id' , 'name');
         $searchModel = new SectionSearch();
         $dataProvider = $searchModel->searchSection(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+             'listData' => $listData,
+             'model' => $model
         ]);
     }
 
     /**
      * Displays a single Section model.
      * @param integer $id
-     * @return mixed
+     * @return mixedj
      */
     public function actionView($id)
     {

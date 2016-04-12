@@ -27,7 +27,7 @@ class SignupForm extends Model
         return [
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'required'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'string', 'min' => 3, 'max' => 255],
             ['username', 'unique', 'targetClass' => '\app\models\User', 
                 'message' => 'This username has already been taken.'],
 

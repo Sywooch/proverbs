@@ -1,0 +1,48 @@
+Message-ID: <eb94420e9f96a065f469e3136ae670fe@localhost>
+Date: Tue, 12 Apr 2016 15:49:39 +0800
+Subject: Account activation for PVA Portal
+From: PVA Portal robot <support@proverbs.com>
+To: zup@zup.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="_=_swift_v4_1460447379_0a741570e0b5a2d970ab801fc6a2d816_=_"
+
+
+--_=_swift_v4_1460447379_0a741570e0b5a2d970ab801fc6a2d816_=_
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello zup,
+
+Follow this link to activate your account:
+
+Please, cli=
+ck here to activate your account.
+
+--_=_swift_v4_1460447379_0a741570e0b5a2d970ab801fc6a2d816_=_
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/=
+xhtml">
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/ht=
+ml; charset=3DUTF-8" />
+    <title></title>
+    </head>
+<body>
+    =
+    Hello zup,
+
+Follow this link to activate your account:
+
+<a href=
+=3D"http://localhost/proverbs/site/activate-account?token=3Dbb1lGeV_pat2Dc9=
+4Ix_kanKH36SiFQt8_1460447379">Please, click here to activate your account.<=
+/a>    </body>
+</html>
+
+
+--_=_swift_v4_1460447379_0a741570e0b5a2d970ab801fc6a2d816_=_--

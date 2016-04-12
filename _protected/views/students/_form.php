@@ -206,6 +206,7 @@ $this->title = "New";
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <?= $form->field($model, 'status', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Active</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->status])->label(false) ?>
                                         <?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>Siblings Enrolled</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled])->label(false) ?>
+                                        <?= $form->field($model, 'sped', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555;"><strong>SPED</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled])->label(false) ?>
                                     </div>
                                 </div>
                             </div>
@@ -235,70 +236,5 @@ $this->title = "New";
     </div>
 </div>
 <?php
-$sw = <<< JS
-$(document).ready(function(){
-    var hash = '#';
-    var blank = '';
-
-    function syncValue(elem){
-        if(elem.defaultValue !== elem.previousElementSibling.defaultValue){
-            elem.previousElementSibling.defaultValue = elem.defaultValue;
-        }
-    }
-
-    function changeState(elem){
-        if(parseInt(elem.defaultValue) === 1){
-            elem.checked = false;
-            $(elem).attr('checked', false);
-            elem.previousElementSibling.defaultValue = 1;
-        } else {
-            elem.checked = true;
-            $(elem).attr('checked', true);
-            elem.previousElementSibling.defaultValue = 0;
-        }
-    }
-    
-    if (Array.prototype.forEach) {
-        var i = 0;
-        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-        
-        elems.forEach(function(html) {
-            syncValue(elems[i]);
-            changeState(elems[i]);
-            var switchery = new Switchery(html, {size: 'small', speed: '0.2s'});
-
-            elems[i].onchange = function() { 
-                if(this.checked){
-                    this.defaultValue = 0;
-                    changeState(this);
-                }else {
-                    this.defaultValue = 1;
-                    changeState(this);
-                }
-            };
-            i++;
-        });
-    } else {
-        var i = 0;
-        var elems = document.querySelectorAll('.js-switch');
-
-        for (i ; i < elems.length; i++) {
-            syncValue(elems[i]);
-            changeState(elems[i]);
-            var switchery = new Switchery(elems[i], {size: 'small', speed: '0.2s'});
-
-            elems[i].onchange = function() { 
-                if(this.checked){
-                    this.defaultValue = 0;
-                    changeState(this);
-                }else {
-                    this.defaultValue = 1;
-                    changeState(this);
-                }
-            };
-        }
-    }
-});
-JS;
-$this->registerJs($sw);
+$this->render('switch');
 ?>

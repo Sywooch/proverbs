@@ -3,16 +3,16 @@
 return [
     [
         // this user is active and is The Creator of the site
-        'username' => 'The Creator',
-        'email' => 'creator@example.com',
-        'auth_key' => '8QcTRbD5UxYkaJ9calSahAvXd_GMPIcS',
-        // password is : creator123
-        'password_hash' => '$2y$13$joQ.0Gz.Kg1oST/BpkR1d.Ch5BjxW8NUGgJR1rvHXpNQtbRByW5k2',
+        'username' => 'dev',
+        'email' => 'dev@dev.com',
+        'auth_key' => 'mxSbRCz4E320bLKQCzIg6JmlPHMRsnM6',
+        // password is : dev123
+        'password_hash' => '$2y$13$75OdNEUm2/CZyhWLgg.FguPWs/ANYI4uUvcBKLv3xlw3dKVm9/ML2',
         'password_reset_token' => '',
         'account_activation_token' => '',
         'status' => 10,
-        'created_at' => '1413919102',
-        'updated_at' => '1413919102',
+        'created_at' => '1448011899',
+        'updated_at' => '1448012073',
     ],
     [
         // this user is active and is administrator of the site

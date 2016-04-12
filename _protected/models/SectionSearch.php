@@ -82,7 +82,7 @@ class SectionSearch extends Section
     public function searchSection($params)
     {
         $query = Section::find();
-        $pageSize = 20;
+        $pageSize = 10;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

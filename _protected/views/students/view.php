@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
             'id',
             [
                 'attribute' => 'status',
-                'value' => $model->getStatus($model->status), // 0:INACTIVE 1:ACTIVE 2: APPLICANT (DEFAULT)
+                'value' => $model->getStatus($model->status), // 0:ACTIVE 1:INACTIVE 2: APPLICANT (DEFAULT)
             ],
             [
                 'attribute' => 'grade_level_id',

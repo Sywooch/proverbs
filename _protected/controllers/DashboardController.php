@@ -109,7 +109,7 @@ class DashboardController extends Controller
 
     public function countCurrentEnrolled(){
         $latest = (int) SchoolYear::find()->orderBy(['id' => SORT_DESC])->all()[0]['id'];
-        $count = count(EnrolledForm::find()->where(['sy_id' => $latest])->all());
+        $count = count(EnrolledForm::find()->where(['sy_id' => $latest])->where(['enrollment_status' => 0])->all());
         
         return $count;
     }

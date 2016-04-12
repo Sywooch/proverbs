@@ -7,9 +7,10 @@
 }
 
 @mixin rounded-border($radius){
-	border-style: solid;
     -webkit-border-radius: $radius;
             border-radius: $radius;
+    border-width: 1px;
+	border-style: solid;
 }
 @mixin border-color($color){
     -webkit-border-radius: $color;

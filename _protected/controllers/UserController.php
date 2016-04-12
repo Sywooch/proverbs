@@ -70,16 +70,17 @@ class UserController extends AppController
          * How many users we want to display per page.
          * @var int
          */
-        $pageSize = 11;
+        $pageSize = 10;
 
         /**
          * Only theCreator role can see all users.
-         * Lower roles will not be able to see theCreator @see: search(). 
+         * Lower roles will not be able to see dev @see: search(). 
          * @var boolean
          */
         $dev = (Yii::$app->user->is('dev')) ? true : false ;
 
         $searchModel = new UserSearch();
+        $searchModel->status = 10;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $pageSize, $dev);
         
         return $this->render('index', [

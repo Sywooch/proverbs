@@ -39,7 +39,7 @@ class User extends UserIdentity
             [['username', 'email'], 'filter', 'filter' => 'trim'],
             [['username', 'email', 'status'], 'required'],
             ['email', 'email'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'string', 'min' => 3, 'max' => 255],
 
             // password field is required on 'create' scenario
             ['password', 'required', 'on' => 'create'],
@@ -122,6 +122,7 @@ class User extends UserIdentity
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
     }
+
 //------------------------------------------------------------------------------------------------//
 // USER FINDERS
 //------------------------------------------------------------------------------------------------//
@@ -209,11 +210,6 @@ class User extends UserIdentity
         }
     }
 
-    /**
-     * Returns the array of possible user status values.
-     *
-     * @return array
-     */
     public function getStatusList()
     {
         $statusArray = [
@@ -225,11 +221,40 @@ class User extends UserIdentity
         return $statusArray;
     }
 
+    public function getStatusArray()
+    {
+        $statusArray = [
+            null => null,
+            0 => 'Deleted',  
+            1 => 'Inactive',  
+            10 => 'Active',  
+        ];
+
+        return $statusArray;
+    }
+
     /**
      * Returns the role name ( item_name )
      *
      * @return string
      */
+    public function getRolesArray()
+    {
+        $array = [
+                null => null,
+                'admin' => 'Admin',
+                'cashier' => 'Cashier',
+                'dev' => 'Dev',
+                'master' => 'Master',
+                'parent' => 'Parent',
+                'principal' => 'Principal',
+                'staff' => 'Staff',
+                'teacher' => 'Teacher',
+
+            ];
+        return $array;
+    }
+
     public function getRoleName()
     {
         return $this->role->item_name;

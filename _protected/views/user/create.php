@@ -8,15 +8,8 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'New');
 ?>
 <div class="user-create">
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-			    <?= $this->render('_form', [
-			        'user' => $user,
-			        'role' => $role,
-			    ]) ?>
-			</div>
-		</div>
-	</div>
+    <?= $this->render('_form', [
+        'user' => $user,
+        'role' => $role,
+    ]) ?>
 </div>
-<p></p>

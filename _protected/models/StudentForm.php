@@ -9,8 +9,8 @@ use yii\db\Expression;
 
 class StudentForm extends \yii\db\ActiveRecord
 {
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 1;
+    const STATUS_ACTIVE = 0;
 
     public static function tableName()
     {
@@ -179,13 +179,13 @@ class StudentForm extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getStatus($data) { // 0:INACTIVE 1:ACTIVE 2: APPLICANT (DEFAULT)
+    public function getStatus($data) { // 0:ACTIVE 1:INACTIVE 2: APPLICANT (DEFAULT)
         if($data === 2){
             return 'Applicant';
         } elseif ($data === 1) {
-            return 'Active';
-        } else {
             return 'Inactive';
+        } else {
+            return 'Active';
         }
     }
     
@@ -223,17 +223,17 @@ class StudentForm extends \yii\db\ActiveRecord
 
     public function getMotherIs($data) { //0:Living 1:Deceased
         if($data === 1){
-            return 'Living';
-        } else {
             return 'Deceased';
+        } else {
+            return 'Living';
         }
     }
 
     public function getFatherIs($data) { //0:Living 1:Deceased
         if($data === 1){
-            return 'Living';
-        } else {
             return 'Deceased';
+        } else {
+            return 'Living';
         }
     }
 

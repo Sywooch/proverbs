@@ -29,8 +29,9 @@ class AuthItem extends ActiveRecord
     public static function getRoles()
     {
 
-        if (!Yii::$app->user->isGuest)
+        if (!Yii::$app->user->isGuest){
             $role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
+        }
 
         if ($role === 'dev' || $role === 'master')
         {

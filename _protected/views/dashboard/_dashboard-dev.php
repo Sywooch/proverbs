@@ -50,7 +50,7 @@ use app\models\SchoolYear;
 			</li>
 			<li class="bg-primary">
 				<div class="top-info">
-					<a href="<?= Yii::$app->request->baseUrl . '/enroll' ?>">Enrolled</a>
+					<a href="<?= Yii::$app->request->baseUrl . '/enroll' ?>">Enrollee</a>
 					<small>&nbsp;</small>
 				</div>
 				<a href="<?= Yii::$app->request->baseUrl . '/enroll' ?>"><i class="icon-stats2"></i></a>

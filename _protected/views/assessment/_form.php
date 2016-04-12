@@ -149,7 +149,7 @@ if($model->isNewRecord){
                     <td>
                         <p>
                             <div id="sibling">
-                                <?= $form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => $sb])->label(false) ?>
+                                <?= $form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => $sb, 'class' => 'js-switch', 'data-switchery' => true])->label(false) ?>
                             </div>
                             <div id="select-discount">
                             <?= Html::activeDropDownList($sbm, 'id', 
@@ -164,9 +164,9 @@ if($model->isNewRecord){
                         <p>
                             <div id="book">
                                 <?= $model->isNewRecord ?
-                                    $form->field($model, 'has_book_discount', ['inputTemplate' => '<label style="color: #333;">Book Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => 0])->label(false)
+                                    $form->field($model, 'has_book_discount', ['inputTemplate' => '<label style="color: #333;">Book Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => 0, 'class' => 'js-switch', 'data-switchery' => true])->label(false)
                                     :
-                                    $form->field($model, 'has_book_discount', ['inputTemplate' => '<label style="color: #333;">Book Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox()->label(false)
+                                    $form->field($model, 'has_book_discount', ['inputTemplate' => '<label style="color: #333;">Book Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true])->label(false)
                                 ?>
                             </div>
                         </p>
@@ -177,9 +177,9 @@ if($model->isNewRecord){
                         <p>
                             <div id="honor">
                                 <?= $model->isNewRecord ?
-                                    $form->field($model, 'has_honor_discount', ['inputTemplate' => '<label style="color: #333;">Honor Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => 0])->label(false)
+                                    $form->field($model, 'has_honor_discount', ['inputTemplate' => '<label style="color: #333;">Honor Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => 0, 'class' => 'js-switch', 'data-switchery' => true])->label(false)
                                     :
-                                    $form->field($model, 'has_honor_discount', ['inputTemplate' => '<label style="color: #333;">Honor Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox()->label(false)
+                                    $form->field($model, 'has_honor_discount', ['inputTemplate' => '<label style="color: #333;">Honor Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true])->label(false)
                                 ?>
                             </div>
                         </p>
@@ -221,6 +221,7 @@ if($model->isNewRecord){
 $tdf = json_encode(0);
 $ttl = json_encode(0);
 $bal = json_encode(0);
+
 
 if($model->isNewRecord){
 $dis = <<< JS

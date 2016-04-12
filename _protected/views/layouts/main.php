@@ -37,7 +37,7 @@ $un = '';
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> -->
     <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script> -->
-
+    <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
     <?php $this->head() ?>
 </head>
 <body <?= Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/site/signup' || Yii::$app->request->url === '/proverbs/login' || Yii::$app->request->url === '/proverbs/signup' ? 'style="display:table;"' : 'class=""';?>>
@@ -66,16 +66,16 @@ $un = '';
             include('header.php');
             echo '<div class="page-container">';
             include('sidebar.php');
-            echo '<div class="page-content">' . '<div id="header-offset"></div>';
+            echo '<div class="page-content"><div id="header-offset"></div>';
             //include('page-header.php');
             //echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['homeLink' => ['label' => 'Dashboard', 'url' => Yii::$app->request->baseUrl . '/dashboard'],'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
-            echo    '<div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="breadcrumb-line">' . 
-                                Breadcrumbs::widget(['homeLink' => ['label' => 'Dashboard', 'url' => Yii::$app->request->baseUrl . '/dashboard'],'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . 
-                            '</div>
-                        </div>
-                    </div>' ;
+            // echo    '<div class="row">
+            //             <div class="col-lg-12 col-md-12 col-sm-12">
+            //                 <div class="breadcrumb-line">' . 
+            //                     Breadcrumbs::widget(['homeLink' => ['label' => 'Dashboard', 'url' => Yii::$app->request->baseUrl . '/dashboard'],'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . 
+            //                 '</div>
+            //             </div>
+            //         </div>' ;
             echo $content;
             echo '<div class="page-content-offset"></div>';
             include('footer.php');
@@ -92,7 +92,8 @@ $un = '';
     ?>
     <?php $this->endBody() ?>
     <?php include('script.php');?>
-    <?php if(Yii::$app->request->url !== '/proverbs/site/login'){
+    <?php 
+        if(Yii::$app->request->url !== '/proverbs/site/login' && Yii::$app->request->url !== '/proverbs/site/signup'){
             $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY);
         }
     ?>

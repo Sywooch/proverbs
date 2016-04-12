@@ -43,81 +43,18 @@ if(!empty($array)) {
 	$yearly 		= 0;
 	$books 			= 0;
 }
-
-if($student->student_has_sibling_enrolled === 0) {
-	$sb = 0;
-}else {
-	$sb = 1;
-}
 ?>
 <div class="assessment-form">
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'tuition_id', ['inputTemplate' => '{input}', 'inputOptions' => ['class' => 'hidden']])->label(false) ?>
 	<div class="row">
-		<div class="col-lg-4 col-md-4 col-sm-12">
-			<table class="table table-striped table-bordered detail-view">
-				<tbody>
-					<tr><th>Grade Level</th><td><span class="pull-right"><?= $grade_level ?></span></td></tr>
-					<tr><th>Enrollment</th><td><span class="pull-right"><?= $enrollment ?></span></td></tr>
-					<tr><th>Admission</th><td><span class="pull-right"><?= $admission ?></span></td></tr>
-					<tr><th>Tuition</th><td><span class="pull-right"><?= $tuition_fee ?></span></td></tr>
-					<tr><th>Miscellaneous</th><td><span class="pull-right"><?= $misc_fee ?></span></td></tr>
-					<tr><th>Ancillary</th><td><span class="pull-right"><?= $ancillary ?></span></td></tr>
-					<tr><th>Yearly</th><td><span class="pull-right"><?= $yearly ?></span></td></tr>
-					<tr><th>Monthly</th><td><span class="pull-right"><?= $monthly ?></span></td></tr>
-					<tr><th>Books</th><td><span class="pull-right"><?= $books ?></span></td></tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="col-lg-5 col-md-5 col-sm-12">
-			<table class="table table-striped table-bordered detail-view">
-				<tbody>
-					<tr><td style="width: 180px;"><label>Sibling Discount</label><p><small id="td-sb-discount-value"></small></p></td>
-						<td><?= $form->field($model, 'sibling_discount')->textInput(['class' => 'form-control text-align-right'])->label(false) ?></td>
-					</tr>
-					<tr>
-						<td><label>Book Discount</label><p><small id="td-book-discount-value"></small></p></td>
-						<td><?= $form->field($model, 'book_discount')->textInput(['class' => 'form-control text-align-right', 'value' => 0])->label(false) ?></td>
-					</tr>
-					<tr>
-						<td><label>Honor Discount</label></td>
-						<td><?= $form->field($model, 'honor_discount')->textInput(['class' => 'form-control text-align-right', 'value' => 0])->label(false) ?></td>
-					</tr>
-					<tr>
-						<td colspan="2"><span><span class="pull-left"><strong>Total Discount</strong></span><strong><span id="td-total-discount-value" class="pull-right">0</span></strong></span></td>
-					</tr>
-					<tr style="text-align: right;">
-						<td id="td-block" colspan="2">
-							<span id="td-yearly">0</span>
-							<span><span class="pull-left"><strong>+</strong></span><span id="td-books">0</span></span>
-							<span><span class="pull-left"><strong>Sub Total</strong></span><strong><span id="td-sub">0</span></strong></span>
-							<span><span class="pull-left"><strong>Less</strong></span><strong><span id="td-less">0</span></strong></span>
-						</td>
-					</tr>
-					<tr style="text-align: right;">
-						<td><span><span class="pull-left"><strong>TOTAL ASSESSED</strong></span></span></td>
-						<td><?= $form->field($model, 'total_assessed')->textInput(['class' => 'form-control text-align-right' , 'style' => 'font-weight: 800; font-size: 16px;', 'value' => 0])->label(false) ?></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
 		<div class="col-lg-3 col-md-3 col-sm-12">
 			<table class="table table-striped table-bordered detail-view">
 				<tbody>
 				<tr>
 					<td>
 						<p>
-							<div id="sibling">
-								<?= 
-									$model->isNewRecord ? 								
-										$sb === 1 ? 
-											$form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => $sb ])->label(false) 
-											:
-											$form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => $sb])->label(false)
-										:
-										$form->field($model, 'has_sibling_discount', ['inputTemplate' => '<label style="color: #333;">Sibling Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox()->label(false)
-								?>
-							</div>
+							<div id="sibling"><?= $form->field($model, 'has_sibling_discount', ['inputTemplate' => '<div style="margin-top: 2px;"><label style="padding: 0; color: #555;"><strong>Sibling Discount</strong></label><div class="pull-right">{input}</div></div>', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true ])->label(false) ?></div>
 							<div id="select-discount">
 							<?= Html::activeDropDownList($sbm, 'id', 
 								ArrayHelper::map(SiblingDiscount::find()->asArray()->all(), 'id' , 'percentage_value'), 
@@ -129,13 +66,7 @@ if($student->student_has_sibling_enrolled === 0) {
 				<tr>
 					<td>
 						<p>
-							<div id="book">
-								<?= $model->isNewRecord ?
-									$form->field($model, 'has_book_discount', ['inputTemplate' => '<label style="color: #333;">Book Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => 0])->label(false)
-									:
-									$form->field($model, 'has_book_discount', ['inputTemplate' => '<label style="color: #333;">Book Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox()->label(false)
-								?>
-							</div>
+							<div id="book"><?= $form->field($model, 'has_book_discount', ['inputTemplate' => '<div style="margin-top: 2px;"><label style="padding: 0; color: #555;"><strong>Book Discount</strong></label><div class="pull-right">{input}</div></div>', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true])->label(false) ?></div>
 						</p>
 					</td>
 				</tr>
@@ -143,11 +74,7 @@ if($student->student_has_sibling_enrolled === 0) {
 					<td>
 						<p>
 							<div id="honor">
-								<?= $model->isNewRecord ?
-									$form->field($model, 'has_honor_discount', ['inputTemplate' => '<label style="color: #333;">Honor Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['value' => 0])->label(false)
-									:
-									$form->field($model, 'has_honor_discount', ['inputTemplate' => '<label style="color: #333;">Honor Discount</label>&nbsp;&nbsp;{input}', 'inputOptions' => ['style' => 'color: black;']])->checkbox()->label(false)
-								?>
+								<?= $form->field($model, 'has_honor_discount', ['inputTemplate' => '<div style="margin-top: 2px;"><label style="padding: 0; color: #555;"><strong>Honor Discount</strong></label><div class="pull-right">{input}</div></div>', 'inputOptions' => ['style' => 'color: black;']])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true])->label(false) ?>
 							</div>
 						</p>
 					</td>
@@ -179,7 +106,9 @@ $bkt = json_encode($books_float);
 $tdf = json_encode(0);
 $ttl = json_encode(0);
 $bal = json_encode(0);
-$sbd = <<< JS
+
+$this->render('switch');
+/*$sbd = <<< JS
 $(document).ready(function(){
 	var tff = $tff; 
 	var tdf = $tdf;
@@ -335,5 +264,5 @@ $(document).ready(function(){
 	}
 });
 JS;
-$this->registerJs($sbd);
+$this->registerJs($sbd);*/
 ?>

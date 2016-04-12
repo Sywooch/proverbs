@@ -7,56 +7,113 @@ use yii\captcha\Captcha;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \app\models\SignupForm */
 
-$this->title = Yii::t('app', 'Signup');
+$this->title = Yii::t('app', 'Sign Up');
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sky">
-    <div class="moon"></div>
-    <div class="clouds_one"></div>
-    <div class="clouds_two"></div>
-    <div class="clouds_three"></div>
-</div>
+<?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 <div class="pva-login-mask">
-    <div class="pva-login">
+    <a id="btn-login" href="login" class="btn btn-primary btn-lg rounded-edge">LOGIN</a>
+    <div class="pva-form">
         <div class="pva-form-wrap">
-            <div class="pva-form">
-                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12"></div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="panel-heading login-form-heading">
-                        <h2>Sign In</h2>
-                    </div>
-                    <div class="panel panel-default form-login">
-                        <div class="panel-body">
-                            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-
-                            <?= $form->field($model, 'username',['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Username']])->label(false) ?>
-                            <?= $form->field($model, 'email',['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope-o"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Email']])->label(false) ?>
-                            <?= $form->field($model, 'password',['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-asterisk"></i></span></span>{input}</div>'])->label(false)->widget(PasswordInput::classname(), [])?>
-
-                            <?= $form->field($model, 'verifyCode')->label('Verify Code:', ['style' => 'color: white;'])->widget(Captcha::className(), [
-                                'template' => '<div class="row"><div class="col-lg-3 col-md-3 col-sm-12 text-centered" style="margin-bottom: 15px;">{image}</div><div class="col-lg-1 col-md-12 col-sm-12"></div><div class="col-lg-8 col-md-8 col-sm-12">{input}</div></div>',
-                            ]) ?>
-
-                            <div class="form-group">
-                                <?= Html::submitButton(Yii::t('app', 'SIGN UP'), ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'signup-button']) ?>
+            <div class="pva-form-login">
+                <div class="panel panel-default form-login">
+                    <div class="panel-body">
+                        <p>
+                            <?php
+                                //var_dump(Yii::$app->session->id);
+                                if(empty($model->errors)){
+                                    //var_dump($model->errors);
+                                } else {
+                                    //var_dump($model->errors);
+                                }
+                            ?>
+                        </p>
+                        <div id="user-check-img-wrap">
+                            <img id="user-check-img" class="animated2" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/user-default.png'?>" alt="user" data-img="false">
+                        </div>
+                        <p></p>
+                        <span id="span-login-nav"><i id="back" class="fa fa-arrow-left fa-one-point-five i-back-btn invisible slide-in-right"></i></span>
+                        <p></p>
+                        <div id="check-email">
+                            <div id="slide-form">
+                                <div id="slide-mail" class="animated">
+                                    <div id="slide-content2" class="row" style="margin: 0; padding: 0;">
+                                        <div class="mail" style="">
+                                            <?= $form->field($model, 'username',['inputTemplate' => '{input}','inputOptions' => ['id' => 'input-username-check', 'style' => 'margin-bottom: -10px;', 'class' => 'form-control pva-border', 'placeholder' => 'Username']])->label(false) ?>
+                                            <?= $form->field($model, 'email',['inputTemplate' => '{input}','inputOptions' => ['id' => 'input-mail-check', 'style' => 'margin-bottom: -10px;',  'class' => 'form-control pva-border', 'placeholder' => 'Email']])->label(false) ?>     
+                                            <?= $form->field($model, 'password',['inputTemplate' => '{input}','inputOptions' => ['id' => 'input-password-check', 'style' => 'margin-bottom: -10px;', 'class' => 'form-control pva-border', 'placeholder' => 'Password']])->passwordInput()->label(false); ?>
+                                        </div>
+                                        <div class="vfy" style="">
+                                            <?= $form->field($model, 'verifyCode')->label(false)->widget(Captcha::className(), ['template' => '<div class="display: inline;"><label class="pull-left" style="color: white;">Captcha Code: </label><div class="text-right">{image}</div><div style="margin-top: 25px; margin-bottom: 25px; color: white;">* * Click image to generate new captcha code</div></div><p></p>{input}']) ?>
+                                        </div>
+                                    </div>
+                                </div>                                
                             </div>
-
-                            <?php ActiveForm::end(); ?>
-
-                            <?php if ($model->scenario === 'rna'): ?>
-                                <div class="text-centered" style="color: white;margin:1em 0;font-size:1em;">
-                                    <i>* <?= Yii::t('app', 'Activation link will be sent to your email account.') ?></i>
-                                </div>
-                            <?php endif ?>  
+                            <div class="slide-btn">
+                                <button type="button" id="btn-info-check" class="btn btn-primary btn-block pva-border" style="height: 46px; background: #337AB7; border: 0;" data-toggle="modal" data-target="#verify">NEXT</button>
+                            </div>
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-centered" style="color:white;margin:1em 0">
-                            <span class="pva-form-registered">Already registered? <?= Html::a(Yii::t('app', 'Login'), ['site/login']) ?></span>
-                        </div>
-                        </div>
+                        <p id="msg-info-check" style="color: white; font-size: 16px; margin-top: 20px;"></p>
                     </div>
                 </div>
-                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div> 
             </div>
         </div>
     </div>
 </div>
+<?php
+$su = <<< JS
+$(document).ready(function(){
+    $('.help-block.help-block-error').addClass('hidden');
+    var btn = $('#btn-info-check');
+    var msg = $('#msg-info-check');
+    var usn = $('#input-username-check');
+    var email = $('#input-mail-check');
+    var pwd = $('#input-pwd-check');
+    var back = $('#back');
+    var sb = false;
+    
+    function slideLeft(){
+        $('#slide-form').attr('style', 'left: -330px;');
+        back.removeClass('invisible').removeClass('slide-in-right').addClass('slide-in-left');
+        back.removeClass('fa-arrow-right').addClass('fa-arrow-left');
+    }
+
+    function slideRight(){
+        $('#slide-form').attr('style', 'left: 0;');
+        back.addClass('invisible').removeClass('slide-in-left').addClass('slide-in-right');
+        back.removeClass('fa-arrow-left').addClass('fa-arrow-right');
+    }
+
+    btn.click(function(){
+        if(btn.attr('type') === 'button'){
+            slideLeft();
+            changeBtnType(data='submit', text='SUBMIT');
+            sb = true;
+        } else {
+
+        }
+    });
+
+    back.click(function(){
+        if(!sb){
+            slideLeft();
+            changeBtnType(data='submit', text='SUBMIT');
+            sb = true;
+        } else{
+            slideRight();
+            changeBtnType(data='button', text='NEXT');
+            sb = false;
+        }
+    });
+
+    function changeBtnType(data,text){
+        setTimeout(function(){
+            btn.attr('type', data);
+            btn.html(text);
+        }, 1000);
+    }
+});
+JS;
+$this->registerJs($su);
+?>
+<?php ActiveForm::end(); ?>

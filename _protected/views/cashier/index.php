@@ -12,16 +12,15 @@ $this->title = Yii::t('app', 'Cashier');
 ?>
 <div class="cashier-form-index">
     <p><?= Html::a('<i class="fa fa-plus"></i> New Cashier', ['create'], ['class' => 'btn btn-success']) ?></p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'summary' => false,
         'columns' => [
             'username',
-            'first_name',
-            'middle_name',
-            'last_name',
+            //'first_name',
+            //'middle_name',
+            //'last_name',
             //'email:email',
             [
                 'attribute'=>'status',

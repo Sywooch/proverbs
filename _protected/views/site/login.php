@@ -10,13 +10,14 @@ $this->title = Yii::t('app', 'Login');
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pva-login-mask">
+    <a id="btn-signup" href="signup" class="btn btn-primary btn-lg rounded-edge">SIGN UP</a>
     <div class="pva-form">
         <div class="pva-form-wrap">
             <div class="pva-form-login">
                 <div class="panel panel-default form-login">
                     <div class="panel-body">
                         <div id="user-check-img-wrap">
-                            <img id="user-check-img" class="animated2" src="<?= Yii::$app->request->baseUrl . '/themes/proverbs/images/user-default.png'?>" alt="user" data-img="false">
+                            <img id="user-check-img" class="animated2" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/user-default.png'?>" alt="user" data-img="false">
                         </div>
                         <p></p>
                         <span id="span-login-nav"><i id="back" class="fa fa-arrow-left fa-one-point-five i-back-btn invisible slide-in-right"></i></span>
@@ -40,14 +41,10 @@ $this->title = Yii::t('app', 'Login');
                                 </div>                                
                             </div>
                             <div class="slide-btn">
-                                <button type="button" href="#" id="btn-mail-check" class="btn btn-primary btn-block pva-border" style="height: 46px; background: #337AB7;">NEXT</button>
+                                <button type="button" href="#" id="btn-mail-check" class="btn btn-primary btn-block pva-border" style="height: 46px; background: #337AB7; border: 0;">NEXT</button>
                             </div>
                             <div id="remember-checkbox-wrap" class="checkbox" style="right: -320px;">
-                                <label for="remember-checkbox">
-                                    Stay logged in &nbsp;
-                                    <input type="hidden" name="LoginForm[rememberMe]" value="0">
-                                    <input type="checkbox" id="remember-checkbox" class="js-switch" name="LoginForm[rememberMe]" value="0" checked>
-                                </label>
+                                <?= $form->field($model, 'rememberMe', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: white;">Stay Logged in</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch pull-right', 'data-switchery' => true, 'value' => 0])->label(false) ?>
                             </div>
                         </div>
                         <?php ActiveForm::end(); ?>
@@ -69,7 +66,7 @@ if(!empty($model->errors)){
 
     if(!empty($query)){
 
-        if(!empty($query[0]['profile_image']) || $query[0]['profihttp://localhost/proverbs/themes/proverbs/images/user-default.pngle_image'] !== null){
+        if(!empty($query[0]['profile_image']) || $query[0]['http://localhost/proverbs/themes/proverbs/images/user-default.pngle_image'] !== null){
 
             $foto = Yii::$app->request->baseUrl . '/uploads/profile-img/' . $query[0]['profile_image'];
             $this->registerJs("$('#msg-mail-check').html('" . $msg . "'); $('#user-check-img').attr('src','" . $foto . "'); $('#user-check-img').attr('data-img','true');");
