@@ -3,6 +3,7 @@ namespace app\rbac\helpers;
 
 use app\models\User;
 use app\rbac\models\Role;
+use app\rbac\models\AuthItem;
 use Yii;
 
 class RbacHelper
@@ -17,14 +18,21 @@ class RbacHelper
         // FIRST USER
         if ($usersCount === 1)
         {
-            $role = 'dev';
+            $array = (array) AuthItem::getDevRole();
+            foreach ($array as $key) {
+                $role = $key->name;
+            }
+
             $auth->assign($role, $id);
             
             return $role;
         } 
         else 
         {
-            $role = 'parent';
+            $array = (array) AuthItem::getParentRole();
+            foreach ($array as $key) {
+                $role = $key->name;
+            }
             $auth->assign($role, $id);
             
             return $role;

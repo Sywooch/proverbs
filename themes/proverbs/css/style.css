@@ -1987,15 +1987,22 @@ select.form-control.pva-form-control {
 }
 
 /* line 1475, ../sass/style.scss */
+#user-profile-img-thumb {
+  background: #f7f7f7;
+  -webkit-box-shadow: 0px 0px 1px 2px rgba(58, 75, 85, 0.2);
+  box-shadow: 0px 0px 1px 2px rgba(58, 75, 85, 0.2);
+}
+
+/* line 1480, ../sass/style.scss */
 #btn-mail-check, #btn-info-check {
   opacity: 1;
 }
-/* line 1477, ../sass/style.scss */
+/* line 1482, ../sass/style.scss */
 #btn-mail-check:hover, #btn-info-check:hover {
   opacity: .8;
 }
 
-/* line 1481, ../sass/style.scss */
+/* line 1486, ../sass/style.scss */
 #btn-signup, #btn-login {
   position: absolute;
   top: 20px;
@@ -2004,27 +2011,27 @@ select.form-control.pva-form-control {
   width: 85px;
   opacity: .5;
 }
-/* line 1488, ../sass/style.scss */
+/* line 1493, ../sass/style.scss */
 #btn-signup:hover, #btn-login:hover {
   opacity: 1;
 }
 
-/* line 1492, ../sass/style.scss */
+/* line 1497, ../sass/style.scss */
 #captcha-wrap {
   display: inline;
 }
 
-/* line 1495, ../sass/style.scss */
+/* line 1500, ../sass/style.scss */
 .fa-one-half {
   font-size: 14px;
 }
 
-/* line 1498, ../sass/style.scss */
+/* line 1503, ../sass/style.scss */
 .fa.fa-mars, .fa.fa-venus {
   color: orange;
 }
 
-/* line 1501, ../sass/style.scss */
+/* line 1506, ../sass/style.scss */
 .gridview-edit-btn-wrap {
   height: 30px;
   width: 30px;
@@ -2037,104 +2044,163 @@ select.form-control.pva-form-control {
   border-radius: 2px;
 }
 
-/* line 1510, ../sass/style.scss */
+/* line 1515, ../sass/style.scss */
 .gridview-role-wrap {
   float: right;
   padding-top: 40px;
   min-height: 100%;
 }
 
-/* line 1515, ../sass/style.scss */
+/* line 1520, ../sass/style.scss */
 .gridview-role-type {
   margin-top: -4px;
   margin-left: -6px;
 }
-/* line 1518, ../sass/style.scss */
+/* line 1523, ../sass/style.scss */
 .gridview-role-type div {
   text-align: center;
   width: 30px;
   height: 30px;
   border-color: transparent;
 }
-/* line 1523, ../sass/style.scss */
+/* line 1528, ../sass/style.scss */
 .gridview-role-type div span {
   position: relative;
   top: 7px;
 }
 
-/* line 1529, ../sass/style.scss */
+/* line 1534, ../sass/style.scss */
+.user-halo-state {
+  position: relative;
+  top: -90px;
+  left: 80px;
+  height: 15px;
+  width: 15px;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border: 0;
+}
+
+/* line 1543, ../sass/style.scss */
+.user-halo-state.active {
+  background: #7AB317;
+}
+
+/* line 1546, ../sass/style.scss */
+.user-halo-state.inactive {
+  background: #929C92;
+}
+
+/* line 1549, ../sass/style.scss */
+.user-halo-state.deleted {
+  background: #C61F19;
+}
+
+/* line 1552, ../sass/style.scss */
+.user-halo-state-update {
+  position: relative;
+  top: -170px;
+  left: 222px;
+  height: 30px;
+  width: 30px;
+  -webkit-border-radius: 100%;
+  border-radius: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border: 0;
+}
+
+/* line 1561, ../sass/style.scss */
+.user-halo-state-update.active {
+  background: #7AB317;
+}
+
+/* line 1564, ../sass/style.scss */
+.user-halo-state-update.inactive {
+  background: #929C92;
+}
+
+/* line 1567, ../sass/style.scss */
+.user-halo-state-update.deleted {
+  background: #C61F19;
+}
+
+/* line 1571, ../sass/style.scss */
 .square-badge {
+  margin-top: 4px;
   color: white;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 
-/* line 1534, ../sass/style.scss */
+/* line 1577, ../sass/style.scss */
 .square-badge.dev-badge, .square-badge.master-badge {
   background: #ffdf33;
 }
 
-/* line 1537, ../sass/style.scss */
+/* line 1580, ../sass/style.scss */
 .admin-badge {
   background: rgba(255, 165, 0, 0.5);
 }
 
-/* line 1540, ../sass/style.scss */
+/* line 1583, ../sass/style.scss */
 .cashier-badge {
   background: teal;
 }
 
-/* line 1543, ../sass/style.scss */
+/* line 1586, ../sass/style.scss */
 .principal-badge {
   background: rgba(165, 42, 42, 0.7);
 }
 
-/* line 1546, ../sass/style.scss */
+/* line 1589, ../sass/style.scss */
 .staff-badge {
   background: rgba(128, 0, 128, 0.5);
 }
 
-/* line 1549, ../sass/style.scss */
+/* line 1592, ../sass/style.scss */
 .teacher-badge {
   background: #718d9e;
 }
 
-/* line 1552, ../sass/style.scss */
+/* line 1595, ../sass/style.scss */
 .parent-badge {
   background: #e1e1e1;
 }
 
-/* line 1555, ../sass/style.scss */
+/* line 1598, ../sass/style.scss */
 .rounded-edge {
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 
-/* line 1559, ../sass/style.scss */
+/* line 1602, ../sass/style.scss */
 .circle {
   -webkit-border-radius: 100%;
   border-radius: 100%;
 }
 
-/* line 1563, ../sass/style.scss */
+/* line 1606, ../sass/style.scss */
 .gridview-edit {
   height: 32px;
   width: 32px;
 }
 
-/* line 1567, ../sass/style.scss */
+/* line 1610, ../sass/style.scss */
 .gridview-user-wrap {
   margin: 5px auto;
 }
-/* line 1569, ../sass/style.scss */
+/* line 1612, ../sass/style.scss */
 .gridview-user-wrap .gridview-user-thumb {
   text-align: center;
   margin: auto;
   height: 100px;
   width: 100px;
 }
-/* line 1574, ../sass/style.scss */
+/* line 1617, ../sass/style.scss */
 .gridview-user-wrap .gridview-user-thumb img {
   background: #e9eaed;
   height: 100px;
@@ -2142,7 +2208,7 @@ select.form-control.pva-form-control {
   border: 0;
 }
 
-/* line 1592, ../sass/style.scss */
+/* line 1635, ../sass/style.scss */
 .gridview-level-name {
   width: 40px;
   height: 40px;
@@ -2154,65 +2220,65 @@ select.form-control.pva-form-control {
   border-style: solid;
   border: 0;
 }
-/* line 1599, ../sass/style.scss */
+/* line 1642, ../sass/style.scss */
 .gridview-level-name span {
   position: relative;
   top: 12px;
   color: black;
 }
 
-/* line 1605, ../sass/style.scss */
+/* line 1648, ../sass/style.scss */
 .gridview-level-name.one-char > span {
   right: -15px;
 }
 
-/* line 1608, ../sass/style.scss */
+/* line 1651, ../sass/style.scss */
 .gridview-level-name.two-char > span {
   right: -13px;
 }
 
-/* line 1611, ../sass/style.scss */
+/* line 1654, ../sass/style.scss */
 .gridview-level-name.three-char > span {
   right: -9px;
 }
 
-/* line 1614, ../sass/style.scss */
+/* line 1657, ../sass/style.scss */
 .gridview-level-name.five-char > span {
   right: -6px;
 }
 
-/* line 1617, ../sass/style.scss */
+/* line 1660, ../sass/style.scss */
 .gridview-block {
   display: block;
 }
 
-/* line 1620, ../sass/style.scss */
+/* line 1663, ../sass/style.scss */
 .gridview-info {
   padding: 1px;
 }
 
-/* line 1623, ../sass/style.scss */
+/* line 1666, ../sass/style.scss */
 .gridview-info.username {
   font-size: 16px;
 }
 
-/* line 1626, ../sass/style.scss */
+/* line 1669, ../sass/style.scss */
 .gridview-info.email {
   font-size: 14px;
   font-style: italic;
 }
 
-/* line 1630, ../sass/style.scss */
+/* line 1673, ../sass/style.scss */
 #options-column {
   width: 180px;
 }
 
-/* line 1633, ../sass/style.scss */
+/* line 1676, ../sass/style.scss */
 #options-column-extended {
   width: 300px;
 }
 
-/* line 1636, ../sass/style.scss */
+/* line 1679, ../sass/style.scss */
 .ac-options-btn {
   max-height: 20px;
   -webkit-border-radius: 2px;
@@ -2222,50 +2288,50 @@ select.form-control.pva-form-control {
   padding: 0 4px 4px 4px;
 }
 
-/* line 1641, ../sass/style.scss */
+/* line 1684, ../sass/style.scss */
 .hr-full-width {
   width: 100%;
 }
 
-/* line 1645, ../sass/style.scss */
+/* line 1688, ../sass/style.scss */
 .table.table-striped.table-bordered > thead + tbody > tr td {
   padding: 5px 10px;
 }
-/* line 1648, ../sass/style.scss */
+/* line 1691, ../sass/style.scss */
 .table.table-striped.table-bordered > thead + tbody > tr td:last-child {
   width: 150px;
 }
 
-/* line 1652, ../sass/style.scss */
+/* line 1695, ../sass/style.scss */
 .gridview-summary {
   margin: 0;
 }
 
-/* line 1656, ../sass/style.scss */
+/* line 1699, ../sass/style.scss */
 #enroll-popover-more {
   text-align: center;
   margin: auto;
   height: 50px;
   padding: 5px 10px;
 }
-/* line 1661, ../sass/style.scss */
+/* line 1704, ../sass/style.scss */
 #enroll-popover-more ul li {
   list-style-type: none;
   display: inline;
 }
 
-/* line 1670, ../sass/style.scss */
+/* line 1713, ../sass/style.scss */
 .sweet-alert.showSweetAlert, .sa-confirm-button-container > button.confirm, .sa-button-container > button.cancel {
   border-radius: 2px;
 }
 
-/* line 1673, ../sass/style.scss */
+/* line 1716, ../sass/style.scss */
 .sweet-alert.show-sweet-alert, .sweet-alert.show-sweet-alert > button.sweet-confirm, .sweet-alert.show-sweet-alert > button.sweet-cancel {
   border-radius: 2px;
 }
 
 @media (max-width: 767px) {
-  /* line 1678, ../sass/style.scss */
+  /* line 1721, ../sass/style.scss */
   .breadcrumb {
     text-align: left;
     background: transparent;

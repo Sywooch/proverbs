@@ -23,8 +23,16 @@
                             <li><a href='<?= Yii::$app->request->baseUrl . '/site/logout' ?>' data-method='post'>Logout <i class='icon-exit'></i></a></li>
                         </ul>
                     </div>">
-                <img id="" src="/proverbs/themes/proverbs/images/ricmil.jpg">
-                <span><?= ucfirst($un) ?></span>
+                <?php
+                    if(!Yii::$app->user->isGuest){
+                        if(!empty(Yii::$app->user->identity->profile_image)){
+                            echo '<img id="user-profile-img-thumb" src="/proverbs/uploads/profile-img/' . Yii::$app->user->identity->profile_image .'">';
+                        }else {
+                            echo '<img id="user-profile-img-thumb" src="/proverbs/uploads/ui/user-blue.png">';
+                        }
+                    }
+                ?> 
+                <span><?= !Yii::$app->user->isGuest ? ucfirst(Yii::$app->user->identity->username) : '' ?></span>
                 <span id="dropdown-caret"><i class="caret open"></i></span>
             </a>
         </li>

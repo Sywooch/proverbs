@@ -6,6 +6,7 @@ use Yii;
 use app\models\User;
 use app\models\UserSearch;
 use app\rbac\models\Role;
+use app\rbac\models\AuthAssignment;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -55,7 +56,7 @@ class CashierController extends AppController
          * Lower roles will not be able to see theCreator @see: search(). 
          * @var boolean
          */
-        $dev = (Yii::$app->user->is('dev')) ? true : false ;
+        $dev = AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev' ? true : false ;
 
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->searchCashier(Yii::$app->request->queryParams, $pageSize, $dev);

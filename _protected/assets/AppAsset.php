@@ -40,8 +40,6 @@ class AppAsset extends AssetBundle
         'css/jan-responsive.css',
         'css/form-background.css',
         'css/switchery.css',
-        //'css/sweetalert.css',
-        'css/sweetalert2.min.css',
     ];
 
     public $depends = [
@@ -54,8 +52,6 @@ class AppAsset extends AssetBundle
         'js/init.js',
         'js/pva.js',
         'js/switchery.min.js',
-        //'js/sweetalert.min.js',
-        'js/sweetalert2.min.js',
     ];
 
 }

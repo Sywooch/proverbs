@@ -60,5 +60,5 @@ class Role extends ActiveRecord
     {
         // Role has_many User via User.id -> user_id
         return $this->hasMany(User::className(), ['id' => 'user_id']);
-    }    
+    }
 }

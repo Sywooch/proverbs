@@ -15,11 +15,8 @@ use yii\web\View;
 AppAsset::register($this);
 ?>
 <?php
-$fn = '';
-$un = '';
     if(!Yii::$app->user->isGuest){
-        $fn = Yii::$app->user->identity->first_name . ' ' . Yii::$app->user->identity->last_name;
-        $un = Yii::$app->user->identity->username;
+        $role = app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id);
     }
 ?>
 <?php $this->beginPage() ?>
@@ -50,12 +47,12 @@ $un = '';
     <?php
         if(Yii::$app->user->isGuest){
             echo $content;
-        } elseif(Yii::$app->user->is('parent') === true) {
+        } elseif($role === 'parent') {
             include('header.php');
             echo '<div class="page-container">';
             include('sidebar.php');
             echo '<div class="page-content">' . '<div class="header-offset"></div>';
-            include('page-header.php');
+            //include('page-header.php');
             echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
             echo $content;
             echo '<div class="page-content-offset"></div>';
@@ -81,8 +78,8 @@ $un = '';
             include('footer.php');
             echo '</div>' . // PAGE-CONTENT
             '</div>'; // PAGE-CONTAINERa
-                    !Yii::$app->user->is('parent') ? require('_messages.php') : '';
-                    !Yii::$app->user->is('parent') ? require('_write.php') : '';
+                    $role !== 'parent' ? require('_messages.php') : '';
+                    $role !== 'parent' ? require('_write.php') : '';
                     echo '</div>
                 </div>
                 </div>
@@ -100,3 +97,4 @@ $un = '';
 </body>
 </html>
 <?php $this->endPage() ?>
+s

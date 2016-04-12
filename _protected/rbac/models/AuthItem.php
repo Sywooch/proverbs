@@ -46,5 +46,19 @@ class AuthItem extends ActiveRecord
                                  ->andWhere(['!=', 'name', 'master'])
                                  ->all();
         }
-    }        
+    }
+
+    public static function getParentRole(){
+        return static::find()->select('name')
+                             ->where(['type' => 1])
+                             ->andWhere(['=', 'name', 'parent'])
+                             ->all();
+    }   
+
+    public static function getDevRole(){
+        return static::find()->select('name')
+                             ->where(['type' => 1])
+                             ->andWhere(['=', 'name', 'dev'])
+                             ->all();
+    }
 }

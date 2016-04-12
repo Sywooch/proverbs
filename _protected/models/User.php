@@ -85,7 +85,7 @@ class User extends UserIdentity
 
     /**
      * Returns the attribute labels.
-     *
+     *  
      * @return array
      */
     public function attributeLabels()
@@ -113,6 +113,18 @@ class User extends UserIdentity
         return $this->hasOne(Role::className(), ['user_id' => 'id']);
     }
     
+    public function getAssignedRole($id){
+        $array = Yii::$app->authManager->getRolesByUser($id);
+        
+         $role = [];
+
+        foreach ($array as $key) {
+            $role = $key;
+        }
+
+        return $role->name;
+    }
+
     public function getUsername()
     {
         return $this->hasMany(Message::className(), ['sender' => 'username']);

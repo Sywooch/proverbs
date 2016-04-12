@@ -2,12 +2,17 @@
 use app\helpers\CssHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii2mod\alert\Alert;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Users');
+
+CONST ACTIVE = 10;
+CONST INACTIVE = 1;
+
 ?>
 <p></p>
 <div class="user-form-index">
@@ -18,6 +23,17 @@ $this->title = Yii::t('app', 'Users');
                     <div class="pull-right" style="margin-bottom: 10px;"><?= Html::a('<i class="fa fa-plus" style="margin-top: 3px;"></i> New', ['create'], ['class' => 'btn btn-md btn-success']) ?></div>
                     <h4>Users</h4>
                     <hr class="hr-full-width">
+                    <?php
+                        // Alert::widget([
+                        //         'type' => Alert::TYPE_WARNING,
+                        //         'options' => [
+                        //             'title' => 'Success message',
+                        //             'text' => "You will not be able to recover this imaginary file!",
+                        //             'confirmButtonText'  => "Yes, delete it!",
+                        //             'cancelButtonText' =>  "No, cancel plx!"
+                        //         ]
+                        // ]);
+                    ?>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         //'filterModel' => $searchModel,
@@ -40,7 +56,16 @@ $this->title = Yii::t('app', 'Users');
                                     $url = Yii::$app->request->baseUrl . '/user/view?id=';
                                     $edit = Yii::$app->request->baseUrl . '/user/update?id=';
                                     $delete = Yii::$app->request->baseUrl . '/user/delete?id=';
-                                    
+                                    $state = $model->status;
+
+                                    if($state === ACTIVE){
+                                        $halo = 'active';
+                                    }elseif($state === INACTIVE){
+                                        $halo = 'inactive';
+                                    }else{
+                                        $halo = 'deleted';
+                                    }
+
                                     if($model->role->item_name === 'dev'){
                                         $type = 'square-badge dev-badge';
                                     } elseif($model->role->item_name === 'master'){
@@ -74,6 +99,7 @@ $this->title = Yii::t('app', 'Users');
                                                             <a href="' . $url . $model->id . '">
                                                                 <img class="circle" src="' . $img . '" alt="' . $model->username . '">
                                                             </a>
+                                                            <div class="user-halo-state ' . $halo .'"></div>
                                                         </div>
                                                     </div>
                                                 </div>

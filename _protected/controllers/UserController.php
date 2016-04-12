@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\models\User;
 use app\models\UserSearch;
 use app\rbac\models\Role;
+use app\rbac\models\AuthAssignment;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -77,7 +78,8 @@ class UserController extends AppController
          * Lower roles will not be able to see dev @see: search(). 
          * @var boolean
          */
-        $dev = (Yii::$app->user->is('dev')) ? true : false ;
+        $id = Yii::$app->user->identity->id;
+        $dev = (\app\rbac\models\AuthAssignment::getAssignment($id) === 'dev') ? true : false ;
 
         $searchModel = new UserSearch();
         $searchModel->status = 10;
@@ -156,7 +158,7 @@ class UserController extends AppController
 
         // Dev/Master can update everyone`s roles
         // admin will not be able to update role of Dev/Master
-        if (!Yii::$app->user->is('dev') || !Yii::$app->user->is('master')) 
+        if (!AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev' || !AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'master') 
         {
             if ($role->item_name === 'dev' || $role->item_name === 'master')
             {

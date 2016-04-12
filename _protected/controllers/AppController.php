@@ -78,9 +78,4 @@ class AppController extends Controller
         ];
 
     }
-
-    public function actionBoard()
-    {
-        
-    }
 }
