@@ -28,6 +28,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@themes';
 
     public $css = [
+        'css/semantic.min.css',
         'css/animated.css',
         'css/bootstrap.min.css',
         'css/datepicker.css',
@@ -49,6 +50,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jquery-ui.min.js',
         'js/bootstrap.min.js',
+        'js/semantic.min.js',
         'js/init.js',
         'js/pva.js',
         'js/switchery.min.js',

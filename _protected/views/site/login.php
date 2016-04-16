@@ -54,7 +54,6 @@ $this->title = Yii::t('app', 'Login');
             </div>
         </div>
     </div>
-</div>
 <?php
 
 if(Yii::$app->request->url === '/proverbs/site/login'){

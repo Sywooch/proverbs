@@ -60,6 +60,7 @@ $this->title = Yii::t('app', 'Sign Up');
         </div>
     </div>
 </div>
+<?php ActiveForm::end(); ?>
 <?php
 $su = <<< JS
 $(document).ready(function(){
@@ -116,4 +117,3 @@ $(document).ready(function(){
 JS;
 $this->registerJs($su);
 ?>
-<?php ActiveForm::end(); ?>

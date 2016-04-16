@@ -19,6 +19,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'first_name') ?>
 
+    <?= $form->field($model, 'middle_name') ?>
+
     <?= $form->field($model, 'last_name') ?>
 
     <?= $form->field($model, 'nickname') ?>
@@ -132,8 +134,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary btn-block']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default btn-block']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

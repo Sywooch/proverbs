@@ -26,9 +26,9 @@
                 <?php
                     if(!Yii::$app->user->isGuest){
                         if(!empty(Yii::$app->user->identity->profile_image)){
-                            echo '<img id="user-profile-img-thumb" src="/proverbs/uploads/profile-img/' . Yii::$app->user->identity->profile_image .'">';
+                            echo '<img id="user-profile-img-thumb" class="rounded-edge" src="/proverbs/uploads/profile-img/' . Yii::$app->user->identity->profile_image .'">';
                         }else {
-                            echo '<img id="user-profile-img-thumb" src="/proverbs/uploads/ui/user-blue.png">';
+                            echo '<img id="user-profile-img-thumb" class="rounded-edge" src="/proverbs/uploads/ui/user-blue.png">';
                         }
                     }
                 ?> 

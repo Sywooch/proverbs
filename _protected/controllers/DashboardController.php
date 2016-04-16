@@ -34,8 +34,7 @@ class DashboardController extends Controller
         );
     }
 
-    public function behaviors()
-    {
+/*    public function behaviors(){
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -61,7 +60,7 @@ class DashboardController extends Controller
                 ],
             ],
         ];
-    }
+    }*/
 
     public function actionIndex()
     {

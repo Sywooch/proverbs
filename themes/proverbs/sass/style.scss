@@ -1,8 +1,6 @@
 @import "compass";
 @import "variables";
 @import "fonts";
-@import "raul";
-@import "julfer";
 @import "mixins";
 
 body {
@@ -1375,15 +1373,13 @@ span.express-form-student {
     }
 }
 .form-control.pva-form-control {
-    height: 28px;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 1px solid $vanilla;
-    border-left: 0;
-    padding-left: 0;
+    -webkit-border-radius: 2px;
+            border-radius: 2px;
+    height: 32px;
+    border: 1px solid $vanilla;
 }
-select.form-control.pva-form-control {
-    padding-top: 0;
+select.form-control.pva-form-control{
+    padding-top: 5px;
 }
 .hr-form-separator {
     width: 100%;
@@ -1472,6 +1468,27 @@ select.form-control.pva-form-control {
 }
 
 ///////////////////////// UI
+.link.item {
+    font-size: 14px;
+}
+.ui.five.item.pointing.menu > a {
+    font-size: 14px;
+    color: $powder-blue;
+}
+.full-name {
+    font-size: 14px;
+}
+.nickname {
+    font-size: 12px;
+}
+.sped,.student-id {
+    color: #333;
+    margin-top: 5px;
+}
+.pencil.icon{
+    font-size: 18px;
+    margin-top: 5px;
+}
 #user-profile-img-thumb {
     background: $softgrey;
     -webkit-box-shadow: 0px 0px 1px 2px fade_out($darkerblue , .8);
@@ -1569,7 +1586,7 @@ select.form-control.pva-form-control {
 }
 
 .square-badge {
-    margin-top: 4px;
+    margin-top: 0;
     color: white;
     @include border-radius(2px);
     

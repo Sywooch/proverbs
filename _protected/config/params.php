@@ -4,6 +4,7 @@ return [
 //------------------------//
 // SYSTEM SETTINGS
 //------------------------//
+    'student_list' => true,
 
     /**
      * Registration Needs Activation.

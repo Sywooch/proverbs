@@ -42,9 +42,19 @@ class StudentFormSearch extends StudentForm
     public function search($params)
     {
         $query = StudentForm::find();
+        $pageSize = 20;
+
+        $dataProvider->sort->attributes['first_name'] = [
+            'asc' => ['first_name' => SORT_ASC],
+            'desc' => ['first_name' => SORT_DESC],
+        ];
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC, 'first_name'=>SORT_ASC]],
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ]
         ]);
 
         $this->load($params);
@@ -129,12 +139,20 @@ class StudentFormSearch extends StudentForm
     public function searchStudent($params)
     {
         $query = StudentForm::find();
+        $pageSize = 20;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['last_name' => SORT_ASC]],
+            'sort'=> [
+                'defaultOrder' => ['id' => SORT_DESC],
+                //'defaultOrder' => ['first_name' => SORT_ASC]
+            ],
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ]
         ]);
 
+        
         $this->load($params);
 
         if (!$this->validate()) {
@@ -180,7 +198,7 @@ class StudentFormSearch extends StudentForm
 
         $query->orFilterWhere(['status' => 1])->orFilterWhere(['status' => 0]);
 
-        $query->orderBy('last_name', 'asc');
+        //$query->orderBy('id', 'desc');
         
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
             ->andFilterWhere(['like', 'middle_name', $this->middle_name])

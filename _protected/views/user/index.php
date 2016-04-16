@@ -1,7 +1,7 @@
 <?php
 use app\helpers\CssHelper;
 use yii\helpers\Html;
-use yii\grid\GridView;
+use app\models\GridView2;
 use yii2mod\alert\Alert;
 
 /* @var $this yii\web\View */
@@ -27,14 +27,14 @@ CONST INACTIVE = 1;
                         // Alert::widget([
                         //         'type' => Alert::TYPE_WARNING,
                         //         'options' => [
-                        //             'title' => 'Success message',
-                        //             'text' => "You will not be able to recover this imaginary file!",
+                        //             'title' => 'Title',
+                        //             'text' => "Test",
                         //             'confirmButtonText'  => "Yes, delete it!",
                         //             'cancelButtonText' =>  "No, cancel plx!"
                         //         ]
                         // ]);
                     ?>
-                    <?= GridView::widget([
+                    <?= GridView2::widget([
                         'dataProvider' => $dataProvider,
                         //'filterModel' => $searchModel,
                         'layout'=>"<div class='text-centered'>{pager}</div>{items}<div class='text-centered'>{pager}</div>",
@@ -42,7 +42,6 @@ CONST INACTIVE = 1;
                             [
                                 'format' => 'html',
                                 'header' => '',
-                                'attribute' => 'username',
                                 'attribute' => 'username',
                                 'value' => function($model){
 

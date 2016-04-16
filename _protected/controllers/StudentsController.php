@@ -29,7 +29,7 @@ class StudentsController extends Controller
         );
     }
 
-    public function behaviors()
+/*    public function behaviors()
     {
         return [
             'access' => [
@@ -57,7 +57,7 @@ class StudentsController extends Controller
                 ],
             ],
         ];
-    }
+    }*/
 
     /**
      * Lists all StudentForm models.
@@ -125,6 +125,7 @@ class StudentsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            die(var_dump($_POST));
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

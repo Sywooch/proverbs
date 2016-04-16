@@ -14,7 +14,7 @@ CONST DELETED = 0;
                 <div id="user-form-wrap" class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="gridview-role-type" style="margin-left: -24px; margin-top: -12px;"><div id="role-badge" class="square-badge"><span>A</span></div></div>
+                            <div class="gridview-role-type" style="margin-left: -24px; margin-top: -8px;"><div id="role-badge" class="square-badge"><span>A</span></div></div>
                             <div id="user-profile-img-wrap">
                                 <div id="user-profile-image-bg" style="background: url('../uploads/ui/user-default.png'); background-size: contain;"></div>
                                 <img id="user-student-profile-image" class="animated2 fastShrink hidden" src="../uploads/ui/user-blue.png" alt="student"  data-write="false">

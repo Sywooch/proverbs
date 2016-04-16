@@ -18,56 +18,19 @@ class AppController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'controllers' => ['master', 'user', 'teachers', 'staff', 'cashier', 'nursery'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
-                        'allow' => true,
-                        'roles' => ['dev', 'master'],
-                    ],
-                    [
-                        'controllers' => ['admin', 'user', 'staff', 'cashier'],
-                        'actions' => ['index', 'view', 'update', 'create'],
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                    [
                         'controllers' => ['user'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
-                        'allow' => true,
-                        'roles' => ['principal'],
-                    ],
-                    [
-                        'controllers' => ['user','teachers'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
-                        'allow' => true,
-                        'roles' => ['teacher'],
-                    ],
-                    [
-                        'controllers' => ['user', 'enroll'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
-                        'allow' => true,
-                        'roles' => ['cashier'],
-                    ],
-                    [
-                        'controllers' => ['user'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
-                        'allow' => true,
-                        'roles' => ['staff'],
-                    ],
-                    [
-                        'controllers' => ['teacher', 'staff'],
-                        'actions' => ['index', 'view'],
-                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => false,
                         'roles' => ['parent'],
                     ],
                     [
-                        'controllers' => ['profile'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
-                        'allow' => false,
-                        'roles' => ['member'],
+                        'controllers' => ['user'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
                     ],
                 ],
-
-            ],
+            ],  
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

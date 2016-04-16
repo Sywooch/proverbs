@@ -31,25 +31,20 @@ class UserController extends AppController
         );
     }
 
-    public function behaviors()
+/*    public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'controllers' => ['user'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['index' , 'create', 'view', 'update'],
-                        'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
-            ],        
+            ],       
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -59,7 +54,7 @@ class UserController extends AppController
                 ],
             ],
         ];
-    }
+    }*/
     /**
      * Lists all User models.
      *

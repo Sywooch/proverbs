@@ -1,140 +1,36 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\ApplicantForm */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
+$this->title = implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
 ?>
-<div class="student-form-view">
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Payment', ['/payments/new', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
-        <?= Html::a('Enroll', ['/enroll/new', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-    </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            [
-                'attribute' => 'status',
-                'value' => $model->getStatus($model->status), // 0:ACTIVE 1:INACTIVE 2: APPLICANT (DEFAULT)
-            ],
-            [
-                'attribute' => 'grade_level_id',
-                'value' => $model->getGradeLevelId($model->grade_level_id),
-            ],
-            'first_name',
-            'middle_name',
-            'last_name',
-            'nickname',
-            [
-                'attribute' => 'gender',
-                'value' => $model->getGender($model->gender)
-            ],
-            [
-                'attribute' => 'birth_date',
-                'value' => $model->getBirthdate($model->birth_date) //DATE IN CARBON FORMAT
-            ],
-            'religion',
-            'citizenship',
-            'address',
-            'zip_code',
-            'mobile',
-            'phone',
-            'fathers_name',
-            'fathers_occupation',
-            'fathers_employer',
-            'fathers_citizenship',
-            'fathers_religion',
-            'fathers_email:email',
-            'fathers_mobile',
-            'fathers_phone',
-            [
-                'attribute' => 'father_is',
-                'value' => $model->getFatherIs($model->father_is) //0:Living 1: Deceased
-            ],
-            'mothers_name',
-            'mothers_occupation',
-            'mothers_employer',
-            'mothers_citizenship',
-            'mothers_religion',
-            'mothers_email:email',
-            'mothers_mobile',
-            'mothers_phone',
-            [
-                'attribute' => 'mother_is',
-                'value' => $model->getMotherIs($model->mother_is) //0:Living 1:Deceased
-            ],
-            [
-                'attribute' => 'parents_are',
-                'value' => $model->getParentsAre($model->parents_are) //0:Together 1:Separated 2:Widowed 3:Single 4:Marriage Anulled
-            ],
-            'guardians_name',
-            'guardians_profile_image',
-            'guardians_address',
-            'guardians_relation_to_student',
-            'guardians_occupation',
-            'guardians_employer',
-            'guardians_phone',
-            'guardians_mobile',
-            'previous_school_name',
-            'previous_school_description',
-            'previous_school_address',
-            'previous_school_phone',
-            'previous_school_mobile',
-            [
-                'attribute' => 'previous_school_grade_level',
-                'value' => $model->getGradeLevelId($model->previous_school_grade_level)
-            ],
-            'previous_school_average_grade',
-            'previous_school_teacher_in_charge',
-            'previous_school_principal',
-            [
-                'attribute' => 'student_has_sibling_enrolled',
-                'value' => $model->getHasSiblingEnrolled($model->student_has_sibling_enrolled)
-            ],
-            [
-                'attribute' => 'student_photo',
-                'value' => $model->getSubmitted($model->student_photo)
-            ],
-            [
-                'attribute' => 'guardians_photo',
-                'value' => $model->getSubmitted($model->guardians_photo)
-            ],
-            [
-                'attribute' => 'birth_certificate',
-                'value' => $model->getSubmitted($model->birth_certificate)
-            ],
-            [
-                'attribute' => 'report_card',
-                'value' => $model->getSubmitted($model->report_card)
-            ],
-            [
-                'attribute' => 'good_moral',
-                'value' => $model->getSubmitted($model->good_moral)
-            ],
-            'previous_school_from_school_year',
-            'previous_school_to_school_year',
-            'created_at:date',
-            [
-                'attribute' => 'updated_at',
-                'value' => $model->getUpdatedAt($model->updated_at)
-            ],
-        ],
-    ]) ?>
-    <br/>
-    <p>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'pull-right btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="four wide column">
+        <div class="column">
+            <?= $this->render('_card', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="nine wide column">
+        <div class="column">
+            <div id="student-info-menu">
+                <div class="ui five item pointing menu stackable">
+                    <a class="item active" data-tab="first">Student</a>
+                    <a class="item" data-tab="second">Parents</a>
+                    <a class="item" data-tab="third">Guardian</a>
+                    <a class="item" data-tab="fourth">Previous School</a>
+                    <a class="item" data-tab="fifth">Requirements</a>
+                </div>
+                <?= $this->render('_detail', ['model' => $model]) ?>
+            </div>
+        </div>
+    </div>
+    <div class="three wide column">
+        <div class="column">
+            <div class="ui fluid vertical menu">
+                <?= Html::a('New<i class="right floated icon plus"></i>',['create'], ['class' => 'ui link item right labeled icon', 'style' => 'color: #4a8bc2;']) ?>
+                <?= Html::a('Edit<i class="right floated icon edit"></i>',['update', 'id' => $model->id], ['class' => 'ui link item right labeled icon', 'style' => 'color: #4a8bc2;']) ?>
+                <?= Html::a('Delete<i class="right floated icon trash"></i>',['delete', 'id' => $model->id], ['title'=>'Delete Student', 'class' => 'ui link item right labeled icon', 'style' => 'color: #4a8bc2;', 'data' => ['confirm' => Yii::t('app', 'Are you sure you want to delete this student?'),'method' => 'post']]) ?>
+            </div>
+        </div>
+    </div>
 </div>
