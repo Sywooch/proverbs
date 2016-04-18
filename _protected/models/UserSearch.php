@@ -20,7 +20,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['username', 'first_name', 'middle_name', 'last_name', 'email', 'status', 'item_name', 'role'], 'safe'],
+            [['id', 'username', 'first_name', 'middle_name', 'last_name', 'email', 'status', 'item_name', 'role'], 'safe'],
         ];
     }
 
@@ -41,13 +41,14 @@ class UserSearch extends User
      * @param  array $params
      * @return ActiveDataProvider
      */
-    public function search($params, $pageSize = 10)
+    public function searchUser($params, $dev)
     {
         $query = User::find()->joinWith('role');
+        $pageSize = Yii::$app->params['pageSize'];
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['created_at'=>SORT_DESC]],
             //'sort'=> ['defaultOrder' => ['username'=>SORT_ASC]],
             'pagination' => [
                 'pageSize' => $pageSize,
@@ -68,8 +69,6 @@ class UserSearch extends User
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])

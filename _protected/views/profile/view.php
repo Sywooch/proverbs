@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Profile', 'url' => ['index']];
 <div class="profile-form-view">
 
     <h1><?= Html::encode(ucfirst($model->username)) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [

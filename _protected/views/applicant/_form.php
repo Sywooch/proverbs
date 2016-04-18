@@ -7,292 +7,213 @@ use yii\helpers\ArrayHelper;
 
 $grade_level = GradeLevel::find()->all();
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
+$def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
 ?>
-<div class="applicant-form">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <!-- <div class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                    <span class="sr-only"></span>
+<p></p>
+<?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
+<div class="ui two column stackable grid">
+    <div class="four wide rounded column">
+        <div class="ui center aligned stackable cards">
+            <div class="card">
+                <div class="image"><img src="<?= $def ?>" class="tiny image"></div>
+                <div class="ui center aligned content">
+                    <?= $model->isNewRecord ? 
+                        '' : 
+                        $form->field($model, 'id', ['inputTemplate' => '<label>ID#</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
                 </div>
-            </div> -->
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <ul id="tablist" class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#step1" aria-controls="step1" role="tab" data-toggle="tab">Student Information</a></li>
-                <li role="presentation"><a href="#step2" aria-controls="step2" role="tab" data-toggle="tab">Parents Information</a></li>
-                <li role="presentation"><a href="#step3" aria-controls="step3" role="tab" data-toggle="tab">In case of Emergency</a></li>
-                <li role="presentation"><a href="#step4" aria-controls="step4" role="tab" data-toggle="tab">Previous School</a></li>
-                <li role="presentation"><a href="#step5" aria-controls="step5" role="tab" data-toggle="tab">Requirements</a></li>
-            </ul>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <?php $form = ActiveForm::begin(); ?>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="step1">
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <?= $model->isNewRecord ? '' : '<div class="col-lg-3 col-md-3 col-sm-12">' . $form->field($model, 'id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">ID</span></span></span>{input}</div>'])->label(false) . '</div>' ?>
-                                <?= $model->isNewRecord ? '' : '<div class="col-lg-3 col-md-3 col-sm-12">' . $form->field($model, 'status', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Status</span></span></span>{input}</div>'])->dropDownList(['0' => 'Inactive', '1' => 'Active', '2' => 'Applicant'], ['default' => 'Applicant'])->label(false) . '</div>' ?>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData, ['id', 'name'])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12">
-                                    <?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<label style="color: #555; padding-right: 15px;">Sibling</label>{input}'])->checkbox($options = [
-                                        'id' => 'iss', 'class' => 'js-switch js-switch-small-green ss', 
-                                        'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled,
-                                        'data-switcher' => true
-                                        ])->label(false) 
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-4 col-md-3 col-sm-`2"><?= $form->field($model, 'first_name', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'First Name']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true]) ?></div>
-                                <div class="col-lg-4 col-md-3 col-sm-12"><?= $form->field($model, 'middle_name', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Middle']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true])->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-4 col-md-3 col-sm-12"><?= $form->field($model, 'last_name', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Last Name']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true])->textInput(['maxlength' => true]) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'nickname', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Nickname']])->label(false)->textInput(['class' => 'form-control'], ['maxlength' => true])->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'gender', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-venus-mars fa-one-point-five"></i></span></span>{input}</div>'])->dropDownList(['0' => 'Male', '1' => 'Female'])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'birth_date', ['inputTemplate' => '<div class="input-group">{input}<span class="input-group-addon"><i class="fa fa-calendar fa-one-point-five"></i></span></span></div>', 'inputOptions' => ['placeholder' => 'Birthday']])->label(false)->widget(DatePicker::className(),['options' => ['class' => 'form-control', 'placeholder' =>  'Date of Birth']] )?></div>
-                                <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'religion', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Religion']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'citizenship', ['inputTemplate' => '{input}' , 'inputOptions' => ['placeholder' => 'Citizenship']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-7 col-md-7 col-sm-12"><?= $form->field($model, 'address',['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-home fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Home Address']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'zip_code',['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Zip Code']])->label(false)->textInput() ?></div>
-                            </div>
-                        </div> 
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'phone', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-phone fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Tel. No.']])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mobile', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-mobile fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Mobile']])->label(false) ?></div>
-                            </div>
+                <div class="extra content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData,['class' => 'form-control pva-form-control'])->label(false)?>
                         </div>
                     </div>
-
-                    <div role="tabpanel" class="tab-pane" id="step2">
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'fathers_name', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Fathers Full Name']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'fathers_phone', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-phone fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Tel. No.']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'fathers_mobile', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-mobile fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Mobile']])->textInput(['maxlength' => true])->label(false) ?></div>
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <?= $form->field($model, 'sped', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">SPED</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->sped])->label(false) ?>
                         </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'fathers_citizenship', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Citizenship']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'fathers_religion', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Religion']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'fathers_occupation', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-briefcase fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Occupation']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'fathers_employer', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-building fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Employer']])->textInput(['maxlength' => true])->label(false) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'fathers_email', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Email']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'father_is', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Father</span></span></span>{input}</div>'])->dropDownList(['0' => 'Still Lives', '1' => 'Is Deceased'], ['default' => 'Still Lives'])->label(false) ?></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'mothers_name', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Mothers Full Name']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mothers_phone', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-phone fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Tel. No.']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mothers_mobile', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-mobile fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Mobile']])->textInput(['maxlength' => true])->label(false) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mothers_citizenship', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Citizenship']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mothers_religion', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Religion']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mothers_occupation', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-briefcase fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Occupation']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mothers_employer', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-building fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Employer']])->textInput(['maxlength' => true])->label(false) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'mothers_email', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope fa-one-point-five"></i></span></span>{input}</div>', 'inputOptions' => ['placeholder' => 'Email']])->textInput(['maxlength' => true])->label(false) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'mother_is', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Mother</span></span></span>{input}</div>'])->dropDownList(['0' => 'Still Lives', '1' => 'Is Deceased'], ['default' => 'Still Lives'])->label(false) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">   
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'parents_are', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Parents are</span></span></span>{input}</div>'])->dropDownList(['0' => 'Together', '1' => 'Separated', '2' => 'Widowed', '3' => 'Single', '4' => 'Marriage Anulled'], ['default' => 'Together'])->label(false) ?></div>
-                                <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'student_is_living_with', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Student is living with</span></span></span>{input}</div>'])->dropDownList(['0' => 'Both Parents', '1' => 'Father', '2' => 'Mother', '3' => 'Guardian'], ['default' => 'Both Parents'])->label(false) ?></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div role="tabpanel" class="tab-pane" id="step3">
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'guardians_name', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Guardians Full Name']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'guardians_phone', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-phone fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Tel. No.']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'guardians_mobile', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-mobile fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Mobile']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'guardians_relation_to_student', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-group fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Relation to Student']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'guardians_address', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-home fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Home Address']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'guardians_occupation', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-briefcase fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Occupation']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'guardians_employer', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-building fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Employer']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="step4">
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'previous_school_grade_level', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData, ['id', 'name'])->label(false) ?></div>
-                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'previous_school_average_grade', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'Average Grade']])->label(false)->textInput() ?></div>
-                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'previous_school_from_school_year', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'From School Year']])->label(false)->textInput() ?></div>
-                                <div class="col-lg-2 col-md-2 col-sm-12"><?= $form->field($model, 'previous_school_to_school_year', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'To School Year']])->label(false)->textInput() ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'previous_school_name', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-institution fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Name of School']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'previous_school_phone', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-phone fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Tel. No.']])->label(false)->textInput() ?></div>
-                                <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'previous_school_mobile', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-mobile fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Mobile']])->label(false)->textInput() ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                <div class="col-lg-5 col-md-5 col-sm-12"><?= $form->field($model, 'previous_school_description', ['inputTemplate' => '{input}','inputOptions' => ['placeholder' => 'Description']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-7 col-md-7 col-sm-12"><?= $form->field($model, 'previous_school_address', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-road fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Address']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="container form-input-wrapper">                        
-                                <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_teacher_in_charge', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Teacher-in-charge']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                                <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_principal', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-one-point-five"></i></span></span>{input}</div>','inputOptions' => ['placeholder' => 'Principal']])->label(false)->textInput(['maxlength' => true]) ?></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="step5">
-                        <div class="row">
-                            <div class="container form-input-wrapper">
-                                    <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'student_photo', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Student\'s Photo</span></span></span>{input}</div>'])->dropDownList(['0' => 'Not Submitted', '1' => 'Submitted'], ['default' => 'No'])->label(false) ?></div>
-                                    <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'guardians_photo', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Guardians\' Photo</span></span></span>{input}</div>'])->dropDownList(['0' => 'Not Submitted', '1' => 'Submitted'], ['default' => 'No'])->label(false) ?></div>
-                                    <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'report_card', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Birth Certificate</span></span></span>{input}</div>'])->dropDownList(['0' => 'Not Submitted', '1' => 'Submitted'], ['default' => 'No'])->label(false) ?></div>
-                                    <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'birth_certificate', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Report Card</span></span></span>{input}</div>'])->dropDownList(['0' => 'Not Submitted', '1' => 'Submitted'], ['default' => 'No'])->label(false) ?></div>
-                                    <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'good_moral', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list"></span>Good Moral</span></span>{input}</div>'])->dropDownList(['0' => 'Not Submitted', '1' => 'Submitted'], ['default' => 'No'])->label(false) ?></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                       <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                       <?= Html::a(Yii::t('app', 'Cancel'), ['/applicant'], ['class' => 'btn btn-default']) ?>
                     </div>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
+        </div>
+    </div>
+    <div class="nine wide rounded column">
+        <div id="student-info-menu">
+            <div class="ui five item pointing menu stackable">
+                <a class="item active" data-tab="first">Student</a>
+                <a class="item" data-tab="second">Parents</a>
+                <a class="item" data-tab="third">Guardian</a>
+                <a class="item" data-tab="fourth">Previous School</a>
+                <a class="item" data-tab="fifth">Requirements</a>
+            </div>
+                <div class="ui tab segment active" data-tab="first">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <?php //PRINCIPALS VIEW
+                                $form->field($model, 'status', ['inputTemplate' => '<div style="margin-top: -10px;"><label style="padding: 0; color: #555; font-weight: 600;">Active</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->status])->label(false) 
+                            ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'first_name', ['inputTemplate' => '<label>First</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'middle_name', ['inputTemplate' => '<label>Middle</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'last_name', ['inputTemplate' => '<label>Surname</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'nickname', ['inputTemplate' => '<label>Nickname</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'gender', ['inputTemplate' => '<label>Gender</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(['0' => 'Male', '1' => 'Female'])->label(false) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'birth_date', ['inputTemplate' => '<label>Birth Date</label>{input}'])->label(false)->widget(DatePicker::className(),['options' => ['class' => 'form-control pva-form-control']] ) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'address', ['inputTemplate' => '<label>Address</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'zip_code', ['inputTemplate' => '<label>Zip Code</label>{input}','inputOptions' => []])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'religion', ['inputTemplate' => '<label>Religion</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'citizenship', ['inputTemplate' => '<label>Citizenship</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'phone', ['inputTemplate' => '<label>Landline</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mobile', ['inputTemplate' => '<label>Mobile</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                </div>
+                <div class="ui tab segment hidden" data-tab="second">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'fathers_name', ['inputTemplate' => '<label>Father\'s Name</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_phone', ['inputTemplate' => '<label>Landline</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_mobile', ['inputTemplate' => '<label>Mobile</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'fathers_email', ['inputTemplate' => '<label>Email</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_religion', ['inputTemplate' => '<label>Religion</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_citizenship', ['inputTemplate' => '<label>Citizenship</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_occupation', ['inputTemplate' => '<label>Occupation</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_employer', ['inputTemplate' => '<label>Employer</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row"><div class="col-lg-12"><div class="ui divider"></div></div></div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'mothers_name', ['inputTemplate' => '<label>Mother\'s Name</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_phone', ['inputTemplate' => '<label>Landline</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_mobile', ['inputTemplate' => '<label>Mobile</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'mothers_email', ['inputTemplate' => '<label>Email</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_religion', ['inputTemplate' => '<label>Religion</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_citizenship', ['inputTemplate' => '<label>Citizenship</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_occupation', ['inputTemplate' => '<label>Occupation</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_employer', ['inputTemplate' => '<label>Employer</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                </div>
+                <div class="ui tab segment hidden" data-tab="third">
+                    <div class="ui two column">
+                        <div class="six wide stackable column">
+                            <div class="ui items">
+                                <div class="item">
+                                    <div class="ui small rounded image">
+                                        <img src="<?= $def ?>" style="background: #e9eaed;">
+                                    </div>
+                                    <div class="content">
+                                        <div class="row">
+                                            <div class="col-lg-10 col-md-10 col-sm-12"><?= $form->field($model, 'guardians_name', ['inputTemplate' => '<label>Guardian\'s Name</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'guardians_relation_to_student', ['inputTemplate' => '<label>Relation</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12"><?= $form->field($model, 'guardians_address', ['inputTemplate' => '<label>Address</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'guardians_phone', ['inputTemplate' => '<label>Landline</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'guardians_mobile', ['inputTemplate' => '<label>Mobile</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'guardians_occupation', ['inputTemplate' => '<label>Occupation</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12"><?= $form->field($model, 'guardians_employer', ['inputTemplate' => '<label>Employer</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui tab segment hidden" data-tab="fourth">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_grade_level', ['inputTemplate' => '<label>Grade Level</label>{input}','inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData, ['id', 'name'])->label(false) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_from_school_year', ['inputTemplate' => '<label>From</label>{input}','inputOptions' => [] ])->label(false)->widget(DatePicker::className(),['options' => ['class' => 'form-control pva-form-control']] ) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_to_school_year', ['inputTemplate' => '<label>To</label>{input}','inputOptions' => [] ])->label(false)->widget(DatePicker::className(),['options' => ['class' => 'form-control pva-form-control']] ) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <?= $form->field($model, 'previous_school_teacher_in_charge', ['inputTemplate' => '<label>Teacher-in-charge</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <?= $form->field($model, 'previous_school_principal', ['inputTemplate' => '<label>Principal</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <?= $form->field($model, 'previous_school_average_grade', ['inputTemplate' => '<label>Average Grade</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'previous_school_name', ['inputTemplate' => '<label>Name of School</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'previous_school_address', ['inputTemplate' => '<label>Address</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'previous_school_description', ['inputTemplate' => '<label>Description</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_phone', ['inputTemplate' => '<label>Landline</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_mobile', ['inputTemplate' => '<label>Mobile</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                    </div>
+                </div>
+                <div class="ui tab segment hidden" data-tab="fifth">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <?= $form->field($model, 'student_photo', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Student\'s Photo</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_photo])->label(false) ?>
+                            <?= $form->field($model, 'guardians_photo', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Guardian\'s Photo</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->guardians_photo])->label(false) ?>
+                            <?= $form->field($model, 'report_card', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Birth Certificate</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->report_card])->label(false) ?>
+                            <?= $form->field($model, 'birth_certificate', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Report Card</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->birth_certificate])->label(false) ?>
+                            <?= $form->field($model, 'good_moral', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Good Moral</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->good_moral])->label(false) ?>
+                            <?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Siblings Enrolled</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled])->label(false) ?>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="three wide rounded column">
+        <div class="column">
+            <?= Html::submitButton($model->isNewRecord ?    
+                    '<i class="left floated icon plus" style="color: white;"></i>New' : 
+                    'Save' ,
+                    ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?><p></p>
+            <?= Html::a(Yii::t('app', 'Cancel'),['/students'], ['class' => 'ui link fluid huge basic button']) ?>
+        </div>
     </div>
 </div>
+<?php ActiveForm::end(); ?>
 <?php
-if($model->isNewRecord){
-$sw = <<< JS
-$(document).ready(function(){
-    var switches = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    switches.forEach(function(html) {
-      var switchery = new Switchery(html);
+$this->registerJs("
+    $('#student-info-menu .ui.menu')
+    .on('click', '.item', function() {
+        $(this).addClass('active').siblings('.item').removeClass('active');
+        var sel = $(this).attr('data-tab');
+        var tab = $('.ui.tab.segment');
+        var t = $('#student-info-menu').find('[data-tab=\"' + sel + '\"]');
+        $(t).addClass('active').removeClass('hidden').siblings('.ui.tab.segment').removeClass('active').addClass('hidden');
     });
-
-    var hash = '#';
-    var blank = '';
-
-    function iload(object){
-        if(object.value !== object.previousElementSibling){
-            object.previousElementSibling.value = object.value;
-        }
-    }
-
-    $('input.js-sw').each(function(){
-        var elem = $(this).attr('class').split(' ').pop();
-        var temp = '.' + $(this).attr('class').split(' ').pop();
-        
-        var elem = document.querySelector(temp);
-        
-        iload(elem);
-
-        elem.onchange = function() { 
-            if(elem.checked){
-                $(hash + elem.id).val(0);
-                $(hash + elem.id).prev().val(0);
-            } else {
-                $(hash + elem.id).val(1);
-                $(hash + elem.id).prev().val(1);
-            }
-        };
-    });
-});
-JS;
-$this->registerJs($sw);
-} else {
-$swu = <<< JS
-$(document).ready(function(){
-    var switches_update = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    switches_update.forEach(function(html) {
-      var switches_update = new Switchery(html);
-    });
-
-    var hash = '#';
-    var blank = '';
-
-    function syncValue(object){
-        if(object.value !== object.previousElementSibling){
-            object.previousElementSibling.value = object.value;
-        }
-    }
-
-    function changeState(object){
-        if(parseInt(object.value) === 1) {
-            if (typeof $(hash + object.id).attr('checked') !== typeof undefined && $(hash + object.id).attr('checked') !== false) {
-                $(hash + object.id).removeAttr('checked').removeAttr('data-switchery');
-                object.checked = false;
-                $(object.nextElementSibling).click();
-                $(object.nextElementSibling).click();
-            }
-        } else {
-            $(hash + object.id).attr('checked', true);
-            $(hash + object.id).attr('data-switchery', true);
-            object.checked = true;
-            $(object.nextElementSibling).click().click();
-        }
-    }
-
-    $('input.js-sw').each(function(){
-        var elem = $(this).attr('class').split(' ').pop();
-        var temp = '.' + $(this).attr('class').split(' ').pop();
-        var elem = document.querySelector(temp);
-        
-        syncValue(elem);
-        changeState(elem);
-
-        elem.onchange = function() { 
-            if(elem.checked){
-                $(hash + elem.id).val(0);
-                $(hash + elem.id).prev().val(0);
-            } else {
-                $(hash + elem.id).val(1);
-                $(hash + elem.id).prev().val(1);
-            }
-        };
-    });
-});
-JS;
-$this->registerJs($swu);
-}
-?>
+");?>
+<?php $this->render('switch'); ?>

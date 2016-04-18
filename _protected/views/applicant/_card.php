@@ -1,24 +1,26 @@
-<?php 
-    $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
-    !empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $def;
-    $model->gender === 0 ? $gender = 'Male <i class="fa fa-mars fa-one-point-five"></i>' : $gender = 'Female <i class="fa fa-venus fa-one-point-five"></i>';
+<?php
+use yii\helpers\Html;
+$def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
+!empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $def;
+$model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Female <i class="woman icon"></i>';
+!empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>
-<a class="image" href="<?= 'students/view?id=' . $model->id ?>">
-    <img src="<?= $img ?>">
-</a>
-<div class="content">
-    <a class="header" href="<?= 'students/view?id=' . $model->id ?>"><?= implode(' ', [$model->first_name, 
-        !empty(trim($model->middle_name)) ? 
-            ucfirst(substr($model->middle_name, 0,1)). '.' : 
-            '', $model->last_name]) ?>
-    </a>
-    <div class="meta">
-        <label><strong><?= ucfirst($model->nickname) ?></strong></label>
-    </div>
-    <div class="meta">
-        <span><?= $gender ?></span>
-    </div>
-    <div class="description">
-        <span><?= $model->gradeLevel->name ?></span>
+<div class="ui center aligned stackable cards">
+    <div class="card">
+        <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+        <div class="ui center aligned content">
+            <label>ID# <strong><?= $model->id ?></strong></label>
+            <div class="header">
+                <?= Html::a(implode(' ', [$model->first_name, $middle, $model->last_name]),['view?id=' . $model->id], ['class' => '']) ?>
+            </div>
+            <div class="meta">  
+            </div>
+        </div>
+        <div class="extra content">
+            <label class="left floated student-id"><span><?= $model->gradeLevel->name ?></span></label>
+            <span class="right floated">
+                <?php if($model->sped === 0) : ?><div class="ui star rating sped" data-rating="1"><div class="icon active" style="font-size:  16px;"></div></div><?php endif ?>
+            </span>
+        </div>
     </div>
 </div>

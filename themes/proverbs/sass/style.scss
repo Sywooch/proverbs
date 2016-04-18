@@ -1471,8 +1471,8 @@ select.form-control.pva-form-control{
 .link.item {
     font-size: 14px;
 }
-.ui.five.item.pointing.menu > a {
-    font-size: 14px;
+.ui.five.item.pointing.menu > a, .ui.fluid.vertical.menu.stackable> a{
+    font-size: 12px;
     color: $powder-blue;
 }
 .full-name {

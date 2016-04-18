@@ -14,11 +14,11 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
 	    'model' => $model,
 	    'options' => ['class' => 'ui fixed very basic table'],
 	    'attributes' => [
-	        'id',
 	    	[
 	    		'attribute' => 'status',
 	    		'value' => $model->getStatus($model->status)
 	    	],
+	        'id',
 	        'first_name',
 	        'middle_name',
 	        'last_name',
@@ -122,8 +122,14 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
 	    	'previous_school_description',
 	    	'previous_school_teacher_in_charge',
 	    	'previous_school_principal',
-	    	'previous_school_from_school_year',
-	    	'previous_school_to_school_year',
+	    	[
+	    		'attribute' => 'previous_school_from_school_year',
+	    		'value' => $model->getCarbonDate($model->previous_school_from_school_year)
+	    	],
+	    	[
+	    		'attribute' => 'previous_school_to_school_year',
+	    		'value' => $model->getCarbonDate($model->previous_school_to_school_year)
+	    	],
 	    	'previous_school_phone',
 	    	'previous_school_mobile',
 	    ],

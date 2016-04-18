@@ -64,7 +64,7 @@ class ApplicantController extends Controller
     public function actionIndex()
     {
         $searchModel = new ApplicantFormSearch();
-        $dataProvider = $searchModel->searchStatus(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchApplicant(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -8,25 +8,29 @@ use yii\helpers\ArrayHelper;
 $grade_level = GradeLevel::find()->all();
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
+!empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $def;
 ?>
 <p></p>
+<?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
 <div class="ui two column stackable grid">
     <div class="four wide rounded column">
         <div class="ui center aligned stackable cards">
             <div class="card">
-                <div class="image"><img src="<?= $def ?>" class="tiny image"></div>
+                <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
                 <div class="ui center aligned content">
-                    <label class="hidden">ID# <strong></strong></label>
-                    <div class="header">&nbsp;</div>
-                    <div class="meta"> 
-                        &nbsp;
-                    </div>
+                    <?= $model->isNewRecord ? '' : $form->field($model, 'id', ['inputTemplate' => '<label>ID#</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
                 </div>
                 <div class="extra content">
-                    <label class="left floated student-id"><span>&nbsp;</span></label>
-                    <span class="right floated">
-                        <div class="ui hidden star rating sped" data-rating="1"><div class="icon active" style="font-size: 16px;"></div></div>
-                    </span>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData,['class' => 'form-control pva-form-control'])->label(false)?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <?= $form->field($model, 'sped', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">SPED</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->sped])->label(false) ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,16 +44,9 @@ $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
                 <a class="item" data-tab="fourth">Previous School</a>
                 <a class="item" data-tab="fifth">Requirements</a>
             </div>
-            <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
                 <div class="ui tab segment active" data-tab="first">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'status', ['inputTemplate' => '<div style="margin-top: -10px;"><label style="padding: 0; color: #555; font-weight: 600;">Active</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->status])->label(false) ?></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $model->isNewRecord ? '' : $form->field($model, 'id', ['inputTemplate' => '<label>ID#</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label>Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData,['class' => 'form-control pva-form-control'])->label(false)?></div>
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'first_name', ['inputTemplate' => '<label>First</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?></div>
@@ -187,7 +184,6 @@ $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
                             <?= $form->field($model, 'birth_certificate', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Report Card</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->birth_certificate])->label(false) ?>
                             <?= $form->field($model, 'good_moral', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Good Moral</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->good_moral])->label(false) ?>
                             <?= $form->field($model, 'student_has_sibling_enrolled', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Siblings Enrolled</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled])->label(false) ?>
-                            <?= $form->field($model, 'sped', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">SPED</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->student_has_sibling_enrolled])->label(false) ?>
                         </div>
                     </div>
                 </div>
@@ -198,12 +194,12 @@ $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
             <?= Html::submitButton($model->isNewRecord ?    
                     '<i class="left floated icon plus" style="color: white;"></i>New' : 
                     'Save' ,
-                    ['class' => 'ui link fluid huge positive submit button', 'style' => 'color: white;']) ?><p></p>
+                    ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?><p></p>
             <?= Html::a(Yii::t('app', 'Cancel'),['/students'], ['class' => 'ui link fluid huge basic button']) ?>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
 </div>
+<?php ActiveForm::end(); ?>
 <?php
 $this->registerJs("
     $('#student-info-menu .ui.menu')

@@ -1866,8 +1866,8 @@ select.form-control.pva-form-control {
 }
 
 /* line 1474, ../sass/style.scss */
-.ui.five.item.pointing.menu > a {
-  font-size: 14px;
+.ui.five.item.pointing.menu > a, .ui.fluid.vertical.menu.stackable > a {
+  font-size: 12px;
   color: #4a8bc2;
 }
 

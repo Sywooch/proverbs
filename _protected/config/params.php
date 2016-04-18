@@ -43,4 +43,7 @@ return [
      * You can set support email here.
      */
     'supportEmail' => 'support@proverbs.com',
+
+    //DEFAULTS
+    'pageSize' => 20,
 ];

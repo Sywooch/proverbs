@@ -9,6 +9,32 @@ use yii\db\Expression;
 
 class ApplicantForm extends \yii\db\ActiveRecord
 {
+    const STATUS_INACTIVE = 1;
+    const STATUS_ACTIVE = 0;
+    const STATUS_NULL = null;
+    const GENDER_MALE = 0;
+    const GENDER_FEMALE = 1;
+    const STATUS_PENDING = 1;
+    const STATUS_ENROLLED = 0;
+    const N = null;
+    const L1 = 1;
+    const L2 = 2;
+    const L3 = 3;
+    const L10 = 10;
+    const L20 = 20;
+    const L30 = 30;
+    const L40 = 40;
+    const L50 = 50;
+    const L60 = 60;
+    const L70 = 70;
+    const L80 = 80;
+    const L90 = 90;
+    const L100 = 100;
+    const L110 = 110;
+    const L111 = 111;
+    const L120 = 120;
+    const L121 = 121;
+
     /**
      * @inheritdoc
      */
@@ -51,12 +77,14 @@ class ApplicantForm extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'status' => 'Status',
+            'grade_level_id' => 'Grade Level',
             'first_name' => 'First Name',
             'middle_name' => 'Middle Name',
             'last_name' => 'Last Name',
             'nickname' => 'Nickname',
             'gender' => 'Gender',
-            'birth_date' => 'Date of Birth',
+            'birth_date' => 'Birth Date',
             'religion' => 'Religion',
             'citizenship' => 'Citizenship',
             'address' => 'Address',
@@ -64,139 +92,187 @@ class ApplicantForm extends \yii\db\ActiveRecord
             'mobile' => 'Mobile',
             'phone' => 'Phone',
             'fathers_name' => 'Fathers Name',
-            'fathers_occupation' => 'Fathers Occupation',
-            'fathers_employer' => 'Fathers Employer',
-            'fathers_citizenship' => 'Fathers Citizenship',
-            'fathers_religion' => 'Fathers Religion',
-            'fathers_email' => 'Fathers Email',
-            'fathers_mobile' => 'Fathers Mobile',
-            'fathers_phone' => 'Fathers Phone',
-            'father_is' => 'Father Is',
+            'fathers_occupation' => 'Occupation',
+            'fathers_employer' => 'Employer',
+            'fathers_citizenship' => 'Citizenship',
+            'fathers_religion' => 'Religion',
+            'fathers_email' => 'Email',
+            'fathers_mobile' => 'Mobile',
+            'fathers_phone' => 'Phone',
+            'father_is' => 'Deceased Father',
             'mothers_name' => 'Mothers Name',
-            'mothers_occupation' => 'Mothers Occupation',
-            'mothers_employer' => 'Mothers Employer',
-            'mothers_citizenship' => 'Mothers Citizenship',
-            'mothers_religion' => 'Mothers Religion',
-            'mothers_email' => 'Mothers Email',
-            'mothers_mobile' => 'Mothers Mobile',
-            'mothers_phone' => 'Mothers Phone',
-            'mother_is' => 'Mother Is',
-            'parents_are' => 'Parents Are',
+            'mothers_occupation' => 'Occupation',
+            'mothers_employer' => 'Employer',
+            'mothers_citizenship' => 'Citizenship',
+            'mothers_religion' => 'Religion',
+            'mothers_email' => 'Email',
+            'mothers_mobile' => 'Mobile',
+            'mothers_phone' => 'Phone',
+            'mother_is' => 'Deceased Mother',
+            'parents_are' => 'Parents are',
             'guardians_name' => 'Guardians Name',
-            'guardians_profile_image' => 'Guardians Profile Image',
+            'guardians_profile_image' => 'Profile Image',
             'guardians_address' => 'Guardians Address',
-            'guardians_relation_to_student' => 'Guardians Relation To Student',
-            'guardians_occupation' => 'Guardians Occupation',
-            'guardians_employer' => 'Guardians Employer',
-            'guardians_phone' => 'Guardians Phone',
-            'guardians_mobile' => 'Guardians Mobile',
-            'student_is_living_with' => 'Student Is Living With',
-            'student_has_sibling_enrolled' => 'Student Has Sibling Enrolled',
+            'guardians_relation_to_student' => 'Relation to student',
+            'guardians_occupation' => 'Occupation',
+            'guardians_employer' => 'Employer',
+            'guardians_phone' => 'Phone',
+            'guardians_mobile' => 'Mobile',
+            'student_is_living_with' => 'Student is living with',
+            'previous_school_name' => 'School Name',
+            'previous_school_description' => 'Description',
+            'previous_school_address' => 'Address',
+            'previous_school_phone' => 'Phone',
+            'previous_school_mobile' => 'Mobile',
+            'previous_school_grade_level' => 'Grade Level',
+            'previous_school_average_grade' => 'Average Grade',
+            'previous_school_teacher_in_charge' => 'Teacher In Charge',
+            'previous_school_principal' => 'Principal',
+            'previous_school_from_school_year' => 'From School Year',
+            'previous_school_to_school_year' => 'To School Year',
+            'student_has_sibling_enrolled' => 'Sibling Enrolled',
+            'students_profile_image' => 'Profile Image',
             'student_photo' => 'Student Photo',
             'guardians_photo' => 'Guardians Photo',
             'report_card' => 'Report Card',
             'birth_certificate' => 'Birth Certificate',
-            'good_moral' => 'Good Moral',
-            'grade_level_id' => 'Grade Level ID',
-            'previous_school_name' => 'Previous School Name',
-            'previous_school_description' => 'Previous School Description',
-            'previous_school_address' => 'Previous School Address',
-            'previous_school_phone' => 'Previous School Phone',
-            'previous_school_mobile' => 'Previous School Mobile',
-            'previous_school_grade_level' => 'Previous School Grade Level',
-            'previous_school_average_grade' => 'Previous School Average Grade',
-            'previous_school_teacher_in_charge' => 'Previous School Teacher In Charge',
-            'previous_school_principal' => 'Previous School Principal',
-            'previous_school_from_school_year' => 'From',
-            'previous_school_to_school_year' => 'To School Year',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'good_moral' => 'Good Moral',            
+            'created_at' => 'Date Created',
+            'updated_at' => 'Last Updated',
         ];
     }
 
     public function beforeSave($insert)
     {
-        $date = $this->birth_date;
-        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
         if (parent::beforeSave($insert)) {
-
-            if($this->isNewRecord){ // CREATE
-                if(strstr($date, '/')){
-                    $m = trim(substr($date, 0, 2));
-                    $d = trim(substr($date, 3, 2));
-                    $Y = substr($date, 6, 4);
-                    $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                    return true;
-                } else {
-                    if(strlen($date) === 12){
-                        $m = trim(substr($date, 0, 3));
-
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = trim(substr($date, 4, 2));
-                                $Y = substr($date, 8, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    } else {
-                        $m = trim(substr($date, 0, 3));
-                        
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = substr($date, 4, 1);
-                                $Y = substr($date, 7, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    }
-                }
-            } else { // UPDATE
-                if(strstr($date, '/')){
-                    $m = trim(substr($date, 0, 2));
-                    $d = trim(substr($date, 3, 2));
-                    $Y = substr($date, 6, 4);
-
-                    $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                    return true;
-                } else {
-                    if(strlen($date) === 12){
-                        $m = trim(substr($date, 0, 3));
-
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = trim(substr($date, 4, 2));
-                                $Y = substr($date, 8, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    } else {
-                        $m = trim(substr($date, 0, 3));
-                        
-                        for($i = 0; $i <= 11; $i++){
-                            if($months[$i] === $m){
-                                $m = $i+=1;
-                                $d = substr($date, 4, 1);
-                                $Y = substr($date, 7, 4);
-                                $this->birth_date = $this->birth_date = $Y . '-' . $m . '-' . $d;
-                                return true;
-                            }
-                        }
-                    }
-                }
+            if($this->isNewRecord){
+                $this->formatBirthDate($this->birth_date);
+                $this->formatFromDate($this->previous_school_from_school_year);
+                $this->formatToDate($this->previous_school_to_school_year);
+                return true;
+            } else {
+                $this->formatBirthDate($this->birth_date);
+                $this->formatFromDate($this->previous_school_from_school_year);
+                $this->formatToDate($this->previous_school_to_school_year);
+                return true;
             }
         } else {
             return false;
         }
     }
 
+    public function formatBirthDate($date){
+        $date = \Carbon\Carbon::parse($date)->toFormattedDateString();
+        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        if(strpos($date, ',') !== false){
+            if(strlen($date) === 12){
+                $m = trim(substr($date, 0, 3));
+
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = trim(substr($date, 4, 2));
+                        $Y = substr($date, 8, 4);
+                        $this->birth_date = implode('-', [$Y,$m,$d]);
+                        $date = $this->birth_date;
+                        return $date;
+                    }
+                }
+            } else {
+                $m = trim(substr($date, 0, 3));
+                
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = substr($date, 4, 1);
+                        $Y = substr($date, 7, 4);
+                        $this->birth_date = implode('-', [$Y,$m,$d]);
+                        $date = $this->birth_date;
+                        return $date;
+                    }
+                }
+            }
+        }
+
+    }
+
+    public function formatFromDate($date){
+
+        $date = \Carbon\Carbon::parse($date)->toFormattedDateString();
+        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        if(strpos($date, ',') !== false){
+            if(strlen($date) === 12){
+                $m = trim(substr($date, 0, 3));
+
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = trim(substr($date, 4, 2));
+                        $Y = substr($date, 8, 4);
+                        $this->previous_school_from_school_year = implode('-', [$Y,$m,$d]);
+                        $date = $this->previous_school_from_school_year;
+
+                        return $date;
+                    }
+                }
+            } else {
+                $m = trim(substr($date, 0, 3));
+                
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = substr($date, 4, 1);
+                        $Y = substr($date, 7, 4);
+                        $this->previous_school_from_school_year = implode('-', [$Y,$m,$d]);
+                        $date = $this->previous_school_from_school_year;
+                        return $date;
+                    }
+                }
+            }
+        }
+
+    }
+
+    public function formatToDate($date){
+        $date = \Carbon\Carbon::parse($date)->toFormattedDateString();
+        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        if(strpos($date, ',') !== false){
+            if(strlen($date) === 12){
+                $m = trim(substr($date, 0, 3));
+
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = trim(substr($date, 4, 2));
+                        $Y = substr($date, 8, 4);
+                        $this->previous_school_to_school_year = implode('-', [$Y,$m,$d]);
+                        $date = $this->previous_school_to_school_year;
+
+                        return $date;
+                    }
+                }
+            } else {
+                $m = trim(substr($date, 0, 3));
+                
+                for($i = 0; $i <= 11; $i++){
+                    if($months[$i] === $m){
+                        $m = $i+=1;
+                        $d = substr($date, 4, 1);
+                        $Y = substr($date, 7, 4);
+                        $this->previous_school_to_school_year = implode('-', [$Y,$m,$d]);
+                        $date = $this->previous_school_to_school_year;
+                        
+                        return $date;
+                    }
+                }
+            }
+        }
+
+    }
+    
     public function getStatus($data) { // 0:INACTIVE 1:ACTIVE 2: APPLICANT (DEFAULT)
         if($data === 2){
             return 'Applicant';
@@ -250,6 +326,9 @@ class ApplicantForm extends \yii\db\ActiveRecord
         $m = substr($data, 5, 2);
         $d = substr($data, 8, 2);
         return \Carbon\Carbon::create($Y, $m, $d)->toFormattedDateString();
+    }
+    public function getCarbonDate($data) {
+        return \Carbon\Carbon::parse($data, 'Asia/Manila')->toFormattedDateString();
     }
 
     public function getCreatedAt($data) {
@@ -345,5 +424,56 @@ class ApplicantForm extends \yii\db\ActiveRecord
     public function getGradeLevel()
     {
         return $this->hasOne(GradeLevel::className(), ['id' => 'grade_level_id']);
+    }
+
+
+    public function getGenderList()
+    {
+        $genderArray = [
+            self::N => null,
+            self::GENDER_MALE => 'Male',
+            self::GENDER_FEMALE => 'Female',
+        ];
+        
+
+        return $genderArray;
+    }
+
+    public function getStatusList()
+    {
+        $statusArray = [
+            self::STATUS_NULL => null,
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_ENROLLED => 'Enrolled',
+        ];
+        
+
+        return $statusArray;
+    }
+
+    public function getLevelList()
+    {
+        $levelArray = [
+            self::N => null,
+            self::L1 => 'Nursery',
+            self::L2 => 'Kinder 1',
+            self::L3 => 'Kinder 2',
+            self::L10 => 'Grade 1',
+            self::L20 => 'Grade 2',
+            self::L30 => 'Grade 3',
+            self::L40 => 'Grade 4',
+            self::L50 => 'Grade 5',
+            self::L60 => 'Grade 6',
+            self::L70 => 'Grade 7',
+            self::L80 => 'Grade 8',
+            self::L90 => 'Grade 9',
+            self::L100 => 'Grade 10',
+            self::L111 => 'Grade 11 1st Sem',
+            self::L110 => 'Grade 11 2nd Sem',
+            self::L120 => 'Grade 12 1st Sem',
+            self::L121 => 'Grade 12 2nd Sem',
+        ];
+        
+        return $levelArray;
     }
 }
