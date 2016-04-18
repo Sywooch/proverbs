@@ -26,6 +26,36 @@ class AuthItem extends ActiveRecord
         return '{{%auth_item}}';
     }
 
+    public static function getRolesArray()
+    {
+
+        if (!Yii::$app->user->isGuest){
+            $role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
+        }
+
+        if ($role === 'dev' || $role === 'master')
+        {
+            $roles = self::find()->select('name')->where(['type' => 1])->all();
+
+        }
+        else
+        {
+            $roles = self::find()->select('name')
+                                 ->where(['type' => 1])
+                                 ->andWhere(['!=', 'name', 'dev'])
+                                 ->andWhere(['!=', 'name', 'master'])
+                                 ->all();
+        }
+
+        $rolesArray = [];
+
+        for ($i=0; $i < count($roles); $i++) { 
+            $rolesArray[$roles[$i]->name] = ucfirst($roles[$i]->name);
+        }
+
+        return $rolesArray;
+    }
+
     public static function getRoles()
     {
 

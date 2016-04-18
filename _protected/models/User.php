@@ -45,8 +45,8 @@ class User extends UserIdentity
             ['password', 'required', 'on' => 'create'],
             // use passwordStrengthRule() method to determine password strength
             $this->passwordStrengthRule(),
-            ['username', 'unique', 'message' => 'This username has already been taken.'],
-            ['email', 'unique', 'message' => 'This email address has already been taken.'],
+            ['username', 'unique', 'message' => 'Sorry, username already exist.'],
+            ['email', 'unique', 'message' => 'Sorry, email address already exist.'],
         ];
     }
 
@@ -254,6 +254,22 @@ class User extends UserIdentity
     {
         $array = [
                 null => null,
+                'admin' => 'Admin',
+                'cashier' => 'Cashier',
+                'dev' => 'Dev',
+                'master' => 'Master',
+                'parent' => 'Parent',
+                'principal' => 'Principal',
+                'staff' => 'Staff',
+                'teacher' => 'Teacher',
+
+            ];
+        return $array;
+    }
+
+    public function getRolesList()
+    {
+        $array = [
                 'admin' => 'Admin',
                 'cashier' => 'Cashier',
                 'dev' => 'Dev',

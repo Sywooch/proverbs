@@ -18,8 +18,8 @@ $this->title = 'Students';
             <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
             <p></p>
             <br>
-            <?= Html::a('','#',['id' => 'trig', 'class' => 'hidden']) ?>
-            <?php Pjax::begin(['id' => 'student-list', 'timeout' => 5000, 'enablePushState' => false]); ?>
+            <?= Html::a('','#',['id' => 'trig1', 'class' => 'hidden']) ?>
+            <?php Pjax::begin(['id' => 'student-list1', 'timeout' => 10000, 'enablePushState' => false]); ?>
                 <?= UiListView::widget([
                        'dataProvider' => $dataProvider,
                         'itemView' => '_list',

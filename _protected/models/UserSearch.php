@@ -217,22 +217,4 @@ class UserSearch extends User
 
         return $dataProvider;
     }
-
-    /**
-     * Returns the array of possible user roles.
-     * NOTE: used in user/index view.
-     *
-     * @return mixed
-     */
-    public static function getRolesList()
-    {
-        $roles = [];
-
-        foreach (AuthItem::getRoles() as $item_name) 
-        {
-            $roles[$item_name->name] = $item_name->name;
-        }
-
-        return $roles;
-    }
 }

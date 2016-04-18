@@ -19,7 +19,7 @@ class SectionSearch extends Section
     {
         return [
             [['id', 'grade_level_id'], 'integer'],
-            [['section_name'], 'safe'],
+            [['grade_level_id','section_name'], 'safe'],
         ];
     }
 
@@ -39,50 +39,11 @@ class SectionSearch extends Section
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = Section::find();
-        $pageSize = 20;
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $dataProvider->sort->attributes['section_name'] = [
-            'asc' => ['section_name' => SORT_ASC],
-            'desc' => ['section_name' => SORT_DESC],
-        ];
-        
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort'=> ['defaultOrder' => ['section_name'=>SORT_ASC]],
-            'pagination' => [
-                'pageSize' => $pageSize,
-            ]
-        ]);
-        
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'grade_level_id' => $this->grade_level_id,
-        ]);
-
-        $query->andFilterWhere(['like', 'section_name', $this->section_name]);
-
-        return $dataProvider;
-    }
 
     public function searchSection($params)
     {
         $query = Section::find();
-        $pageSize = 10;
+        $pageSize = Yii::$app->params['pageSize'];
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

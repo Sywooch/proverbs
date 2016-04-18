@@ -46,4 +46,6 @@ return [
 
     //DEFAULTS
     'pageSize' => 20,
+
+    'avatar' =>  '/uploads/ui/user-blue.png',
 ];

@@ -1,11 +1,17 @@
 <?php
 $script = <<< JS
 $(document).ready(function(){
+
+function trigger(){
+    setTimeout(function(){ $('#trig1').click(); },1000);
+}
+
 setInterval(function(){
-    $('#trig').click();
-}, 5000);
+    trigger();
+}, 10000);
+
 $(document).on('click', '#trig', function(e){
-    $.pjax.reload({container:'#student-list'});
+    $.pjax.reload({container:'#user-list'});
 });
 });
 JS;

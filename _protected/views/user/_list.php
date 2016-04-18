@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
 
-$def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
-!empty($model->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->profile_image : $img = $def;
+$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+!empty($model->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->profile_image : $img = $avatar;
 ?>
 
 <div class="right floated content"><?= Html::a('<i class="pencil icon"></i>', ['update?id=' . $model->id]) ?></div>

@@ -62,9 +62,7 @@ class UserController extends AppController
      */
     public function actionIndex()
     {
-
-        $id = Yii::$app->user->identity->id;
-        $dev = (\app\rbac\models\AuthAssignment::getAssignment($id) === 'dev') ? true : false ;
+        $dev = AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev' ? true : false ;
 
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams, $dev);
@@ -100,7 +98,6 @@ class UserController extends AppController
     {
         $user = new User(['scenario' => 'create']);
         $role = new Role();
-
         if ($user->load(Yii::$app->request->post()) && $role->load(Yii::$app->request->post()) && Model::validateMultiple([$user, $role]))
         {
             $user->setPassword($user->password);

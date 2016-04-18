@@ -104,6 +104,31 @@ class Section extends \yii\db\ActiveRecord
         return $levelArray;
     }
 
+    public function getLevelMinify()
+    {
+        $levelArray = [
+            self::L1 => 'N',
+            self::L2 => 'K1',
+            self::L3 => 'K2',
+            self::L10 => 'G1',
+            self::L20 => 'G2',
+            self::L30 => 'G3',
+            self::L40 => 'G4',
+            self::L50 => 'G5',
+            self::L60 => 'G6',
+            self::L70 => 'G7',
+            self::L80 => 'G8',
+            self::L90 => 'G9',
+            self::L100 => 'G10',
+            self::L111 => 'G11 A',
+            self::L110 => 'G11 B',
+            self::L120 => 'G12 A',
+            self::L121 => 'G12 B',
+        ];
+        
+        return $levelArray;
+    }
+
     public function getGradeList()
     {
         $grade_level = GradeLevel::find()->orderBy(['id' => SORT_ASC])->all();

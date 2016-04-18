@@ -18,7 +18,7 @@ $this->title = 'Applicants';
                 <p></p>
                 <br>
                 <?= Html::a('','#',['id' => 'trig', 'class' => 'hidden']) ?>
-                <?php Pjax::begin(['id' => 'student-list', 'timeout' => 5000, 'enablePushState' => false]); ?>
+                <?php Pjax::begin(['id' => 'applicant-list', 'timeout' => 5000, 'enablePushState' => false]); ?>
                 <?=
                     UiListView::widget([
                        'dataProvider' => $dataProvider,

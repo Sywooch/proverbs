@@ -12,7 +12,7 @@ $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
 ?>
 <p></p>
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
-<div class="ui two column stackable grid">
+<div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <div class="ui center aligned stackable cards">
             <div class="card">
@@ -191,10 +191,12 @@ $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <?= Html::submitButton($model->isNewRecord ?    
-                    '<i class="left floated icon plus" style="color: white;"></i>New' : 
-                    'Save' ,
-                    ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?><p></p>
+            <?= Html::submitButton($model->isNewRecord ? '<i class="left floated icon plus" style="color: white;"></i>New' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+            <p></p>
+            <?php if(!$model->isNewRecord): ?>
+            <?= Html::a(Yii::t('app', 'View'),['update', 'id' => $model->id], ['class' => 'ui link fluid huge info button']) ?>
+            <p></p>
+            <?php endif ?>
             <?= Html::a(Yii::t('app', 'Cancel'),['/students'], ['class' => 'ui link fluid huge basic button']) ?>
         </div>
     </div>

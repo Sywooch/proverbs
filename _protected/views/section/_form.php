@@ -1,44 +1,31 @@
 <?php
-
 use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use kartik\select2\Select2;
 use yii\bootstrap\ActiveForm;
-use app\models\GradeLevel;
-use app\models\Section;
-
-$grade_level = GradeLevel::find()->all();
-$section = Section::find()->all();
-$listData = ArrayHelper::map($grade_level, 'id' , 'name');
-$listData2 = ArrayHelper::map($section, 'id' , 'section_name');
 ?>
+
 <p></p>
 <?php $form = ActiveForm::begin(); ?>
-<div class="section-form">
-    <div class="row">
-            <div class="col-lg-9 col-md-9 col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="container form-input-wrapper">
-                            <div class="col-lg-9 col-md-9 col-sm-12">
-
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12">
-                                <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-div-wrap"><label>Grade Level</label></label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData, ['id', 'name'])->label(false) ?>
-                                <?= $form->field($model, 'section_name', ['inputTemplate' => '<div class="input-div-wrap"><label>Section Name</label></label>{input}</div>','inputOptions' => ['class' => 'form-control pva-form-control']])->label(false)->textInput(['maxlength' => true]) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="ui three column stackable grid">
+    <div class="four wide rounded column">
+        <div class="ui center aligned stackable cards">
+            <div class="card">
+                <div class="image"><img src="<?= Yii::$app->request->baseUrl . '/uploads/ui/section-bg.jpg' ?>" alt="bg" class="tiny image"></div>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-block' : 'btn btn-primary']) ?>
-                        <?= Html::a(Yii::t('app', 'Cancel'), ['/section'], ['class' => 'btn btn-default btn-block']) ?>
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
+    <div class="nine wide rounded column">
+    <div class="panel panel-default rounded-edge">
+        <div class="panel-body">
+            
+        </div>
+    </div>
+    </div>
+    <div class="three wide rounded column">
+        <div class="column">
+            <?= Html::submitButton($model->isNewRecord ? '<i class="left floated icon plus" style="color: white;"></i>New' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+            <p></p>
+            <?= Html::a(Yii::t('app', 'Cancel'),['/section'], ['class' => 'ui link fluid huge basic button']) ?>
+        </div>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
