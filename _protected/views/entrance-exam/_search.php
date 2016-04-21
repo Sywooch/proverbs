@@ -1,47 +1,39 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\EntranceExamFormSearch */
-/* @var $form yii\widgets\ActiveForm */
+use yii\helpers\ArrayHelper;
+use yii\bootstrap\ActiveForm;
 ?>
 
-<div class="entrance-exam-form-search">
-
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'applicant_id') ?>
-
-    <?= $form->field($model, 'interviewer') ?>
-
-    <?= $form->field($model, 'english') ?>
-
-    <?= $form->field($model, 'reading_skills') ?>
-
-    <?php // echo $form->field($model, 'science') ?>
-
-    <?php // echo $form->field($model, 'comprehension') ?>
-
-    <?php // echo $form->field($model, 'remarks') ?>
-
-    <?php // echo $form->field($model, 'recommendations') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+<?php $form = ActiveForm::begin(['action' => ['index'],'method' => 'get',]); ?>
+<div class="ui fluid vertical menu">
+    <div class="item">
+        <?= Html::a('More', '#entrance-exam-filters-more' , ['class' => 'ui right floated small basic button collapsed', 'role' => 'button', 'data-toggle' => 'collapse', 'aria-expanded' => 'false', 'aria-controls' => 'entrance-exam-filters-more', 'aria-expanded' => 'false'])?>
+        <div class="header"><span><i class="ui massive icon search"></i></span></div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
+    <div class="item">
+        <p></p>
+        <?= Html::submitButton('Search', ['id' => 'search', 'class' => 'ui fluid huge primary button']) ?>
+        <p></p>
+        <?= Html::button('Reset', ['id' => 'clear', 'class' => 'ui fluid huge basic button']) ?>
+        <p></p>
+        <?= $form->field($model, 'applicant_id', ['inputTemplate' => '<label for="Applicant ID">Applicant ID</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
+    </div>
+    <div class="item">
+        <div class="collapse" id="entrance-exam-filters-more">
+            <p></p>
+        </div>
+    </div>
 </div>
+<?php ActiveForm::end(); ?>
+<?php
+$clear = <<< JS
+$(document).ready(function(){
+    var clr = $('#clear')
+    clr.click(function(){
+        $('input[type=\"text\"]').val('');
+    });
+});
+JS;
+$this->registerJs($clear);
+?>

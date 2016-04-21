@@ -4,10 +4,11 @@ use yii\helpers\Html;
 use app\models\UiTable;
 use yii\widgets\Pjax;
 ?>
-<div class="panel panel-default rounded-edge">
-	<div class="panel-body">
-		<?= Html::a('','#',['id' => 'trig', 'class' => 'hidden']) ?>
-        <?php Pjax::begin(['id' => 'user-list', 'timeout' => 5000, 'enablePushState' => false]); ?>
+<div class="ui segment">
+        <?php Pjax::begin(['id' => 'user-detail', 'timeout' => 10000, 'enablePushState' => false, 'enableReplaceState' => true]); ?>
+			<div class="ui inverted dimmer">
+			    <div class="ui massive text loader"></div>
+			</div>
 			<?=
 				UiTable::widget([
 					'model' => $model,
@@ -38,14 +39,9 @@ use yii\widgets\Pjax;
 			            'password_reset_token',
 			            'account_activation_token',
 			            'created_at:date',
-			            [
-			                'attribute' => 'updated_at',
-			                'value' => $model->getUpdatedAt($model->updated_at)
-			            ],
+			            'updated_at:date',
 					],
 				]);
 			?>
 		<?php Pjax::end(); ?>
-	</div>
 </div>
-<?= $this->render('_pjax')?>

@@ -1861,6 +1861,20 @@ select.form-control.pva-form-control {
 }
 
 /* line 1471, ../sass/style.scss */
+.ui.tab.segment {
+  -webkit-transition: all ease 1s 0s;
+  -moz-transition: all ease 1s 0s;
+  -ms-transition: all ease 1s 0s;
+  -o-transition: all ease 1s 0s;
+  transition: all ease 1s 0s;
+}
+
+/* line 1478, ../sass/style.scss */
+.ui.black.ribbon.label > h4 {
+  min-width: 100px;
+}
+
+/* line 1481, ../sass/style.scss */
 .section-minify {
   color: white;
   text-align: center;
@@ -1868,68 +1882,68 @@ select.form-control.pva-form-control {
   margin: auto;
   padding: 25px 0;
 }
-/* line 1477, ../sass/style.scss */
+/* line 1487, ../sass/style.scss */
 .section-minify h4 {
   font-size: 20px;
 }
 
-/* line 1481, ../sass/style.scss */
+/* line 1491, ../sass/style.scss */
 .section-wrap {
   width: 76px;
   height: 76px;
   background: teal;
 }
 
-/* line 1486, ../sass/style.scss */
+/* line 1496, ../sass/style.scss */
 .link.item {
   font-size: 14px;
 }
 
-/* line 1489, ../sass/style.scss */
+/* line 1499, ../sass/style.scss */
 .ui.five.item.pointing.menu > a, .ui.fluid.vertical.menu.stackable > a {
   font-size: 12px;
   color: #4a8bc2;
 }
 
-/* line 1493, ../sass/style.scss */
+/* line 1503, ../sass/style.scss */
 .full-name {
   font-size: 14px;
 }
 
-/* line 1496, ../sass/style.scss */
+/* line 1506, ../sass/style.scss */
 .nickname {
   font-size: 12px;
 }
 
-/* line 1499, ../sass/style.scss */
+/* line 1509, ../sass/style.scss */
 .sped, .student-id, .user-id {
   color: #333;
   margin-top: 5px;
 }
 
-/* line 1503, ../sass/style.scss */
+/* line 1513, ../sass/style.scss */
 .pencil.icon {
   font-size: 18px;
   margin-top: 5px;
 }
 
-/* line 1507, ../sass/style.scss */
+/* line 1517, ../sass/style.scss */
 #user-profile-img-thumb {
   background: #f7f7f7;
   -webkit-box-shadow: 0px 0px 1px 2px rgba(58, 75, 85, 0.2);
   box-shadow: 0px 0px 1px 2px rgba(58, 75, 85, 0.2);
 }
 
-/* line 1512, ../sass/style.scss */
+/* line 1522, ../sass/style.scss */
 #btn-mail-check, #btn-info-check {
   opacity: 1;
 }
-/* line 1514, ../sass/style.scss */
+/* line 1524, ../sass/style.scss */
 #btn-mail-check:hover, #btn-info-check:hover {
   opacity: .8;
 }
 
-/* line 1518, ../sass/style.scss */
+/* line 1528, ../sass/style.scss */
 #btn-signup, #btn-login {
   position: absolute;
   top: 20px;
@@ -1938,27 +1952,27 @@ select.form-control.pva-form-control {
   width: 85px;
   opacity: .5;
 }
-/* line 1525, ../sass/style.scss */
+/* line 1535, ../sass/style.scss */
 #btn-signup:hover, #btn-login:hover {
   opacity: 1;
 }
 
-/* line 1529, ../sass/style.scss */
+/* line 1539, ../sass/style.scss */
 #captcha-wrap {
   display: inline;
 }
 
-/* line 1532, ../sass/style.scss */
+/* line 1542, ../sass/style.scss */
 .fa-one-half {
   font-size: 14px;
 }
 
-/* line 1535, ../sass/style.scss */
+/* line 1545, ../sass/style.scss */
 .fa.fa-mars, .fa.fa-venus {
   color: orange;
 }
 
-/* line 1538, ../sass/style.scss */
+/* line 1548, ../sass/style.scss */
 .gridview-edit-btn-wrap {
   height: 30px;
   width: 30px;
@@ -1971,32 +1985,32 @@ select.form-control.pva-form-control {
   border-radius: 2px;
 }
 
-/* line 1547, ../sass/style.scss */
+/* line 1557, ../sass/style.scss */
 .gridview-role-wrap {
   float: right;
   padding-top: 40px;
   min-height: 100%;
 }
 
-/* line 1552, ../sass/style.scss */
+/* line 1562, ../sass/style.scss */
 .gridview-role-type {
   margin-top: -4px;
   margin-left: -6px;
 }
-/* line 1555, ../sass/style.scss */
+/* line 1565, ../sass/style.scss */
 .gridview-role-type div {
   text-align: center;
   width: 30px;
   height: 30px;
   border-color: transparent;
 }
-/* line 1560, ../sass/style.scss */
+/* line 1570, ../sass/style.scss */
 .gridview-role-type div span {
   position: relative;
   top: 7px;
 }
 
-/* line 1566, ../sass/style.scss */
+/* line 1576, ../sass/style.scss */
 .user-halo-state {
   position: relative;
   top: -90px;
@@ -2010,22 +2024,22 @@ select.form-control.pva-form-control {
   border: 0;
 }
 
-/* line 1575, ../sass/style.scss */
+/* line 1585, ../sass/style.scss */
 .user-halo-state.active {
   background: #7AB317;
 }
 
-/* line 1578, ../sass/style.scss */
+/* line 1588, ../sass/style.scss */
 .user-halo-state.inactive {
   background: #929C92;
 }
 
-/* line 1581, ../sass/style.scss */
+/* line 1591, ../sass/style.scss */
 .user-halo-state.deleted {
   background: #C61F19;
 }
 
-/* line 1584, ../sass/style.scss */
+/* line 1594, ../sass/style.scss */
 .user-halo-state-update {
   position: relative;
   top: -170px;
@@ -2039,22 +2053,22 @@ select.form-control.pva-form-control {
   border: 0;
 }
 
-/* line 1593, ../sass/style.scss */
+/* line 1603, ../sass/style.scss */
 .user-halo-state-update.active {
   background: #7AB317;
 }
 
-/* line 1596, ../sass/style.scss */
+/* line 1606, ../sass/style.scss */
 .user-halo-state-update.inactive {
   background: #929C92;
 }
 
-/* line 1599, ../sass/style.scss */
+/* line 1609, ../sass/style.scss */
 .user-halo-state-update.deleted {
   background: #C61F19;
 }
 
-/* line 1603, ../sass/style.scss */
+/* line 1613, ../sass/style.scss */
 .square-badge {
   margin-top: 0;
   color: white;
@@ -2063,71 +2077,71 @@ select.form-control.pva-form-control {
   border-radius: 2px;
 }
 
-/* line 1609, ../sass/style.scss */
+/* line 1619, ../sass/style.scss */
 .square-badge.dev-badge, .square-badge.master-badge {
   background: #ffdf33;
 }
 
-/* line 1612, ../sass/style.scss */
+/* line 1622, ../sass/style.scss */
 .admin-badge {
   background: rgba(255, 165, 0, 0.5);
 }
 
-/* line 1615, ../sass/style.scss */
+/* line 1625, ../sass/style.scss */
 .cashier-badge {
   background: teal;
 }
 
-/* line 1618, ../sass/style.scss */
+/* line 1628, ../sass/style.scss */
 .principal-badge {
   background: rgba(165, 42, 42, 0.7);
 }
 
-/* line 1621, ../sass/style.scss */
+/* line 1631, ../sass/style.scss */
 .staff-badge {
   background: rgba(128, 0, 128, 0.5);
 }
 
-/* line 1624, ../sass/style.scss */
+/* line 1634, ../sass/style.scss */
 .teacher-badge {
   background: #718d9e;
 }
 
-/* line 1627, ../sass/style.scss */
+/* line 1637, ../sass/style.scss */
 .parent-badge {
   background: #e1e1e1;
 }
 
-/* line 1630, ../sass/style.scss */
+/* line 1640, ../sass/style.scss */
 .rounded-edge {
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 
-/* line 1634, ../sass/style.scss */
+/* line 1644, ../sass/style.scss */
 .circle {
   -webkit-border-radius: 100%;
   border-radius: 100%;
 }
 
-/* line 1638, ../sass/style.scss */
+/* line 1648, ../sass/style.scss */
 .gridview-edit {
   height: 32px;
   width: 32px;
 }
 
-/* line 1642, ../sass/style.scss */
+/* line 1652, ../sass/style.scss */
 .gridview-user-wrap {
   margin: 5px auto;
 }
-/* line 1644, ../sass/style.scss */
+/* line 1654, ../sass/style.scss */
 .gridview-user-wrap .gridview-user-thumb {
   text-align: center;
   margin: auto;
   height: 100px;
   width: 100px;
 }
-/* line 1649, ../sass/style.scss */
+/* line 1659, ../sass/style.scss */
 .gridview-user-wrap .gridview-user-thumb img {
   background: #e9eaed;
   height: 100px;
@@ -2135,7 +2149,7 @@ select.form-control.pva-form-control {
   border: 0;
 }
 
-/* line 1667, ../sass/style.scss */
+/* line 1677, ../sass/style.scss */
 .gridview-level-name {
   width: 40px;
   height: 40px;
@@ -2147,65 +2161,65 @@ select.form-control.pva-form-control {
   border-style: solid;
   border: 0;
 }
-/* line 1674, ../sass/style.scss */
+/* line 1684, ../sass/style.scss */
 .gridview-level-name span {
   position: relative;
   top: 12px;
   color: black;
 }
 
-/* line 1680, ../sass/style.scss */
+/* line 1690, ../sass/style.scss */
 .gridview-level-name.one-char > span {
   right: -15px;
 }
 
-/* line 1683, ../sass/style.scss */
+/* line 1693, ../sass/style.scss */
 .gridview-level-name.two-char > span {
   right: -13px;
 }
 
-/* line 1686, ../sass/style.scss */
+/* line 1696, ../sass/style.scss */
 .gridview-level-name.three-char > span {
   right: -9px;
 }
 
-/* line 1689, ../sass/style.scss */
+/* line 1699, ../sass/style.scss */
 .gridview-level-name.five-char > span {
   right: -6px;
 }
 
-/* line 1692, ../sass/style.scss */
+/* line 1702, ../sass/style.scss */
 .gridview-block {
   display: block;
 }
 
-/* line 1695, ../sass/style.scss */
+/* line 1705, ../sass/style.scss */
 .gridview-info {
   padding: 1px;
 }
 
-/* line 1698, ../sass/style.scss */
+/* line 1708, ../sass/style.scss */
 .gridview-info.username {
   font-size: 16px;
 }
 
-/* line 1701, ../sass/style.scss */
+/* line 1711, ../sass/style.scss */
 .gridview-info.email {
   font-size: 14px;
   font-style: italic;
 }
 
-/* line 1705, ../sass/style.scss */
+/* line 1715, ../sass/style.scss */
 #options-column {
   width: 180px;
 }
 
-/* line 1708, ../sass/style.scss */
+/* line 1718, ../sass/style.scss */
 #options-column-extended {
   width: 300px;
 }
 
-/* line 1711, ../sass/style.scss */
+/* line 1721, ../sass/style.scss */
 .ac-options-btn {
   max-height: 20px;
   -webkit-border-radius: 2px;
@@ -2215,50 +2229,50 @@ select.form-control.pva-form-control {
   padding: 0 4px 4px 4px;
 }
 
-/* line 1716, ../sass/style.scss */
+/* line 1726, ../sass/style.scss */
 .hr-full-width {
   width: 100%;
 }
 
-/* line 1720, ../sass/style.scss */
+/* line 1730, ../sass/style.scss */
 .table.table-striped.table-bordered > thead + tbody > tr td {
   padding: 5px 10px;
 }
-/* line 1723, ../sass/style.scss */
+/* line 1733, ../sass/style.scss */
 .table.table-striped.table-bordered > thead + tbody > tr td:last-child {
   width: 150px;
 }
 
-/* line 1727, ../sass/style.scss */
+/* line 1737, ../sass/style.scss */
 .gridview-summary {
   margin: 0;
 }
 
-/* line 1731, ../sass/style.scss */
+/* line 1741, ../sass/style.scss */
 #enroll-popover-more {
   text-align: center;
   margin: auto;
   height: 50px;
   padding: 5px 10px;
 }
-/* line 1736, ../sass/style.scss */
+/* line 1746, ../sass/style.scss */
 #enroll-popover-more ul li {
   list-style-type: none;
   display: inline;
 }
 
-/* line 1745, ../sass/style.scss */
+/* line 1755, ../sass/style.scss */
 .sweet-alert.showSweetAlert, .sa-confirm-button-container > button.confirm, .sa-button-container > button.cancel {
   border-radius: 2px;
 }
 
-/* line 1748, ../sass/style.scss */
+/* line 1758, ../sass/style.scss */
 .sweet-alert.show-sweet-alert, .sweet-alert.show-sweet-alert > button.sweet-confirm, .sweet-alert.show-sweet-alert > button.sweet-cancel {
   border-radius: 2px;
 }
 
 @media (max-width: 767px) {
-  /* line 1753, ../sass/style.scss */
+  /* line 1763, ../sass/style.scss */
   .breadcrumb {
     text-align: left;
     background: transparent;

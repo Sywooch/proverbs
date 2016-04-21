@@ -1,10 +1,12 @@
 <?php
 use yii\helpers\Html;
-$def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
-!empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $def;
+use yii\widgets\Pjax;
+$avatar = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
+!empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
 $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Female <i class="woman icon"></i>';
 !empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>
+<?php Pjax::begin(['id' => 'applicant-card', 'timeout' => 10000, 'enablePushState' => false]); ?>
 <div class="ui center aligned stackable cards">
     <div class="card">
         <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
@@ -24,3 +26,4 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
         </div>
     </div>
 </div>
+<?php Pjax::end() ?>

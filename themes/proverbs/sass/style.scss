@@ -1468,6 +1468,16 @@ select.form-control.pva-form-control{
 }
 
 ///////////////////////// UI
+.ui.tab.segment {
+    -webkit-transition: all ease 1s 0s;
+       -moz-transition: all ease 1s 0s;
+        -ms-transition: all ease 1s 0s;
+         -o-transition: all ease 1s 0s;
+            transition: all ease 1s 0s;
+}
+.ui.black.ribbon.label > h4 {
+    min-width: 100px;
+}
 .section-minify {
     color: white;
     text-align: center;

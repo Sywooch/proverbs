@@ -148,42 +148,6 @@ class Section extends \yii\db\ActiveRecord
         $grade_level = (empty($grade_level)) ? $this->grade_level_id : $grade_level ;
 
         if ($grade_level === self::L121){
-            return "G12 B";
-        } elseif($grade_level === self::L120){
-            return "G12 A";
-        } elseif($grade_level === self::L111){
-            return "G11 B";
-        } elseif($grade_level === self::L110){
-            return "G11 A";
-        } elseif($grade_level === self::L100){
-            return "G10";
-        } elseif($grade_level === self::L90){
-            return "G9";
-        } elseif($grade_level === self::L80){
-            return "G8";
-        } elseif($grade_level === self::L70){
-            return "G7";
-        } elseif($grade_level === self::L60){
-            return "G6";
-        } elseif($grade_level === self::L50){
-            return "G5";
-        } elseif($grade_level === self::L40){
-            return "G4";
-        } elseif($grade_level === self::L30){
-            return "G3";
-        } elseif($grade_level === self::L20){
-            return "G2";
-        } elseif($grade_level === self::L10){
-            return "G1";
-        } elseif($grade_level === self::L3){
-            return "K2";
-        } elseif($grade_level === self::L2){
-            return "K1";
-        } elseif($grade_level === self::L1){
-            return "N";
-        }
-
-        /*if ($grade_level === self::L121){
             return "Grade 12 2nd Sem";
         } elseif($grade_level === self::L121){
             return "Grade 12 1st Sem";
@@ -217,6 +181,47 @@ class Section extends \yii\db\ActiveRecord
             return "Kinder 1";
         } elseif($grade_level === self::L1){
             return "Nursery";
-        }*/
+        }
+    }
+
+    public function getLevelNameMinify($grade_level = null)
+    {
+        $grade_level = (empty($grade_level)) ? $this->grade_level_id : $grade_level ;
+
+        if ($grade_level === self::L121){
+            return "G12 B";
+        } elseif($grade_level === self::L121){
+            return "G12 A";
+        } elseif($grade_level === self::L111){
+            return "G11 B";
+        } elseif($grade_level === self::L110){
+            return "G11 A";
+        } elseif($grade_level === self::L100){
+            return "G10";
+        } elseif($grade_level === self::L90){
+            return "G9";
+        } elseif($grade_level === self::L80){
+            return "G8";
+        } elseif($grade_level === self::L70){
+            return "G7";
+        } elseif($grade_level === self::L60){
+            return "G6";
+        } elseif($grade_level === self::L50){
+            return "G5";
+        } elseif($grade_level === self::L40){
+            return "G4";
+        } elseif($grade_level === self::L30){
+            return "G3";
+        } elseif($grade_level === self::L20){
+            return "G2";
+        } elseif($grade_level === self::L10){
+            return "G1";
+        } elseif($grade_level === self::L3){
+            return "K2";
+        } elseif($grade_level === self::L2){
+            return "K1";
+        } elseif($grade_level === self::L1){
+            return "N";
+        }
     }
 }

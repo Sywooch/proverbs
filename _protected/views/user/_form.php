@@ -70,13 +70,19 @@ if($user->scenario !== 'create'){
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <?= Html::submitButton($user->scenario === 'create' ? '<i class="left floated icon plus" style="color: white;"></i>New' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
-            <p></p>
-            <?php if($user->scenario !== 'create'): ?>
-            <?= Html::a(Yii::t('app', 'View'),['update', 'id' => $user->id], ['class' => 'ui link fluid huge info button']) ?>
-            <p></p>
-            <?php endif ?>
-            <?= Html::a(Yii::t('app', 'Cancel'),['/user'], ['class' => 'ui link fluid huge basic button']) ?>
+            <div class="ui fluid vertical menu">
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
+                </div>
+                <div class="item">
+                    <?= Html::submitButton($user->scenario === 'create' ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+                    <p></p>
+                    <?php if($user->scenario !== 'create'): ?>
+                    <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $user->id], ['class' => 'ui link fluid huge teal button']) ?>
+                    <p></p>
+                    <?php endif ?>
+                    <?= Html::a(Yii::t('app', 'Cancel'),['/user'], ['class' => 'ui link fluid huge grey button']) ?>
+            </div>
         </div>
     </div>
 </div>

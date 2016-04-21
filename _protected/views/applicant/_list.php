@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
 
-$def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
-!empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $def;
+$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+!empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
 $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Female <i class="woman icon"></i>';
 !empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>

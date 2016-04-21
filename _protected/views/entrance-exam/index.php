@@ -1,62 +1,40 @@
 <?php
-
 use yii\helpers\Html;
-use yii\grid\GridView;
+use app\models\UiListView;
+use yii\widgets\Pjax;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\EntranceExamFormSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = 'Entrance Exam';
+$this->title = 'Entrance Exams';
 ?>
-<div class="entrance-exam-form-index">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <p>
-        <?= Html::a('<i class="fa fa-plus"></i> New', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            'applicant_id',
-            'english',
-            'reading_skills',
-            'science',
-            'comprehension',
-            'remarks',
-            'recommendations',
-            /*
-            'created_at:date',
-            [
-                'attribute' => 'updated_at',
-                'value' => function($model){
-                    return \Carbon\Carbon::createFromTimestamp($model->updated_at, 'Asia/Manila')->diffForHumans();
-                }
-            ],*/
-            ['class' => 'yii\grid\ActionColumn',
-                    'header' => "Options",
-                    'template' => '{view} {update} {delete}',
-                    'options' => ['style' => 'width: 100px; text-align: center; margin: auto;'],
-                    'buttons' => [
-                        'view' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'View Examinee', 
-                                'class'=>'fa fa-user fa-2x']);
-                        },
-                        'update' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'Update Examinee', 
-                                'class'=>'fa fa-edit fa-2x']);
-                        },
-                        'delete' => function ($url, $model, $key) {
-                            return Html::a('', $url, 
-                                ['title'=>'Delete Applicant', 
-                                    'class'=>'fa fa-times fa-2x fa-remove text-centered',
-                                    'data' => [
-                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this record?'),
-                                        'method' => 'post']
-                ]);
-                    }
-                ]
-            ],
-        ],
-    ]); ?>
-
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="twelve wide column">
+        <div class="ui raised segment">
+            <div class="ui black ribbon label" style="margin-left: -2px;">
+                <h4>Entrance Exams</h4>
+            </div>
+            <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
+            <p></p>
+            <?php Pjax::begin(['id' => 'entrance-exam-list', 'timeout' => 10000, 'enablePushState' => false]); ?>
+            <?=
+                UiListView::widget([
+                   'dataProvider' => $dataProvider,
+                    'itemView' => '_list',
+                ]);    
+            ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+    <div class="four wide column">
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
+    </div>
 </div>
+<?php
+$script = <<< JS
+$(document).ready(function(){
+    setInterval(function(){
+        $.pjax.reload({container:'#entrance-exam-list'});
+    }, 10000);
+});
+JS;
+$this->registerJs($script);
+?>

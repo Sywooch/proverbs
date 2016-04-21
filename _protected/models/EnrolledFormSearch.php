@@ -75,7 +75,7 @@ class EnrolledFormSearch extends EnrolledForm
 
     public function searchEnrolled($params)
     {
-        $pageSize = 10;
+        $pageSize = Yii::$app->params['pageSize'];
         
         $query = EnrolledForm::find()
             ->joinWith(['gradeLevel' => function($query) {

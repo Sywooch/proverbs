@@ -1,3 +1,4 @@
+
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -65,9 +66,9 @@ if(!empty($model->errors)){
 
     if(!empty($query)){
 
-        if(!empty($query[0]['profile_image']) || $query[0]['http://localhost/proverbs/themes/proverbs/images/user-default.pngle_image'] !== null){
+        if(!empty($query[0]['profile_image'])/* || $query[0]['http://localhost/proverbs/themes/proverbs/uploads/ui/user-default.png'] !== null*/ ){
 
-            $foto = Yii::$app->request->baseUrl . '/uploads/profile-img/' . $query[0]['profile_image'];
+            $foto = Yii::$app->request->baseUrl . '/uploads/users/' . $query[0]['profile_image'];
             $this->registerJs("$('#msg-mail-check').html('" . $msg . "'); $('#user-check-img').attr('src','" . $foto . "'); $('#user-check-img').attr('data-img','true');");
         } else {
 

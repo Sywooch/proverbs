@@ -11,7 +11,6 @@ use app\models\Board;
 use app\models\BoardSearch;
 use yii\bootstrap\ActiveForm;
 use yii\web\View;
-
 AppAsset::register($this);
 ?>
 <?php
@@ -64,6 +63,7 @@ AppAsset::register($this);
             echo '<div class="page-container">';
             include('sidebar.php');
             echo '<div class="page-content"><div id="header-offset"></div>';
+            include('alert.php');
             //include('page-header.php');
             //echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['homeLink' => ['label' => 'Dashboard', 'url' => Yii::$app->request->baseUrl . '/dashboard'],'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
             // echo    '<div class="row">

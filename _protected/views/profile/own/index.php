@@ -9,47 +9,28 @@ use yii\widgets\DetailView;
 $this->title =  'Profile';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="profile-form-index">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <p class="pull-right">
-                <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            </p>
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="four wide column">
+        <div class="column">
+            <?= $this->render('_card', ['model' => $model]) ?> 
         </div>
-        <div class="panel panel-profile">
-            <div class="panel-body" style="padding-left: 0; margin-top: 30px;">
-                <div id="profile-img-wrapper" class="col-lg-3 col-md-3 col-sm-12">
-                    <div class="profile-head">
-                        <img src="<?= $model->profile_image === $model->id .'.jpg' ? Yii::$app->request->baseUrl . '/uploads/profile-img/' .  $model->profile_image : Yii::$app->request->baseUrl . '/uploads/user-thumb/male.png' ?>" alt="foto">
-                        <p></p>
-                        <span class="profile-data"><?= $model->username ?></span>
-                        <p class="profile-user-icon"><i class="fa fa-user fa-2x"></i></p>                        
-                    </div>
-                        <p>&nbsp;</p>
+    </div>
+    <div class="nine wide column">
+        <div class="column">
+            <?= $this->render('_detail', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="three wide column">
+        <div class="column">
+            <div class="ui fluid vertical menu">
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
                 </div>
-                <div id="profile-details-wrapper" class="col-lg-9 col-md-9 col-sm-12">
-                    <?= DetailView::widget([
-                        'model' => $model,
-                        'attributes' => [
-                            'first_name',
-                            'middle_name',
-                            'last_name',
-                            [
-                                'attribute' => 'gender',
-                                'value' => $model->gender === 0 ? 'Male' : 'Female'
-                            ],
-                            'birth_date:date',
-                            'email',
-                            'address',
-                            'phone',
-                            'mobile',
-                        ],
-                    ]) ?>
+                <div class="item">
+                    <?= Html::a(Yii::t('app', 'Edit'),['update', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        
     </div>
 </div>

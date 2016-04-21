@@ -11,6 +11,7 @@ use yii\web\ForbiddenHttpException;
 use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 use Yii;
 
 /**
@@ -31,7 +32,7 @@ class UserController extends AppController
         );
     }
 
-/*    public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -39,8 +40,8 @@ class UserController extends AppController
                 'rules' => [
                     [
                         'controllers' => ['user'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'allow' => false,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'pjax'],
+                        'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
@@ -51,10 +52,11 @@ class UserController extends AppController
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
-    }*/
+    }
     /**
      * Lists all User models.
      *
@@ -88,6 +90,23 @@ class UserController extends AppController
         ]);
     }
 
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $u = $this->findModel($object->uid);
+
+            if($u->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $u->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
     /**
      * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.

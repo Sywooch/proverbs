@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 /**
  * ApplicantController implements the CRUD actions for ApplicantForm model.
  */
@@ -32,7 +33,7 @@ class ApplicantController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update'],
+                //'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
                         'actions' => ['index' , 'create', 'view', 'update'],
@@ -40,7 +41,7 @@ class ApplicantController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'actions' => ['index' , 'create', 'view', 'update', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,6 +53,7 @@ class ApplicantController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
@@ -84,6 +86,24 @@ class ApplicantController extends Controller
         ]);
     }
 
+
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $applicant = $this->findModel($object->uid);
+
+            if($applicant->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $applicant->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
     /**
      * Creates a new ApplicantForm model.
      * If creation is successful, the browser will be redirected to the 'view' page.

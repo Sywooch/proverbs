@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  * StudentsController implements the CRUD actions for StudentForm model.
@@ -42,7 +43,7 @@ class StudentsController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'actions' => ['index' , 'create', 'view', 'update', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,6 +55,7 @@ class StudentsController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
@@ -147,6 +149,24 @@ class StudentsController extends Controller
         return $this->redirect(['index']);
     }
 
+
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $student = $this->findModel($object->uid);
+
+            if($student->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $student->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
     /**
      * Finds the StudentForm model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

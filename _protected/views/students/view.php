@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 $this->title = implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
 ?>
-
 <p></p>
 <div class="ui two column stackable grid">
     <div class="four wide column">
@@ -27,10 +26,18 @@ $this->title = implode(' ', [$model->first_name, $model->middle_name, $model->la
     <div class="three wide column">
         <div class="column">
             <div class="ui fluid vertical menu">
-                <?= Html::a('New<i class="right floated icon plus"></i>',['create'], ['class' => 'ui link item right labeled icon', 'style' => 'color: #4a8bc2;']) ?>
-                <?= Html::a('Edit<i class="right floated icon edit"></i>',['update', 'id' => $model->id], ['class' => 'ui link item right labeled icon', 'style' => 'color: #4a8bc2;']) ?>
-                <?= Html::a('Delete<i class="right floated icon trash"></i>',['delete', 'id' => $model->id], ['title'=>'Delete Student', 'class' => 'ui link item right labeled icon', 'style' => 'color: #4a8bc2;', 'data' => ['confirm' => Yii::t('app', 'Are you sure you want to delete this student?'),'method' => 'post']]) ?>
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
+                </div>
+                <div class="item">
+                    <?= Html::a(Yii::t('app', 'New'),['create'], ['class' => 'ui link fluid huge primary button']) ?>
+                    <p></p>
+                    <?= Html::a(Yii::t('app', 'Edit'),['update', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
+                    <p></p>
+                    <?= Html::a(Yii::t('app', 'Delete'),['delete', 'id' => $model->id], ['title'=>'Delete Studnet', 'class' => 'ui link fluid huge grey button', 'data' => ['confirm' => Yii::t('app', 'Are you sure you want to delete this applicant?'),'method' => 'post']]) ?>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<?= $this->render('_pjax', ['model' => $model]) ?>

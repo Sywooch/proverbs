@@ -48,4 +48,6 @@ return [
     'pageSize' => 20,
 
     'avatar' =>  '/uploads/ui/user-blue.png',
+
+    'pjaxInterval' => 5000,
 ];

@@ -85,7 +85,7 @@ class SiteController extends Controller
                     if(!empty($query) && $email === $query[0]['email']){
 
                         if(!empty($query[0]['profile_image']) || $query[0]['profile_image'] !== null){
-                            $foto = Yii::$app->request->baseUrl . '/uploads/profile-img/' . $query[0]['profile_image'];
+                            $foto = Yii::$app->request->baseUrl . '/uploads/users/' . $query[0]['profile_image'];
                             $object = (object) array('code' => 200, 'attempt' => $attempt, 'username' => $query[0]['username'], 'foto' => $foto);
 
                             return $object;

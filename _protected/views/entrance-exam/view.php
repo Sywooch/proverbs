@@ -1,46 +1,33 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\EntranceExamForm */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Entrance Exam Forms', 'url' => ['index']];
+//$this->title = implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
 ?>
-<div class="entrance-exam-form-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'applicant_id',
-            'english',
-            'reading_skills',
-            'science',
-            'comprehension',
-            'remarks',
-            'recommendations',
-            'created_at:date',
-            [
-                'attribute' => 'updated_at',
-                'value' => $model->getUpdatedAt($model->updated_at)
-            ],
-        ],
-    ]) ?>
-
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="four wide column">
+        <div class="column">
+            <?= $this->render('_card', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="nine wide column">
+        <div class="column">
+            <?= $this->render('_detail', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="three wide column">
+        <div class="column">
+            <div class="ui fluid vertical menu">
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
+                </div>
+                <div class="item">
+                    <?= Html::a(Yii::t('app', 'New'),['create'], ['class' => 'ui link fluid huge primary button']) ?>
+                    <p></p>
+                    <?= Html::a(Yii::t('app', 'Edit'),['update', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
+                    <p></p>
+                    <?= Html::a(Yii::t('app', 'Delete'),['delete', 'id' => $model->id], ['title'=>'Delete Record', 'class' => 'ui link fluid huge grey button', 'data' => ['confirm' => Yii::t('app', 'Are you sure you want to delete this record?'),'method' => 'post']]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

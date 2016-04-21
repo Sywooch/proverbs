@@ -18,8 +18,8 @@ class ApplicantFormSearch extends ApplicantForm
     public function rules()
     {
         return [
-            [['id', 'gender', 'zip_code', 'mobile', 'phone', 'fathers_mobile', 'fathers_phone', 'father_is', 'mothers_mobile', 'mothers_phone', 'mother_is', 'parents_are', 'guardians_phone', 'guardians_mobile', 'student_is_living_with', 'student_has_sibling_enrolled', 'student_photo', 'guardians_photo', 'report_card', 'birth_certificate', 'good_moral', 'grade_level_id', 'previous_school_phone', 'previous_school_mobile', 'previous_school_grade_level', 'previous_school_average_grade', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['id', 'first_name', 'middle_name', 'last_name', 'nickname', 'gender', 'grade_level_id', 'birth_date', 'religion', 'citizenship', 'address', 'fathers_name', 'fathers_occupation', 'fathers_employer', 'fathers_citizenship', 'fathers_religion', 'fathers_email', 'mothers_name', 'mothers_occupation', 'mothers_employer', 'mothers_citizenship', 'mothers_religion', 'mothers_email', 'guardians_name', 'guardians_profile_image', 'students_profile_image', 'guardians_address', 'guardians_relation_to_student', 'guardians_occupation', 'guardians_employer', 'previous_school_name', 'previous_school_description', 'previous_school_address', 'previous_school_teacher_in_charge', 'previous_school_principal', 'previous_school_from_school_year', 'previous_school_to_school_year'], 'safe'],
+            [['id', 'gender', 'zip_code', 'mobile', 'phone', 'fathers_mobile', 'fathers_phone', 'father_is', 'mothers_mobile', 'mothers_phone', 'mother_is', 'parents_are', 'guardians_phone', 'guardians_mobile', 'student_is_living_with', 'student_has_sibling_enrolled', 'student_photo', 'guardians_photo', 'report_card', 'birth_certificate', 'good_moral', 'grade_level_id', 'previous_school_phone', 'previous_school_mobile', 'previous_school_grade_level', 'previous_school_average_grade', 'status', 'created_at', 'updated_at', 'sped'], 'integer'],
+            [['id', 'first_name', 'middle_name', 'last_name', 'nickname', 'gender', 'grade_level_id', 'birth_date', 'religion', 'citizenship', 'address', 'fathers_name', 'fathers_occupation', 'fathers_employer', 'fathers_citizenship', 'fathers_religion', 'fathers_email', 'mothers_name', 'mothers_occupation', 'mothers_employer', 'mothers_citizenship', 'mothers_religion', 'mothers_email', 'guardians_name', 'guardians_profile_image', 'students_profile_image', 'guardians_address', 'guardians_relation_to_student', 'guardians_occupation', 'guardians_employer', 'previous_school_name', 'previous_school_description', 'previous_school_address', 'previous_school_teacher_in_charge', 'previous_school_principal', 'previous_school_from_school_year', 'previous_school_to_school_year', 'sped'], 'safe'],
         ];
     }
 
@@ -57,6 +57,7 @@ class ApplicantFormSearch extends ApplicantForm
         }
 
         $query->andFilterWhere([
+            'sped' => $this->sped,
             'zip_code' => $this->zip_code,
             'mobile' => $this->mobile,
             'phone' => $this->phone,

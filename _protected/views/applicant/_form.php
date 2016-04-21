@@ -8,6 +8,7 @@ use yii\helpers\ArrayHelper;
 $grade_level = GradeLevel::find()->all();
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+!empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
 ?>
 <p></p>
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
@@ -15,7 +16,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
     <div class="four wide rounded column">
         <div class="ui center aligned stackable cards">
             <div class="card">
-                <div class="image"><img src="<?= $avatar ?>" class="tiny image"></div>
+                <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
                 <div class="ui center aligned content">
                     <?= $model->isNewRecord ? 
                         '' : 
@@ -196,13 +197,20 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <?= Html::submitButton($model->isNewRecord ? '<i class="left floated icon plus" style="color: white;"></i>New' : 'Save' ,['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
-            <p></p>
-            <?php if(!$model->isNewRecord): ?>
-            <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $model->id], ['class' => 'ui link fluid huge info button']) ?>
-            <p></p>
-            <?php endif ?>
-            <?= Html::a(Yii::t('app', 'Cancel'),['/students'], ['class' => 'ui link fluid huge basic button']) ?>
+            <div class="ui fluid vertical menu">
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
+                </div>
+                <div class="item">
+                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+                    <p></p>
+                    <?php if(!$model->isNewRecord): ?>
+                    <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
+                    <p></p>
+                    <?php endif ?>
+                    <?= Html::a(Yii::t('app', 'Cancel'),['/applicant'], ['class' => 'ui link fluid huge grey button']) ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

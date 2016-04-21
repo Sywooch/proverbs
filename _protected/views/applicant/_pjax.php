@@ -1,42 +1,84 @@
 <?php
-$script = <<< JS
+$uid = json_encode($model->id);
+$upd = json_encode($model->updated_at);
+$pjaxInt = json_encode(Yii::$app->params['pjaxInterval']);
+$pjax = <<< JS
 $(document).ready(function(){
+    var uid;
+    var val;
+    var ini = true;
 
-function trigger(){
-    setTimeout(function(){ $('#trig1').click(); },1000);
-    setTimeout(function(){ $('#trig2').click(); },2000);
-    setTimeout(function(){ $('#trig3').click(); },3000);
-    setTimeout(function(){ $('#trig4').click(); },4000);
-    setTimeout(function(){ $('#trig5').click(); },5000);
-}
+	$('#applicant-info-menu .ui.menu')
+    .on('click', '.item', function() {
+        $(this).addClass('active').siblings('.item').removeClass('active');
+        var sel = $(this).attr('data-tab');
+        var tab = $('.ui.tab.segment');
+        var t = $('#applicant-info-menu').find('[data-tab=\"' + sel + '\"]');
+        $(t).addClass('active').removeClass('hidden').siblings('.ui.tab.segment').removeClass('active');
+    });
 
-setInterval(function(){
-    trigger();
-}, 10000);
+    function pjax(data){
+        $('.ui.inverted.dimmer').addClass('active');
+        $.pjax.reload({container:'#applicant-card'});
+        setTimeout(function(){
+            $.pjax.reload({container:'#applicant-detail',clientOptions: setTab()});
+        }, 1000);
+    }
 
-$(document).on('click', '#trig1', function(e){
-    $.pjax.reload({container:'#applicant-list1'});
-});
+    function getIni(data){
+        return ini;
+    }
 
-$(document).on('click', '#trig2', function(e){
-    $.pjax.reload({container:'#applicant-list2'});
-});
+    function setIni(data){
+        ini = data;
+    }
 
-$(document).on('click', '#trig3', function(e){
-    $.pjax.reload({container:'#applicant-list3'});
-});
+    function getUpd(){
+        if(ini){
+            return $upd;
+        }else {
+            return val;
+        }
+    }
 
-$(document).on('click', '#trig4', function(e){
-    $.pjax.reload({container:'#applicant-list4'});
-});
+    function state(){
+        $('.ui.inverted.dimmer').removeClass('active');
+    }
 
-$(document).on('click', '#trig5', function(e){
-    $.pjax.reload({container:'#applicant-list5'});
-});
+    function setTab(){
+        
+        setTimeout(function(){
+            var sel = $('#applicant-info-menu .ui.menu > .item.active').attr('data-tab');
+            var t =  $('#applicant-info-menu > #applicant-detail').find('[data-tab=\"' + sel + '\"]');
+            t.addClass('active').siblings('.ui.tab.segment').removeClass('active');
+        },200);
 
+        setTimeout(function(){
+            state();
+        },2200);
+    }
 
-
+    setInterval(function(){
+        $.ajax({
+            type: 'POST',
+            url: 'pjax?data=' + JSON.stringify({
+                    uid: $uid,
+                    upd: getUpd(),
+                }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(data) {
+                if(data.pjax){
+                    pjax();
+                    if(data.delta){
+                        val = data.upd;
+                        setIni(false);
+                    }
+                }
+            }
+        });
+    }, $pjaxInt);
 });
 JS;
-$this->registerJs($script);
+$this->registerJs($pjax);
 ?>

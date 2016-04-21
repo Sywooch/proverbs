@@ -6,13 +6,14 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use app\models\GradeLevel;
+use app\models\StudentForm;
 
 /**
  * This is the model class for table "entrance_exam".
  *
  * @property string $id
- * @property string $student_id
- * @property integer $interviewer
+ * @property string $applicant_id
  * @property integer $english
  * @property integer $reading_skills
  * @property integer $science
@@ -22,8 +23,7 @@ use yii\db\Expression;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property Student $student
- * @property User $interviewer0
+ * @property Student $applicant
  */
 class EntranceExamForm extends \yii\db\ActiveRecord
 {
@@ -43,7 +43,8 @@ class EntranceExamForm extends \yii\db\ActiveRecord
         return [
             [['applicant_id', 'english', 'reading_skills', 'science', 'comprehension', 'created_at', 'updated_at'], 'integer'],
             [['english', 'reading_skills', 'science', 'comprehension'], 'required'],
-            [['remarks', 'recommendations'], 'string', 'max' => 255]
+            [['applicant.first_name','applicant.middle_name','applicant.last_name', 'remarks', 'recommendations'], 'string', 'max' => 255],
+            [['applicant_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentForm::className(), 'targetAttribute' => ['applicant_id' => 'id']],
         ];
     }
 
@@ -55,6 +56,10 @@ class EntranceExamForm extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'applicant_id' => 'Applicant ID',
+            'applicant.first_name' => 'First Name',
+            'applicant.middle_name' => 'Middle Name',
+            'applicant.last_name' => 'Last Name',
+            'applicant.gradeLevel.name' => 'Grade Level',
             'english' => 'English',
             'reading_skills' => 'Reading Skills',
             'science' => 'Science',
@@ -65,6 +70,7 @@ class EntranceExamForm extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
 
     public function behaviors()
     {
@@ -78,17 +84,44 @@ class EntranceExamForm extends \yii\db\ActiveRecord
             ],
         ];
     }
-
-    public function getUpdatedAt($data) {        
-
-        return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
-    }
-    
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getApplicant()
     {
-        return $this->hasOne(Student::className(), ['id' => 'applicant_id']);
+        return $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
     }
+    
+    public function getApplicantFirstName($id)
+    {
+        $student = $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
+        
+        return $student['first_name'];
+    }
+
+    public function getApplicantMiddleName($id)
+    {
+        $student = $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
+        
+        return $student['middle_name'];
+    }
+
+    public function getApplicantLastName($id)
+    {
+        $student = $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
+        
+        return $student['last_name'];
+    }
+
+    public function getUpdatedAt($data) {        
+
+        return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
+    }
+
+    public function getGradeLevelName($id){
+        $level = GradeLevel::findOne($id);
+
+        return $level['name'];
+    }
+
 }

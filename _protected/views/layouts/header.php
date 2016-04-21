@@ -32,7 +32,7 @@
                         }
                     }
                 ?> 
-                <span><?= !Yii::$app->user->isGuest ? ucfirst(Yii::$app->user->identity->username) : '' ?></span>
+                <span><?= !Yii::$app->user->isGuest ? Yii::$app->user->identity->username : '' ?></span>
                 <span id="dropdown-caret"><i class="caret open"></i></span>
             </a>
         </li>

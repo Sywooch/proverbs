@@ -12,7 +12,7 @@ $def = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
 </div>
 <div class="content">
 	<label>ID# <strong><?= $model->id ?></strong></label><br>
-	<?= Html::a(implode(' ', [$model->first_name, $middle, $model->last_name]),['view?id=' . $model->id], ['class' => 'header full-name']) ?>
+	<?= Html::a(implode(' ', [$model->first_name, $middle, $model->last_name]),['view?id=' . $model->id], ['user-view', 'class' => 'header full-name']) ?>
 	<br>
 	<div class="extra content">
 		<span><?= $model->gradeLevel->name ?></span>

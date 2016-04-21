@@ -1,8 +1,8 @@
 <?php
 
 namespace app\models;
-
 use Yii;
+use app\rbac\models\Role;
 
 /**
  * This is the model class for table "user".
@@ -143,5 +143,37 @@ class ProfileForm extends \yii\db\ActiveRecord
         } else {
             return false;
         }
+    }
+
+    public function getRole()
+    {
+        // User has_one Role via Role.user_id -> id
+        return $this->hasOne(Role::className(), ['user_id' => 'id']);
+    }
+
+    public function getGenderName($data)
+    {
+        if($data === 0) {
+            return 'Male';
+        }else {
+            return 'Female';
+        }
+    }
+
+    public function getRoleName()
+    {
+        return $this->role->item_name;
+    }
+
+    public function getAssignedRole($id){
+        $array = Yii::$app->authManager->getRolesByUser($id);
+        
+         $role = [];
+
+        foreach ($array as $key) {
+            $role = $key;
+        }
+
+        return $role->name;
     }
 }

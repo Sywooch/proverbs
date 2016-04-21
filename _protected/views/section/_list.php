@@ -6,7 +6,7 @@ use yii\helpers\Html;
 <div class="ui tiny rounded image">
 	<div class="section-wrap">
 		<div class="section-minify">
-			<h4><?= $model->getLevelName() ?></h4>
+			<h4><?= $model->getLevelNameMinify() ?></h4>
 		</div>
 	</div>
 </div>

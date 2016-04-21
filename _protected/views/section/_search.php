@@ -11,7 +11,7 @@ use yii\helpers\ArrayHelper;
     </div>
     <div class="item">
         <p></p>
-        <?= Html::submitButton('Search', ['id' => 'search', 'class' => 'ui fluid huge primary button']) ?>
+        <?= Html::submitButton('Search', ['id' => 'search', 'class' => 'ui fluid huge blue button']) ?>
         <p></p>
         <?= Html::button('Reset', ['id' => 'clear', 'class' => 'ui fluid huge basic button']) ?>
         <p></p>
