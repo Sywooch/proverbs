@@ -27,9 +27,25 @@ use app\models\StudentForm;
  */
 class EntranceExamForm extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    const N = null;
+    const L1 = 1;
+    const L2 = 2;
+    const L3 = 3;
+    const L10 = 10;
+    const L20 = 20;
+    const L30 = 30;
+    const L40 = 40;
+    const L50 = 50;
+    const L60 = 60;
+    const L70 = 70;
+    const L80 = 80;
+    const L90 = 90;
+    const L100 = 100;
+    const L110 = 110;
+    const L111 = 111;
+    const L120 = 120;
+    const L121 = 121;
+    
     public static function tableName()
     {
         return 'entrance_exam';
@@ -43,7 +59,7 @@ class EntranceExamForm extends \yii\db\ActiveRecord
         return [
             [['applicant_id', 'english', 'reading_skills', 'science', 'comprehension', 'created_at', 'updated_at'], 'integer'],
             [['english', 'reading_skills', 'science', 'comprehension'], 'required'],
-            [['applicant.first_name','applicant.middle_name','applicant.last_name', 'remarks', 'recommendations'], 'string', 'max' => 255],
+            [['remarks', 'recommendations'], 'string', 'max' => 255],
             [['applicant_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentForm::className(), 'targetAttribute' => ['applicant_id' => 'id']],
         ];
     }
@@ -84,6 +100,33 @@ class EntranceExamForm extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+
+    public function getLevelList()
+    {
+        $levelArray = [
+            self::N => null,
+            self::L1 => 'Nursery',
+            self::L2 => 'Kinder 1',
+            self::L3 => 'Kinder 2',
+            self::L10 => 'Grade 1',
+            self::L20 => 'Grade 2',
+            self::L30 => 'Grade 3',
+            self::L40 => 'Grade 4',
+            self::L50 => 'Grade 5',
+            self::L60 => 'Grade 6',
+            self::L70 => 'Grade 7',
+            self::L80 => 'Grade 8',
+            self::L90 => 'Grade 9',
+            self::L100 => 'Grade 10',
+            self::L110 => 'Grade 11 1st Sem',
+            self::L111 => 'Grade 11 2nd Sem',
+            self::L120 => 'Grade 12 1st Sem',
+            self::L121 => 'Grade 12 2nd Sem',
+        ];
+        
+        return $levelArray;
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -122,6 +165,12 @@ class EntranceExamForm extends \yii\db\ActiveRecord
         $level = GradeLevel::findOne($id);
 
         return $level['name'];
+    }
+
+
+    public function getGradeLevel()
+    {
+        return $this->hasOne(GradeLevel::className(), ['id' => 'grade_level_id']);
     }
 
 }

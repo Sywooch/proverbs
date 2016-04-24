@@ -20,9 +20,9 @@ $this->title = 'Students';
             <p></p>
             <?php Pjax::begin(['id' => 'student-list', 'timeout' => 10000]); ?>
                 <?= UiListView::widget([
-                       'dataProvider' => $dataProvider,
-                        'itemView' => '_list',
-                    ]); ?>
+                   'dataProvider' => $dataProvider,
+                    'itemView' => '_list',
+                ]); ?>
             <?php Pjax::end(); ?>
         </div>
     </div>
@@ -31,7 +31,7 @@ $this->title = 'Students';
     </div>
 </div>
 <?php
-$script = <<< JS
+$pjax = <<< JS
 $(document).ready(function(){
     setInterval(function(){
         $.pjax.reload({
@@ -43,5 +43,5 @@ $(document).ready(function(){
     }, 10000);
 });
 JS;
-$this->registerJs($script);
+$this->registerJs($pjax);
 ?>

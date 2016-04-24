@@ -5,7 +5,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->applicant['students_profile_image']) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->applicant['students_profile_image'] : $img = $avatar;
 !empty(trim($model->applicant['middle_name'])) ? $middle = ucfirst(substr($model->applicant['middle_name'], 0,1)).'.' : $middle = '';
 ?>
-<?php Pjax::begin(['id' => 'entrance-exam-card', 'timeout' => 10000, 'enablePushState' => false]); ?>
+<?php Pjax::begin(['id' => 'entrance-exam-card', 'timeout' => 60000]); ?>
 <div class="ui center aligned stackable cards">
     <div class="card">
         <div class="image"><img src="<?= $img ?>" class="tiny image"></div>

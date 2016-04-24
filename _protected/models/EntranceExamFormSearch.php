@@ -82,9 +82,14 @@ class EntranceExamFormSearch extends EntranceExamForm
         ;
 
         // add conditions that should always apply here
+        $dataProvider->sort->attributes['id'] = [
+            'asc' => ['id' => SORT_ASC],
+            'desc' => ['id' => SORT_DESC],
+        ];
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
         ]);
 
         $this->load($params);

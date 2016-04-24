@@ -5,43 +5,137 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use app\models\ApplicantForm;
+use app\models\Card;
+
+$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+!$model->isNewRecord ? !empty($model->applicant->applicants_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->applicant->applicants_profile_image : $img = $avatar : '';
+!$model->isNewRecord ? !empty(trim($model->applicant->middle_name)) ? $middle = ucfirst(substr($model->applicant->middle_name, 0,1)).'.' : $middle = '' : '';
+!$model->isNewRecord ? $this->title = implode(' ', [$model->applicant->first_name, $middle, $model->applicant->last_name]) : 'New';
+
+$model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model->applicant->first_name, $middle, $model->applicant->last_name]);
 ?>
-
-<div class="entrance-exam-form-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <?= $form->field($model, 'applicant_id')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(ApplicantForm::find()->where(['status' => 2])->all(), 'id', function($model){return $model->id . ' ' . $model->last_name . ', ' . $model->first_name . ' ' . $model->middle_name;}),
+<p></p>
+<?php $form = ActiveForm::begin(); ?>
+<div class="ui three column stackable grid">
+    <div class="four wide rounded column">
+        <?= Card::render($options = [
+            'imageContent' => !$model->isNewRecord ? $img : $avatar,
+            'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->applicant_id, '</strong>']) : '&nbsp;',
+            'labelFor' => 'Applicant ID',
+            'labelOptions' => '',
+            'headerContent' => !$model->isNewRecord ? implode(' ', [$model->applicant->first_name, $middle, $model->applicant->last_name]) : '&nbsp;',
+            'headerOptions' => '',
+            'metaContent' => !$model->isNewRecord ? implode('', ['\'', $model->applicant->nickname, '\'']) : '&nbsp',
+            'metaOptions' => '',
+            'leftFloatedContent' => !$model->isNewRecord ? $model->applicant->gradeLevel->name : '&nbsp;',
+            'leftFloatedFor' => '',
+            'leftFloatedOptions' => '',
+            'rightFloatedContent' => '',
+            'rightFloatedOptions' => !$model->isNewRecord ? $model->applicant->sped === 0 ? '' : 'hidden' : 'hidden'
+        ]) ?>
+    </div>
+    <div class="nine wide rounded column">
+        <div class="ui segment">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <?= $model->isNewRecord ? $form->field($model, 'applicant_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;" for="Applicant">Applicant</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->widget(Select2::classname(), [
+                        'data' => ArrayHelper::map(ApplicantForm::find()->where(['status' => 2])->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
+                            return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
+                        }),
                         'language' => 'en',
-                        'options' => ['id' => 'auto-suggest','placeholder' => 'Applicant ID #'],
+                        'options' => ['id' => 'auto-suggest','placeholder' => 'Select Applicant', 'class' => 'form-control pva-form-control'],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
-                    ])->label(false); 
-                ?>
+                        'pluginEvents' => [
+                            'change' => "
+                                run = function(){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'card?data=' + JSON.stringify({sid:$('#auto-suggest').val(),}),
+                                            contentType: 'application/json; charset=utf-8',
+                                            dataType: 'json',
+                                            success: function(data) {
+                                                console.log(data);
+                                                $('#header-label').html('ID# ' + '<strong>' + data.sid + '</strong>');
+                                                $('#header-content').html(data.name);
+                                                $('#meta-content').html(data.nick);
+                                                $('#left-content').html(data.level);
+
+                                                if(data.spd === 0){
+                                                    $('#right-content').removeClass('hidden');
+                                                }
+
+                                                if(data.img !== 'empty'){
+                                                    $('.tiny.image').attr('src', data.img);
+                                                }else {
+                                                    $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                                }
+                                            }
+                                        });
+                                },function(){
+                                    if($('#auto-suggest').val() === ''){
+                                        $('#header-label').html('&nbsp;');
+                                        $('#header-content').html('&nbsp;');
+                                        $('#meta-content').html('&nbsp;');
+                                        $('#left-content').html('&nbsp;');
+                                        $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                        $('#right-content').addClass('hidden');
+                                    }else {
+                                        run();
+                                    }
+                                }
+                            ",
+                        ],
+                    ])->label(false) : ''; ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'english', ['inputTemplate' => '<label for="English">English</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'reading_skills', ['inputTemplate' => '<label for="Reading Skills">Reading Skills</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'science', ['inputTemplate' => '<label for="Science">Science</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'comprehension', ['inputTemplate' => '<label for="Comprehension">Comprehension</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'remarks', ['inputTemplate' => '<label for="Remarks">Remarks</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'recommendations', ['inputTemplate' => '<label for="Recommendations">Recommendations</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'english', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="custom-input-group-addon">English</span></span></span>{input}</div>'])->label(false)->textInput() ?></div>
-            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'reading_skills', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="custom-input-group-addon">Reading Skills</span></span></span>{input}</div>'])->label(false)->textInput() ?></div>
-            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'science', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="custom-input-group-addon">Science</span></span></span>{input}</div>'])->label(false)->textInput() ?></div>
-            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'comprehension', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="custom-input-group-addon">Comprehension</span></span></span>{input}</div>'])->label(false)->textInput() ?></div>
+    <div class="three wide rounded column">
+        <div class="column">
+            <div class="ui fluid vertical menu">
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
+                </div>
+                <div class="item">
+                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+                    <p></p>
+                    <?php if(!$model->isNewRecord): ?>
+                    <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
+                    <p></p>
+                    <?php endif ?>
+                    <?= Html::a(Yii::t('app', 'Cancel'),['/entrance-exam'], ['class' => 'ui link fluid huge grey button']) ?>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'remarks', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Remarks']])->label(false)->textInput(['maxlength' => true]) ?></div>
-            <div class="col-lg-3 col-md-3 col-sm-12"><?= $form->field($model, 'recommendations', ['inputTemplate' => '{input}', 'inputOptions' => ['placeholder' => 'Recommendations']])->label(false)->textInput(['maxlength' => true]) ?></div>
-        </div>
-    </div>
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Cancel'), ['/entrance-exam'], ['class' => 'btn btn-default']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
 </div>
+<?php ActiveForm::end(); ?>

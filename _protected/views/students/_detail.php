@@ -9,7 +9,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->guardians_profile_image) ? $g = Yii::$app->request->baseUrl . '/uploads/guardians/' . $model->guardians_profile_image : $g = $avatar;
 !empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>
-<?php Pjax::begin(['id' => 'student-detail', 'timeout' => 60000, 'enablePushState' => false, 'enableReplaceState' => false]); ?>
+<?php Pjax::begin(['id' => 'student-detail', 'timeout' => 60000]); ?>
 <div class="ui tab segment active" data-tab="first">
 	<div class="ui inverted dimmer">
 	    <div class="ui massive text loader"></div>

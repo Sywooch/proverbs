@@ -43,8 +43,8 @@ class StudentFormSearch extends StudentForm
     public function searchStudent($params)
     {
         $query = StudentForm::find();
-        //$pageSize = Yii::$app->params['pageSize'];
-        $pageSize = 5;
+        $pageSize = Yii::$app->params['pageSize'];
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> [

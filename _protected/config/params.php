@@ -47,7 +47,7 @@ return [
     //DEFAULTS
     'pageSize' => 20,
 
-    'avatar' =>  '/uploads/ui/user-blue.png',
+    'avatar' =>  '/uploads/ui/user-blue.svg',
 
     'pjaxInterval' => 5000,
 ];

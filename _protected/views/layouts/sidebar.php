@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Html;
 use app\rbac\models\AuthAssignment;
 if (!Yii::$app->user->isGuest)
 	$role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);
@@ -8,7 +8,7 @@ if (!Yii::$app->user->isGuest)
 	<div class="sidebar-content">
 		<ul class="navigation">
 			<li <?= Yii::$app->controller->id === 'dashboard' ? 'class="active"' : ''?>><a href="<?= Yii::$app->controller->id === '/dashboard' ? '#' : Yii::$app->request->baseUrl . '/dashboard'?>"><span>Dashboard </span> <i class="icon-screen2"></i></a></li>
-			<li <?= Yii::$app->controller->id === 'profile' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/profile'?>"><span>Profile</span> <i class="icon-paragraph-justify2"></i></a></li>
+			<li <?= Yii::$app->controller->id === 'profile' ? 'class="active"' : ''?>><?= Html::a('<span>Profile</span><i class="icon-user"></i>',['/profile']) ?></li>
 			<li><a href="<?= Yii::$app->request->baseUrl . '/gii'?>"><span>Gii</span> <i class="icon-grid"></i></a></li>
 			<li <?= Yii::$app->controller->id === 'user' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/user'?>"><span>User</span> <i class="icon-user"></i></a></li>
 			<li <?= Yii::$app->controller->id === 'students' ? 'class="active"' : ''?>><a href="<?= Yii::$app->request->baseUrl . '/students'?>"><span>Students</span> <i class="icon-numbered-list"></i></a></li>

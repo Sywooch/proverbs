@@ -7,6 +7,8 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\EnrolledForm;
 use app\models\GradeLevel;
+use app\models\StudentForm;
+use yii\web\NotFoundHttpException;
 
 /**
  * EnrolledFormSearch represents the model behind the search form about `app\models\EnrolledForm`.
@@ -16,13 +18,14 @@ class EnrolledFormSearch extends EnrolledForm
     public function attributes()
     {
         // add related fields to searchable attributes
-        return array_merge(parent::attributes(), ['student.first_name', 'student.middle_name',  'student.last_name', 'student.first_name', 'student.middle_name', 'sy.sy', 'section.section_name']);
+        return array_merge(parent::attributes(), ['student.last_name', 'student.first_name', 'student.middle_name', 'sy.sy', 'section.section_name']);
     }
 
     public function rules()
     {
         return [    
             [['id', 'enrollment_status', 'created_at', 'updated_at', 'student_id', 'grade_level_id', 'section_id'], 'integer'],
+            [['student.first_name'],'string'],
             [['student' ,'student_id', 'student.last_name', 'student.first_name', 'student.middle_name', 'sy_id', 'section', 'section.section_name'], 'safe'],
         ];
     }
@@ -81,15 +84,16 @@ class EnrolledFormSearch extends EnrolledForm
             ->joinWith(['gradeLevel' => function($query) {
                 $query->from(['gradeLevelName' => 'grade_level']);
             }])
-            /*->joinWith(['student' => function($query) {
-                $query->from(['student' => 'student']);
-            }])*/
+            // ->joinWith(['student' => function($query) {
+            //     $query->from(['stud' => 'student']);
+            // }])
             ->joinWith(['sy' => function($query) {
                 $query->from(['sy' => 'school_year']);
             }])
             ;
             /*->joinWith(['relation name' => function($query) {
-                $query->from(['method' => 'table name']);
+                $query->from(['alias' => 'table name']);
+                //$query->from(['method' => 'table name']);
             }])*/
 
         $dataProvider->sort->attributes['sy_id'] = [
@@ -114,8 +118,9 @@ class EnrolledFormSearch extends EnrolledForm
         }
 
         //$query->joinWith('method');
-        //$query->joinWith('gradeLevelName');
-        //$query->joinWith('studentName');
+        //$query->joinWith('relation');
+        $query->joinWith('gradeLevelName');
+        //$query->joinWith('student');
 
         $query
         ->andFilterWhere([
@@ -129,7 +134,8 @@ class EnrolledFormSearch extends EnrolledForm
         ])
         //->andFilterWhere(['like', 'gradeLevelName.name', $this->grade_level_id])
         //->andFilterWhere(['like', 'student.last_name', $this->student_id])
-        //->andFilterWhere(['like', 'student.first_name', $this->student_id])
+        //->andFilterWhere(['like', 'student_id', $this->student_id])
+        //->andFilterWhere(['like', 'student', $this->student['first_name']])
         ->andFilterWhere(['like', 'sy.sy', $this->sy_id])
         ;
 

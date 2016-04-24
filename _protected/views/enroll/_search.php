@@ -1,40 +1,39 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\EnrolledFormSearch */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="enrolled-form-search">
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
-    <a class="btn btn-warning btn-block" role="button" data-toggle="collapse" href="#enroll-profile-more" aria-expanded="false" aria-controls="enroll-profile-more" aria-expanded="false" aria-controls="enroll-profile-more">More Search Filters</a>
-    <p></p>
-    <?= $form->field($model, 'student_id', ['inputTemplate' => '<label><strong>Student</strong></label>{input}', 'inputOptions' => ['class' => 'form-control']])->label(false) ?>
-    <div class="collapse" id="enroll-profile-more">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-div-wrap"><label>Grade Level</label>{input}</div>','inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($model->levelList)->label(false) ?>
-                <?= $form->field($model, 'enrollment_status', ['inputTemplate' => '<div class="input-div-wrap"><label>Enrollment Status</label>{input}</div>','inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($model->statusList)->label(false) ?>    
-                <?= $form->field($model, 'sy_id', ['inputTemplate' => '<div class="input-div-wrap"><label>School Year</label>{input}</div>','inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($model->syList)->label(false) ?>                
-            </div>
-        </div>
+<?php $form = ActiveForm::begin(['action' => ['index'],'method' => 'get',]); ?>
+<div class="ui fluid vertical menu">
+    <div class="item">
+        <div class="header"><span><i class="ui massive icon search"></i></span></div>
     </div>
-    <p></p>
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['id' => 'searchBtn', 'class' => 'btn btn-primary btn-block']) ?>
-        <?= Html::resetButton('Reset', ['id' => 'resetBtn','class' => 'btn btn-default btn-block']) ?>
+    <div class="item">
+        <p></p>
+        <?= Html::submitButton('Search', ['id' => 'search', 'class' => 'ui fluid huge primary button']) ?>
+        <p></p>
+        <?= Html::button('Reset', ['id' => 'clear', 'class' => 'ui fluid huge basic button']) ?>
+        <p></p>
+        <?= $form->field($model, 'student_id', ['inputTemplate' => '<label for="Student ID">Student ID</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
+        <?= $form->field($model, 'enrollment_status', ['inputTemplate' => '<label for="Status">Status</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($model->statusList, ['class' => 'form-control pva-form-control'])->label(false) ?>
+        <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label for="Grade Level">Grade Level</label>{input}'])->dropDownList($model->levelList, ['class' => 'form-control pva-form-control'])->label(false) ?>
     </div>
-    <?php ActiveForm::end(); ?>
+    <div class="item">
+    </div>
 </div>
+<?php ActiveForm::end(); ?>
 <?php
-$this->render('switch');
-$this->registerJs("
-    
-");
+$clear = <<< JS
+$(document).ready(function(){
+    var clr = $('#clear')
+    clr.click(function(){
+        $("#enrolledformsearch-grade_level_id").val($("#enrolledformsearch-grade_level_id option:first").val());
+        $("#enrolledformsearch-enrollment_status").val($("#enrolledformsearch-enrollment_status option:first").val());
+        $('input[type=\"text\"]').val('');
+    });
+});
+JS;
+$this->registerJs($clear);
 ?>

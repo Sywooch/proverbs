@@ -102,6 +102,14 @@ class User extends UserIdentity
         ];
     }
 
+    public function getGenderName($data)
+    {
+        if($data === 0) {
+            return 'Male';
+        }else {
+            return 'Female';
+        }
+    }
     /**
      * Relation with Role model.
      *

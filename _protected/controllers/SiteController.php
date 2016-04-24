@@ -14,6 +14,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\web\Response;
 use Yii;
@@ -65,6 +66,23 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function action403(){
+        if(Yii::$app->user->isGuest){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }else {
+            return $this->render('403');
+        }
+    }
+
+    public function action404(){
+
+        return $this->render('404');
+    }
+
+    public function action500(){
+        return $this->render('500');
     }
 
     public function actionMailCheck($email){

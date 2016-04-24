@@ -14,7 +14,7 @@ $this->title = 'Entrance Exams';
             </div>
             <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
             <p></p>
-            <?php Pjax::begin(['id' => 'entrance-exam-list', 'timeout' => 10000, 'enablePushState' => false]); ?>
+            <?php Pjax::begin(['id' => 'entrance-exam-list', 'timeout' => 60000]); ?>
             <?=
                 UiListView::widget([
                    'dataProvider' => $dataProvider,
@@ -29,12 +29,18 @@ $this->title = 'Entrance Exams';
     </div>
 </div>
 <?php
-$script = <<< JS
+$pjaxInterval = json_encode(Yii::$app->params['pjaxInterval']);
+$pjax = <<< JS
 $(document).ready(function(){
     setInterval(function(){
-        $.pjax.reload({container:'#entrance-exam-list'});
-    }, 10000);
+        $.pjax.reload({
+            container:'#entrance-exam-list',
+            success: function(){
+                $('ul.pagination > li.active > a').click()
+            }
+        });
+    }, $pjaxInterval);
 });
 JS;
-$this->registerJs($script);
+$this->registerJs($pjax);
 ?>

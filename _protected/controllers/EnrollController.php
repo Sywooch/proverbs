@@ -13,6 +13,7 @@ use app\models\SchoolYear;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\web\Response;
 use app\models\GradeLevel;
 use yii\helpers\ArrayHelper;
@@ -37,6 +38,21 @@ class EnrollController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update','pjax', 'grade-level', 'card'],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update', 'pjax', 'section', 'grade-level', 'card'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -47,6 +63,7 @@ class EnrollController extends Controller
                     'section' => ['post'],
                     'findTuitionId' => ['post'],
                     'gradeLevel' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
@@ -63,8 +80,8 @@ class EnrollController extends Controller
         $listData = ArrayHelper::map($grade_level, 'id' , 'name');
         $listData2 = ArrayHelper::map($school_year, 'id' , 'sy');
         $searchModel = new EnrolledFormSearch();
-        $searchModel->enrollment_status = 0;
         $searchModel->sy_id = $this->findLatestSy();
+        $searchModel->enrollment_status = 1;
         $dataProvider = $searchModel->searchEnrolled(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -108,6 +125,22 @@ class EnrollController extends Controller
         ]);
     }
 
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $student = $this->findModel($object->uid);
+
+            if($student->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $student->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+            return $data;
+        }
+    }
     /**
      * Creates a new EnrolledForm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -118,7 +151,7 @@ class EnrollController extends Controller
         $sy = new SchoolYear();
         $model = new EnrolledForm();
         $assessment = new AssessmentForm();
-        $model->enrollment_status = 0;
+        $model->enrollment_status = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -154,13 +187,14 @@ class EnrollController extends Controller
             }else {
                 $img = 'empty';
             }
+            
+            !empty(trim($student->middle_name)) ? $middle = ucfirst(substr($student->middle_name, 0,1)).'.' : $middle = '';
 
             $data = array(
                     'sid'=> $student->id, 
                     'act'=> (int) $student->status,
-                    'name' =>  implode(' ', [$student->first_name, $student->middle_name, $student->last_name]),
+                    'name' =>  implode(' ', [$student->first_name, $middle, $student->last_name]),
                     'nick' => ucfirst('\'' . $student->nickname . '\''),
-                    'addr' => $student->address,
                     'bday' => $bday,
                     'age' => $age,
                     'level' => $level,

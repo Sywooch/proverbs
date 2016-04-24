@@ -59,8 +59,9 @@ class EnrolledForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['student_id', 'grade_level_id', 'sy_id', 'section_id'],'required'],
             [['enrollment_status', 'created_at', 'updated_at', 'student_id', 'grade_level_id', 'section_id'], 'integer'],
-            [['gradeLevel', 'student', 'student_id', 'sy_id', 'sy', 'grade_level_id'],'safe'],
+            [['gradeLevel', 'student','student.first_name','student.middle_name','student.last_name', 'student_id', 'sy_id', 'sy', 'grade_level_id'],'safe']
         ];
     }
 
@@ -100,10 +101,10 @@ class EnrolledForm extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'student_id' => 'Student ID',
-            'student' => 'Student',
-            'student.last_name' => 'Last Name',
+            'student' => 'Student Name',
             'student.first_name' => 'First Name',
             'student.middle_name' => 'Middle Name',
+            'student.last_name' => 'Last Name',
             'gradeLevel' => 'Grade Level',
             'grade_level_id' => 'Grade Level',
             'enrollment_status' => 'Enrollment Status',
@@ -192,8 +193,8 @@ class EnrolledForm extends \yii\db\ActiveRecord
             self::L80 => 'Grade 8',
             self::L90 => 'Grade 9',
             self::L100 => 'Grade 10',
-            self::L111 => 'Grade 11 1st Sem',
-            self::L110 => 'Grade 11 2nd Sem',
+            self::L110 => 'Grade 11 1st Sem',
+            self::L111 => 'Grade 11 2nd Sem',
             self::L120 => 'Grade 12 1st Sem',
             self::L121 => 'Grade 12 2nd Sem',
         ];
@@ -275,5 +276,14 @@ class EnrolledForm extends \yii\db\ActiveRecord
     public function getUpdatedAt($data) {        
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
+    }
+
+    protected function findStudent($id)
+    {
+        if (($model = StudentForm::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

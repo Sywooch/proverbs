@@ -14,9 +14,9 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
             <label>ID# <strong><?= $model->id ?></strong></label>
             <div class="header">
                 <?= Html::a(implode(' ', [$model->first_name, $middle, $model->last_name]),['view?id=' . $model->id], ['class' => '']) ?>
+                <p></p>
             </div>
-            <div class="meta">  
-            </div>
+            <div class="meta"><span id="nickname"><?= implode('', ['\'', $model->nickname, '\'']) ?></span></div>
         </div>
         <div class="extra content">
             <label class="left floated student-id"><span><?= $model->gradeLevel->name ?></span></label>

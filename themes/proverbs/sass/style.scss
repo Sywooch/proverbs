@@ -1385,27 +1385,6 @@ select.form-control.pva-form-control{
     width: 100%;
     border: 1px 0 0 0 solid $form-border;
 }
-#student-status-sw-wrap {
-    position: absolute;
-    top: 0;
-}
-#enroll-profile-write-wrap {
-    position: absolute;
-    bottom: 50px;
-    //left: 30px;
-    right: 30px;
-}
-
-#enroll-profile-name {
-    padding: 20px 0;
-    padding-bottom: 0;
-    font-weight: 700;
-}
-.horizontal-stripe {
-    background-color: #fff; 
-    background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, transparent 0px, transparent 81px), linear-gradient($vanilla .1em, transparent .1em);
-    background-size: 100% 1.5em;
-}
 .smooth {
     -webkit-transition: all ease 2s 0s;
        -moz-transition: all ease 2s 0s;
@@ -1413,61 +1392,25 @@ select.form-control.pva-form-control{
          -o-transition: all ease 2s 0s;
             transition: all ease 2s 0s;
 }
-#enroll-profile-sped {
-    //display: none;
-    position: relative;
-    top: -350px;
-    right: -60px;
-    height: 40px;
-    width: 40px;
-    margin: auto;
-    background: yellow;
-    padding: 10px 4px;
-    @include rounded-border(100%);
-    border: 1px solid transparent;
-    label {
-        font-weight: 800;
-    }
-}
-#enrollment-form-wrap, #user-form-wrap {
-    padding: 0;
-    @include rounded-border(2px);
-}
-
-#enroll-profile-details {
-    .row {
-        margin: 10px;
-    }
-}
-.enroll-profile-info-wrap table {
-    tr {
-        vertical-align: middle;
-        td {
-            padding-right: 20px;
-        }
-        td:first-child {
-        }
-        td:last-child {
-
-        }
-    }
-}
-#enroll-profile-address {
-    text-align: left;
-}
-#enroll-profile-id,
-#enroll-profile-address,
-#enroll-profile-birth,
-#enroll-profile-age,
-{
-    font-size: 16px;
-}
 #ui-profile-info-icon {
     height: 32px;
     width: 32px;
 }
 
 ///////////////////////// UI
+.ui.black.ribbon.label {
+    border-top-left-radius: 4px;
+}
+.select2-selection.select2-selection--single {
+    height: 46px;
+}
+.select2-search__field {
+    margin-left: -20px;
+}
+#meta-content {
+    font-size: 14px;
+    color: #555;
+}
 .ui.tab.segment {
     -webkit-transition: all ease 1s 0s;
        -moz-transition: all ease 1s 0s;
@@ -1496,7 +1439,9 @@ select.form-control.pva-form-control{
 .link.item {
     font-size: 14px;
 }
-.ui.five.item.pointing.menu > a, .ui.fluid.vertical.menu.stackable> a{
+.ui.five.item.pointing.menu > a,
+.ui.two.item.pointing.menu > a,
+.ui.fluid.vertical.menu.stackable> a{
     font-size: 12px;
     color: $powder-blue;
 }
@@ -1542,202 +1487,6 @@ select.form-control.pva-form-control{
 .fa-one-half {
     font-size: 14px;
 }
-.fa.fa-mars, .fa.fa-venus {
-    color: orange;
-}
-.gridview-edit-btn-wrap {
-    height: 30px;
-    width: 30px;
-    margin-left: -6px;
-    background: $vanilla;
-    padding: 6px;
-    border: 1px solid $vanilla;
-    @include border-radius(2px);
-}
-.gridview-role-wrap {
-    float: right;
-    padding-top: 40px;
-    min-height: 100%;
-}
-.gridview-role-type {
-    margin-top: -4px;
-    margin-left: -6px;
-    div {
-        text-align: center;
-        width: 30px;
-        height: 30px;
-        border-color: transparent;
-        span {
-            position: relative;
-            top: 7px;
-        }
-    }
-}
-.user-halo-state {
-    position: relative;
-    top: -90px;
-    left: 80px;
-    height: 15px;
-    width: 15px;
-    @include rounded-border(100%);
-    border: 0;
-}
-.user-halo-state.active {
-    background: $active;
-}
-.user-halo-state.inactive {
-    background: $inactive;
-}
-.user-halo-state.deleted {
-    background: $deleted;
-}
-.user-halo-state-update {
-    position: relative;
-    top: -170px;
-    left: 222px;
-    height: 30px;
-    width: 30px;
-    @include rounded-border(100%);
-    border: 0;
-}
-.user-halo-state-update.active {
-    background: $active;
-}
-.user-halo-state-update.inactive {
-    background: $inactive;
-}
-.user-halo-state-update.deleted {
-    background: $deleted;
-}
-
-.square-badge {
-    margin-top: 0;
-    color: white;
-    @include border-radius(2px);
-    
-}
-.square-badge.dev-badge, .square-badge.master-badge {
-    background: lighten(gold, 10%);
-}
-.admin-badge {
-    background: fade_out(orange, .5);
-}
-.cashier-badge {
-    background: teal;
-}
-.principal-badge {
-    background: fade_out(brown, .3);
-}
-.staff-badge {
-    background: fade_out(purple, .5);
-}
-.teacher-badge {
-    background: lighten($darkerblue, 25%);
-}
-.parent-badge {
-    background: $midgrey;
-}
-.rounded-edge {
-    -webkit-border-radius: 2px;
-            border-radius: 2px;
-}
-.circle {
-    -webkit-border-radius: 100%;
-            border-radius: 100%;
-}
-.gridview-edit {
-    height: 32px;
-    width: 32px;
-}
-.gridview-user-wrap {
-    margin: 5px auto;
-    .gridview-user-thumb {
-        text-align: center;
-        margin: auto;
-        height: 100px;
-        width: 100px;
-        img {
-            background: $vanilla;
-            height: 100px;
-            width: 100px;
-            border: 0;
-        }
-    }
-}
-.gridview-section-items {
-    tr {
-        td:first-child {
-            //background: blue;
-        }
-        td:last-child {
-            //background: orange;
-        }
-    }
-}
-.gridview-level-name {
-    width: 40px;
-    height: 40px;
-    background: #FFCC00;
-    font-weight: bold;
-    @include rounded-border(100%);
-    border: 0;
-    span {
-        position: relative;
-        top: 12px;
-        color: black;
-    }
-}
-.gridview-level-name.one-char > span {
-    right: -15px;
-}
-.gridview-level-name.two-char > span {
-    right: -13px;
-}
-.gridview-level-name.three-char > span {
-    right: -9px;
-}
-.gridview-level-name.five-char > span {
-    right: -6px;
-}
-.gridview-block {
-    display: block;
-}
-.gridview-info {
-    padding: 1px;
-}
-.gridview-info.username {
-    font-size: 16px;
-}
-.gridview-info.email {
-    font-size: 14px;
-    font-style: italic;
-}
-#options-column {
-    width: 180px;
-}
-#options-column-extended {
-    width: 300px;
-}
-.ac-options-btn {
-    max-height: 20px;
-    @include rounded-border(2px);
-    padding: 0 4px 4px 4px;
-}
-.hr-full-width {
-    width: 100%;
-}
-.table.table-striped.table-bordered > thead + tbody > tr {
-    td {
-        padding: 5px 10px;
-    }
-    td:last-child {
-        width: 150px;
-    }
-}
-.gridview-summary {
-    margin: 0;
-}
-
 #enroll-popover-more {
     text-align: center;
     margin: auto;

@@ -12,157 +12,172 @@ use yii\bootstrap\ActiveForm;
 use app\models\GradeLevel;
 use app\models\Section;
 use app\models\SchoolYear;
+use app\models\Card;
 
 $current_date = date('Y');
 $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
 $section = Section::find()->all();
 $grade_level = GradeLevel::find()->where(['!=', 'id', 0])->all();
+$status = [['id' => 1, 'status' => 'Pending'], ['id' => 0, 'status' => 'Enrolled']];
 
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 $listData2 = ArrayHelper::map($school_year, 'id' , 'sy');
 $listData3 = ArrayHelper::map($section, 'id' , 'section_name');
+$listData4 = ArrayHelper::map($status, 'id', 'status');
 $state = false;
-$this->params['breadcrumbs'][] = $this->title;
+
+$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+!$model->isNewRecord ? !empty($model->student->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->student->students_profile_image : $img = $avatar : '';
+!$model->isNewRecord ? !empty(trim($model->student->middle_name)) ? $middle = ucfirst(substr($model->student->middle_name, 0,1)).'.' : $middle = '' : '';
+!$model->isNewRecord ? $this->title = implode(' ', [$model->student->first_name, $middle, $model->student->last_name]) : 'New';
+
+$model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model->student->first_name, $middle, $model->student->last_name]);
 ?>
+<p></p>
 <?php $form = ActiveForm::begin(); ?>
-    <div class="enrollment-form">
-        <div class="row">
-            <p><p>
-            <div class="col-lg-9 col-md-9 col-12">
-                <div id="enrollment-form-wrap" class="panel panel-default horizontal-stripe" style="border-top: 0;">
-                    <div id="enroll-card" class="panel-body">
-                        <div id="enroll-profile-img-wrap">
-                            <div id="enroll-student-profile-image-bg" style="background: url('../uploads/ui/user-default.png'); background-size: contain;"></div>
-                            <img id="enroll-student-profile-image" class="animated2 fastShrink hidden" src="../uploads/ui/user-blue.png" alt="student"  data-write="false">
-                            <div id="enroll-profile-sped" class="hidden"><label for="SPED">SPED</label></div>
-                        </div>
-                        <div id="enroll-profile-write-wrap"><img src="<?= Yii::$app->request->baseUrl . '/uploads/ui/pencil.png' ?>" alt="write"></div>
-                        <div class="container form-input-wrapper">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="text-centered">
-                                        <h1 id="enroll-profile-name">&nbsp;</h1>
-                                        <h4><p id="enroll-profile-nickname">&nbsp;</p></h4>
-                                        <br>
-                                    </div>
-                                    <div id="enroll-profile-details" class="<?= $model->isNewRecord ? 'hidden' : '' ?>" style="text-align: left;">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="enroll-profile-info-wrap">
-                                                    <table>
-                                                        <tr>
-                                                            <td><span><img id="ui-profile-info-icon" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/id.png' ?>" alt="id"></span></td>
-                                                            <td><div id="enroll-profile-id"></div></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="enroll-profile-info-wrap">
-                                                    <table>
-                                                        <tr>
-                                                            <td><span><img id="ui-profile-info-icon" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/map-marker.png' ?>" alt="map"></span></td>
-                                                            <td><div id="enroll-profile-address"></div></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="enroll-profile-info-wrap">
-                                                    <table>
-                                                        <tr>
-                                                            <td><span><img id="ui-profile-info-icon" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/birthday.png' ?>" alt="birthday"></span></td>
-                                                            <td><div id="enroll-profile-birth"></div></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <div class="enroll-profile-info-wrap">
-                                                    <table>
-                                                        <tr>
-                                                            <td><span><img id="ui-profile-info-icon" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/age.png' ?>" alt="age"></span></td>
-                                                            <td><div id="enroll-profile-age"></div></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="ui three column stackable grid">
+    <div class="four wide rounded column">
+        <?= Card::render($options = [
+            'imageContent' => !$model->isNewRecord ? $img : $avatar,
+            'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->student->id, '</strong>']) : '&nbsp;',
+            'labelFor' => 'Enrollee ID',
+            'labelOptions' => '',
+            'headerContent' => !$model->isNewRecord ? implode(' ', [$model->student->first_name, $middle, $model->student->last_name]) : '&nbsp;',
+            'headerOptions' => '',
+            'metaContent' => !$model->isNewRecord ? implode('', ['\'', $model->student->nickname, '\'']) : '&nbsp',
+            'metaOptions' => '',
+            'leftFloatedContent' => !$model->isNewRecord ? $model->levelName : '&nbsp;',
+            'leftFloatedFor' => 'Grade Level',
+            'leftFloatedOptions' => '',
+            'rightFloatedContent' => '',
+            'rightFloatedOptions' => !$model->isNewRecord ? $model->student->sped === 0 ? '' : 'hidden' : 'hidden'
+        ]) ?>
+    </div>
+    <div class="nine wide rounded column">
+        <div class="ui segment">
+            <?php if($model->isNewRecord): ?>
+
+            <?php else:?>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <?= $form->field($model, 'enrollment_status', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Status</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData4,['id', 'status'])->label(false) ?>
                     </div>
                 </div>
+            <?php endif ?>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'sy_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">School Year</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData2, ['id', 'sy'])->label(false) ?>
+                </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-12">
-                <div class="panel panel-default">
-                    <div  class="panel-body">
-                        <div class="container form-input-wrapper">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <?= $model->isNewRecord ? $form->field($model, 'student_id')->widget(Select2::classname(), [
-                                                'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){ return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);}),
-                                                'language' => 'en',
-                                                'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student'],
-                                                'pluginOptions' => [
-                                                    'allowClear' => true
-                                                ],
-                                                'pluginEvents' => [
-                                                    'change' => "
-                                                        function(){
-                                                            $.post('". Yii::$app->urlManager->createUrl('enroll/grade-level?id=') . "'+parseInt($('#auto-suggest').val()), function(data){
-                                                                $('select#enrolledform-grade_level_id').val(data);
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <?= $model->isNewRecord ? $form->field($model, 'student_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Student</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->widget(Select2::classname(), [
+                        'data' => ArrayHelper::map(StudentForm::find()->where(['status' => 1])->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
+                            return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
+                        }),
+                        'language' => 'en',
+                        'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student', 'class' => 'form-control pva-form-control'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                        'pluginEvents' => [
+                            'change' => "
+                                run = function(){
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'card?data=' + JSON.stringify({
+                                                    sid: $('#auto-suggest').val(),
+                                                }),
+                                            contentType: 'application/json; charset=utf-8',
+                                            dataType: 'json',
+                                            success: function(data) {
+                                                $('#header-label').html('ID# ' + '<strong>' + data.sid + '</strong>');
+                                                $('#header-content').html(data.name);
+                                                $('#meta-content').html(data.nick);
+                                                $('#left-content').html(data.level);
 
-                                                                $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
-                                                                    $('#enrolledform-section_id').find('option').remove();
-                                                                    $('#enrolledform-section_id').each(function(){
-                                                                        $(this).append(data);
-                                                                    });
-                                                                });
-                                                            });
-                                                        }
-                                                    ",
-                                                ],
-                                            ])->label(false) : ''; 
-                                        ?>
-                                        <?= $form->field($model, 'enrollment_status', ['inputTemplate' => '<div style="margin-top: 2px;"><label style="padding: 0; color: #555;"><strong>Enrolled</strong></label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->enrollment_status])->label(false) ?>
-                                        <?= $form->field($model, 'sy_id', ['inputTemplate' => '<div class="input-div-wrap"><label>School Year</label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData2, ['id', 'sy'])->label(false) ?>
-                                        <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-div-wrap"><label>Grade Level</label></label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData,
-                                        [
-                                            'onchange' => "
-                                                $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
-                                                    $('#enrolledform-section_id').find('option').remove();
-                                                    $('#enrolledform-section_id').each(function(){
-                                                        $(this).append(data);
-                                                    });
-                                                });
-                                            ",
-                                        ])->label(false) ?>
-                                        <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-div-wrap" style="margin-bottom: 30px;"><label>Section</label></label>{input}</div>', 'inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
-                                    <div class="form-group">
-                                        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Save', ['class' => $model->isNewRecord ? 'btn btn-success btn-block' : 'btn btn-primary btn-block']) ?>
-                                        <?= Html::a(Yii::t('app', 'Cancel'), ['/enroll'], ['class' => 'btn btn-default btn-block']) ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                                if(data.spd === 0){
+                                                    $('#right-content').removeClass('hidden');
+                                                }
+
+                                                if(data.img !== 'empty'){
+                                                    $('.tiny.image').attr('src', data.img);
+                                                }else {
+                                                    $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                                }
+
+                                            }
+                                        });
+                                },
+                                function(){
+                                    if($('#auto-suggest').val() === ''){
+                                        $('#header-label').html('&nbsp;');
+                                        $('#header-content').html('&nbsp;');
+                                        $('#meta-content').html('&nbsp;');
+                                        $('#left-content').html('&nbsp;');
+                                        $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                        $('#right-content').addClass('hidden');
+                                    }else {
+                                        run();
+                                    }
+                                    $.post('". Yii::$app->urlManager->createUrl('enroll/grade-level?id=') . "'+parseInt($('#auto-suggest').val()), function(data){
+                                        $('select#enrolledform-grade_level_id').val(data);
+                                        $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
+                                            $('#enrolledform-section_id').find('option').remove();
+                                            $('#enrolledform-section_id').each(function(){
+                                                $(this).append(data);
+                                            });
+                                        });
+                                    });
+                                }
+                            ",
+                        ],
+                    ])->label(false) : ''; ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData,
+                        [
+                            'onchange' => "
+                                level = function(){
+                                    $('#left-content').html($('#enrolledform-grade_level_id').find('option:selected').text());
+                                },
+                                $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
+                                    level();
+                                    $('#enrolledform-section_id').find('option').remove();
+                                    $('#enrolledform-section_id').each(function(){
+                                        $(this).append(data);
+                                    });
+                                });
+                            ",
+                    ])->label(false) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">School Year</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
                 </div>
             </div>
         </div>
     </div>
+    <div class="three wide rounded column">
+        <div class="column">
+            <div class="ui fluid vertical menu">
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
+                </div>
+                <div class="item">
+                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+                    <p></p>
+                    <?php if(!$model->isNewRecord): ?>
+                    <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
+                    <p></p>
+                    <?php endif ?>
+                    <?= Html::a(Yii::t('app', 'Cancel'),['/enroll'], ['class' => 'ui link fluid huge grey button']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php ActiveForm::end(); ?>
-
-<?php
-if($model->isNewRecord){
-    $this->render('_js-new');      
-} else {
-    $this->render('_js-update', ['student' => $student]);
-    $this->render('_js-section');      
-
-};
-$this->render('switch');
-?>

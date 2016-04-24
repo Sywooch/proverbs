@@ -32,6 +32,7 @@ $this->title = ucfirst($model->username);
         </div>
     </div>
 </div>
+<?= $this->render('_pjax', ['model' => $model]) ?>
 <?= $this->render('_modal') ?>
 <?php
 $modal = <<< JS
@@ -44,72 +45,4 @@ $(document).ready(function(){
 
 JS;
 $this->registerJs($modal);
-?>
-<?php
-$uid = json_encode($model->id);
-$upd = json_encode($model->updated_at);
-$pjax = <<< JS
-$(document).ready(function(){
-    var uid;
-    var val;
-    var ini = true;
-
-    function pjax(data){
-        $('.ui.inverted.dimmer').addClass('active');
-        $.pjax.reload({container:'#user-card'});
-        setTimeout(function(){
-            $.pjax.reload({container:'#user-detail',clientOptions: run()});
-        }, 1000);
-    }
-
-    function getIni(data){
-        return ini;
-    }
-
-    function setIni(data){
-        ini = data;
-    }
-
-    function getUpd(){
-        if(ini){
-            return $upd;
-        }else {
-            return val;
-        }
-    }
-
-    function state(){
-        $('.ui.inverted.dimmer').removeClass('active');
-    }
-
-    function run(){
-
-        setTimeout(function(){
-            state();
-        },2200);
-    }
-
-    setInterval(function(){
-        $.ajax({
-            type: 'POST',
-            url: 'pjax?data=' + JSON.stringify({
-                    uid: $uid,
-                    upd: getUpd(),
-                }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function(data) {
-                if(data.pjax){
-                    pjax();
-                    if(data.delta){
-                        val = data.upd;
-                        setIni(false);
-                    }
-                }
-            }
-        });
-    }, 10000);
-});
-JS;
-$this->registerJs($pjax);
 ?>

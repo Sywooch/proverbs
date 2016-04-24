@@ -7,12 +7,12 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 $model->gender === 0 ? $gender = 'Male' : $gender = 'Female';
 !empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>
-<?php Pjax::begin(['id' => 'user-card', 'timeout' => 10000, 'enablePushState' => false]); ?>
+<?php Pjax::begin(['id' => 'profile-card', 'timeout' => 60000]); ?>
 <div class="ui center aligned stackable cards">
 	<div class="card">
 		<div class="image"><img src="<?= $img ?>" class="tiny image"></div>
 		<div class="ui center aligned content">
-			<label>ID# <strong><?= $model->id ?></strong></label>
+			<label><em><?= $model->email ?></em></label>
 			<div class="header">
 				<?= $model->username ?>
 			</div>

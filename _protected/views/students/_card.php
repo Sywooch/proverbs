@@ -16,8 +16,11 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
 			<label>ID# <strong><?= $model->id ?></strong></label>
 			<div class="header">
 				<?= implode(' ', [$model->first_name, $middle, $model->last_name]) ?>
+				<p></p>
 			</div>
-		    <div class="meta">	
+		    <div class="meta">
+				<span id="nickname"><?= implode('', ['\'', $model->nickname, '\'']) ?></span>
+				<p></p>
 		    </div>
 		</div>
 		<div class="extra content">

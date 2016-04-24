@@ -1,7 +1,11 @@
 <?php
 
 namespace app\models;
+
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 use app\rbac\models\Role;
 
 /**
@@ -44,7 +48,7 @@ class ProfileForm extends \yii\db\ActiveRecord
     {
         return [
             [['username', 'email', 'first_name', 'middle_name', 'last_name', 'gender', 'address'], 'required'],
-            [['phone', 'mobile', 'gender'], 'integer'],
+            [['phone', 'mobile', 'gender','created_at', 'updated_at'], 'integer'],
             [['birth_date'], 'safe'],
             [['username', 'email', 'address', 'notes'], 'string', 'max' => 255],
             [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 45],
@@ -82,6 +86,19 @@ class ProfileForm extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+    
     public function formatDate($date){
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -157,6 +174,17 @@ class ProfileForm extends \yii\db\ActiveRecord
             return 'Male';
         }else {
             return 'Female';
+        }
+    }
+
+    public function getStatusName($data)
+    {
+        if($data === 10) {
+            return 'Active';
+        }elseif($data === 10) {
+            return 'Inactive';
+        }else {
+            return 'Deleted';
         }
     }
 

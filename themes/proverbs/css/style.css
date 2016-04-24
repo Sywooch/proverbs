@@ -1762,33 +1762,6 @@ select.form-control.pva-form-control {
 }
 
 /* line 1388, ../sass/style.scss */
-#student-status-sw-wrap {
-  position: absolute;
-  top: 0;
-}
-
-/* line 1392, ../sass/style.scss */
-#enroll-profile-write-wrap {
-  position: absolute;
-  bottom: 50px;
-  right: 30px;
-}
-
-/* line 1399, ../sass/style.scss */
-#enroll-profile-name {
-  padding: 20px 0;
-  padding-bottom: 0;
-  font-weight: 700;
-}
-
-/* line 1404, ../sass/style.scss */
-.horizontal-stripe {
-  background-color: #fff;
-  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 79px, #abced4 79px, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 81px), linear-gradient(#e9eaed 0.1em, rgba(0, 0, 0, 0) 0.1em);
-  background-size: 100% 1.5em;
-}
-
-/* line 1409, ../sass/style.scss */
 .smooth {
   -webkit-transition: all ease 2s 0s;
   -moz-transition: all ease 2s 0s;
@@ -1797,70 +1770,34 @@ select.form-control.pva-form-control {
   transition: all ease 2s 0s;
 }
 
-/* line 1416, ../sass/style.scss */
-#enroll-profile-sped {
-  position: relative;
-  top: -350px;
-  right: -60px;
-  height: 40px;
-  width: 40px;
-  margin: auto;
-  background: yellow;
-  padding: 10px 4px;
-  -webkit-border-radius: 100%;
-  border-radius: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border: 1px solid transparent;
-}
-/* line 1428, ../sass/style.scss */
-#enroll-profile-sped label {
-  font-weight: 800;
-}
-
-/* line 1432, ../sass/style.scss */
-#enrollment-form-wrap, #user-form-wrap {
-  padding: 0;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  border-width: 1px;
-  border-style: solid;
-}
-
-/* line 1438, ../sass/style.scss */
-#enroll-profile-details .row {
-  margin: 10px;
-}
-
-/* line 1443, ../sass/style.scss */
-.enroll-profile-info-wrap table tr {
-  vertical-align: middle;
-}
-/* line 1445, ../sass/style.scss */
-.enroll-profile-info-wrap table tr td {
-  padding-right: 20px;
-}
-
-/* line 1455, ../sass/style.scss */
-#enroll-profile-address {
-  text-align: left;
-}
-
-/* line 1458, ../sass/style.scss */
-#enroll-profile-id,
-#enroll-profile-address,
-#enroll-profile-birth,
-#enroll-profile-age {
-  font-size: 16px;
-}
-
-/* line 1465, ../sass/style.scss */
+/* line 1395, ../sass/style.scss */
 #ui-profile-info-icon {
   height: 32px;
   width: 32px;
 }
 
-/* line 1471, ../sass/style.scss */
+/* line 1401, ../sass/style.scss */
+.ui.black.ribbon.label {
+  border-top-left-radius: 4px;
+}
+
+/* line 1404, ../sass/style.scss */
+.select2-selection.select2-selection--single {
+  height: 46px;
+}
+
+/* line 1407, ../sass/style.scss */
+.select2-search__field {
+  margin-left: -20px;
+}
+
+/* line 1410, ../sass/style.scss */
+#meta-content {
+  font-size: 14px;
+  color: #555;
+}
+
+/* line 1414, ../sass/style.scss */
 .ui.tab.segment {
   -webkit-transition: all ease 1s 0s;
   -moz-transition: all ease 1s 0s;
@@ -1869,12 +1806,12 @@ select.form-control.pva-form-control {
   transition: all ease 1s 0s;
 }
 
-/* line 1478, ../sass/style.scss */
+/* line 1421, ../sass/style.scss */
 .ui.black.ribbon.label > h4 {
   min-width: 100px;
 }
 
-/* line 1481, ../sass/style.scss */
+/* line 1424, ../sass/style.scss */
 .section-minify {
   color: white;
   text-align: center;
@@ -1882,68 +1819,70 @@ select.form-control.pva-form-control {
   margin: auto;
   padding: 25px 0;
 }
-/* line 1487, ../sass/style.scss */
+/* line 1430, ../sass/style.scss */
 .section-minify h4 {
   font-size: 20px;
 }
 
-/* line 1491, ../sass/style.scss */
+/* line 1434, ../sass/style.scss */
 .section-wrap {
   width: 76px;
   height: 76px;
   background: teal;
 }
 
-/* line 1496, ../sass/style.scss */
+/* line 1439, ../sass/style.scss */
 .link.item {
   font-size: 14px;
 }
 
-/* line 1499, ../sass/style.scss */
-.ui.five.item.pointing.menu > a, .ui.fluid.vertical.menu.stackable > a {
+/* line 1442, ../sass/style.scss */
+.ui.five.item.pointing.menu > a,
+.ui.two.item.pointing.menu > a,
+.ui.fluid.vertical.menu.stackable > a {
   font-size: 12px;
   color: #4a8bc2;
 }
 
-/* line 1503, ../sass/style.scss */
+/* line 1448, ../sass/style.scss */
 .full-name {
   font-size: 14px;
 }
 
-/* line 1506, ../sass/style.scss */
+/* line 1451, ../sass/style.scss */
 .nickname {
   font-size: 12px;
 }
 
-/* line 1509, ../sass/style.scss */
+/* line 1454, ../sass/style.scss */
 .sped, .student-id, .user-id {
   color: #333;
   margin-top: 5px;
 }
 
-/* line 1513, ../sass/style.scss */
+/* line 1458, ../sass/style.scss */
 .pencil.icon {
   font-size: 18px;
   margin-top: 5px;
 }
 
-/* line 1517, ../sass/style.scss */
+/* line 1462, ../sass/style.scss */
 #user-profile-img-thumb {
   background: #f7f7f7;
   -webkit-box-shadow: 0px 0px 1px 2px rgba(58, 75, 85, 0.2);
   box-shadow: 0px 0px 1px 2px rgba(58, 75, 85, 0.2);
 }
 
-/* line 1522, ../sass/style.scss */
+/* line 1467, ../sass/style.scss */
 #btn-mail-check, #btn-info-check {
   opacity: 1;
 }
-/* line 1524, ../sass/style.scss */
+/* line 1469, ../sass/style.scss */
 #btn-mail-check:hover, #btn-info-check:hover {
   opacity: .8;
 }
 
-/* line 1528, ../sass/style.scss */
+/* line 1473, ../sass/style.scss */
 #btn-signup, #btn-login {
   position: absolute;
   top: 20px;
@@ -1952,327 +1891,46 @@ select.form-control.pva-form-control {
   width: 85px;
   opacity: .5;
 }
-/* line 1535, ../sass/style.scss */
+/* line 1480, ../sass/style.scss */
 #btn-signup:hover, #btn-login:hover {
   opacity: 1;
 }
 
-/* line 1539, ../sass/style.scss */
+/* line 1484, ../sass/style.scss */
 #captcha-wrap {
   display: inline;
 }
 
-/* line 1542, ../sass/style.scss */
+/* line 1487, ../sass/style.scss */
 .fa-one-half {
   font-size: 14px;
 }
 
-/* line 1545, ../sass/style.scss */
-.fa.fa-mars, .fa.fa-venus {
-  color: orange;
-}
-
-/* line 1548, ../sass/style.scss */
-.gridview-edit-btn-wrap {
-  height: 30px;
-  width: 30px;
-  margin-left: -6px;
-  background: #e9eaed;
-  padding: 6px;
-  border: 1px solid #e9eaed;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-}
-
-/* line 1557, ../sass/style.scss */
-.gridview-role-wrap {
-  float: right;
-  padding-top: 40px;
-  min-height: 100%;
-}
-
-/* line 1562, ../sass/style.scss */
-.gridview-role-type {
-  margin-top: -4px;
-  margin-left: -6px;
-}
-/* line 1565, ../sass/style.scss */
-.gridview-role-type div {
-  text-align: center;
-  width: 30px;
-  height: 30px;
-  border-color: transparent;
-}
-/* line 1570, ../sass/style.scss */
-.gridview-role-type div span {
-  position: relative;
-  top: 7px;
-}
-
-/* line 1576, ../sass/style.scss */
-.user-halo-state {
-  position: relative;
-  top: -90px;
-  left: 80px;
-  height: 15px;
-  width: 15px;
-  -webkit-border-radius: 100%;
-  border-radius: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border: 0;
-}
-
-/* line 1585, ../sass/style.scss */
-.user-halo-state.active {
-  background: #7AB317;
-}
-
-/* line 1588, ../sass/style.scss */
-.user-halo-state.inactive {
-  background: #929C92;
-}
-
-/* line 1591, ../sass/style.scss */
-.user-halo-state.deleted {
-  background: #C61F19;
-}
-
-/* line 1594, ../sass/style.scss */
-.user-halo-state-update {
-  position: relative;
-  top: -170px;
-  left: 222px;
-  height: 30px;
-  width: 30px;
-  -webkit-border-radius: 100%;
-  border-radius: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border: 0;
-}
-
-/* line 1603, ../sass/style.scss */
-.user-halo-state-update.active {
-  background: #7AB317;
-}
-
-/* line 1606, ../sass/style.scss */
-.user-halo-state-update.inactive {
-  background: #929C92;
-}
-
-/* line 1609, ../sass/style.scss */
-.user-halo-state-update.deleted {
-  background: #C61F19;
-}
-
-/* line 1613, ../sass/style.scss */
-.square-badge {
-  margin-top: 0;
-  color: white;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-}
-
-/* line 1619, ../sass/style.scss */
-.square-badge.dev-badge, .square-badge.master-badge {
-  background: #ffdf33;
-}
-
-/* line 1622, ../sass/style.scss */
-.admin-badge {
-  background: rgba(255, 165, 0, 0.5);
-}
-
-/* line 1625, ../sass/style.scss */
-.cashier-badge {
-  background: teal;
-}
-
-/* line 1628, ../sass/style.scss */
-.principal-badge {
-  background: rgba(165, 42, 42, 0.7);
-}
-
-/* line 1631, ../sass/style.scss */
-.staff-badge {
-  background: rgba(128, 0, 128, 0.5);
-}
-
-/* line 1634, ../sass/style.scss */
-.teacher-badge {
-  background: #718d9e;
-}
-
-/* line 1637, ../sass/style.scss */
-.parent-badge {
-  background: #e1e1e1;
-}
-
-/* line 1640, ../sass/style.scss */
-.rounded-edge {
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-}
-
-/* line 1644, ../sass/style.scss */
-.circle {
-  -webkit-border-radius: 100%;
-  border-radius: 100%;
-}
-
-/* line 1648, ../sass/style.scss */
-.gridview-edit {
-  height: 32px;
-  width: 32px;
-}
-
-/* line 1652, ../sass/style.scss */
-.gridview-user-wrap {
-  margin: 5px auto;
-}
-/* line 1654, ../sass/style.scss */
-.gridview-user-wrap .gridview-user-thumb {
-  text-align: center;
-  margin: auto;
-  height: 100px;
-  width: 100px;
-}
-/* line 1659, ../sass/style.scss */
-.gridview-user-wrap .gridview-user-thumb img {
-  background: #e9eaed;
-  height: 100px;
-  width: 100px;
-  border: 0;
-}
-
-/* line 1677, ../sass/style.scss */
-.gridview-level-name {
-  width: 40px;
-  height: 40px;
-  background: #FFCC00;
-  font-weight: bold;
-  -webkit-border-radius: 100%;
-  border-radius: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border: 0;
-}
-/* line 1684, ../sass/style.scss */
-.gridview-level-name span {
-  position: relative;
-  top: 12px;
-  color: black;
-}
-
-/* line 1690, ../sass/style.scss */
-.gridview-level-name.one-char > span {
-  right: -15px;
-}
-
-/* line 1693, ../sass/style.scss */
-.gridview-level-name.two-char > span {
-  right: -13px;
-}
-
-/* line 1696, ../sass/style.scss */
-.gridview-level-name.three-char > span {
-  right: -9px;
-}
-
-/* line 1699, ../sass/style.scss */
-.gridview-level-name.five-char > span {
-  right: -6px;
-}
-
-/* line 1702, ../sass/style.scss */
-.gridview-block {
-  display: block;
-}
-
-/* line 1705, ../sass/style.scss */
-.gridview-info {
-  padding: 1px;
-}
-
-/* line 1708, ../sass/style.scss */
-.gridview-info.username {
-  font-size: 16px;
-}
-
-/* line 1711, ../sass/style.scss */
-.gridview-info.email {
-  font-size: 14px;
-  font-style: italic;
-}
-
-/* line 1715, ../sass/style.scss */
-#options-column {
-  width: 180px;
-}
-
-/* line 1718, ../sass/style.scss */
-#options-column-extended {
-  width: 300px;
-}
-
-/* line 1721, ../sass/style.scss */
-.ac-options-btn {
-  max-height: 20px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  border-width: 1px;
-  border-style: solid;
-  padding: 0 4px 4px 4px;
-}
-
-/* line 1726, ../sass/style.scss */
-.hr-full-width {
-  width: 100%;
-}
-
-/* line 1730, ../sass/style.scss */
-.table.table-striped.table-bordered > thead + tbody > tr td {
-  padding: 5px 10px;
-}
-/* line 1733, ../sass/style.scss */
-.table.table-striped.table-bordered > thead + tbody > tr td:last-child {
-  width: 150px;
-}
-
-/* line 1737, ../sass/style.scss */
-.gridview-summary {
-  margin: 0;
-}
-
-/* line 1741, ../sass/style.scss */
+/* line 1490, ../sass/style.scss */
 #enroll-popover-more {
   text-align: center;
   margin: auto;
   height: 50px;
   padding: 5px 10px;
 }
-/* line 1746, ../sass/style.scss */
+/* line 1495, ../sass/style.scss */
 #enroll-popover-more ul li {
   list-style-type: none;
   display: inline;
 }
 
-/* line 1755, ../sass/style.scss */
+/* line 1504, ../sass/style.scss */
 .sweet-alert.showSweetAlert, .sa-confirm-button-container > button.confirm, .sa-button-container > button.cancel {
   border-radius: 2px;
 }
 
-/* line 1758, ../sass/style.scss */
+/* line 1507, ../sass/style.scss */
 .sweet-alert.show-sweet-alert, .sweet-alert.show-sweet-alert > button.sweet-confirm, .sweet-alert.show-sweet-alert > button.sweet-cancel {
   border-radius: 2px;
 }
 
 @media (max-width: 767px) {
-  /* line 1763, ../sass/style.scss */
+  /* line 1512, ../sass/style.scss */
   .breadcrumb {
     text-align: left;
     background: transparent;

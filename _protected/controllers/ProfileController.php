@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
+use yii\web\Response;
 /**
  * ProfileController implements the CRUD actions for ProfileForm model.
  */
@@ -34,15 +34,9 @@ class ProfileController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'actions' => ['index' , 'create', 'view', 'update', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,6 +48,7 @@ class ProfileController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
@@ -68,7 +63,7 @@ class ProfileController extends Controller
         $searchModel = new ProfileFormSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('own/index', [
+        return $this->render('index', [
             'model' => $this->findModel(Yii::$app->user->identity->id),
         ]);
     }
@@ -85,6 +80,22 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $u = $this->findModel($object->uid);
+
+            if($u->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $u->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+            return $data;
+        }
+    }
     /**
      * Creates a new ProfileForm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -116,7 +127,7 @@ class ProfileController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
         } else {
-            return $this->render('own/update', [
+            return $this->render('update', [
                 'model' => $model,
             ]);
         }
