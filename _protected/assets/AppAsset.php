@@ -41,6 +41,7 @@ class AppAsset extends AssetBundle
         'css/jan-responsive.css',
         'css/form-background.css',
         'css/switchery.css',
+        'css/toastr.css',
     ];
 
     public $depends = [
@@ -54,6 +55,7 @@ class AppAsset extends AssetBundle
         'js/init.js',
         'js/pva.js',
         'js/switchery.min.js',
+        'js/toastr.min.js',
     ];
 
 }

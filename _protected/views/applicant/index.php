@@ -31,6 +31,7 @@ $this->title = 'Applicants';
             <?= $this->render('_search', ['model' => $searchModel]) ?>
         </div>
 </div>
+<?= $this->render('/layouts/_toast')?>
 <?php
 $pjax = <<< JS
 $(document).ready(function(){

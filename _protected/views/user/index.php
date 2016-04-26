@@ -27,6 +27,7 @@ $this->title = Yii::t('app', 'Users');
         <?= $this->render('_search', ['model' => $searchModel]) ?>
     </div>
 </div>
+<?= $this->render('/layouts/_toast')?>
 <?php
 $script = <<< JS
 $(document).ready(function(){

@@ -20,19 +20,6 @@ use yii\filters\AccessControl;
  */
 class AssessmentController extends Controller
 {
-    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }
-
     public function behaviors()
     {
         return [
@@ -290,38 +277,16 @@ class AssessmentController extends Controller
      */
     public function actionUpdate($id)
     {
-        $sbm = new SiblingDiscount;
-        $sbd = SiblingDiscount::find()->all();
         $model = $this->findModel($id);
 
-        $eid = (int) $model->enrolled_id;
-        $id = EnrolledForm::findOne($eid);
-
-        $student_id = (int) $id->student_id;
-        $grade_level_id = (int) $id->grade_level_id;
-        $student = StudentForm::findOne($student_id);
-        $tuition = Tuition::find()->where(['grade_level_id' => $grade_level_id])->orderBy(['id' => SORT_DESC])->all();
-        $tid = (int) $tuition[0]['id'];
-
-        if(!empty($tuition)){
-            $array = $tuition;
-        } else {
-            throw new NotFoundHttpException('Oops, Something went wrong.');
-        }
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            
+
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
 
             return $this->render('update', [
                 'model' => $model,
-                'array' => $array,
-                'student' => $student,
-                'tuition' => $tuition,
-                'tid' => $tid,
-                'sbm' => $sbm,
-                'sbd' => $sbd,
             ]);
         }
     }
@@ -335,7 +300,8 @@ class AssessmentController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        
+        Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
 

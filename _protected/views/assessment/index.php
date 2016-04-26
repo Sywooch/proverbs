@@ -1,45 +1,28 @@
-<?php
-
+<?php 
 use yii\helpers\Html;
-use yii\grid\GridView;
-
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\AssessmentFormSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Assessment Forms';
-$this->params['breadcrumbs'][] = $this->title;
+use app\models\UiListView;
+use yii\widgets\Pjax;
+$this->title = "Assessment";
 ?>
-<div class="assessment-form-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Assessment Form', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            'id',
-            'enrolled_id',
-            'tuition_id',
-            /*
-            'has_sibling_discount',
-            'has_book_discount',
-            'has_honor_discount',
-            'sibling_discount',
-            'book_discount',
-            'honor_discount',*/
-            'total_assessed',
-            'balance',
-            //'created_at',
-            //'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="twelve wide rounded column">
+        <div class="ui raised segment">
+            <div class="ui black ribbon label" style="margin-left: -2px;">
+                <h4>Assessment</h4>
+            </div>
+            <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
+            <p></p>
+            <?php Pjax::begin(['id' => 'assessment-list', 'timeout' => 60000]); ?>
+                <?= UiListView::widget([
+                   'dataProvider' => $dataProvider,
+                    'itemView' => '_list',
+                ]); ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+    <div class="four wide column">
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
+    </div>
 </div>
+<?= $this->render('/layouts/_toast')?>

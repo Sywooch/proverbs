@@ -21,6 +21,8 @@ use yii\widgets\Alert;
  */
 class EntranceExamController extends Controller
 {
+    CONST SUCCESS = 'success';
+
     public $jsFile;
     
     public function init() {
@@ -125,6 +127,7 @@ class EntranceExamController extends Controller
         $model->comprehension = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success','Saved');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -196,8 +199,10 @@ class EntranceExamController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success','Saved');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            Yii::$app->session->setFlash('warning','Error');
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -213,9 +218,7 @@ class EntranceExamController extends Controller
     public function actionDelete($id)
     {
         if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev'){
-            $flash = Yii::$app->session->setFlash('error', ['Error 1', 'Error 2']);
-            
-            return $this->redirect('view', ['id' => $id, 'flash' => $flash]);
+            return $this->redirect(['index']);
         } else {
             //$this->findModel($id)->delete();
             return $this->redirect(['index']);

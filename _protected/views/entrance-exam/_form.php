@@ -6,9 +6,10 @@ use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use app\models\ApplicantForm;
 use app\models\Card;
+use app\models\Options;
 
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-!$model->isNewRecord ? !empty($model->applicant->applicants_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->applicant->applicants_profile_image : $img = $avatar : '';
+!$model->isNewRecord ? !empty($model->applicant->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->applicant->students_profile_image : $img = $avatar : '';
 !$model->isNewRecord ? !empty(trim($model->applicant->middle_name)) ? $middle = ucfirst(substr($model->applicant->middle_name, 0,1)).'.' : $middle = '' : '';
 !$model->isNewRecord ? $this->title = implode(' ', [$model->applicant->first_name, $middle, $model->applicant->last_name]) : 'New';
 
@@ -121,21 +122,9 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <div class="ui fluid vertical menu">
-                <div class="ui fluid huge label item">
-                    <span>Options</span>
-                </div>
-                <div class="item">
-                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
-                    <p></p>
-                    <?php if(!$model->isNewRecord): ?>
-                    <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
-                    <p></p>
-                    <?php endif ?>
-                    <?= Html::a(Yii::t('app', 'Cancel'),['/entrance-exam'], ['class' => 'ui link fluid huge grey button']) ?>
-                </div>
-            </div>
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id,'id' => $model->id]); ?>
         </div>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+<?= $this->render('/layouts/_toast', ['model' => $model])?>

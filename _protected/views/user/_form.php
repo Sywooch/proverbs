@@ -2,6 +2,7 @@
 use app\rbac\models\AuthItem;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\Options;
 
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 
@@ -70,19 +71,7 @@ if($user->scenario !== 'create'){
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <div class="ui fluid vertical menu">
-                <div class="ui fluid huge label item">
-                    <span>Options</span>
-                </div>
-                <div class="item">
-                    <?= Html::submitButton($user->scenario === 'create' ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
-                    <p></p>
-                    <?php if($user->scenario !== 'create'): ?>
-                    <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $user->id], ['class' => 'ui link fluid huge teal button']) ?>
-                    <p></p>
-                    <?php endif ?>
-                    <?= Html::a(Yii::t('app', 'Cancel'),['/user'], ['class' => 'ui link fluid huge grey button']) ?>
-            </div>
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'id' => $user->id]); ?>
         </div>
     </div>
 </div>

@@ -50,4 +50,6 @@ return [
     'avatar' =>  '/uploads/ui/user-blue.svg',
 
     'pjaxInterval' => 5000,
+
+    'toastTimeout' => 5000,
 ];

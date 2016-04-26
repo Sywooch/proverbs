@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\models\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use app\models\SchoolYear;
+use app\models\AssessmentForm;
+use app\models\Tuition;
 /**
  * This is the model class for table "enrolled".
  *
@@ -61,7 +63,7 @@ class EnrolledForm extends \yii\db\ActiveRecord
         return [
             [['student_id', 'grade_level_id', 'sy_id', 'section_id'],'required'],
             [['enrollment_status', 'created_at', 'updated_at', 'student_id', 'grade_level_id', 'section_id'], 'integer'],
-            [['gradeLevel', 'student','student.first_name','student.middle_name','student.last_name', 'student_id', 'sy_id', 'sy', 'grade_level_id'],'safe']
+            [['gradeLevel', 'student', 'student_id', 'sy_id', 'sy', 'grade_level_id'],'safe']
         ];
     }
 
@@ -91,6 +93,22 @@ class EnrolledForm extends \yii\db\ActiveRecord
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($insert){
+
+            $tuition = Tuition::find()->where(['grade_level_id' => $this->grade_level_id])->orderBy(['id' => SORT_DESC])->all()[0];
+            
+            $assessment = new AssessmentForm();
+            $assessment->enrolled_id = (int) $this->id;
+            $assessment->tuition_id = $tuition->id;
+            $assessment->total_assessed = (float) $tuition->yearly + (float) $tuition->books;
+            $assessment->balance = (float) $assessment->total_assessed;
+            $assessment->save();
+            Yii::$app->session->setFlash('success2', 'New assessment successfully generated!');
         }
     }
     /**
@@ -281,6 +299,15 @@ class EnrolledForm extends \yii\db\ActiveRecord
     protected function findStudent($id)
     {
         if (($model = StudentForm::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findAssessment($id)
+    {
+        if (($model = AssessmentForm::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

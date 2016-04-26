@@ -20,6 +20,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class AssessmentForm extends \yii\db\ActiveRecord
 {
+    const STATUS_NULL = null;
+    const STATUS_PENDING = 1;
+    const STATUS_ENROLLED = 0;
     /**
      * @inheritdoc
      */
@@ -34,7 +37,7 @@ class AssessmentForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['enrolled_id', 'tuition_id', 'has_sibling_discount', 'has_book_discount', 'has_honor_discount', 'created_at', 'updated_at'], 'integer'],
+            [['enrolled_id', 'tuition_id', 'has_sibling_discount', 'has_book_discount', 'has_honor_discount', 'percentage_value', 'created_at', 'updated_at'], 'integer'],
             [['sibling_discount', 'book_discount', 'honor_discount', 'total_assessed', 'balance'], 'number'],
             [['enrolled_id', 'tuition_id', 'total_assessed', 'balance'], 'required']
         ];
@@ -57,10 +60,18 @@ class AssessmentForm extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if($this->isNewRecord){
+                if($this->has_sibling_discount === 1){$this->sibling_discount = 0; $this->percentage_value = 0;}
+                if($this->has_honor_discount === 1){$this->honor_discount = 0;}
+                if($this->has_book_discount === 1){$this->book_discount = 0;}
+                
                 $this->created_at = time();
                 $this->updated_at = time();
                 $this->has_sibling_discount = 1;
             } else {
+                if($this->has_sibling_discount === 1){$this->sibling_discount = 0; $this->percentage_value = 0;}
+                if($this->has_book_discount === 1){$this->book_discount = 0;}
+                if($this->has_honor_discount === 1){$this->honor_discount = 0;}
+
                 $this->touch('updated_at');
             }
             return true;
@@ -72,13 +83,6 @@ class AssessmentForm extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
 
-        if(!$this->isNewRecord){
-            $student = \app\models\StudentForm::findOne((int) $this->enrolled->student_id);
-            if($this->has_sibling_discount !== $student->student_has_sibling_enrolled){
-                $student->student_has_sibling_enrolled = $this->has_sibling_discount;
-                $student->save();
-            }
-        }
     }
     /**
      * @inheritdoc
@@ -92,6 +96,7 @@ class AssessmentForm extends \yii\db\ActiveRecord
             'has_sibling_discount' => 'Has Sibling Discount',
             'has_book_discount' => 'Has Book Discount',
             'has_honor_discount' => 'Has Honor Discount',
+            'sibling_discount_percentage' => 'Percent Discount',
             'sibling_discount' => 'Sibling Discount',
             'book_discount' => 'Book Discount',
             'honor_discount' => 'Honor Discount',
@@ -102,6 +107,14 @@ class AssessmentForm extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getEnrollmentStatus($data)
+    {
+        if($data === 0){
+            return 'Enrolled';
+        } else {
+            return 'Pending';
+        }
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

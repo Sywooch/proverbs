@@ -18,7 +18,7 @@ class AssessmentFormSearch extends AssessmentForm
     public function rules()
     {
         return [
-            [['id', 'enrolled_id', 'tuition_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'enrolled_id', 'tuition_id', 'percentage_value', 'created_at', 'updated_at'], 'integer'],
             [['sibling_discount', 'book_discount', 'honor_discount', 'total_assessed', 'balance'], 'number'],
         ];
     }
@@ -92,6 +92,7 @@ class AssessmentFormSearch extends AssessmentForm
             'enrolled_id' => $this->enrolled_id,
             'tuition_id' => $this->tuition_id,
             'sibling_discount' => $this->sibling_discount,
+            'sibling_percentage_value' => $this->percentage_value,
             'book_discount' => $this->book_discount,
             'honor_discount' => $this->honor_discount,
             'total_assessed' => $this->total_assessed,

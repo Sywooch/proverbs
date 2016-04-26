@@ -58,7 +58,7 @@ class EntranceExamForm extends \yii\db\ActiveRecord
     {
         return [
             [['applicant_id', 'english', 'reading_skills', 'science', 'comprehension', 'created_at', 'updated_at'], 'integer'],
-            [['english', 'reading_skills', 'science', 'comprehension'], 'required'],
+            [['applicant_id', 'english', 'reading_skills', 'science', 'comprehension'], 'required'],
             [['remarks', 'recommendations'], 'string', 'max' => 255],
             [['applicant_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentForm::className(), 'targetAttribute' => ['applicant_id' => 'id']],
         ];

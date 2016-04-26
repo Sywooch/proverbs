@@ -78,21 +78,21 @@ AppAsset::register($this);
             include('footer.php');
             echo '</div>' . // PAGE-CONTENT
             '</div>'; // PAGE-CONTAINERa
-                    $role !== 'parent' ? require('_messages.php') : '';
-                    $role !== 'parent' ? require('_write.php') : '';
+                    //$role !== 'parent' ? require('_messages.php') : '';
+                    //$role !== 'parent' ? require('_write.php') : '';
                     echo '</div>
                 </div>
                 </div>
              </div>';
-            echo '<button id="toggle-board-menu"><i class="fa fa-wechat fa-2x"></i></button>';
+            //echo '<button id="toggle-board-menu"><i class="fa fa-wechat fa-2x"></i></button>';
         }
     ?>
     <?php $this->endBody() ?>
     <?php include('script.php');?>
     <?php 
-        if(Yii::$app->request->url !== '/proverbs/site/login' && Yii::$app->request->url !== '/proverbs/site/signup'){
+        /*if(Yii::$app->request->url !== '/proverbs/site/login' && Yii::$app->request->url !== '/proverbs/site/signup'){
             $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY);
-        }
+        }*/
     ?>
 </body>
 </html>

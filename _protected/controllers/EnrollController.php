@@ -108,6 +108,8 @@ class EnrollController extends Controller
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+            Yii::$app->session->setFlash('success', 'New enrollee successfully created!');
+            Yii::$app->session->setFlash('success', 'New assessment successfully created!');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('new', [
@@ -150,15 +152,15 @@ class EnrollController extends Controller
     {
         $sy = new SchoolYear();
         $model = new EnrolledForm();
-        $assessment = new AssessmentForm();
         $model->enrollment_status = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            Yii::$app->session->setFlash('success', 'New enrollee successfully created!');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'assessment' => $assessment,
                 'sy' => $sy,
             ]);
         }
@@ -238,6 +240,8 @@ class EnrollController extends Controller
         //$model->student_id = $student->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect('index');
         } else {
             return $this->render('update', [
@@ -257,7 +261,8 @@ class EnrollController extends Controller
     {        
         $this->findModel($id)->delete();
         $this->deleteAssessment($id);
-
+        
+        Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
 

@@ -8,7 +8,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->profile_image : $img = $avatar;
 !empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>
-<?php Pjax::begin(['id' => 'profile-detail', 'timeout' => 60000, 'enablePushState' => false, 'enableReplaceState' => false]); ?>
+<?php Pjax::begin(['id' => 'profile-detail', 'timeout' => 60000]); ?>
 <div class="ui segment">
 	<div class="ui inverted dimmer">
 	    <div class="ui massive text loader"></div>

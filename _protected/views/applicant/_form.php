@@ -26,10 +26,11 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
             'headerOptions' => '',
             'metaContent' => !$model->isNewRecord ? implode('', ['\'', $model->nickname, '\'']) : '&nbsp',
             'metaOptions' => '',
-            'leftFloatedContent' => !$model->isNewRecord ? $model->gradeLevel->name : '&nbsp;',
+            'leftFloatedContent' => !$model->isNewRecord ? 
+                '<div class="row"><div class="col-lg-12 col-md-12 col-sm-12">' . $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData,['class' => 'form-control pva-form-control'])->label(false) . '</div></div>' : '&nbsp;',
             'leftFloatedFor' => 'Grade Level',
             'leftFloatedOptions' => '',
-            'rightFloatedContent' => '',
+            'rightFloatedContent' => $form->field($model, 'sped', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">SPED</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->sped])->label(false),
             'rightFloatedOptions' => !$model->isNewRecord ? $model->sped === 0 ? '' : 'hidden' : 'hidden'
         ]) ?>
     </div>

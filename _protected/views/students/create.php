@@ -16,3 +16,4 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<?= $this->render('/layouts/_toast')?>

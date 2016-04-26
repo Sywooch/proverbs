@@ -128,6 +128,7 @@ class UserController extends AppController
                 $role->save(); 
             }  
 
+            Yii::$app->session->setFlash('success', implode(' ', [ucfirst($user->username), ' successfully created!']));
             return $this->redirect('index');      
         } 
         else 
@@ -158,10 +159,9 @@ class UserController extends AppController
 
         // Dev/Master can update everyone`s roles
         // admin will not be able to update role of Dev/Master
-        if (!AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev' || !AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'master') 
+        if (AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'dev' || AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'master') 
         {
-            if ($role->item_name === 'dev' || $role->item_name === 'master')
-            {
+            if($role === 'dev' || $role === 'master'){
                 throw new ForbiddenHttpException('Unauthorized Access', 403);
             }
         }
@@ -184,7 +184,8 @@ class UserController extends AppController
 
             $user->save(false);
             $role->save(false); 
-            
+
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect(['view', 'id' => $user->id]);
         }
         else 
@@ -215,6 +216,7 @@ class UserController extends AppController
             $role->delete();
         }
 
+        Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
 

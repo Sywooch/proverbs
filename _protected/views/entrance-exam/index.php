@@ -28,6 +28,7 @@ $this->title = 'Entrance Exams';
         <?= $this->render('_search', ['model' => $searchModel]) ?>
     </div>
 </div>
+<?= $this->render('/layouts/_toast')?>
 <?php
 $pjaxInterval = json_encode(Yii::$app->params['pjaxInterval']);
 $pjax = <<< JS
