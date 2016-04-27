@@ -15,8 +15,8 @@ $avatar = Yii::$app->params['avatar'];
 				<?= Html::a($model->username,['/profile/view', 'id' => $model->id],['']) ?>
 			</div>
 		</div>
-		<div class="extra content">
-			<label class="left floated user-id"><span><?= ucfirst($model->role->item_name) ?></span></label>
+		<div class="extra center aligned content">
+			<label class="user-id"><span><?= ucfirst($model->role->item_name) ?></span></label>
 		</div>
 	</div>
 </div>

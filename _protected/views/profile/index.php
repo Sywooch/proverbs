@@ -35,3 +35,4 @@ $this->title =  ucfirst($model->username);
     </div>
 </div>
 <?= $this->render('_self-pjax', ['model' => $model]) ?>
+<?= $this->render('/layouts/_toast')?>

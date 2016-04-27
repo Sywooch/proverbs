@@ -1,6 +1,9 @@
 <?php
 use yii\helpers\Html;
 use app\models\Options;
+use app\models\ProfileForm;
+$profile = ProfileForm::find()->where(['id' => $model->id])->one();
+
 $avatar = Yii::$app->params['avatar'];
 $this->title = ucfirst($model->username);
 ?>
@@ -13,7 +16,7 @@ $this->title = ucfirst($model->username);
     </div>
     <div class="nine wide column">
         <div class="column">
-            <?= $this->render('_detail', ['model' => $model]) ?>
+            <?= $this->render('_detail', ['model' => $model, 'profile' => $profile]) ?>
         </div>
     </div>
     <div class="three wide column">

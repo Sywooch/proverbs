@@ -1,91 +1,103 @@
 <?php
-use yii\helpers\Html;
-use kartik\select2\Select2;
-use app\models\ActiveRecord;
-use yii\helpers\ArrayHelper;
-use app\models\SchoolYear;
+
+use app\models\Card;
+use app\models\DataHelper;
 use app\models\GradeLevel;
-use app\models\User;
+use app\models\Options;
+use app\models\SchoolYear;
 use app\models\Section;
+use app\models\User;
+use app\rbac\models\AuthItem;
+use kartik\select2\Select2;
+use nesbot\Carbon;
 use yii\bootstrap\ActiveForm;
+use yii\jui\DatePicker;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 $teachers = User::find()->joinWith('role')->where(['item_name' => 'teacher'])->orderBy(['last_name' => SORT_ASC])->all();
-$grade_level = GradeLevel::find()->all();
-$section = Section::find()->all();
-$school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
+$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+!empty($model->teacher->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->teacher->profile_image : $img = $avatar;
 
-$listData_grade_level = ArrayHelper::map($grade_level, 'id' , 'name');
-$listData_school_year = ArrayHelper::map($school_year, 'id' , 'sy');
-$listData_section = ArrayHelper::map($section, 'id' , 'section_name');
-$listData_teachers = ArrayHelper::map($teachers, 'id' , 'last_name');
+if($model->isNewRecord){
+    $this->title = 'New';
+}else {
+    $this->title = $model->id;
+}
+
 ?>
-
-<div class="class-adviser-form-form">
-    <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
-        <div class="container form-input-wrapper">
-    		<div class="col-lg-3 col-md-3 col-sm-12">
-    			<?= $form->field($model, 'sy_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">School Year</span></span></span>{input}</div>'])->dropDownList($listData_school_year, ['id', 'sy'])->label(false) ?>
-			</div>
-		</div>
-	</div>
-    <div class="row">
-        <div class="container form-input-wrapper">
-    		<div class="col-lg-3 col-md-3 col-sm-12">
-
-			</div>
-		</div>
-	</div>
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-3 col-md-3 col-sm-12">
-                <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">Grade Level</span></span></span>{input}</div>'])->dropDownList($listData_grade_level, [
-                    'onchange' => "
-                        $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#classadviserform-grade_level_id').val()), function(data){
-                            $('#classadviserform-section_id').find('option').remove();
-                            $('#classadviserform-section_id').each(function(){
-                                $(this).append(data);
-                            });
-                        });
-                    ",
-                ])
-                ->label(false) ?>
+<p></p>
+<?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
+<div class="ui three column stackable grid">
+    <div class="four wide rounded column">
+        <?= Card::render($options = [
+            'imageContent' => !$model->isNewRecord ? $img : $avatar,
+            'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->teacher->id, '</strong>']) : '&nbsp;',
+            'labelFor' => 'Applicant ID',
+            'labelOptions' => '',
+            'headerContent' => !$model->isNewRecord ? DataHelper::name($model->teacher->first_name, $model->teacher->middle_name, $model->teacher->last_name) : '&nbsp;',
+            'headerOptions' => '',
+            'metaContent' => !$model->isNewRecord ? implode('', ['\'', $model->teacher->username, '\'']) : '&nbsp',
+            'metaOptions' => '',
+            'leftFloatedContent' => !$model->isNewRecord ? implode('', [DataHelper::gradeLevel($model->grade_level_id),'<p style="color: rgba(0,0,0,.4);"><span style="font-size: 11px;">', DataHelper::schoolYear($model->sy_id),'</span><br/>Adviser', '</p>']) : '&nbsp;',
+            'leftFloatedFor' => '',
+            'leftFloatedOptions' => '',
+            'rightFloatedContent' => '',
+            'rightFloatedOptions' => 'hidden'
+        ]) ?>
+    </div>
+    <div class="nine wide rounded column">
+        <div class="ui segment">
+            <?= !$model->isNewRecord ? Html::tag('label',implode('', [implode('-', array_map('ucfirst', explode('-', Yii::$app->controller->id))),'# ', $model->id]), ['class' => 'ui fluid big label']) : '' ?>
+            <br><br>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'sy_id', ['inputTemplate' => '<label>School Year</label>{input}'])->dropDownList(ArrayHelper::map(SchoolYear::find()->orderBy(['id' => SORT_DESC])->all(),'id','sy'), ['class' => 'form-control pva-form-control'])->label(false)?>
+                </div>
             </div>
-    		<div class="col-lg-3 col-md-3 col-sm-12">
-                <?= $form->field($model, 'section_id', ['inputTemplate' => '<div class="input-group"><span class="input-group-addon"><span class="dropdown-list">School Year</span></span></span>{input}</div>'])->dropDownList($listData_section, ['id', 'section_name'])->label(false) ?>
-			</div>
-		</div>
-	</div>
-    <div class="row">
-        <div class="container form-input-wrapper">
-            <div class="col-lg-3 col-md-3 col-sm-12">
-                <?= $model->isNewRecord ?
-                    $form->field($model, 'teacher_id')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(User::find()->joinWith('role')->where(['item_name' => 'teacher'])->orderBy(['last_name' => SORT_ASC])->all(),'id', function($model){return $model->last_name . ', ' . $model->first_name . ' ' . $model->middle_name . ' (' . $model->username . ') ';}),
-                        'language' => 'en',
-                        'options' => ['id' => 'auto-suggest2','placeholder' => 'Select Teacher'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])->label(false) 
-                    : 
-                    $form->field($model, 'teacher_id')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(User::find()->joinWith('role')->where(['item_name' => 'teacher'])->orderBy(['last_name' => SORT_ASC])->all(),'id', function($model){return $model->last_name . ', ' . $model->first_name . ' ' . $model->middle_name . ' (' . $model->username . ') ';}),
-                        'language' => 'en',
-                        'options' => ['id' => 'auto-suggest2','placeholder' => 'Select Teacher'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])->label(false) 
-                    ;
-                ?>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <?= $form->field($model, 'teacher_id')->widget(Select2::classname(), [
+                            'data' => ArrayHelper::map(User::find()->joinWith('role')->where(['item_name' => 'teacher'])->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);}),
+                            'language' => 'en',
+                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Teacher'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ])->label(false) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(ArrayHelper::map(GradeLevel::find()->all(), 'id' , 'name'), [
+                        'onchange' => "
+                            $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#classadviserform-grade_level_id').val()), function(data){
+                                $('#classadviserform-section_id').find('option').remove();
+                                $('#classadviserform-section_id').each(function(){
+                                    $(this).append(data);
+                                });
+                            });
+                        ",
+                    ['class' => 'form-control pva-form-control'] ])
+                    ->label(false) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(ArrayHelper::map(Section::find()->all(), 'id' , 'section_name'), ['id', 'section_name'])->label(false) ?>
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <div class="three wide rounded column">
+        <div class="column">
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id,'id' => $model->id]); ?>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>
+<?php ActiveForm::end(); ?>
+<?php 
+$this->registerJs("
+    $('.datepicker').datepicker();
+");
+?>

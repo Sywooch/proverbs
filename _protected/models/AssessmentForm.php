@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\models\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use app\models\StudentForm;
 /**
  * This is the model class for table "assessment".
  *
@@ -60,19 +61,34 @@ class AssessmentForm extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if($this->isNewRecord){
-                if($this->has_sibling_discount === 1){$this->sibling_discount = 0; $this->percentage_value = 0;}
-                if($this->has_honor_discount === 1){$this->honor_discount = 0;}
-                if($this->has_book_discount === 1){$this->book_discount = 0;}
+                if(empty($this->sibling_discount)){ $this->sibling_discount = 0;}
+                if(empty($this->honor_discount)){ $this->honor_discount = 0;}
+                if(empty($this->book_discount)){ $this->book_discount = 0;}
+
+                if((int) $this->has_sibling_discount === 1){
+                    $this->sibling_discount = 0; $this->percentage_value = 0;
+                    self::siblingEnrolled($this->enrolled->student->id, 1);
+                }else {
+                    self::siblingEnrolled($this->enrolled->student->id, 0);
+                }
+                if((int) $this->has_honor_discount === 1){$this->honor_discount = 0;}
+                if((int) $this->has_book_discount === 1){$this->book_discount = 0;}
                 
                 $this->created_at = time();
                 $this->updated_at = time();
-                $this->has_sibling_discount = 1;
+
             } else {
-                if($this->has_sibling_discount === 1){$this->sibling_discount = 0; $this->percentage_value = 0;}
-                if($this->has_book_discount === 1){$this->book_discount = 0;}
-                if($this->has_honor_discount === 1){$this->honor_discount = 0;}
+                if((int) $this->has_sibling_discount === 1){
+                    $this->sibling_discount = 0; $this->percentage_value = 0;
+                    self::siblingEnrolled($this->enrolled->student->id, 1);
+                }else {
+                    self::siblingEnrolled($this->enrolled->student->id, 0);
+                }
+                if((int) $this->has_book_discount === 1){$this->book_discount = 0;}
+                if((int) $this->has_honor_discount === 1){$this->honor_discount = 0;}
 
                 $this->touch('updated_at');
+
             }
             return true;
         } else {
@@ -83,6 +99,10 @@ class AssessmentForm extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
 
+    }
+
+    public function calculate(){
+        
     }
     /**
      * @inheritdoc
@@ -105,6 +125,12 @@ class AssessmentForm extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function siblingEnrolled($id, $value){
+        $student = self::findStudent($id);
+        $student->student_has_sibling_enrolled = (int) $value;
+        $student->save();
     }
 
     public function getEnrollmentStatus($data)
@@ -139,5 +165,17 @@ class AssessmentForm extends \yii\db\ActiveRecord
     public function getUpdatedAt($data) {        
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
+    }
+
+    protected function findStudent($id)
+    {
+        if (($model = StudentForm::findOne($id)) !== null) 
+        {
+            return $model;
+        } 
+        else 
+        {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

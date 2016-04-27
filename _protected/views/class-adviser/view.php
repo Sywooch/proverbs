@@ -1,40 +1,28 @@
 <?php
-
+use app\models\Options;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use app\models\ProfileForm;
+$profile = ProfileForm::find()->where(['id' => $model->teacher->id])->one();
 
-/* @var $this yii\web\View */
-/* @var $model app\models\ClassAdviserForm */
-
-$this->title = $model->teacher_id;
-$this->params['breadcrumbs'][] = ['label' => 'Class Adviser Forms', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = implode(' ', [$model->teacher->first_name, $model->teacher->middle_name, $model->teacher->last_name]);
 ?>
-<div class="class-adviser-form-view">
-    <p>
-        <?= Html::a('Update', ['update', 'teacher_id' => $model->teacher_id, 'grade_level_id' => $model->grade_level_id, 'sy_id' => $model->sy_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'teacher_id' => $model->teacher_id, 'grade_level_id' => $model->grade_level_id, 'sy_id' => $model->sy_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'attribute' => 'teacher_id',
-                'value' => $model->teacher->last_name . ', ' . $model->teacher->first_name . ' ' . $model->teacher->middle_name,
-            ],
-            [
-                'attribute' => 'grade_level_id',
-                'value' => $model->gradeLevel->name,
-            ],
-            'sy.sy',
-        ],
-    ]) ?>
-
+<p></p>
+<div class="ui two column stackable grid">  
+    <div class="four wide column">
+        <div class="column">
+            <?= $this->render('_card', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="nine wide column">
+        <div class="column">
+            <?= $this->render('_detail', ['model' => $model, 'profile' => $profile]) ?>
+        </div>
+    </div>
+    <div class="three wide column">
+        <div class="column">
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'id' => $model->id]); ?>
+        </div>
+    </div>
 </div>
+<?= $this->render('_pjax', ['model' => $model]) ?>
+<?= $this->render('/layouts/_toast')?>

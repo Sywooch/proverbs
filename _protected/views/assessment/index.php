@@ -26,3 +26,18 @@ $this->title = "Assessment";
     </div>
 </div>
 <?= $this->render('/layouts/_toast')?>
+<?php
+$pjax = <<< JS
+$(document).ready(function(){
+    setInterval(function(){
+        $.pjax.reload({
+            container:'#assessment-list',
+            success: function(){
+                $('ul.pagination > li.active > a').click()
+            }
+        });
+    }, 10000);
+});
+JS;
+$this->registerJs($pjax);
+?>

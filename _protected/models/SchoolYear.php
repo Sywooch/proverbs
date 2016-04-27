@@ -1,7 +1,5 @@
 <?php
-
 namespace app\models;
-
 use Yii;
 
 /**
@@ -9,6 +7,10 @@ use Yii;
  *
  * @property string $id
  * @property string $sy
+ *
+ * @property Advisory[] $advisories
+ * @property Assigned[] $assigneds
+ * @property Enrolled[] $enrolleds
  */
 class SchoolYear extends \yii\db\ActiveRecord
 {
@@ -26,7 +28,7 @@ class SchoolYear extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sy'], 'string', 'max' => 10]
+            [['sy'], 'string', 'max' => 10],
         ];
     }
 
@@ -37,13 +39,31 @@ class SchoolYear extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'sy' => 'Sy',
+            'sy' => 'School Year',
         ];
     }
 
-    public function getSyItem()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdvisories()
     {
-        $item = new SchoolYear();
-        return $item;
+        return $this->hasMany(Advisory::className(), ['sy_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAssigned()
+    {
+        return $this->hasMany(Assigned::className(), ['sy_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEnrolled()
+    {
+        return $this->hasMany(Enrolled::className(), ['sy_id' => 'id']);
     }
 }

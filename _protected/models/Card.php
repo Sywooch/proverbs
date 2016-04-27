@@ -47,7 +47,7 @@ class Card
 
 		$left_floated = Html::label($options['leftFloatedContent'], $options['leftFloatedFor'], ['id' => 'left-content', 'class' => $options['leftFloatedOptions'], 'style' => 'color: #555; font-weight: 600;']);
 
-		$right_floated = Html::tag('span', Html::tag('div', '<div class="icon active" style="font-size: 16px;"></div>' ,['id' => 'right-content', 'class' => implode(' ', ['ui star rating', $options['rightFloatedOptions']]) ]), ['class' => 'right floated', 'data-rating' => 1]);
+		$right_floated = Html::tag('span', Html::tag('div', $options['rightFloatedContent'] . '<div class="icon active" style="font-size: 16px;"></div>' ,['id' => 'right-content', 'class' => implode(' ', ['ui star rating', $options['rightFloatedOptions']]) ]), ['class' => 'right floated', 'data-rating' => 1]);
 
 		$extra_content = Html::tag('div', implode('',['<span class="left floated">', $left_floated. '</span>' . $right_floated]), ['class' => 'extra content']);
 

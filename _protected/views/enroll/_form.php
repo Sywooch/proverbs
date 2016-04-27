@@ -55,6 +55,9 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
     </div>
     <div class="nine wide rounded column">
         <div class="ui segment">
+        <?= !$model->isNewRecord ? Html::tag('label',implode('', [implode('-', array_map('ucfirst', explode('-', Yii::$app->controller->id))),'# ', $model->id]), ['class' => 'ui fluid big label']) : '' ?>
+            <br>
+            <br>
             <?php if($model->isNewRecord): ?>
 
             <?php else:?>
@@ -72,11 +75,12 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <?= $model->isNewRecord ? $form->field($model, 'student_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Student</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(StudentForm::find()->where(['status' => 1])->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
+                        'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
                             return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
                         }),
                         'language' => 'en',
                         'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student', 'class' => 'form-control pva-form-control'],
+                        'size' => 'md',
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
@@ -96,7 +100,7 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                                                 $('#meta-content').html(data.nick);
                                                 $('#left-content').html(data.level);
 
-                                                if(data.spd === 0){
+                                                if(parseInt(data.spd) === 0){
                                                     $('#right-content').removeClass('hidden');
                                                 }
 
@@ -155,8 +159,8 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">School Year</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Section</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData3, ['id', 'section_name'])->label(false) ?>
                 </div>
             </div>
         </div>

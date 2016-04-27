@@ -33,7 +33,7 @@ class AssessmentController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
+                        'actions' => ['index' , 'create', 'view', 'update', 'new', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -43,9 +43,7 @@ class AssessmentController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-                    'sbd' => ['post'],
-                    'dlist' => ['post'],
-                    'calc' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
@@ -57,11 +55,8 @@ class AssessmentController extends Controller
      */
     public function actionIndex()
     {
-        /*if (Yii::$app->user->isGuest) 
-            return $this->redirect('site/login');*/
-
         $searchModel = new AssessmentFormSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchAssessment(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -98,134 +93,6 @@ class AssessmentController extends Controller
                 'model' => $model,
             ]);
         }*/
-    }
-
-    public function actionCalc($data){
-        if(Yii::$app->request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            
-            $object = json_decode($data);
-
-            if((int) $object->sbi === 1){
-
-                $object->dri = (int) $object->dri;
-                $object->sbi = (int) $object->sbi;
-                $object->bki = (int) $object->bki;
-                $object->hri = (int) $object->hri;
-
-                $object->sbv = (float) $object->sbv;
-                $object->bkv = (float) $object->bkv;
-                $object->hrv = (float) $object->hrv;
-                $object->bkt = (float) $object->bkt;
-                $object->bal = (float) $object->bal;
-
-                $total       = (float) $object->ttl;
-                $balance     = $total;
-                $books       = (float) $object->bkt;
-                $yearly      = (float) $object->yra;
-
-                $discount    = $object->dri/100 * $object->tff + ($object->bki === 1 ? $object->bkv : 0)  + ($object->hri === 1 ? $object->hrv : 0);
-                $total = $yearly + $books - $discount;
-                
-                $object->sub = number_format($yearly + $books, 2);
-                $object->yra = number_format($yearly, 2);
-                $object->bkt = number_format($books, 2);
-                $object->sdt = $object->dri . " % x " . number_format($object->tff, 2) . ' = ' . number_format(round($object->dri/100 * $object->tff, 2, PHP_ROUND_HALF_UP), 2);
-                $object->sbv = round(($object->dri/100 * $object->tff), 2, PHP_ROUND_HALF_UP);
-                $object->tdf = number_format($discount, 2);
-
-                $object->ttl = round($total, 2, PHP_ROUND_HALF_UP);
-                $object->bal = round($total, 2, PHP_ROUND_HALF_UP);
-
-                return $object;
-            } else {
-
-                $object->dri = (int) $object->dri;
-                $object->sbi = (int) $object->sbi;
-                $object->bki = (int) $object->bki;
-                $object->hri = (int) $object->hri;
-
-                $object->sbv = (float) $object->sbv;
-                $object->bkv = (float) $object->bkv;
-                $object->hrv = (float) $object->hrv;
-                $object->bkt = (float) $object->bkt;
-
-                $total       = (float) $object->ttl;
-                $books       = (float) $object->bkt;
-                $yearly      = (float) $object->yra;
-
-                $discount    = ($object->bki === 1 ? $object->bkv : 0)  + ($object->hri === 1 ? $object->hrv : 0);
-                $total       = $yearly + $books - $discount;
-
-                $object->sub = number_format($yearly + $books, 2);
-                $object->yra = number_format($yearly, 2);
-                $object->bkt = number_format($books, 2);
-                $object->sdt = "0";
-                $object->sbv = 0;
-
-                $object->tdf = number_format($discount, 2);
-
-                $object->ttl = $total;
-                $object->bal = $total;
-
-                return $object;
-            }
-
-            return $object;
-
-        } else {
-            throw new NotFoundHttpException('Oops, Something went wrong.');
-        }
-    }
-
-    public function actionSbd($cd, $id, $t, $sb, $bd, $hd){
-        $cd = (int) $cd;
-        $id = (int) $id;
-        
-        if($cd === 0){
-            $value = 1;
-        } else {
-            $value = 0;
-            //$id = SiblingDiscount::find()->where(['id'=> $id])->all();
-        }
-
-        if($id === 0){
-            $calc = $percent . ' x ' . $tuition . ' = ' . 0;
-            $td = (float) $bd + (float) $hd;
-        } else {
-            $tuition = number_format($t, 2);
-            $td = (float) $sd + (float) $bd + (float) $hd;
-            $calc = $percent . ' x ' . $tuition . ' = ' . number_format(($p/100 * $t), 2);
-            
-        }
-
-
-        $data = (object) array('value' => $value, 'id' => $id, 'calc' => $calc , 'sb' => $sb, 'bd' => $bd, 'hd' => $hd, 'td' => $td);
-
-        return $data;
-    }
-
-    public function actionDlist($id, $t, $bd, $hd){
-
-        if(Yii::$app->request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-
-            $id = SiblingDiscount::find()->where(['id'=> $id])->all();
-            $p = $id[0]['percentage_value'];
-            $percent = $id[0]['percentage_value'] . '%';
-            $tuition = number_format($t, 2);
-
-            $calc = $percent . ' x ' . $tuition . ' = ' . number_format(($p/100 * $t), 2);
-            
-            $sb = round($p/100 * $t, 3);
-            $bd = (float) $bd;
-            $hd = (float) $hd;
-            $td = $sb + $bd + $hd;
-
-            $data = (object) array('id' => $id, 'calc' => $calc , 'sb' => $sb, 'bd' => $bd, 'hd' => $hd, 'td' => $td);
-
-            return $data;
-        }
     }
 
     public function actionNew($eid){
@@ -303,6 +170,25 @@ class AssessmentController extends Controller
         
         Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
+    }
+
+
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $u = $this->findModel($object->uid);
+
+            if($u->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $u->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
     }
 
     /**

@@ -17,8 +17,8 @@ $model->gender === 0 ? $gender = 'Male' : $gender = 'Female';
 				<?= $model->username ?>
 			</div>
 		</div>
-		<div class="extra content">
-			<label class="left floated user-id"><span><?= ucfirst($model->role->item_name) ?></span></label>
+		<div class="extra center aligned content">
+			<label class="user-id"><span><?= ucfirst($model->role->item_name) ?></span></label>
 		</div>
 	</div>
 </div>

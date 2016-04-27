@@ -14,6 +14,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<div class="ui inverted dimmer">
 	    <div class="ui massive text loader"></div>
 	</div>
+	<?= Html::a('View Profile',['/profile/view', 'id' => $profile->id],['class' => 'ui right floated huge basic button'])?>
 	<?=	UiTable::widget([
 		'model' => $model,
 		'options' => ['class' => 'ui fixed very basic table'],

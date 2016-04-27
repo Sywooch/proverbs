@@ -10,10 +10,10 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<img src="<?= $img ?>" style="background: #e9eaed;">
 </div>
 <div class="content">
-	<label>ID# <strong><?= $model->applicant_id ?></strong></label><br>
-	<?= Html::a(implode(' ', [$model->applicant['first_name'], $middle, $model->applicant['last_name']]),['view?id=' . $model->id], ['class' => 'header full-name']) ?>
-	<br>
+	<label><strong><?= Html::a(implode(' ', ['ID#', $model->id]),['view', 'id' => $model->id],[]) ?></strong></label><br>
+	<h6 style="margin: 0 auto;"><?= implode(' ', [$model->applicant['first_name'], $middle, $model->applicant['last_name']]) ?></h6>
 	<div class="extra content">
-		<span><?= $model->getGradeLevelName($model->applicant['grade_level_id']) ?> </span>
+		<span><?= $model->getGradeLevelName($model->applicant['grade_level_id']) ?><?= $model->applicant['sped'] === 0 ? '&nbsp;<div class="ui star rating" data-rating="1"><i class="icon star active"></i></div>' : ''?></span><br>
+		<span>&nbsp;</span>
 	</div>
 </div>

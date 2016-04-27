@@ -43,6 +43,7 @@ class GradeLevel extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'gradeLevel.name' => 'Grade Level'
         ];
     }
 

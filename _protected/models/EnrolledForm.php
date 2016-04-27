@@ -101,12 +101,35 @@ class EnrolledForm extends \yii\db\ActiveRecord
         if($insert){
 
             $tuition = Tuition::find()->where(['grade_level_id' => $this->grade_level_id])->orderBy(['id' => SORT_DESC])->all()[0];
-            
             $assessment = new AssessmentForm();
+            
+            //CHECK IF STUDENT HAS SIBLINGS ENROLLED
+            if((int) $this->student->student_has_sibling_enrolled === 0){
+                $assessment->has_sibling_discount = 0;
+                $sibling_discount = (float) $tuition->tuition_fee * 0.05;
+                $assessment->percentage_value = 5;
+                $assessment->sibling_discount = $sibling_discount;
+                $assessment->honor_discount = 0;
+                $assessment->book_discount = 0;
+                $assessment->total_assessed = (float) $tuition->yearly + (float) $tuition->books - $sibling_discount;
+                $assessment->balance = (float) $assessment->total_assessed;
+            } else {
+                $assessment->has_sibling_discount = 1;
+                $assessment->sibling_discount = 0;
+                $assessment->percentage_value = 0;
+                $assessment->honor_discount = 0;
+                $assessment->book_discount = 0;
+                $assessment->total_assessed = (float) $tuition->yearly + (float) $tuition->books;
+                $assessment->balance = (float) $assessment->total_assessed;
+            }
+
+            //die($changedAttributes);
+
+            $assessment->has_honor_discount = 1;
+            $assessment->has_book_discount = 1;
             $assessment->enrolled_id = (int) $this->id;
             $assessment->tuition_id = $tuition->id;
-            $assessment->total_assessed = (float) $tuition->yearly + (float) $tuition->books;
-            $assessment->balance = (float) $assessment->total_assessed;
+
             $assessment->save();
             Yii::$app->session->setFlash('success2', 'New assessment successfully generated!');
         }

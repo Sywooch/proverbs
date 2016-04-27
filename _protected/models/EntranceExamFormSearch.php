@@ -77,11 +77,10 @@ class EntranceExamFormSearch extends EntranceExamForm
 
     public function searchEntranceExam($params)
     {
-        $query = EntranceExamForm::find()
-        //->innerJoin('INNER JOIN', 'student', 'first_name')
-        ;
+        $pageSize = Yii::$app->params['pageSize'];
 
-        // add conditions that should always apply here
+        $query = EntranceExamForm::find();
+
         $dataProvider->sort->attributes['id'] = [
             'asc' => ['id' => SORT_ASC],
             'desc' => ['id' => SORT_DESC],
@@ -90,6 +89,9 @@ class EntranceExamFormSearch extends EntranceExamForm
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ]
         ]);
 
         $this->load($params);
@@ -113,9 +115,7 @@ class EntranceExamFormSearch extends EntranceExamForm
         ]);
 
         $query->andFilterWhere(['like', 'remarks', $this->remarks])
-            ->andFilterWhere(['like', 'recommendations', $this->recommendations])
-            //->andFilterWhere(['like', 'applicant.first_name', $this->applicant['first_name']])
-            ;
+            ->andFilterWhere(['like', 'recommendations', $this->recommendations]);
 
         return $dataProvider;
     }

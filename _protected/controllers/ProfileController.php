@@ -125,6 +125,8 @@ class ProfileController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect('index');
         } else {
             return $this->render('update', [

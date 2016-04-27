@@ -21,20 +21,6 @@ use yii\widgets\Alert;
  */
 class EntranceExamController extends Controller
 {
-    CONST SUCCESS = 'success';
-
-    public $jsFile;
-    
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }
     public function behaviors()
     {
         return [
@@ -127,7 +113,7 @@ class EntranceExamController extends Controller
         $model->comprehension = 0;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success','Saved');
+            Yii::$app->session->setFlash('success','New examinee created successfully!');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -135,7 +121,6 @@ class EntranceExamController extends Controller
             ]);
         }
     }
-
 
     public function actionCard($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
@@ -199,7 +184,8 @@ class EntranceExamController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success','Saved');
+
+            Yii::$app->session->setFlash('success','Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             Yii::$app->session->setFlash('warning','Error');
@@ -218,27 +204,12 @@ class EntranceExamController extends Controller
     public function actionDelete($id)
     {
         if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev'){
+
+            Yii::$app->session->setFlash('success','Deleted successfully');
             return $this->redirect(['index']);
         } else {
             //$this->findModel($id)->delete();
             return $this->redirect(['index']);
-        }
-
-    }
-
-    public function actionPermission(){
-
-        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            
-            $auth = false;
-
-            $data = (object) array(
-                    'id' => Yii::$app->user->identity->id,
-                    'auth' => $auth
-                );
-            
-            return $data;
         }
 
     }

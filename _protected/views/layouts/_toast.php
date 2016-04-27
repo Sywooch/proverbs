@@ -59,10 +59,11 @@ $(document).ready(function(){
           "showMethod": "fadeIn",
           "hideMethod": "fadeOut"
         };
-        
         toastr.success($success2,'Success!');
     }
-    showToast();
+    setTimeout(function(){
+      showToast();
+    }, 500);
 });
 JS;
 $this->registerJs($toast2);

@@ -32,20 +32,17 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
             	'attribute' => 'has_book_discount',
             	'value' => DataHelper::direct($model->has_book_discount)
             ],
-            'sibling_discount:currency',
             [
             	'attribute' => 'percentage_value',
             	'value' => $model->percentage_value . '%'
             ],
+            'sibling_discount:currency',
             'book_discount:currency',
             'honor_discount:currency',
             'total_assessed:currency',
             'balance:currency',
             'created_at:date',
-            [
-            	'attribute' => 'updated_at',
-            	'value' => DataHelper::carbonDateDiff($model->updated_at)
-            ],
+            'updated_at:date',
     	]
 	])?>
 </div>
@@ -67,11 +64,5 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	    	'books:currency',
 	    ],
     ]) ?>
-</div>
-<div class="ui tab segment" data-tab="third">
-	<div class="ui inverted dimmer">
-	    <div class="ui massive text loader"></div>
-	</div>
-	adf
 </div>
 <?php Pjax::end(); ?>

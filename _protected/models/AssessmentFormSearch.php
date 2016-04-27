@@ -74,9 +74,19 @@ class AssessmentFormSearch extends AssessmentForm
     public function searchAssessment($params)
     {
         $query = AssessmentForm::find();
+        $pageSize = Yii::$app->params['pageSize'];
+
+        $dataProvider->sort->attributes['id'] = [
+            'asc' => ['id' => SORT_ASC],
+            'desc' => ['id' => SORT_DESC],
+        ];
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ]
         ]);
 
         $this->load($params);

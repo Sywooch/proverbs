@@ -1,6 +1,10 @@
 <?php
 
 namespace app\models;
+
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 use Yii;
 
 /**
@@ -31,7 +35,7 @@ class ClassAdviser extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'grade_level_id', 'sy_id'], 'required'],
-            [['user_id', 'grade_level_id', 'sy_id'], 'integer']
+            [['user_id', 'grade_level_id', 'sy_id', 'created_at', 'updated_at'], 'integer']
         ];
     }
 
@@ -45,9 +49,38 @@ class ClassAdviser extends \yii\db\ActiveRecord
             'user.last_name' => 'Name',
             'grade_level_id' => 'Grade Level ID',
             'sy_id' => 'Sy ID',
+            'created_at' => 'Created At', 
+            'updated_at' => 'Updated At'
+        ];
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            } else {
+                $this->touch('updated_at');
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

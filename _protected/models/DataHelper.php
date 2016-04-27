@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use app\models\SchoolYear;
+use app\models\Section;
 /*
 *	Direct Questions answerable by Yes or No
 *	Yes (0)
@@ -38,6 +40,11 @@ class DataHelper
 
 	public function direct($data){
 		$data === 0 ? $data = 'Yes' : $data = 'No';
+		return $data;
+	}
+
+	public function directSpecial($data, $yes, $no){
+		$data === 0 ? $data = $yes : $data = $no;
 		return $data;
 	}
 
@@ -104,6 +111,41 @@ class DataHelper
 
     	return $data;
     }
+
+    public function userStatus($data){
+    	if($data === 1){
+    		$data = 'Inactive';
+    	}elseif($data === 0){
+    		$data = 'Active';
+    	}else {
+    		$data = 'Deleted';
+    	}
+
+    	return $data;
+    }
+
+    public function enrolleeStatus($data){
+    	if($data === 1){
+    		$data = 'Pending';
+    	}else {
+    		$data = 'Enrolled';
+    	}
+
+    	return $data;
+    }
+
+    public function schoolYear($data){
+    	$data = SchoolYear::find()->where(['id' => $data])->one();
+
+    	return $data->sy;
+    }
+
+    public function section($data){
+    	$data = Section::find()->where(['id' => $data])->one();
+
+    	return $data->section_name;
+    }
+
 
     public function roundOff($data, $places){
     	$data = number_format($data, $places);

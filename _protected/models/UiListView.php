@@ -17,6 +17,7 @@ class UiListView extends ListView
 	public $itemOptions = ['class' => 'item', 'style' => 'padding: 10px 0;'];
 	public $pager = [];
 	public $layout = "{summary}{pager}{items}{pager}";
+    public $actions = [];
 
     public function renderItems()
     {

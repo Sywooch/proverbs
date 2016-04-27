@@ -37,6 +37,8 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
     </div>
     <div class="nine wide rounded column">
         <div class="ui segment">
+            <?= !$model->isNewRecord ? Html::tag('label',implode('', [implode('-', array_map('ucfirst', explode('-', Yii::$app->controller->id))),'# ', $model->id]), ['class' => 'ui fluid big label']) : '' ?>
+            <br><br>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <?= $model->isNewRecord ? $form->field($model, 'applicant_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;" for="Applicant">Applicant</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->widget(Select2::classname(), [
@@ -57,7 +59,6 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                                             contentType: 'application/json; charset=utf-8',
                                             dataType: 'json',
                                             success: function(data) {
-                                                console.log(data);
                                                 $('#header-label').html('ID# ' + '<strong>' + data.sid + '</strong>');
                                                 $('#header-content').html(data.name);
                                                 $('#meta-content').html(data.nick);

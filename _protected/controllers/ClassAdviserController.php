@@ -6,6 +6,7 @@ use Yii;
 use app\models\ClassAdviserForm;
 use app\models\ClassAdviserFormSearch;
 use yii\web\Controller;
+use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -17,18 +18,6 @@ use app\models\Section;
  */
 class ClassAdviserController extends Controller
 {
-    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }
 
     public function behaviors()
     {
@@ -43,7 +32,7 @@ class ClassAdviserController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
+                        'actions' => ['index' , 'create', 'view', 'update', 'new', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,6 +45,7 @@ class ClassAdviserController extends Controller
                     'fetch' => ['post'],
                     'push' => ['post'],
                     'section' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
@@ -101,6 +91,24 @@ class ClassAdviserController extends Controller
         }
     }
 
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $u = $this->findModel($object->uid);
+
+            if($u->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $u->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
+
     /**
      * Creates a new ClassAdviserForm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -121,6 +129,7 @@ class ClassAdviserController extends Controller
                 ]);
             } else { //ALL THREE NO DUPLICATES
                 $model->save();
+                Yii::$app->session->setFlash('success', 'New Class Adviser successfully created!');
                 return $this->redirect('index');
             }
         } else {
@@ -144,8 +153,9 @@ class ClassAdviserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           //return $this->redirect(['view', 'id' => $model->id]);
-            return $this->redirect('index');
+           
+           Yii::$app->session->setFlash('success', 'Saved successfully');
+           return $this->redirect(['view', 'id' => $model->id]);
         } else {
            return $this->render('update', [
                'model' => $model,
@@ -166,6 +176,7 @@ class ClassAdviserController extends Controller
     {
         $this->findModel($id)->delete();
 
+        Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
 

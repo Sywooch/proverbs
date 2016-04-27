@@ -100,7 +100,7 @@ class StudentFormSearch extends StudentForm
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->orFilterWhere(['status' => 1])->orFilterWhere(['status' => 0]);
+        //$query->orFilterWhere(['status' => 1])->orFilterWhere(['status' => 0]);
         
         $query->andFilterWhere(['like', 'id', $this->id])
             ->andFilterWhere(['=', 'gender', $this->gender])

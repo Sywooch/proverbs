@@ -1398,6 +1398,22 @@ select.form-control.pva-form-control{
 }
 
 ///////////////////////// UI
+.alert-success.alert.fade.in{
+    display: none;
+}
+#tuition-table tbody > tr{
+    td:first-child {
+        //text-align: left;
+    }
+    td:last-child {
+        text-align: right;
+    }
+}
+#tuition-subtotal {
+    p {
+        text-align: right;
+    }
+}
 .ui.black.ribbon.label {
     border-top-left-radius: 4px;
 }

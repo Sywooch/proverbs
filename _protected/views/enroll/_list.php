@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-
+use app\models\DataHelper;
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->student->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->student->students_profile_image : $img = $avatar;
 !empty(trim($model->student->middle_name)) ? $middle = ucfirst(substr($model->student->middle_name, 0,1)).'.' : $middle = '';
@@ -11,12 +11,10 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<img src="<?= $img ?>" style="background: #e9eaed;">
 </div>
 <div class="content">
-	<label>ID#: <strong><?= $model->student_id ?></strong></label><br>
-	<?= Html::a(implode(' ', [$model->student->first_name, $middle, $model->student->last_name]),['view', 'id' => $model->id], ['class' => 'header full-name']) ?>
-	<br>
+	<label><strong><?= Html::a(implode(' ', ['ID#', $model->id]),['view', 'id' => $model->id],[]) ?></strong></label><br>
+	<h6 style="margin: 0 auto;"><?= implode(' ', [$model->student->first_name, $middle, $model->student->last_name]) ?></h6>
 	<div class="extra content">
-		<span><?= $model->levelName ?></span>
-		<p></p>
-		<span><?= $model->statusName ?></span>
+		<span><?= DataHelper::gradeLevel($model->grade_level_id) ?><?= $model->student->sped === 0 ? '&nbsp;<div class="ui star rating" data-rating="1"><i class="icon star active"></i></div>' : ''?></span><br>
+		<span><?= DataHelper::enrolleeStatus($model->enrollment_status) ?></span>
 	</div>
 </div>

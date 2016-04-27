@@ -37,8 +37,9 @@ if($user->scenario !== 'create'){
         </div>
     </div>
     <div class="nine wide rounded column">
-        <div class="panel panel-default rounded-edge">
-            <div class="panel-body">
+        <div class="ui rounded segment">
+                <?= !$user->isNewRecord ? Html::tag('label',implode('', [implode('-', array_map('ucfirst', explode('-', Yii::$app->controller->id))),'# ', $user->id]), ['class' => 'ui fluid big label']) : '' ?>
+                <br><br>
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <?= $form->field($user, 'status', ['inputTemplate' => '<label for="Status" style="font-weight: 600; color: #555;">Status</label>{input}'])->dropDownList($user->statusList, ['class' => 'form-control pva-form-control'])->label(false) ?>
@@ -66,7 +67,6 @@ if($user->scenario !== 'create'){
                         <?php endif ?>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
     <div class="three wide rounded column">

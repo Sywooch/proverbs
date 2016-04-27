@@ -15,10 +15,9 @@ $this->title = implode(' ', [$model->enrolled->student->first_name, $model->enro
     <div class="nine wide column">
         <div class="column">
             <div id="assessment-info-menu">
-                <div class="ui three item pointing menu stackable">
+                <div class="ui two item pointing menu stackable">
                     <a class="item active" data-tab="first">Assessment</a>
                     <a class="item" data-tab="second">Tuition</a>
-                    <a class="item" data-tab="third">Calculation</a>
                 </div>
                 <?= $this->render('_detail', ['model' => $model]) ?>
             </div>

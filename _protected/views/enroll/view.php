@@ -1,6 +1,9 @@
 <?php
 use app\models\Options;
 use yii\helpers\Html;
+use app\models\AssessmentForm;
+$assessment = AssessmentForm::find()->where(['enrolled_id' => $model->id])->one();
+
 $this->title = implode(' ', [$model->student->first_name, $model->student->middle_name, $model->student->last_name]);
 ?>
 <p></p>
@@ -12,7 +15,7 @@ $this->title = implode(' ', [$model->student->first_name, $model->student->middl
     </div>
     <div class="nine wide column">
         <div class="column">
-            <?= $this->render('_detail', ['model' => $model]) ?>
+            <?= $this->render('_detail', ['model' => $model, 'assessment' => $assessment]) ?>
         </div>
     </div>
     <div class="three wide column">
