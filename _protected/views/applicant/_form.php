@@ -10,34 +10,37 @@ $grade_level = GradeLevel::find()->all();
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
-
 $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model->first_name, !empty(trim($model->middle_name)) ? ucfirst(substr($model->middle_name, 0,1)).'.' : '', $model->last_name]);
 ?>
 <p></p>
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
 <div class="ui two column stackable grid">
     <div class="four wide rounded column">
-        <?= Card::render($options = [
-            'imageContent' => $img,
-            'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->id, '</strong>']) : '&nbsp;',
-            'labelFor' => 'Enrollee ID',
-            'labelOptions' => '',
-            'headerContent' => !$model->isNewRecord ? implode(' ', [$model->first_name, !empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '', $model->last_name]) : '&nbsp;',
-            'headerOptions' => '',
-            'metaContent' => !$model->isNewRecord ? implode('', ['\'', $model->nickname, '\'']) : '&nbsp',
-            'metaOptions' => '',
-            'leftFloatedContent' => !$model->isNewRecord ? 
-                '<div class="row"><div class="col-lg-12 col-md-12 col-sm-12">' . $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData,['class' => 'form-control pva-form-control'])->label(false) . '</div></div>' : '&nbsp;',
-            'leftFloatedFor' => 'Grade Level',
-            'leftFloatedOptions' => '',
-            'rightFloatedContent' => $form->field($model, 'sped', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">SPED</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->sped])->label(false),
-            'rightFloatedOptions' => !$model->isNewRecord ? $model->sped === 0 ? '' : 'hidden' : 'hidden'
-        ]) ?>
+        <div class="ui center aligned stackable cards">
+            <div class="card">
+                <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+                <div class="ui center aligned content">
+                    <?= $model->isNewRecord ? '' : $form->field($model, 'id', ['inputTemplate' => '<label>ID#</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
+                </div>
+                <div class="extra content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(ArrayHelper::map(GradeLevel::find()->all(), 'id' , 'name'),['class' => 'form-control pva-form-control'])->label(false)?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <?= $form->field($model, 'sped', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">SPED</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->sped])->label(false) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="nine wide rounded column">
         <div id="student-info-menu">
             <div class="ui five item pointing menu stackable">
-                <a class="item active" data-tab="first">Student</a>
+                <a class="item active" data-tab="first">Applicant</a>
                 <a class="item" data-tab="second">Parents</a>
                 <a class="item" data-tab="third">Guardian</a>
                 <a class="item" data-tab="fourth">Previous School</a>
@@ -46,9 +49,8 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                 <div class="ui tab segment active" data-tab="first">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12">
-                            <?php //PRINCIPALS VIEW
-                                $form->field($model, 'status', ['inputTemplate' => '<div style="margin-top: -10px;"><label style="padding: 0; color: #555; font-weight: 600;">Active</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->status])->label(false) 
-                            ?>
+                            <?= //PRINCIPALS VIEW
+                                $form->field($model, 'status', ['inputTemplate' => '<label>Status</label>{input}'])->dropDownList([1=> 'Student', 2 => 'Applicant'],['class' => 'form-control pva-form-control'])->label(false)?>
                         </div>
                     </div>
                     <div class="row">

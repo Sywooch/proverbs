@@ -36,7 +36,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'sbar'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,6 +48,7 @@ class SiteController extends Controller
                     'logout' => ['post'],
                     'board' => ['post'],
                     'push' => ['post'],
+                    'sbar' => ['post'],
                     'mail-check' => ['post'],
                     'cred-check' => ['post'],
                 ],
@@ -68,6 +69,36 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionSbar($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $data = json_decode($data);
+            $val = $data->val;
+            
+            $val === 1 ? Yii::$app->session['sidebar'] = '' : Yii::$app->session['sidebar'] = 'sidebar-narrow';
+            
+            return array('val' => Yii::$app->session->get('sidebar'));
+        }
+    }
+
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $student = $this->findModel($object->uid);
+
+            if($student->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $student->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
     public function action403(){
         if(Yii::$app->user->isGuest){
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -239,16 +270,15 @@ class SiteController extends Controller
 
         $model = $lwe ? new LoginForm(['scenario' => 'lwe']) : new LoginForm();
 
+        $sidebar = Yii::$app->session->set('sidebar', '');
+        
         if ($model->load(Yii::$app->request->post()) && $model->login()) 
         {
-
             return $this->redirect(Yii::$app->request->baseUrl . '/dashboard');
         }
         elseif($model->status === User::STATUS_INACTIVE)
         {
-            Yii::$app->session->setFlash('error', 
-                Yii::t('app', 'You have to activate your account first. Please check your email.'));
-
+            Yii::$app->session->setFlash('error', 'You have to activate your account first. Please check your email.');
             return $this->refresh();
         }    
         // ACOUNT ACTIVATED WITH ERRORS

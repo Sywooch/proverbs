@@ -19,6 +19,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 		'model' => $model,
 		'options' => ['class' => 'ui fixed very basic table'],
 		'attributes' => [
+			'id',
 			[
 				'attribute' => 'status',
 				'value' => $model->getStatusName()

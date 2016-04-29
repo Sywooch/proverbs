@@ -13,30 +13,6 @@ use app\models\Section;
 */
 class DataHelper
 {
-    const N = null;
-    const L1 = 1;
-    const L2 = 2;
-    const L3 = 3;
-    const L10 = 10;
-    const L20 = 20;
-    const L30 = 30;
-    const L40 = 40;
-    const L50 = 50;
-    const L60 = 60;
-    const L70 = 70;
-    const L80 = 80;
-    const L90 = 90;
-    const L100 = 100;
-    const L110 = 110;
-    const L111 = 111;
-    const L120 = 120;
-    const L121 = 121;
-
-	const ZERO = 0;
-	const FIVE = 0.05;
-	const SIX = 0.06;
-	const SEVEN = 0.07;
-	const EIGHT = 0.08;
 
 	public function direct($data){
 		$data === 0 ? $data = 'Yes' : $data = 'No';
@@ -125,12 +101,14 @@ class DataHelper
     }
 
     public function enrolleeStatus($data){
-    	if($data === 1){
-    		$data = 'Pending';
-    	}else {
-    		$data = 'Enrolled';
-    	}
+    	$data === 1 ? $data = 'Pending' : $data = 'Enrolled';
 
+    	return $data;
+    }
+
+    public function roundOff($data, $places){
+    	$data = number_format($data, $places);
+    	
     	return $data;
     }
 
@@ -146,13 +124,6 @@ class DataHelper
     	return $data->section_name;
     }
 
-
-    public function roundOff($data, $places){
-    	$data = number_format($data, $places);
-    	
-    	return $data;
-    }
-
     public function siblingDiscount(){
     	$data = array(
     		0 => '0',
@@ -161,6 +132,12 @@ class DataHelper
     		7 => '7% Discount',
     		8 => '8% Discount',
     	);
+
+    	return $data;
+    }
+
+    public function transaction($data){
+    	$data === 1 ? $data = 'Cash' : $data = 'Card';
 
     	return $data;
     }

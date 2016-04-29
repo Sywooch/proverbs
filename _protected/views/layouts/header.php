@@ -1,40 +1,49 @@
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#"><img src="<?= Yii::$app->request->baseUrl . '/themes/proverbs/' ?>images/pvcf-temp.png" alt="Proverbsville Academy"></a>
-        <a class="sidebar-toggle"><i class="icon-paragraph-justify2"></i></a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-icons">
-            <span class="sr-only">Toggle navbar</span>
-            <i class="icon-grid3"></i>
-        </button>
-        <button type="button" class="navbar-toggle offcanvas">
-            <span class="sr-only">Toggle navigation</span>
-            <i class="icon-paragraph-justify2"></i>
-        </button>
-    </div>
-    <ul id="navbar-icons" class="nav navbar-nav navbar-right collapse">
-        <li class="user dropdown">
-            <a href="#" class="dropdown-toggle btn-popover" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" 
-                data-content="
-                    <div id='user-dropdown-options'>
-                        <ul>
-                            <li><a href='<?= Yii::$app->request->baseUrl . '/dashboard' ?>'>Dashboard <i class='icon-cog'></i></a></li>
-                            <li><a href='<?= Yii::$app->request->baseUrl . '/profile' ?>'>Profile <i class='icon-user'></i></a></li>
-                            <li><a href='<?= Yii::$app->request->baseUrl . '/board' ?>'>Messages <i class='icon-bubble4'></i></a></li>
-                            <li><a href='<?= Yii::$app->request->baseUrl . '/site/logout' ?>' data-method='post'>Logout <i class='icon-exit'></i></a></li>
-                        </ul>
-                    </div>">
-                <?php
-                    if(!Yii::$app->user->isGuest){
-                        if(!empty(Yii::$app->user->identity->profile_image)){
-                            echo '<img id="user-profile-img-thumb" class="rounded-edge" src="/proverbs/uploads/users/' . Yii::$app->user->identity->profile_image .'">';
-                        }else {
-                            echo '<img id="user-profile-img-thumb" class="rounded-edge" src="/proverbs/uploads/ui/user-blue.png">';
-                        }
-                    }
-                ?> 
-                <span><?= !Yii::$app->user->isGuest ? Yii::$app->user->identity->username : '' ?></span>
-                <span id="dropdown-caret"><i class="caret open"></i></span>
+<?php 
+use yii\helpers\Html;
+?>
+<div class="row">
+    <div class="ui container">
+        <div class="ui top fixed huge borderless inverted menu">
+            <a class="navbar-toggle offcanvas" style="padding-right: 25px; padding-top: 0; padding-bottom: 0; position: fixed; top: 8px; left: 6px; z-index: 9999">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="icon-menu" style="color: #fff;"></i>
             </a>
-        </li>
-    </ul>
+            <div class="ui left floated link item sidebar-toggle-menu" style="min-width: 54px;">
+                <a id="trigger-sidebar"><i class="icon-menu" style="color: #fff;"></i></a>
+            </div>
+            <div class="center aligned text">
+                <span><?=  Html::a(Html::img(Yii::$app->request->baseUrl . '/uploads/logo/proverbs.svg',['class' => 'ui mini avatar image', 'style' => 'padding-top: 12px;']), Yii::$app->request->baseUrl, []) ?></span>
+            </div>
+            <div class="right floated small menu">
+                <div class="ui link top right pointing dropdown item">
+                    <?= Html::img(
+                        Yii::$app->user->isGuest 
+                            ? Yii::$app->request->baseUrl . Yii::$app->params['avatar'] 
+                                : !empty(Yii::$app->user->identity->profile_image) 
+                                    ? Yii::$app->request->baseUrl . '/uploads/users/' . Yii::$app->user->identity->profile_image 
+                                        : Yii::$app->request->baseUrl . Yii::$app->params['avatar']
+                    , ['id' => 'thumbnail', 'style' => 'background: #f7f7f7;', 'class' => 'ui right thumbnail image', 'alt' => Yii::$app->user->identity->username]) ?>
+                    <div class="menu" style="min-width: 180px; margin-right: 5px; margin-top: 5px; border-radius: 4px;">
+                        <a class="link item" href="<?= Yii::$app->request->baseUrl . '/dashboard' ?>">Dashboard<i class="right floated dashboard icon"></i></a>
+                        <a class="link item" href="<?= Yii::$app->request->baseUrl . '/profile' ?>">Profile<i class="right floated user icon"></i></a>
+                        <a class="link item" href="<?= Yii::$app->request->baseUrl . '/settings' ?>">Settings<i class="right floated settings icon"></i></a>
+                        <a class="link item" href="<?= Yii::$app->request->baseUrl . '/site/logout' ?>" data-method='post'>Signout<i class="right floated sign out icon"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<?php 
+$this->registerJs("
+    $(document).ready(function(){
+        $('.ui.link.top.right.pointing.dropdown.item').dropdown({
+            transition: 'slide down',
+        });
+    });
+");
+?>

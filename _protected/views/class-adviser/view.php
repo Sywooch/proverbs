@@ -2,7 +2,7 @@
 use app\models\Options;
 use yii\helpers\Html;
 use app\models\ProfileForm;
-$profile = ProfileForm::find()->where(['id' => $model->teacher->id])->one();
+$profile = ProfileForm::find()->where(['id' => $model->teacher_id])->one();
 
 $this->title = implode(' ', [$model->teacher->first_name, $model->teacher->middle_name, $model->teacher->last_name]);
 ?>

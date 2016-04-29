@@ -14,7 +14,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<label><strong><?= Html::a(implode(' ', ['ID#', $model->id]),['view', 'id' => $model->id],[]) ?></strong></label><br>
 	<h6 style="margin: 0 auto;"><?= DataHelper::name($model->first_name, $model->middle_name, $model->last_name) ?></h6>
 	<div class="extra content">
-		<span><?= $model->gradeLevel->name ?><?= $model->sped === 0 ? '&nbsp;<div class="ui star rating" data-rating="1"><i class="icon star active"></i></div>' : ''?></span><br>
+		<span><?= DataHelper::gradeLevel($model->grade_level_id) ?><?= $model->sped === 0 ? '&nbsp;<div class="ui star rating" data-rating="1"><i class="icon star active"></i></div>' : ''?></span><br>
 		<span>&nbsp;</span>
 	</div>
 </div>

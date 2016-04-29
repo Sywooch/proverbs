@@ -147,7 +147,11 @@ class ApplicantController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             Yii::$app->session->setFlash('success', 'Saved successfully');
-            return $this->redirect(['view', 'id' => $model->id]);
+            if((int) $model->status === 1){
+                return $this->redirect('index');
+            } elseif((int) $model->status === 2) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -1,13 +1,10 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-
-$avatar = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
+use app\models\DataHelper;
+$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
-$model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Female <i class="woman icon"></i>';
-!empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>
-
 <?php Pjax::begin(['id' => 'student-card', 'timeout' => 60000]); ?>
 <div class="ui center aligned stackable cards">
 	<div class="card">
@@ -15,11 +12,11 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
 		<div class="ui center aligned content">
 			<label>ID# <strong><?= $model->id ?></strong></label>
 			<div class="header">
-				<?= implode(' ', [$model->first_name, $middle, $model->last_name]) ?>
+				<?= DataHelper::name($model->first_name, $model->middle_name, $model->last_name) ?>
 				<p></p>
 			</div>
 		    <div class="meta">
-				<span id="nickname"><?= implode('', ['\'', $model->nickname, '\'']) ?></span>
+				<span id="meta-content"><?= implode('', ['\'', $model->nickname, '\'']) ?></span>
 				<p></p>
 		    </div>
 		</div>

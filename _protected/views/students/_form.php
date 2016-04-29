@@ -5,8 +5,6 @@ use yii\jui\DatePicker;
 use app\models\GradeLevel;
 use yii\helpers\ArrayHelper;
 
-$grade_level = GradeLevel::find()->all();
-$listData = ArrayHelper::map($grade_level, 'id' , 'name');
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
 ?>
@@ -23,7 +21,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                 <div class="extra content">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                            <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($listData,['class' => 'form-control pva-form-control'])->label(false)?>
+                            <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(ArrayHelper::map(GradeLevel::find()->all(), 'id' , 'name'),['class' => 'form-control pva-form-control'])->label(false)?>
                         </div>
                     </div>
                     <div class="row">
@@ -144,7 +142,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                 </div>
                 <div class="ui tab segment hidden" data-tab="fourth">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_grade_level', ['inputTemplate' => '<label>Grade Level</label>{input}','inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList($listData, ['id', 'name'])->label(false) ?></div>
+                        <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_grade_level', ['inputTemplate' => '<label>Grade Level</label>{input}','inputOptions' => ['class' => 'form-control pva-form-control']])->dropDownList(ArrayHelper::map(GradeLevel::find()->all(), 'id' , 'name'), ['id', 'name'])->label(false) ?></div>
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_from_school_year', ['inputTemplate' => '<label>From</label>{input}','inputOptions' => [] ])->label(false)->widget(DatePicker::className(),['options' => ['class' => 'form-control pva-form-control']] ) ?></div>
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'previous_school_to_school_year', ['inputTemplate' => '<label>To</label>{input}','inputOptions' => [] ])->label(false)->widget(DatePicker::className(),['options' => ['class' => 'form-control pva-form-control']] ) ?></div>
                     </div>

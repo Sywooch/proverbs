@@ -13,9 +13,9 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<div class="card">
 		<div class="image"><img src="<?= $img ?>" class="tiny image"></div>
 		<div class="ui center aligned content">
-			<label>ID# <strong><?= $model->teacher->id ?></strong></label>
+			<label><em><?= $model->teacher->email ?></em></label>
 			<div class="header">
-				<?= Html::a(implode(' ', [$model->teacher->first_name, $middle, $model->teacher->last_name]),['/user/view', 'id' => $model->teacher->id]) ?>
+				<?= Html::a(DataHelper::name($model->teacher->first_name, $model->teacher->middle_name, $model->teacher->last_name),['user/view', 'id' => $model->teacher->id],['class' => '']) ?>
 			</div>
 		    <div class="meta"><span id="meta-content"><?= implode('', ['\'', $model->teacher->username, '\'']) ?></span></div>
 		</div>

@@ -29,19 +29,16 @@ class AppAsset extends AssetBundle
 
     public $css = [
         'css/semantic.min.css',
-        'css/animated.css',
-        'css/bootstrap.min.css',
         'css/datepicker.css',
         'css/font-awesome.css',
         'css/hover-min.css',
         'css/icons.min.css',
-        'css/style-dashboard.css',
-        'css/style.css',
-        'css/jan.css',
-        'css/jan-responsive.css',
-        'css/form-background.css',
+        'css/bootstrap.min.css',
+        'css/animated.css',
         'css/switchery.css',
         'css/toastr.css',
+        'css/default.css',
+        'css/style.css',
     ];
 
     public $depends = [
@@ -52,7 +49,7 @@ class AppAsset extends AssetBundle
         'js/jquery-ui.min.js',
         'js/bootstrap.min.js',
         'js/semantic.min.js',
-        'js/init.js',
+        'js/collapsible.min.js',
         'js/pva.js',
         'js/switchery.min.js',
         'js/toastr.min.js',

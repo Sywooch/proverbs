@@ -1,11 +1,9 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-
+use app\models\DataHelper;
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->profile_image : $img = $avatar;
-$model->gender === 0 ? $gender = 'Male' : $gender = 'Female';
-!empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
 ?>
 <?php Pjax::begin(['id' => 'profile-card', 'timeout' => 60000]); ?>
 <div class="ui center aligned stackable cards">
@@ -14,7 +12,12 @@ $model->gender === 0 ? $gender = 'Male' : $gender = 'Female';
 		<div class="ui center aligned content">
 			<label><em><?= $model->email ?></em></label>
 			<div class="header">
-				<?= $model->username ?>
+				<?= DataHelper::name($model->first_name, $model->middle_name, $model->last_name) ?>
+				<p></p>
+			</div>
+			<div class="meta">
+				<span id="meta-content"><?= implode('', ['\'', $model->username, '\'']) ?></span>
+				<p></p>
 			</div>
 		</div>
 		<div class="extra center aligned content">

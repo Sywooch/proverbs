@@ -2,19 +2,24 @@
 
 namespace app\models;
 
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\db\Expression;
 use Yii;
-
+use yii\helpers\ArrayHelper;
+use yii\models\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 /**
  * This is the model class for table "advisory".
  *
- * @property integer $user_id
+ * @property string $id
+ * @property integer $section_id
+ * @property integer $teacher_id
  * @property integer $grade_level_id
  * @property string $sy_id
+ * @property integer $created_at
+ * @property integer $updated_at
  *
- * @property User $user
+ * @property Section $section
+ * @property User $teacher
  * @property GradeLevel $gradeLevel
  * @property SchoolYear $sy
  */
@@ -28,14 +33,14 @@ class ClassAdviser extends \yii\db\ActiveRecord
         return 'advisory';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
-            [['user_id', 'grade_level_id', 'sy_id'], 'required'],
-            [['user_id', 'grade_level_id', 'sy_id', 'created_at', 'updated_at'], 'integer']
+            [['section_id', 'teacher_id', 'grade_level_id', 'sy_id', 'created_at', 'updated_at'], 'integer'],
+            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::className(), 'targetAttribute' => ['section_id' => 'id']],
+            [['teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['teacher_id' => 'id']],
+            [['grade_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => GradeLevel::className(), 'targetAttribute' => ['grade_level_id' => 'id']],
+            [['sy_id'], 'exist', 'skipOnError' => true, 'targetClass' => SchoolYear::className(), 'targetAttribute' => ['sy_id' => 'id']],
         ];
     }
 
@@ -45,23 +50,24 @@ class ClassAdviser extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => 'User ID',
-            'user.last_name' => 'Name',
+            'id' => 'ID',
+            'section_id' => 'Section ID',
+            'teacher_id' => 'Teacher ID',
             'grade_level_id' => 'Grade Level ID',
             'sy_id' => 'Sy ID',
-            'created_at' => 'Created At', 
-            'updated_at' => 'Updated At'
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
-    
+
     public function behaviors()
     {
         return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
+            [
+                'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
         ];
@@ -97,11 +103,20 @@ class ClassAdviser extends \yii\db\ActiveRecord
         return $this->hasOne(GradeLevel::className(), ['id' => 'grade_level_id']);
     }
 
+    public function getSection()
+    {
+        return $this->hasOne(Section::className(), ['id' => 'section_id']);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getSy()
     {
         return $this->hasOne(SchoolYear::className(), ['id' => 'sy_id']);
+    }
+
+    public function getTeacher()
+    {
+        return $this->hasOne(User::className(), ['id' => 'teacher_id']);
     }
 }

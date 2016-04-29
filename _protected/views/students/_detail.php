@@ -134,6 +134,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	        ],
 	    	'previous_school_address',
 	    	'previous_school_description',
+	    	'previous_school_average_grade',
 	    	'previous_school_teacher_in_charge',
 	    	'previous_school_principal',
 	    	[

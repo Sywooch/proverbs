@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
             'student.first_name',
             'student.middle_name',
             'paid_amount',
+            'transaction',
             [
                 'attribute' => 'transaction',
                 'value' => $model->getTransaction($model->transaction)

@@ -1,6 +1,6 @@
 <?php
 	$role = app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id);
-
+	
 	if($role === 'dev'){
 		echo $this->render('_dashboard-dev');
 	} elseif($role === 'master'){

@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\ClassAdviserForm;
+use app\models\ClassAdviser;
 use app\models\ClassAdviserFormSearch;
 use yii\web\Controller;
 use yii\web\Response;
@@ -104,7 +104,6 @@ class ClassAdviserController extends Controller
                 $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
             }
 
-
             return $data;
         }
     }
@@ -191,7 +190,7 @@ class ClassAdviserController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = ClassAdviserForm::findOne($id)) !== null) {
+        if (($model = ClassAdviser::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

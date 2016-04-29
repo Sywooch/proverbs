@@ -46,8 +46,8 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             url: 'pjax?data=' + JSON.stringify({
-                    uid: $uid,
-                    upd: getUpd(),
+                    uid:$uid,
+                    upd:getUpd(),
                 }),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',

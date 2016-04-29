@@ -188,7 +188,6 @@ class EntranceExamController extends Controller
             Yii::$app->session->setFlash('success','Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            Yii::$app->session->setFlash('warning','Error');
             return $this->render('update', [
                 'model' => $model,
             ]);

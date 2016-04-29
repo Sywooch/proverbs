@@ -7,17 +7,10 @@ use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use yii\widgets\ListView;
-use app\models\Board;
-use app\models\BoardSearch;
-use yii\bootstrap\ActiveForm;
 use yii\web\View;
 AppAsset::register($this);
 ?>
-<?php
-    if(!Yii::$app->user->isGuest){
-        $role = app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id);
-    }
-?>
+<?php if(!Yii::$app->user->isGuest){$role = app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id);}?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -36,55 +29,28 @@ AppAsset::register($this);
     <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
     <?php $this->head() ?>
 </head>
-<body <?= Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/site/signup' || Yii::$app->request->url === '/proverbs/login' || Yii::$app->request->url === '/proverbs/signup' ? 'style="display:table;"' : 'class=""';?>>
+<body <?= Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/site/signup' || Yii::$app->request->url === '/proverbs/login' || Yii::$app->request->url === '/proverbs/signup' ? 'style="display:table;"' : '';?> class="<?= Yii::$app->session->get('sidebar') ?>">
     <?php $this->beginBody() ?>
-        <?php
-            if(Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/login')
-                include('alert.php');
-        ?>
+        <?php if(Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/login'){include('alert.php');}?>
         </div>
     <?php
         if(Yii::$app->user->isGuest){
             echo $content;
         } elseif($role === 'parent') {
             include('header.php');
-            echo '<div class="page-container">';
-            include('sidebar.php');
-            echo '<div class="page-content">' . '<div class="header-offset"></div>';
-            //include('page-header.php');
-            echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
+            include('alert.php');
+            echo '<div id="header-offset"></div>';
             echo $content;
-            echo '<div class="page-content-offset"></div>';
-            include('footer.php');
-            echo '</div>' . // PAGE-CONTENT
-            '</div>'; // PAGE-CONTAINER
-        } else {
+        } else { //MAIN
             include('header.php');
             echo '<div class="page-container">';
             include('sidebar.php');
-            echo '<div class="page-content"><div id="header-offset"></div>';
+            echo '<div class="page-content">';
             include('alert.php');
-            //include('page-header.php');
-            //echo '<div class=row><div class="col-lg-12"><div class="breadcrumb-line">' . Breadcrumbs::widget(['homeLink' => ['label' => 'Dashboard', 'url' => Yii::$app->request->baseUrl . '/dashboard'],'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . '</div></div></div>';
-            // echo    '<div class="row">
-            //             <div class="col-lg-12 col-md-12 col-sm-12">
-            //                 <div class="breadcrumb-line">' . 
-            //                     Breadcrumbs::widget(['homeLink' => ['label' => 'Dashboard', 'url' => Yii::$app->request->baseUrl . '/dashboard'],'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],]) . 
-            //                 '</div>
-            //             </div>
-            //         </div>' ;
-            echo $content;
-            echo '<div class="page-content-offset"></div>';
-            include('footer.php');
-            echo '</div>' . // PAGE-CONTENT
-            '</div>'; // PAGE-CONTAINERa
-                    //$role !== 'parent' ? require('_messages.php') : '';
-                    //$role !== 'parent' ? require('_write.php') : '';
-                    echo '</div>
-                </div>
-                </div>
-             </div>';
-            //echo '<button id="toggle-board-menu"><i class="fa fa-wechat fa-2x"></i></button>';
+            echo $content . 
+            '<div class="page-content-offset"></div>' .
+                '</div>' .
+            '</div>';
         }
     ?>
     <?php $this->endBody() ?>

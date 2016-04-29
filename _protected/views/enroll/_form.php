@@ -75,7 +75,7 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <?= $model->isNewRecord ? $form->field($model, 'student_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Student</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
+                        'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->where(['!=', 'status', 2])->all(),'id', function($model){
                             return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
                         }),
                         'language' => 'en',

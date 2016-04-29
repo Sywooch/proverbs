@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-$avatar = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.png';
+$avatar = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.svg';
 !empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
 $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Female <i class="woman icon"></i>';
 !empty(trim($model->middle_name)) ? $middle = ucfirst(substr($model->middle_name, 0,1)).'.' : $middle = '';
@@ -13,7 +13,7 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
         <div class="ui center aligned content">
             <label>ID# <strong><?= $model->id ?></strong></label>
             <div class="header">
-                <?= Html::a(implode(' ', [$model->first_name, $middle, $model->last_name]),['view?id=' . $model->id], ['class' => '']) ?>
+                <?= Html::a(implode(' ', [$model->first_name, $middle, $model->last_name]),['view', 'id' => $model->id], ['class' => '']) ?>
                 <p></p>
             </div>
             <div class="meta"><span id="nickname"><?= implode('', ['\'', $model->nickname, '\'']) ?></span></div>

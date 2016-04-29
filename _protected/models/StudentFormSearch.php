@@ -94,15 +94,14 @@ class StudentFormSearch extends StudentForm
             'report_card' => $this->report_card,
             'good_moral' => $this->good_moral, 
             'birth_certificate' => $this->birth_certificate,
-            'status' => $this->status,
+            //'status' => $this->status,
             'sped' => $this->sped,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
-
-        //$query->orFilterWhere(['status' => 1])->orFilterWhere(['status' => 0]);
         
         $query->andFilterWhere(['like', 'id', $this->id])
+            ->andFilterWhere(['!=', 'status', 2])
             ->andFilterWhere(['=', 'gender', $this->gender])
             ->andFilterWhere(['=', 'grade_level_id', $this->grade_level_id])
             ->andFilterWhere(['like', 'first_name', $this->first_name])
@@ -136,7 +135,9 @@ class StudentFormSearch extends StudentForm
             ->andFilterWhere(['like', 'previous_school_address', $this->previous_school_address])
             ->andFilterWhere(['like', 'previous_school_teacher_in_charge', $this->previous_school_teacher_in_charge])
             ->andFilterWhere(['like', 'previous_school_principal', $this->previous_school_principal]);
-
+        
+        //$query->andFilterWhere(['not'],['status' => 2]);
+        
         return $dataProvider;
     }
 }

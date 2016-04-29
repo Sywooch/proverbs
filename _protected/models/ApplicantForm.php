@@ -50,7 +50,8 @@ class ApplicantForm extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'first_name', 'middle_name', 'last_name', 'gender', 'birth_date', 'religion', 'citizenship', 'address', 'zip_code', 'fathers_name', 'fathers_citizenship', 'fathers_religion', 'mothers_name', 'mothers_citizenship', 'mothers_religion', 'guardians_name', 'guardians_address', 'guardians_relation_to_student', 'student_photo', 'guardians_photo', 'report_card', 'birth_certificate', 'good_moral', 'status', 'sped'], 'required'],
-            [['id', 'zip_code', 'mobile', 'phone', 'fathers_mobile', 'fathers_phone', 'father_is', 'mothers_mobile', 'mothers_phone', 'mother_is', 'parents_are', 'guardians_phone', 'guardians_mobile', 'student_is_living_with', 'student_has_sibling_enrolled', 'student_photo', 'guardians_photo', 'report_card', 'birth_certificate', 'good_moral', 'grade_level_id', 'previous_school_phone', 'previous_school_mobile', 'previous_school_grade_level', 'previous_school_average_grade', 'status', 'created_at', 'updated_at', 'gender'], 'integer'],
+            [['id', 'zip_code', 'mobile', 'phone', 'fathers_mobile', 'fathers_phone', 'father_is', 'mothers_mobile', 'mothers_phone', 'mother_is', 'parents_are', 'guardians_phone', 'guardians_mobile', 'student_is_living_with', 'student_has_sibling_enrolled', 'student_photo', 'guardians_photo', 'report_card', 'birth_certificate', 'good_moral', 'grade_level_id', 'previous_school_phone', 'previous_school_mobile', 'previous_school_grade_level', 'status', 'created_at', 'updated_at', 'gender'], 'integer'],
+            [['previous_school_average_grade'], 'number'],
             [['birth_date', 'previous_school_from_school_year', 'previous_school_to_school_year'], 'safe'],
             [['first_name', 'middle_name', 'last_name', 'nickname', 'religion', 'citizenship', 'fathers_name', 'fathers_occupation', 'fathers_employer', 'fathers_citizenship', 'fathers_religion', 'mothers_name', 'mothers_occupation', 'mothers_employer', 'mothers_citizenship', 'mothers_religion', 'guardians_name', 'guardians_relation_to_student', 'guardians_occupation', 'guardians_employer', 'previous_school_description', 'previous_school_teacher_in_charge', 'previous_school_principal'], 'string', 'max' => 45],
             [['address', 'guardians_profile_image', 'guardians_address'], 'string', 'max' => 255],
@@ -474,7 +475,7 @@ class ApplicantForm extends \yii\db\ActiveRecord
             self::L120 => 'Grade 12 1st Sem',
             self::L121 => 'Grade 12 2nd Sem',
         ];
-        
+    
         return $levelArray;
     }
 }

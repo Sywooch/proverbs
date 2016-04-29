@@ -1,62 +1,46 @@
 <?php
 
+use app\models\Options;
+use app\models\UiListView;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use app\helpers\CssHelper;
-$this->title = 'Payments';
+use yii\widgets\DetailView;
+use yii\widgets\Pjax;
+$this->title =  'Payments';
 ?>
-
-<div class="payment-form-index">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('<i class="fa fa-plus"></i> New Payment', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            'attribute' => 
-            'student_id',
-            'student.last_name',
-            'student.first_name',
-            'student.middle_name',
-            'paid_amount',
-            [
-                'attribute' => 'transaction',
-                'filter' => $searchModel->TransactionType,
-                'value' => function($searchModel){if($searchModel->transaction === 1)return 'Cash';return 'Card';},
-                'contentOptions'=>function($model, $key, $index, $column) {
-                    return ['class'=>CssHelper::statusCss($model->TransactionType)];
-                }
-            ],
-            //'created_at:date',
-            ['class' => 'yii\grid\ActionColumn',
-                    'header' => "Options",
-                    'template' => '{view} {update} {delete}',
-                    'options' => ['style' => 'width: 100px; text-align: center; margin: auto;'],
-                    'buttons' => [
-                        'view' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'View Payment', 
-                                'class'=>'fa fa-user fa-2x']);
-                        },
-                        'update' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'Update Payment', 
-                                'class'=>'fa fa-edit fa-2x']);
-                        },
-                        'delete' => function ($url, $model, $key) {
-                            return Html::a('', $url, 
-                                ['title'=>'Delete Applicant', 
-                                    'class'=>'fa fa-times fa-2x fa-remove text-centered',
-                                    'data' => [
-                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this payment?'),
-                                        'method' => 'post']
-                ]);
-                    }
-                ]
-            ],
-        ],
-    ]); ?>
-
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="twelve wide rounded column">
+        <div class="ui raised segment">
+            <div class="ui black ribbon label" style="margin-left: -2px;">
+                <h4>Payments</h4>
+            </div>
+            <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
+            <p></p>
+            <?php Pjax::begin(['id' => 'payment-list', 'timeout' => 10000]); ?>
+                <?= UiListView::widget([
+                   'dataProvider' => $dataProvider,
+                    'itemView' => '_list',
+                ]); ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+    <div class="four wide column">
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
+    </div>
 </div>
+<?= $this->render('/layouts/_toast')?>
+<?php
+$pjax = <<< JS
+$(document).ready(function(){
+    setInterval(function(){
+        $.pjax.reload({
+            container:'#payment-list',
+            success: function(){
+                $('ul.pagination > li.active > a').click()
+            }
+        });
+    }, 10000);
+});
+JS;
+$this->registerJs($pjax);
+?>
