@@ -1,0 +1,1 @@
+$('#profileform-birth_date .datepicker').datepicker({format: 'dd.mm.yyyy'});

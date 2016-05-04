@@ -393,6 +393,7 @@ blockquote {
 /* line 345, ../sass/default.scss */
 .page-container {
   background-color: #fff;
+  width: 100% !important;
 }
 
 /*===== Adding vertical spacing to responsive grid =====*/

@@ -95,7 +95,7 @@ class BoardSearch extends Board
 
     public function searchBoard($params)
     {
-        $pageSize = 1000;
+        $pageSize = 100;
         $query = Board::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -109,7 +109,7 @@ class BoardSearch extends Board
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_ASC]],
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
             'pagination' => [
                 'pageSize' => $pageSize,
             ]
@@ -132,5 +132,12 @@ class BoardSearch extends Board
         $query->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
+    }
+
+    public function countBoard()
+    {
+        $count = Board::count();
+
+        return $count;
     }
 }

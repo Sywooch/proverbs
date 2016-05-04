@@ -3,26 +3,27 @@ use yii\helpers\Html;
 use app\rbac\models\AuthAssignment;
 if (!Yii::$app->user->isGuest) {$role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);} ?>
 <div class="sidebar smooth">
-	<div class="sidebar-content">
-	    <ul class="navigation">
-	        <?= $this->render('menu') ?>
-    	</ul>
+    <div id="sidebar-offset"></div>
+    <div id="sidebar-content">
+        <?= $this->render('board') ?>
+    </div>
+    <div id="sidebar-write">
+        <?= $this->render('write') ?>
     </div>
 </div>
 <?php
 if(!Yii::$app->user->isGuest){
-$host = json_encode(Yii::$app->request->baseUrl . '/site/sbar?data=');
-
-if(empty(Yii::$app->session['sidebar'])){
-	$sbar = json_encode(1);
-}else {
-	$sbar = json_encode(0);
+    $host = json_encode(Yii::$app->request->baseUrl . '/site/sbar?data=');
+    
+    if(empty(Yii::$app->session['sidebar'])){
+    	$sbar = json_encode(1);
+    }else {
+    	$sbar = json_encode(0);
 }
 
 $trigger = <<< JS
-    var sidebar = $('.sidebar-toggle-menu');
-    var sidebar2 = $('.navbar-toggle.offcanvas');
-	var sbar;
+    var sidebar = $('#sb-btn1');
+    var sbar;
 	
     if(parseInt($sbar) === 0){
 		setSbar(0);
@@ -30,7 +31,7 @@ $trigger = <<< JS
 		setSbar(1);
     }
 
-	console.log('load: ' + sbar);
+	//console.log('load: ' + sbar);
 
     function getSbar(){
         return sbar;
@@ -60,16 +61,6 @@ $trigger = <<< JS
             setSbar(0);
         }else {
             setSbar(1);
-        }
-        //console.log('exec run: ' + getSbar());
-        run();
-    });
-
-    sidebar2.click(function(){
-        if(parseInt(getSbar()) === 1){
-			setSbar(0);
-        }else {
-			setSbar(1);
         }
         //console.log('exec run: ' + getSbar());
         run();

@@ -115,7 +115,7 @@ class ClassAdviserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new ClassAdviserForm();
+        $model = new ClassAdviser();
         $teachers = User::find()->joinWith('role')->where(['item_name' => 'teacher']);
 
        if($model->load(Yii::$app->request->post())){

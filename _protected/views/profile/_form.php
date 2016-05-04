@@ -91,8 +91,3 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
     </div>
 </div>
 <?php ActiveForm::end(); ?>
-<?php 
-$this->registerJs("
-    $('.datepicker').datepicker();
-");
-?>

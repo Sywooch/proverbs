@@ -1,5 +1,6 @@
 <?php 
 use app\rbac\models\AuthAssignment;
+use app\models\DataHelper;
 use yii\helpers\Html;
 ?>
 
@@ -7,40 +8,36 @@ use yii\helpers\Html;
 if(!Yii::$app->user->isGuest){
 	switch (AuthAssignment::getAssignment(Yii::$app->user->identity->id)) {
 		case 'dev':
-			echo $this->render('_dev-menu');
+			echo DataHelper::menu('dev');
 			break;
+
 		case 'master':
-			echo $this->render('_master-menu');
+			echo DataHelper::menu('master');
 			break;
 		
 		case 'admin':
-			echo $this->render('_admin-menu');
+			echo DataHelper::menu('admin');
 			break;
 		
 		case 'principal':
-			echo $this->render('_principal-menu');
+			echo DataHelper::menu('principal');
 			break;
 		
 		case 'teacher':
-			echo $this->render('_teacher-menu');
+			echo DataHelper::menu('teacher');
 			break;
 		
 		case 'cashier':
-			echo $this->render('_cashier-menu');
+			echo DataHelper::menu('cashier');
 			break;
 		
 		case 'staff':
-			echo $this->render('_staff-menu');
+			echo DataHelper::menu('staff');
 			break;
-
-		case 'parent':
-			echo $this->render('_parent-menu');
-			break;
-		
+			
 		default:
-			# code...
+			echo DataHelper::menu('parent');
 			break;
 	}
-
 }
 ?>

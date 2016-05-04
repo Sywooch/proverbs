@@ -1,0 +1,48 @@
+Message-ID: <8316d0e3353eb720cc7045df01339622@192.168.8.103>
+Date: Sat, 30 Apr 2016 16:48:36 +0800
+Subject: Account activation for PVA Portal
+From: PVA Portal robot <support@proverbs.com>
+To: prostaff@pvcf.edu.ph
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="_=_swift_v4_1462006116_6f05ccaf31c2a6699f4dc134d943a24e_=_"
+
+
+--_=_swift_v4_1462006116_6f05ccaf31c2a6699f4dc134d943a24e_=_
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello prostaff,
+
+Follow this link to activate your account:
+
+Please=
+, click here to activate your account.
+
+--_=_swift_v4_1462006116_6f05ccaf31c2a6699f4dc134d943a24e_=_
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/=
+xhtml">
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/ht=
+ml; charset=3DUTF-8" />
+    <title></title>
+    </head>
+<body>
+    =
+    Hello prostaff,
+
+Follow this link to activate your account:
+
+<a=
+ href=3D"http://192.168.8.103/proverbs/site/activate-account?token=3DVIS_RJ=
+GEgtucsOKtq7mcD40chcKBB9li_1462006114">Please, click here to activate your =
+account.</a>    </body>
+</html>
+
+
+--_=_swift_v4_1462006116_6f05ccaf31c2a6699f4dc134d943a24e_=_--

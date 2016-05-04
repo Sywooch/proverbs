@@ -36,7 +36,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'sbar'],
+                        'actions' => ['logout', 'sbar', 'write', 'fetch'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,8 +46,8 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
-                    'board' => ['post'],
-                    'push' => ['post'],
+                    'fetch' => ['post'],
+                    'write' => ['post'],
                     'sbar' => ['post'],
                     'mail-check' => ['post'],
                     'cred-check' => ['post'],
@@ -81,6 +81,41 @@ class SiteController extends Controller
             return array('val' => Yii::$app->session->get('sidebar'));
         }
     }
+    
+
+    public function actionWrite($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $object = json_decode($data);
+            $content = Html::encode($object->msg);
+
+            if(!empty(trim($object->msg))){
+                $board = new Board();
+                $board->posted_by = Yii::$app->user->identity->id;
+                $board->content = $content;
+                $board->save();
+            }
+        }    
+    }  
+
+    public function actionFetch($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $student = $this->findModel($object->uid);
+
+            if($student->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $student->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
 
     public function actionPjax($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
@@ -99,6 +134,7 @@ class SiteController extends Controller
             return $data;
         }
     }
+
     public function action403(){
         if(Yii::$app->user->isGuest){
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -235,29 +271,6 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
-    public function actionBoard()
-    {
-        $board = new Board();
-
-        if ($board->load(Yii::$app->request->post()))
-        {
-            if(empty($board->content) || $board->content === null || trim($board->content) === ''){
-                $board = new Board(); //reset model
-                return $this->render('index',[
-                    'board' => $board,
-                ]);
-            } else {
-                $board->save();
-                $board = new Board(); //reset model
-                return $this->render('index',[
-                    'board' => $board,
-                ]);
-            }
-        }
-
-    }
-
 
     public function actionLogin()
     {

@@ -22,7 +22,7 @@ use yii\helpers\ArrayHelper;
  */
 class EnrollController extends Controller
 {
-    public $jsFile;
+/*    public $jsFile;
 
     public function init() {
         parent::init();
@@ -33,7 +33,7 @@ class EnrollController extends Controller
             Yii::$app->assetManager->getPublishedUrl($this->jsFile),
             ['yii\web\YiiAsset']
         );
-    }
+    }*/
 
     public function behaviors()
     {

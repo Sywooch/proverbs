@@ -48,8 +48,9 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jquery-ui.min.js',
         'js/bootstrap.min.js',
-        'js/semantic.min.js',
+        'js/bootstrap-datepicker.js',
         'js/collapsible.min.js',
+        'js/semantic.min.js',
         'js/pva.js',
         'js/switchery.min.js',
         'js/toastr.min.js',

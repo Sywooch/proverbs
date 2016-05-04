@@ -39,22 +39,24 @@ AppAsset::register($this);
         } elseif($role === 'parent') {
             include('header.php');
             include('alert.php');
-            echo '<div id="header-offset"></div>';
             echo $content;
         } else { //MAIN
             include('header.php');
-            echo '<div class="page-container">';
             include('sidebar.php');
-            echo '<div class="page-content">';
+            echo '<div id="st" class="page-content smooth">';
             include('alert.php');
-            echo $content . 
-            '<div class="page-content-offset"></div>' .
-                '</div>' .
-            '</div>';
+            echo $content;
+            echo '</div>';
         }
     ?>
+    <?php 
+    $this->registerJs("
+        $('.ui.left.vertical.menu.sidebar').sidebar('setting', 'transition', 'push').sidebar('attach events', '#trigger-sidebar, #sb-btn2', 'toggle');
+    ");
+     ?>
+
     <?php $this->endBody() ?>
-    <?php include('script.php');?>
+    <script type="text/javascript" >$('.datepicker').datepicker();</script>
     <?php 
         /*if(Yii::$app->request->url !== '/proverbs/site/login' && Yii::$app->request->url !== '/proverbs/site/signup'){
             $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY);

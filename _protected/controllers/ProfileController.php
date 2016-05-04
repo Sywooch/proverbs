@@ -16,18 +16,6 @@ use yii\web\Response;
  */
 class ProfileController extends Controller
 {
-    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }
 
     public function behaviors()
     {
@@ -145,7 +133,7 @@ class ProfileController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect('index');
     }
 
     /**

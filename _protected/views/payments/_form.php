@@ -6,6 +6,7 @@ use app\models\ActiveRecord;
 use app\models\StudentForm;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
+use app\assets\AppAsset;
 ?>
 
 <div class="payment-form">
@@ -44,102 +45,5 @@ use yii\bootstrap\ActiveForm;
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Cancel'), ['/payments'], ['class' => 'btn btn-default']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>
-<?php
-if($model->isNewRecord){
-$sw = <<< JS
-$(document).ready(function(){
-    $('input[type=checkbox]').filter('.js-switch').filter(
-            'input:not([data-switchery=true])').each(function() {
-        var switches = new Switchery(this, options);
-    });
-
-    var hash = '#';
-    var blank = '';
-
-    function syncValue(object){
-        if(object.value !== object.previousElementSibling){
-            object.previousElementSibling.value = object.value;
-        }
-    }
-
-    $('input.js-sw').each(function(){
-        var elem = $(this).attr('class').split(' ').pop();
-        var temp = '.' + $(this).attr('class').split(' ').pop();
-        
-        var elem = document.querySelector(temp);
-        
-        syncValue(elem);
-
-        elem.onchange = function() { 
-            if(elem.checked){
-                $(hash + elem.id).val(0);
-                $(hash + elem.id).prev().val(0);
-            } else {
-                $(hash + elem.id).val(1);
-                $(hash + elem.id).prev().val(1);
-            }
-        };
-    });
-});
-JS;
-$this->registerJs($sw);
-} else {
-$swu = <<< JS
-$(document).ready(function(){
-    var switches_update = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-
-    switches_update.forEach(function(html) {
-      var switches_update = new Switchery(html);
-    });
-
-    var hash = '#';
-    var blank = '';
-
-    function syncValue(object){
-        if(object.value !== object.previousElementSibling){
-            object.previousElementSibling.value = object.value;
-        }
-    }
-
-    function changeState(object){
-        if(parseInt(object.value) === 1) {
-            if (typeof $(hash + object.id).attr('checked') !== typeof undefined && $(hash + object.id).attr('checked') !== false) {
-                $(hash + object.id).removeAttr('checked').removeAttr('data-switchery');
-                object.checked = false;
-                $(object.nextElementSibling).click().click();
-            }
-        } else {
-            $(hash + object.id).attr('checked', true);
-            $(hash + object.id).attr('data-switchery', true);
-            object.checked = true;
-            $(object.nextElementSibling).click().click();
-        }
-    }
-
-    $('input.js-sw').each(function(){
-        var elem = $(this).attr('class').split(' ').pop();
-        var temp = '.' + $(this).attr('class').split(' ').pop();
-        var elem = document.querySelector(temp);
-        
-        syncValue(elem);
-        changeState(elem);
-
-        elem.onchange = function() { 
-            if(elem.checked){
-                $(hash + elem.id).val(0);
-                $(hash + elem.id).prev().val(0);
-            } else {
-                $(hash + elem.id).val(1);
-                $(hash + elem.id).prev().val(1);
-            }
-        };
-    });
-});
-JS;
-$this->registerJs($swu);
-}
-?>

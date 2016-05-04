@@ -15,7 +15,7 @@ use yii\web\Response;
  */
 class ApplicantController extends Controller
 {
-    public $jsFile;
+/*    public $jsFile;
 
     public function init() {
         parent::init();
@@ -26,7 +26,7 @@ class ApplicantController extends Controller
             Yii::$app->assetManager->getPublishedUrl($this->jsFile),
             ['yii\web\YiiAsset']
         );
-    }
+    }*/
 
     public function behaviors()
     {

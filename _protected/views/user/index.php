@@ -15,11 +15,11 @@ $this->title = Yii::t('app', 'Users');
             </div>
             <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
             <p></p>
-            <?php Pjax::begin(['id' => 'user-list', 'timeout' => 10000, 'enablePushState' => false]); ?>
+            <?php Pjax::begin(['id' => 'user-list', 'timeout' => 60000]); ?>
                 <?= UiListView::widget([
-                       'dataProvider' => $dataProvider,
-                        'itemView' => '_list',
-                    ]); ?>
+                   'dataProvider' => $dataProvider,
+                    'itemView' => '_list',
+                ]); ?>
             <?php Pjax::end(); ?>
         </div>
     </div>
@@ -29,7 +29,8 @@ $this->title = Yii::t('app', 'Users');
 </div>
 <?= $this->render('/layouts/_toast')?>
 <?php
-$script = <<< JS
+$pjaxInterval = json_encode(Yii::$app->params['pjaxInterval']);
+$pjax = <<< JS
 $(document).ready(function(){
     setInterval(function(){
         $.pjax.reload({
@@ -38,8 +39,8 @@ $(document).ready(function(){
                 $('ul.pagination > li.active > a').click()
             }
         });
-    }, 10000);
+    }, $pjaxInterval);
 });
 JS;
-$this->registerJs($script);
+$this->registerJs($pjax);
 ?>

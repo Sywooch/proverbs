@@ -18,7 +18,7 @@ $this->title = 'Students';
             </div>
             <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
             <p></p>
-            <?php Pjax::begin(['id' => 'student-list', 'timeout' => 10000]); ?>
+            <?php Pjax::begin(['id' => 'student-list', 'timeout' => 60000]); ?>
                 <?= UiListView::widget([
                    'dataProvider' => $dataProvider,
                     'itemView' => '_list',
@@ -32,6 +32,7 @@ $this->title = 'Students';
 </div>
 <?= $this->render('/layouts/_toast')?>
 <?php
+$pjaxInterval = json_encode(Yii::$app->params['pjaxInterval']);
 $pjax = <<< JS
 $(document).ready(function(){
     setInterval(function(){
@@ -41,7 +42,7 @@ $(document).ready(function(){
                 $('ul.pagination > li.active > a').click()
             }
         });
-    }, 10000);
+    }, $pjaxInterval);
 });
 JS;
 $this->registerJs($pjax);
