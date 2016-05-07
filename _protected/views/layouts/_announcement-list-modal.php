@@ -5,7 +5,9 @@ use app\models\DataHelper;
 $avatar = DataHelper::avatar();
 ?>
 <div class="ui top aligned content">
-	<div class="right floated"><a href="#"><i class="remove icon" style="color: #767676;"></i></a></div>
+	<div class="right floated">
+		<a id="<?= $model->id ?>" class="anc-delete"><i class="remove icon" style="color: #767676;"></i></a>
+	</div>
 	<div class="description" style="margin-top: -2px;">
 		<?= Html::encode($model->content) ?>
 	</div>

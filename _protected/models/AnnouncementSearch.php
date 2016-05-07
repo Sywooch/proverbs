@@ -70,7 +70,7 @@ class AnnouncementSearch extends Announcement
 
     public function searchAnnouncement($params)
     {
-        $pageSize = 20;
+        $pageSize = 50;
         $query = Announcement::find();
 
         $dataProvider = new ActiveDataProvider([

@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use app\models\SchoolYear;
+use app\models\User;
 use app\models\Section;
 /*
 *	Direct Questions answerable by Yes or No
@@ -182,11 +183,6 @@ class DataHelper
     	}
 
     	return $data;
-    }
-
-    public function userProfileImage($id){
-
-    	return $data = null;
     }
 
     public function roundOff($data, $places){

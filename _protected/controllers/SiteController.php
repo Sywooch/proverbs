@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\models\Announcement;
 use app\models\DataCenter;
+use app\models\DataHelper;
 use app\models\User;
 use app\models\LoginForm;
 use app\models\AccountActivation;
@@ -19,9 +20,11 @@ use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\widgets\Pjax;
 use Yii;
 use app\models\Board;
 use app\models\BoardSearch;
+use app\models\UiListView;
 
 class SiteController extends Controller
 {
@@ -38,7 +41,9 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'sbar', 'write', 'fetch', 'announcement', 'new-announcement'],
+                        'actions' => [
+                                        'logout', 'sbar', 'write', 'fetch', 'announcement', 'impact', 
+                                        'fetch-announcement', 'new-announcement', 'delete-announcement'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,10 +56,13 @@ class SiteController extends Controller
                     'fetch' => ['post'],
                     'write' => ['post'],
                     'sbar' => ['post'],
+                    'impact' => ['post'],
                     'announcement' => ['post'],
                     'mail-check' => ['post'],
                     'cred-check' => ['post'],
+                    'fetch-announcement' => ['post'],
                     'new-announcement' => ['post'],
+                    'delete-announcement' => ['post'],
                 ],
             ],
         ];
@@ -73,6 +81,130 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionImpact(){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $announcement = DataCenter::announcement();
+
+            $list_modal =  UiListView::widget([
+                       'dataProvider' => $announcement,
+                       'options' => ['class' => 'ui divided relaxed items', 'style' => 'padding: 0;'],
+                       'layout' => '{items}',
+                        'itemView' => function($model){
+
+                            if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInDays() < 5){
+                                $timestamp = DataHelper::carbonDateDiff($model->created_at);
+                            }else {
+                                $timestamp = '';
+                            }
+
+                            return '<div class="ui top aligned content">
+                                        <div class="right floated">
+                                            <a id="#" class="anc-delete"><i class="remove icon" style="color: #767676;"></i></a>
+                                        </div>
+                                        <div class="description" style="margin-top: -2px;">'
+                                            . $model->content . 
+                                        '</div>
+                                        <div class="meta">
+                                            <div class="left aligned text">
+                                                <small>' . $timestamp . '</small>
+                                            </div>
+                                        </div>
+                                    </div>';
+                        },
+                    ]);
+
+            $list =  UiListView::widget([
+                       'dataProvider' => $announcement,
+                       'options' => ['class' => 'ui divided relaxed items', 'style' => 'padding: 0;'],
+                       'layout' => '{items}',
+                        'itemView' => function($model){
+                            $avatar = DataHelper::avatar();
+
+                            if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInDays() < 5){
+                                $timestamp = DataHelper::carbonDateDiff($model->created_at);
+                            }else {
+                                $timestamp = '';
+                            }
+
+                            return '<div class="ui mini image">'
+                                        . Html::img(!empty($model->postedBy->profile_image) ? implode('',[Yii::$app->request->baseUrl,'/uploads/users/',$model->postedBy->profile_image]) : $avatar, ['style' => 'background: #f7f7f7;']) .
+                                    '</div>
+                                    <div class="ui top aligned content">
+                                        <div class="description" style="margin-top: -2px;">' . Html::encode($model->content) . '</div>
+                                        <div class="meta">
+                                            <div class="left aligned text"><small>' . $timestamp . '</small></div>
+                                        </div>
+                                    </div>';
+
+                        },
+                    ]);
+
+            $content = Html::tag('div', $list, ['class' => 'ui divided relaxed items', 'style' => 'padding: 10px;']);
+            $wrapper = Html::tag('div', $content,['id' => 'anc-list','data-pjax-container' => '', 'data-pjax-push-state' => '', 'data-pjax-timeout' => 360000]);
+            
+            $content_modal = Html::tag('div', $list_modal, ['class' => 'ui divided relaxed items', 'style' => 'padding: 0 0 0 10px;']);
+            $wrapper_modal = Html::tag('div', $content_modal,['id' => 'anc-list-modal','data-pjax-container' => '', 'data-pjax-push-state' => '', 'data-pjax-timeout' => 360000]);
+            
+            $data = array(
+                        'announcement' => ['content' => $wrapper],
+                        'announcement-modal' => ['content' => $wrapper_modal],
+                    );
+            
+            return $data;
+        }
+    }
+
+    public function actionFetchAnnouncement($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $object = json_decode($data);
+
+            $announcement = DataCenter::countAnnouncement();
+
+            if($count !== $object->poll){
+
+                $list =  UiListView::widget([
+                           'dataProvider' => $announcement,
+                           'options' => ['class' => 'ui divided relaxed items', 'style' => 'padding: 10px;'],
+                           'layout' => '{items}',
+                            'itemView' => function($model){
+
+                                if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInDays() < 5){
+                                    $timestamp = DataHelper::carbonDateDiff($model->created_at);
+                                }else {
+                                    $timestamp = '';
+                                }
+
+                                return '<div class="ui top aligned content">
+                                            <div class="right floated">
+                                                <a id="#" class="anc-delete"><i class="remove icon" style="color: #767676;"></i></a>
+                                            </div>
+                                            <div class="description" style="margin-top: -2px;">' 
+                                                . $model->content . 
+                                            '</div>
+                                            <div class="meta">
+                                                <div class="left aligned text">
+                                                    <small>' . $timestamp . '</small>
+                                                </div>
+                                            </div>
+                                        </div>';
+                            },
+                        ]);
+
+                $begin = Html::tag('div','',['id' => 'anc-list-modal','data-pjax-container' => '', 'data-pjax-push-state' => '', 'data-pjax-timeout' => 360000]);
+                $end = '</div>';
+                $content = Html::tag('div', $list, ['class' => 'ui divided relaxed items', 'style' => 'padding: 0 10px;']);
+                
+                $data = array('begin' => $begin, 'content' => $content, 'end' => $end);
+            }
+            
+            return $data;
+        }
+    }
+
     public function actionNewAnnouncement($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -82,10 +214,19 @@ class SiteController extends Controller
             $object = json_decode($data);
             $announcement->content = $object->msg;
             if(!empty(trim($announcement->content)) ){
-                Yii::$app->session->setFlash('success', 'New announcement created successfully!');
                 $announcement->save();
+                return array('pjax' => true);
             }
 
+        }
+    }
+
+    public function actionDeleteAnnouncement($id){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $this->findAnnouncement($id)->delete();
+            return array('pjax' => true);
         }
     }
 
@@ -469,6 +610,15 @@ class SiteController extends Controller
                 Yii::t('app', 'Your account could not be activated, please contact us!'));
         }
         return $this->redirect('login');
+    }
+
+    protected function findAnnouncement($id)
+    {
+        if (($model = Announcement::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }
 
