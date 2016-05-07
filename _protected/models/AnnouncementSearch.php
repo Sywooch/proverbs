@@ -67,4 +67,46 @@ class AnnouncementSearch extends Announcement
 
         return $dataProvider;
     }
+
+    public function searchAnnouncement($params)
+    {
+        $pageSize = 20;
+        $query = Announcement::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $dataProvider->sort->attributes['id'] = [
+            'asc' => ['id' => SORT_ASC],
+            'desc' => ['id' => SORT_DESC],
+        ];
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'posted_by' => $this->posted_by,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ]);
+
+        $query->andFilterWhere(['like', 'content', $this->content]);
+
+        return $dataProvider;
+    }
 }

@@ -32,12 +32,25 @@ class PaymentFormSearch extends PaymentForm
         return Model::scenarios();
     } 
 
-    public function search($params)
+    public function searchPayment($params)
     {
+        $pageSize = Yii::$app->params['pageSize'];
+
         $query = PaymentForm::find();
+
+
+
+        $dataProvider->sort->attributes['id'] = [
+            'asc' => ['id' => SORT_ASC],
+            'desc' => ['id' => SORT_DESC],
+        ];
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ]
         ]);
 
         $this->load($params);
@@ -52,8 +65,7 @@ class PaymentFormSearch extends PaymentForm
             'id' => $this->id,
             'student_id' => $this->student_id,
             'transaction' => $this->transaction,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'paid_amount' => $this->paid_amount
         ]);
 
         return $dataProvider;

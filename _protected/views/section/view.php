@@ -7,10 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Section */
 
 $this->title = $model->section_name;
-$this->params['breadcrumbs'][] = ['label' => 'Sections', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<p></p>
 <div class="ui two column stackable grid">
     <div class="four wide column">
         <div class="column">

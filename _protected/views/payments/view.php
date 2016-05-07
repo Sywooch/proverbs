@@ -1,48 +1,25 @@
 <?php
-
+use app\models\Options;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Payment */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
+$this->title = implode(' ', [$model->student->first_name, $model->student->middle_name, $model->student->last_name]);
 ?>
-<div class="payment-view">
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'student_id',
-            'student.last_name',
-            'student.first_name',
-            'student.middle_name',
-            'paid_amount',
-            'transaction',
-            [
-                'attribute' => 'transaction',
-                'value' => $model->getTransaction($model->transaction)
-            ],
-            'created_at:date',
-            [
-                'attribute' => 'updated_at',
-                'value' => $model->getUpdatedAt($model->updated_at)
-            ],
-        ],
-    ]) ?>
-    <br/>
-    <p>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'pull-right btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+<div class="ui two column stackable grid">  
+    <div class="four wide column">
+        <div class="column">
+            <?= $this->render('_card', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="nine wide column">
+        <div class="column">
+            <?= $this->render('_detail', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="three wide column">
+        <div class="column">
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'id' => $model->id]); ?>
+        </div>
+    </div>
 </div>
+<?= $this->render('_pjax', ['model' => $model]) ?>
+<?= $this->render('/layouts/_toast')?>

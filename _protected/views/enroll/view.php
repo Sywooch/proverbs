@@ -6,7 +6,6 @@ $assessment = AssessmentForm::find()->where(['enrolled_id' => $model->id])->one(
 
 $this->title = implode(' ', [$model->student->first_name, $model->student->middle_name, $model->student->last_name]);
 ?>
-<p></p>
 <div class="ui two column stackable grid">  
     <div class="four wide column">
         <div class="column">

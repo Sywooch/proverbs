@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\EnrolledForm;
 use app\models\StudentForm;
+use app\models\PaymentForm;
 use app\models\Tuition;
 use app\models\SiblingDiscount;
 use app\models\AssessmentForm;
@@ -73,6 +74,7 @@ class AssessmentController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'payments' => $this->findPayments($id),
         ]);
     }
 
@@ -211,6 +213,16 @@ class AssessmentController extends Controller
     {
         if (($model = Tuition::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+
+    protected function findPayments($id)
+    {
+        if ((($payments = PaymentForm::find()->where(['assessment_id' => $id])->orderBy(['id' => SORT_DESC])->all() ) !== null)) {
+            return $payments;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

@@ -15,18 +15,6 @@ use yii\filters\AccessControl;
  */
 class AnnouncementController extends Controller
 {
-    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }
     
     public function behaviors()
     {
@@ -100,16 +88,12 @@ class AnnouncementController extends Controller
      */
     public function actionCreate()
     {
-        if(!Yii::$app->user->isGuest)
-            $user = Yii::$app->user->identity->id;
 
         $model = new Announcement();
-
-        $model->posted_by = $user;
-        $model->created_at = time();
-        $model->updated_at = time();
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            Yii::$app->session->setFlash('success', 'New announcement created successfully!');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

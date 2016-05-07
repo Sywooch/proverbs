@@ -8,9 +8,9 @@ $dataProvider = DataCenter::board();
 	<?php Pjax::begin(['id' => 'board-list', 'timeout' => 60000]); ?>
         <?= UiListView::widget([
            'dataProvider' => $dataProvider,
-           'options' => ['class' => 'ui divided relaxed items', 'style' => 'padding: 10px;', 'id' => 'bm'],
+           'options' => ['class' => 'ui fitted items', 'style' => 'padding: 0 5px 0 10px;', 'id' => 'bm'],
            'layout' => '{items}',
-            'itemView' => '_list',
+            'itemView' => '_board-list',
         ]); ?>
 	<?php Pjax::end(); ?>
 </div>

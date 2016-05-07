@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\models\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use app\models\User;
 /**
  * This is the model class for table "announcement".
  *
@@ -19,19 +20,6 @@ use yii\behaviors\TimestampBehavior;
  */
 class Announcement extends \yii\db\ActiveRecord
 {
-/*    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }*/
-
     public static function tableName()
     {
         return 'announcement';
@@ -42,9 +30,10 @@ class Announcement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'created_at', 'updated_at'], 'required'],
+            [['content'], 'required'],
             [['posted_by', 'created_at', 'updated_at'], 'integer'],
-            [['content'], 'string', 'max' => 255]
+            [['content'], 'string', 'max' => 255],
+            [['posted_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['posted_by' => 'id']],
         ];
     }
 
@@ -79,6 +68,7 @@ class Announcement extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if($this->isNewRecord){
+                $this->posted_by = Yii::$app->user->identity->id;
                 $this->created_at = time();
                 $this->updated_at = time();
             } else {
@@ -92,10 +82,8 @@ class Announcement extends \yii\db\ActiveRecord
         /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPostedBy($data)
+    public function getPostedBy()
     {
-        $model = User::find()->where(['id' => $data])->one();
-        return $model->username;
-        //return $this->hasOne(User::className(), ['id' => $data]);
+        return $this->hasOne(User::className(), ['id' => 'posted_by']);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace app\controllers;
 
+use app\models\Announcement;
+use app\models\DataCenter;
 use app\models\User;
 use app\models\LoginForm;
 use app\models\AccountActivation;
@@ -36,7 +38,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'sbar', 'write', 'fetch'],
+                        'actions' => ['logout', 'sbar', 'write', 'fetch', 'announcement', 'new-announcement'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -49,8 +51,10 @@ class SiteController extends Controller
                     'fetch' => ['post'],
                     'write' => ['post'],
                     'sbar' => ['post'],
+                    'announcement' => ['post'],
                     'mail-check' => ['post'],
                     'cred-check' => ['post'],
+                    'new-announcement' => ['post'],
                 ],
             ],
         ];
@@ -67,6 +71,22 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function actionNewAnnouncement($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $announcement = new Announcement();
+
+            $object = json_decode($data);
+            $announcement->content = $object->msg;
+            if(!empty(trim($announcement->content)) ){
+                Yii::$app->session->setFlash('success', 'New announcement created successfully!');
+                $announcement->save();
+            }
+
+        }
     }
 
     public function actionSbar($data){
@@ -231,6 +251,23 @@ class SiteController extends Controller
                     ];
                 return $data;
             }
+        }
+    }
+
+    public function actionAnnouncement($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $current_count = DataCenter::countAnnouncement();
+
+            if($object->upd !== $current_count){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $current_count);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+            return $data;
         }
     }
 

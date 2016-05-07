@@ -11,12 +11,14 @@ use yii\db\Expression;
  *
  * @property string $id
  * @property string $student_id
+ * @property string $assessment_id
  * @property double $paid_amount
  * @property integer $transaction
  * @property integer $created_at
  * @property integer $updated_at
  *
  * @property Student $student
+ * @property Assessment $assessment
  */
 class PaymentForm extends \yii\db\ActiveRecord
 {
@@ -31,12 +33,14 @@ class PaymentForm extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
+public function rules()
     {
         return [
-            [['student_id', 'transaction', 'created_at', 'updated_at'], 'integer'],
+            [['student_id', 'assessment_id', 'transaction', 'created_at', 'updated_at'], 'integer'],
             [['paid_amount'], 'number'],
-            [['student_id', 'paid_amount'], 'required']
+            [['paid_amount', 'student_id'], 'required'],
+            [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentForm::className(), 'targetAttribute' => ['student_id' => 'id']],
+            [['assessment_id'], 'exist', 'skipOnError' => true, 'targetClass' => AssessmentForm::className(), 'targetAttribute' => ['assessment_id' => 'id']],
         ];
     }
 
@@ -47,10 +51,11 @@ class PaymentForm extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'student_id' => 'Student ID',
-            'paid_amount' => 'Paid Amount',
+            'student_id' => 'Student',
+            'paid_amount' => 'Amount',
+            'assessment_id' => 'Assessment ID',
             'transaction' => 'Transaction',
-            'created_at' => 'Created At',
+            'created_at' => 'Date of Payment',
             'updated_at' => 'Updated At',
         ];
     }
@@ -121,5 +126,10 @@ class PaymentForm extends \yii\db\ActiveRecord
     public function getStudent()
     {
         return $this->hasOne(StudentForm::className(), ['id' => 'student_id']);
+    }
+
+    public function getAssessment()
+    {
+        return $this->hasOne(Assessment::className(), ['id' => 'assessment_id']);
     }
 }

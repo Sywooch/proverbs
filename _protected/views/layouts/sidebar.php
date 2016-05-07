@@ -1,9 +1,13 @@
 <?php
 use yii\helpers\Html;
 use app\rbac\models\AuthAssignment;
-if (!Yii::$app->user->isGuest) {$role = AuthAssignment::getAssignment(Yii::$app->user->identity->id);} ?>
+use app\models\DataCenter;
+?>
 <div class="sidebar smooth">
     <div id="sidebar-offset"></div>
+    <div id="announcement">
+        <?= $this->render('announcement')?>
+    </div>
     <div id="sidebar-content">
         <?= $this->render('board') ?>
     </div>
@@ -21,7 +25,7 @@ if(!Yii::$app->user->isGuest){
     	$sbar = json_encode(0);
 }
 
-$trigger = <<< JS
+$board_pjax = <<< JS
     var sidebar = $('#sb-btn1');
     var sbar;
 	
@@ -66,6 +70,59 @@ $trigger = <<< JS
         run();
     });
 JS;
-$this->registerJs($trigger);
+$this->registerJs($board_pjax);
 }
+?>
+
+<?php
+$baseUrl = json_encode(Yii::$app->request->baseUrl . '/site/announcement?data=');
+$upd = json_encode(DataCenter::countAnnouncement());
+$pjaxInt = json_encode(Yii::$app->params['announcementInterval']);
+$anc_pjax = <<< JS
+$(document).ready(function(){
+    var val;
+    var ini = true;
+
+    function pjax(){
+        $.pjax.reload({container:'#announcement-list'});
+    }
+
+    function getIni(data){
+        return ini;
+    }
+
+    function setIni(data){
+        ini = data;
+    }
+
+    function getUpd(){
+        if(ini){
+            return $upd;
+        }else {
+            return val;
+        }
+    }
+
+    setInterval(function(){
+        $.ajax({
+            type: 'POST',
+            url: $baseUrl + JSON.stringify({
+                    upd: getUpd(),
+                }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(data) {
+                if(data.pjax){
+                    pjax();
+                    if(data.delta){
+                        val = data.upd;
+                        setIni(false);
+                    }
+                }
+            }
+        });
+    }, $pjaxInt);
+});
+JS;
+$this->registerJs($anc_pjax);
 ?>

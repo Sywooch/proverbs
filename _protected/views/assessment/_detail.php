@@ -65,4 +65,42 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	    ],
     ]) ?>
 </div>
+<div class="ui tab segment" data-tab="third" style="min-height: 80px;">
+	<div class="ui inverted dimmer">
+	    <div class="ui massive text loader"></div>
+	</div>
+	<?= Html::a('New Payment',['/payments/new', 'sid' => $model->enrolled->student->id, 'aid' =>$model->id],['class' => 'ui right floated big basic button'])?>
+	<?php
+		if(count($payments) > 0){
+			for ($i=0; $i < count($payments); $i++) {
+				echo implode('',[
+					'<div class="ui two stackable grid">',
+						'<div class="eight wide column">', 
+							'<label><strong>',
+								DataHelper::carbonDate($payments[$i]->created_at),
+							'</strong></label>',
+						'</div>',
+						'<div class="eight wide column">',
+							UiTable::widget([
+							    'model' => $payments[$i],
+							    'options' => ['class' => 'ui fixed basic payment-history table'],
+							    'attributes' => [
+							    	[
+							    		'attribute' => 'transaction',
+							    		'value' => DataHelper::transaction($payments[$i]->transaction)
+							    	],
+							    	'paid_amount:currency',
+							    ],
+						    ]),
+						'</div>',
+					'</div>',
+					'<div class="ui divider"></div>'
+				]);
+			}
+		}else {
+			echo 'No payment transactions yet.';
+		}
+	?>
+
+</div>
 <?php Pjax::end(); ?>

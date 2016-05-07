@@ -53,5 +53,9 @@ return [
 
     'fetchInterval' => 2000,
 
+    'announcementInterval' => 5000,
+
     'toastTimeout' => 5000,
+    
+    'pjaxTimeout' => 360000,
 ];

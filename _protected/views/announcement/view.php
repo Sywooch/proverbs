@@ -30,15 +30,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Announcements', 'url' => ['index']
             'content',
             [
                 'attribute' => 'posted_by',
-                'value' => $model->getPostedBy($model->posted_by)
-            ],
-            [
-                'label' => 'Created at',
-                'value' => \Carbon\Carbon::parse(date('Y-m-d H:i:s', $model->created_at))->diffForHumans()
-            ],
-            [
-                'label' => 'Updated at',
-                'value' => \Carbon\Carbon::parse(date('Y-m-d H:i:s', $model->updated_at))->diffForHumans()
+                'value' => $model->postedBy->username
             ],
         ],
     ]) ?>

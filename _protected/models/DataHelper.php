@@ -19,16 +19,37 @@ class DataHelper
 		return $avatar;
 	}
 
-	public function direct($data){
-		$data === 0 ? $data = 'Yes' : $data = 'No';
-		return $data;
-	}
+    public function carbonDate($data) {        
 
-	public function directSpecial($data, $yes, $no){
-		$data === 0 ? $data = $yes : $data = $no;
-		return $data;
-	}
+        return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->toFormattedDateString();
+    }
 
+    public function carbonDateDiff($data) {
+
+        return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
+    }
+
+    public function checkIfEmpty($data, $yes, $no){
+        (!empty($data) || $data !== null ) ? $data = $yes : $data = $no;
+        return $data;
+    }
+
+    public function direct($data){
+        $data === 0 ? $data = 'Yes' : $data = 'No';
+        return $data;
+    }
+
+    public function directSpecial($data, $yes, $no){
+        $data === 0 ? $data = $yes : $data = $no;
+        return $data;
+    }
+
+    public function enrolleeStatus($data){
+        $data === 1 ? $data = 'Pending' : $data = 'Enrolled';
+
+        return $data;
+    }
+    
 	public function gender($data){
 		$data === 0 ? $data = 'Male' : $data = 'Female';
 		return $data;
@@ -75,16 +96,74 @@ class DataHelper
         }
     }
 
-    public function carbonDate($data) {        
+    public function menu($role){
+        switch ($role) {
+            case 'dev':
+            $data = implode('',[
+                Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Users',implode('/',[Yii::$app->request->baseUrl, 'user']), ['class' => Yii::$app->controller->id === 'user' ? 'link item active' : 'link item']),
+                Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
+                Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
+                Html::a('Enrollee', implode('/',[Yii::$app->request->baseUrl, 'enroll']), ['class' => Yii::$app->controller->id === 'enroll' ? 'link item active' : 'link item']),
+                Html::a('Assessment', implode('/',[Yii::$app->request->baseUrl, 'assessment']), ['class' => Yii::$app->controller->id === 'assessment' ? 'link item active' : 'link item']),
+                Html::a('Payments', implode('/',[Yii::$app->request->baseUrl, 'payments']), ['class' => Yii::$app->controller->id === 'payments' ? 'link item active' : 'link item']),
+                Html::a('Entrance Exam', implode('/',[Yii::$app->request->baseUrl, 'entrance-exam']), ['class' => Yii::$app->controller->id === 'entrance-exam' ? 'link item active' : 'link item']),
+                Html::a('Section', implode('/',[Yii::$app->request->baseUrl, 'section']), ['class' => Yii::$app->controller->id === 'section' ? 'link item active' : 'link item']),
+                Html::a('Class Adviser', implode('/',[Yii::$app->request->baseUrl, 'class-adviser']), ['class' => Yii::$app->controller->id === 'class-adviser' ? 'link item active' : 'link item']),
+            ]);
+            break;
 
-        return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila');
+            case 'master':
+            $data = implode('',[
+                Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Users',implode('/',[Yii::$app->request->baseUrl, 'user']), ['class' => Yii::$app->controller->id === 'user' ? 'link item active' : 'link item']),
+                Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
+                Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
+                Html::a('Enrollee', implode('/',[Yii::$app->request->baseUrl, 'enroll']), ['class' => Yii::$app->controller->id === 'enroll' ? 'link item active' : 'link item']),
+                Html::a('Assessment', implode('/',[Yii::$app->request->baseUrl, 'assessment']), ['class' => Yii::$app->controller->id === 'assessment' ? 'link item active' : 'link item']),
+                Html::a('Payments', implode('/',[Yii::$app->request->baseUrl, 'payments']), ['class' => Yii::$app->controller->id === 'payments' ? 'link item active' : 'link item']),
+                Html::a('Entrance Exam', implode('/',[Yii::$app->request->baseUrl, 'entrance-exam']), ['class' => Yii::$app->controller->id === 'entrance-exam' ? 'link item active' : 'link item']),
+                Html::a('Section', implode('/',[Yii::$app->request->baseUrl, 'section']), ['class' => Yii::$app->controller->id === 'section' ? 'link item active' : 'link item']),
+                Html::a('Class Adviser', implode('/',[Yii::$app->request->baseUrl, 'class-adviser']), ['class' => Yii::$app->controller->id === 'class-adviser' ? 'link item active' : 'link item']),
+            ]);
+            break;
+
+            case 'admin':
+            $data = implode('',[]);
+            break;
+
+            case 'principal':
+            $data = implode('',[]);
+            break;
+
+            case 'teacher':
+            $data = implode('',[]);
+            break;
+
+            case 'cashier':
+            $data = implode('',[]);
+            break;
+
+            case 'staff':
+            
+            $data = implode('',[
+                Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
+                Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
+                Html::a('Payments', implode('/',[Yii::$app->request->baseUrl, 'payments']), ['class' => Yii::$app->controller->id === 'payments' ? 'link item active' : 'link item']),
+                Html::a('Enrollee', implode('/',[Yii::$app->request->baseUrl, 'enroll']), ['class' => Yii::$app->controller->id === 'enroll' ? 'link item active' : 'link item']),
+                Html::a('Class Adviser', implode('/',[Yii::$app->request->baseUrl, 'class-adviser']), ['class' => Yii::$app->controller->id === 'class-adviser' ? 'link item active' : 'link item']),
+            ]);
+            break;
+
+            default:
+            $data = implode('',[]);
+            break;
+        }
+
+        return $data;
     }
-
-    public function carbonDateDiff($data) {
-
-        return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
-    }
-
+    
     public function name($first, $middle, $last){
     	!empty(trim($middle)) ? $middle = ucfirst(substr($middle, 0,1)) . '.' : $middle = '';
     	
@@ -101,12 +180,6 @@ class DataHelper
     	}else {
     		$data = 'Deleted';
     	}
-
-    	return $data;
-    }
-
-    public function enrolleeStatus($data){
-    	$data === 1 ? $data = 'Pending' : $data = 'Enrolled';
 
     	return $data;
     }
@@ -150,54 +223,5 @@ class DataHelper
     	$data === 1 ? $data = 'Cash' : $data = 'Card';
 
     	return $data;
-    }
-
-    public function menu($role){
-		switch ($role) {
-			case 'dev':
-			$data = implode('',[
-				Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
-				Html::a('Profile', implode('/',[Yii::$app->request->baseUrl, 'profile']), ['class' => Yii::$app->controller->id === 'profile' ? 'link item active' : 'link item']),
-				Html::a('Users',implode('/',[Yii::$app->request->baseUrl, 'user']), ['class' => Yii::$app->controller->id === 'user' ? 'link item active' : 'link item']),
-				Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
-				Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
-				Html::a('Payments', implode('/',[Yii::$app->request->baseUrl, 'payments']), ['class' => Yii::$app->controller->id === 'payments' ? 'link item active' : 'link item']),
-				Html::a('Enroll', implode('/',[Yii::$app->request->baseUrl, 'enroll']), ['class' => Yii::$app->controller->id === 'enroll' ? 'link item active' : 'link item']),
-				Html::a('Assessment', implode('/',[Yii::$app->request->baseUrl, 'assessment']), ['class' => Yii::$app->controller->id === 'assessment' ? 'link item active' : 'link item']),
-				Html::a('Entrance Exam', implode('/',[Yii::$app->request->baseUrl, 'entrance-exam']), ['class' => Yii::$app->controller->id === 'entrance-exam' ? 'link item active' : 'link item']),
-				Html::a('Class Adviser', implode('/',[Yii::$app->request->baseUrl, 'class-adviser']), ['class' => Yii::$app->controller->id === 'class-adviser' ? 'link item active' : 'link item']),
-			]);
-			break;
-
-			case 'master':
-			$data = implode('',[]);
-			break;
-
-			case 'admin':
-			$data = implode('',[]);
-			break;
-
-			case 'principal':
-			$data = implode('',[]);
-			break;
-
-			case 'teacher':
-			$data = implode('',[]);
-			break;
-
-			case 'cashier':
-			$data = implode('',[]);
-			break;
-
-			case 'staff':
-			$data = implode('',[]);
-			break;
-
-			default:
-			$data = implode('',[]);
-			break;
-		}
-
-		return $data;
     }
 }

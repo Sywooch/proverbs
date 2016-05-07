@@ -1,8 +1,15 @@
 <?php 
 use yii\helpers\Html;
+use app\models\Announcement;
+use app\models\UiListView;
+use yii\widgets\ListView;
+use yii\widgets\Pjax;
+use app\models\DataCenter;
+use app\rbac\models\AuthAssignment;
+$announcement = DataCenter::announcement();
 ?>
 <?= $this->render('loading') ?>
-<header class="ui container" style="z-index: 9999;">
+<header class="ui container" style="z-index: 99;">
     <div id="nav-menu" class="ui top fixed secondary pointing menu">
         <?= $this->render('menu') ?>
         <div id="nav-menu-dropdown">
@@ -40,7 +47,12 @@ use yii\helpers\Html;
             </span>
         </div>
         <div class="right floated small menu">
-            <div class="ui link top right pointing dropdown item">
+            <?php if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev' || AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'master' || AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'admin'):  ?>
+                <div id="new-announcement" class="ui link item" data-toggle="modal" data-target="#ann_modal">
+                    <i class="icon-flag"></i>
+                </div>
+            <?php endif ?>
+            <div class="ui link top pointing dropdown item">
                 <?= Html::img(
                     Yii::$app->user->isGuest 
                         ? Yii::$app->request->baseUrl . Yii::$app->params['avatar'] 
@@ -64,7 +76,7 @@ use yii\helpers\Html;
 <?php 
 $this->registerJs("
     $(document).ready(function(){
-        $('.ui.link.top.right.pointing.dropdown.item').dropdown({
+        $('.ui.pointing.dropdown.item').dropdown({
             transition: 'slide down',
         });
     });

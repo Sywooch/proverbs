@@ -17,6 +17,7 @@ use yii\bootstrap\ActiveForm;
         <?= Html::button('Reset', ['id' => 'clear', 'class' => 'ui fluid huge basic button']) ?>
         <p></p>
         <?= $form->field($model, 'student_id', ['inputTemplate' => '<label for="Student ID">Student ID</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
+        <?= $form->field($model, 'sy_id', ['inputTemplate' => '<label for="School Year">School Year</label>{input}'])->dropDownList($model->syList, ['class' => 'form-control pva-form-control'])->label(false) ?>
         <?= $form->field($model, 'enrollment_status', ['inputTemplate' => '<label for="Status">Status</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList($model->statusList, ['class' => 'form-control pva-form-control'])->label(false) ?>
         <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label for="Grade Level">Grade Level</label>{input}'])->dropDownList($model->levelList, ['class' => 'form-control pva-form-control'])->label(false) ?>
     </div>

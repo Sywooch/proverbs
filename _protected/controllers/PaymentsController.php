@@ -6,6 +6,7 @@ use Yii;
 use app\models\PaymentForm;
 use app\models\PaymentFormSearch;
 use app\models\StudentForm;
+use app\models\AssessmentForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -54,7 +55,7 @@ class PaymentsController extends Controller
     public function actionIndex()
     {
         $searchModel = new PaymentFormSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchPayment(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -68,27 +69,48 @@ class PaymentsController extends Controller
      * @return mixed
      */
 
-    public function actionNew($id)
+    public function actionNew($sid, $aid)
     {
         $model = new PaymentForm();
-        $student = $this->findStudent($id);
+        $student = $this->findStudent($sid);
+        $assessment = $this->findAssessment($aid);
         $model->student_id = $student->id;
-        $express = true;
+        $model->assessment_id = $assessment->id;
+        $model->paid_amount = number_format(0, 2, '.', '');
 
-    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $amount = (float) $model->paid_amount;
+            $this->touchBalance($aid, $amount);
+            //die(var_dump($_POST));
+            Yii::$app->session->setFlash('success', 'New payment successfully created!');
             return $this->redirect('index');
         } else {
             return $this->render('new', [
                 'student' => $student,
+                'assessment' => $assessment,
                 'model' => $model,
-                'express' => $express,
             ]);
         }
     }
 
+    public function touchBalance($aid, $amount){
+
+        $assessment = $this->findAssessment($aid);
+        $new_balance = $assessment->balance - (float) $amount;
+        
+        if($new_balance < 0){
+            $assessment->balance = 0;
+        }else {
+            $assessment->balance = $new_balance;
+        }
+        
+        Yii::$app->session->setFlash('success2', 'Assessment saved successfully');
+        $assessment->save();
+    }
+
     public function actionView($id)
     {
-
+        //$assessment = $this->findAssessment($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -104,6 +126,8 @@ class PaymentsController extends Controller
         $model = new PaymentForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -122,7 +146,8 @@ class PaymentsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
+            
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect('index');
         } else {
             return $this->render('update', [
@@ -140,7 +165,8 @@ class PaymentsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        
+        Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
 
@@ -164,6 +190,15 @@ class PaymentsController extends Controller
     {
         if ((($student = StudentForm::findOne($id)) !== null)) {
             return $student;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findAssessment($id)
+    {
+        if ((($assessment = AssessmentForm::findOne($id)) !== null)) {
+            return $assessment;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

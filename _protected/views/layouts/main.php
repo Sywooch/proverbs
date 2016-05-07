@@ -43,10 +43,11 @@ AppAsset::register($this);
         } else { //MAIN
             include('header.php');
             include('sidebar.php');
-            echo '<div id="st" class="page-content smooth">';
+            echo '<div id="st" class="page-content smooth"><p></p>';
             include('alert.php');
             echo $content;
             echo '</div>';
+            include('modal.php');
         }
     ?>
     <?php 
@@ -54,14 +55,9 @@ AppAsset::register($this);
         $('.ui.left.vertical.menu.sidebar').sidebar('setting', 'transition', 'push').sidebar('attach events', '#trigger-sidebar, #sb-btn2', 'toggle');
     ");
      ?>
-
     <?php $this->endBody() ?>
+    
     <script type="text/javascript" >$('.datepicker').datepicker();</script>
-    <?php 
-        /*if(Yii::$app->request->url !== '/proverbs/site/login' && Yii::$app->request->url !== '/proverbs/site/signup'){
-            $this->registerJs("$('#fetch').click(handleAjaxLink);", View::POS_READY);
-        }*/
-    ?>
 </body>
 </html>
 <?php $this->endPage() ?>

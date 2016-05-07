@@ -1,7 +1,7 @@
 <?php 
 use yii\helpers\Html;
 ?>
-<?= Html::textarea('', null, ['id' => 'send', 'type' => 'textarea', 'class' => 'form-control pva-form-control', 'maxlength' => 255, 'rows' => 2, 'style' => 'padding: 0;']) ?>
+<?= Html::textarea('', null, ['id' => 'send', 'type' => 'textarea', 'class' => 'form-control pva-form-control', 'maxlength' => 255, 'rows' => 3]) ?>
 
 <?php
 $fetchInt = json_encode(Yii::$app->params['fetchInterval']);
@@ -19,7 +19,9 @@ $(document).ready(function(){
 	}, false);
 
 	send.click(function(){
-		sb.click();
+		if($('body').hasClass('sidebar-narrow')){
+			sb.click();
+		}
 	});
 
 	function fetch(){
@@ -30,7 +32,7 @@ $(document).ready(function(){
 		setTimeout(function(){
 			send.val('');
 			fetch();
-		}, 10);
+		}, 2);
 	}
 
 	function write(){

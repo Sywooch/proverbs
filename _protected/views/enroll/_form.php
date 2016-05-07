@@ -33,7 +33,6 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 
 $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model->student->first_name, $middle, $model->student->last_name]);
 ?>
-<p></p>
 <?php $form = ActiveForm::begin(); ?>
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">

@@ -22,18 +22,6 @@ use yii\helpers\ArrayHelper;
  */
 class EnrollController extends Controller
 {
-/*    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }*/
 
     public function behaviors()
     {
@@ -81,7 +69,7 @@ class EnrollController extends Controller
         $listData2 = ArrayHelper::map($school_year, 'id' , 'sy');
         $searchModel = new EnrolledFormSearch();
         $searchModel->sy_id = $this->findLatestSy();
-        $searchModel->enrollment_status = 1;
+        $searchModel->enrollment_status = 0;
         $dataProvider = $searchModel->searchEnrolled(Yii::$app->request->queryParams);
 
         return $this->render('index', [

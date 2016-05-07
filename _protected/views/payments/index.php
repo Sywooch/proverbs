@@ -7,7 +7,6 @@ use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 $this->title =  'Payments';
 ?>
-<p></p>
 <div class="ui two column stackable grid">
     <div class="twelve wide rounded column">
         <div class="ui raised segment">
