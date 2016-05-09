@@ -2,11 +2,15 @@
 
 namespace app\models;
 
+use app\models\Announcement;
+use app\models\AnnouncementSearch;
+use app\models\Board;
+use app\models\BoardSearch;
 use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use app\models\Announcement;
-use app\models\Board;
 
 class DataCenter
 {
@@ -31,7 +35,27 @@ class DataCenter
 	}
 
 	public function countBoard(){
-        $count = Board::count();
+        $count = count(Board::find()->all());
+		
+		return $count;
+	}
+
+	public function recentAnnouncement($size){
+        $searchModel = new AnnouncementSearch();
+        $dataProvider = $searchModel->searchRecentAnnouncement($params = null, $size);
+
+		return $dataProvider;
+	}
+
+	public function recentBoard($size){
+        $searchModel = new BoardSearch();
+        $dataProvider = $searchModel->searchRecentBoard($params = null, $size);
+
+		return $dataProvider;
+	}
+
+	public function countRecentAnnouncement(){
+        $count = count(Announcement::find()->all());
 		
 		return $count;
 	}

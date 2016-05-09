@@ -2,10 +2,11 @@
 
 namespace app\models;
 
+use app\models\Board;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Board;
+use yii\helpers\ArrayHelper;
 
 /**
  * BoardSearch represents the model behind the search form about `app\models\Board`.
@@ -134,10 +135,33 @@ class BoardSearch extends Board
         return $dataProvider;
     }
 
-    public function countBoard()
+    public function searchRecentBoard($params, $size)
     {
-        $count = Board::count();
+        $query = Board::find()->orderBy(['created_at' => SORT_DESC]);
+        
+        $dataProvider->sort->attributes['id'] = [
+            'asc' => ['id' => SORT_ASC],
+            'desc' => ['id' => SORT_DESC],
+        ];
 
-        return $count;
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC]
+            ],
+            'pagination' => [
+                'pageSize' => $size,
+            ]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        return $dataProvider;
     }
 }

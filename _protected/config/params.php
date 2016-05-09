@@ -53,7 +53,13 @@ return [
 
     'fetchInterval' => 2000,
 
-    'announcementInterval' => 5000,
+    'announcementInterval' => 60000,
+
+    'boardInterval' => 50100,
+    
+    'day' => '-1 day',
+
+    'hour' => '-1 hour',
 
     'toastTimeout' => 5000,
     

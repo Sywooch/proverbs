@@ -1,10 +1,11 @@
 $(function() {
-	var bc = $('#bm > .item > .top.aligned.content, #bm > .item > .bottom.aligned.content');
+	var bc = $('#bm > .item');
+	var send = $('#send');
 
 	if($('body').hasClass('sidebar-narrow')){
-		bc.addClass('hidden');
+		send.attr('placeholder','');
 	}else {
-		bc.removeClass('hidden');
+		send.attr('placeholder','Write something...');
 	}
 
 	$('.page-content').wrapInner('<div class="ui container"></div>');
@@ -15,12 +16,13 @@ $(function() {
     	//$('body').toggleClass('sidebar-narrow');
 
     	if($('body').hasClass('sidebar-narrow')){
-    		$('body').removeClass('sidebar-narrow');
-    		bc.removeClass('hidden');
+			$('body').removeClass('sidebar-narrow');
+			send.attr('placeholder','Write something...');
     	}else {
     		$('body').addClass('sidebar-narrow');
-    		bc.addClass('hidden');
+			send.attr('placeholder','');
     	}
+
 	});
 
 });

@@ -37,6 +37,18 @@ class Board extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if($this->isNewRecord){
+                $this->created_at = time();
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     /**
      * @inheritdoc
      */

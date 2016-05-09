@@ -2,10 +2,11 @@
 
 namespace app\models;
 
+use app\models\Announcement;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Announcement;
+use yii\helpers\ArrayHelper;
 
 /**
  * AnnouncementSearch represents the model behind the search form about `app\models\Announcement`.
@@ -18,7 +19,7 @@ class AnnouncementSearch extends Announcement
     public function rules()
     {
         return [
-            [['id', 'posted_by', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'posted_by', 'created_at'], 'integer'],
             [['content'], 'safe'],
         ];
     }
@@ -105,7 +106,37 @@ class AnnouncementSearch extends Announcement
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content]);
+        return $dataProvider;
+    }
+
+
+
+    public function searchRecentAnnouncement($params, $size)
+    {
+        $query = Announcement::find()->orderBy(['created_at' => SORT_DESC]);
+        
+        $dataProvider->sort->attributes['id'] = [
+            'asc' => ['id' => SORT_ASC],
+            'desc' => ['id' => SORT_DESC],
+        ];
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC]
+            ],
+            'pagination' => [
+                'pageSize' => $size,
+            ]
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
 
         return $dataProvider;
     }

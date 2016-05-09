@@ -2,37 +2,14 @@
 use yii\helpers\Html;
 use app\models\Announcement;
 use app\models\UiListView;
-use yii\widgets\ListView;
-use yii\widgets\Pjax;
-use app\models\DataCenter;
-use app\rbac\models\AuthAssignment;
-$announcement = DataCenter::announcement();
 ?>
 <?= $this->render('loading') ?>
-<header class="ui container" style="z-index: 99;">
+<header style="z-index: 99;">
     <div id="nav-menu" class="ui top fixed secondary pointing menu">
         <?= $this->render('menu') ?>
         <div id="nav-menu-dropdown">
             <select class="form-control pva-form-control">
             </select>
-            <?php 
-                $this->registerJs("
-                    $(document).ready(function(){
-                        var menu = $('#nav-menu > a');
-                        var dlist = $('#nav-menu-dropdown > select');
-                        var selected;
-
-                        $(menu).each(function(index, value){
-                            $(value).attr('class') === 'link item active' ? selected = 'selected' : selected = '';
-                            $(dlist).append('<option value=\"' + $(value).attr('href') + '\" ' + selected + '>' + $(value).text() + '</option>');
-                        });
-                        
-                        dlist.change(function(){
-                            window.location = $(this).val();
-                        });
-                    });
-                ");
-            ?>
         </div>
     </div>
     <div class="ui top fixed huge inverted menu">
@@ -47,11 +24,10 @@ $announcement = DataCenter::announcement();
             </span>
         </div>
         <div class="right floated small menu">
-            <?php if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev' || AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'master' || AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'admin'):  ?>
-                <div id="new-announcement" class="ui link item" data-toggle="modal" data-target="#ann_modal">
-                    <i class="icon-flag"></i>
-                </div>
-            <?php endif ?>
+            <div id="new-announcement" class="ui link item" data-toggle="modal" data-target="#ann_modal">
+                <i class="icon-flag"></i>
+                <div class="notify announcement hidden"></div>
+            </div>
             <div class="ui link top pointing dropdown item">
                 <?= Html::img(
                     Yii::$app->user->isGuest 
@@ -62,7 +38,7 @@ $announcement = DataCenter::announcement();
                 , ['id' => 'thumbnail', 'style' => 'background: #f7f7f7;', 'class' => 'ui right thumbnail image', 'alt' => Yii::$app->user->identity->username]) 
                     . Html::tag('span', Yii::$app->user->identity->username . '<i class="dropdown icon" style="color: white; margin: 0 5px;"></i>', ['style' => 'margin: auto 10px; color: white;'])
                 ?>
-                <div class="menu" style="min-width: 180px; margin-right: 5px; margin-top: 7px; border-radius: 0;">
+                <div class="menu" style="min-width: 180px; margin-right: 5px; margin-top: 0; border-radius: 0;">
                     <a class="link item" href="<?= Yii::$app->request->baseUrl . '/dashboard' ?>">Dashboard<i class="right floated dashboard icon"></i></a>
                     <a class="link item" href="<?= Yii::$app->request->baseUrl . '/profile' ?>">Profile<i class="right floated user icon"></i></a>
                     <a class="link item" href="<?= Yii::$app->request->baseUrl . '/settings' ?>">Settings<i class="right floated settings icon"></i></a>
@@ -73,12 +49,26 @@ $announcement = DataCenter::announcement();
     </div>
 </header>
 <div id="nav-offset"></div>
-<?php 
-$this->registerJs("
-    $(document).ready(function(){
-        $('.ui.pointing.dropdown.item').dropdown({
-            transition: 'slide down',
+<?php $this->registerJs("
+    (function($){
+        $(window).load(function(){
+            
+            $('.ui.pointing.dropdown.item').dropdown({
+                transition: 'slide down',
+            });
+
+            var menu = $('#nav-menu > a');
+            var dlist = $('#nav-menu-dropdown > select');
+            var selected;
+
+            $(menu).each(function(index, value){
+                $(value).attr('class') === 'link item active' ? selected = 'selected' : selected = '';
+                $(dlist).append('<option value=\"' + $(value).attr('href') + '\" ' + selected + '>' + $(value).text() + '</option>');
+            });
+            
+            dlist.change(function(){
+                window.location = $(this).val();
+            });
         });
-    });
-");
-?>
+    })(jQuery);
+");?>

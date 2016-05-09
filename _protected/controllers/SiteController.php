@@ -1,16 +1,19 @@
 <?php
 namespace app\controllers;
 
+use app\models\AccountActivation;
 use app\models\Announcement;
+use app\models\Board;
+use app\models\BoardSearch;
+use app\models\ContactForm;
 use app\models\DataCenter;
 use app\models\DataHelper;
-use app\models\User;
 use app\models\LoginForm;
-use app\models\AccountActivation;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
-use app\models\ContactForm;
+use app\models\User;
+use app\models\UiListView;
 use app\rbac\models\AuthAssignment;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -20,11 +23,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\widgets\Pjax;
 use Yii;
-use app\models\Board;
-use app\models\BoardSearch;
-use app\models\UiListView;
 
 class SiteController extends Controller
 {
@@ -42,8 +41,15 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => [
-                                        'logout', 'sbar', 'write', 'fetch', 'announcement', 'impact', 
-                                        'fetch-announcement', 'new-announcement', 'delete-announcement'],
+                            'logout', 
+                            'sbar', 
+                            'fetch',
+                            'pull',
+                            'write-announcement', 
+                            'write-board',
+                            'more-announcement',
+                            'more-board',
+                            'delete-announcement'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,17 +58,17 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
-                    'fetch' => ['post'],
-                    'write' => ['post'],
-                    'sbar' => ['post'],
-                    'impact' => ['post'],
-                    'announcement' => ['post'],
-                    'mail-check' => ['post'],
                     'cred-check' => ['post'],
-                    'fetch-announcement' => ['post'],
-                    'new-announcement' => ['post'],
+                    'fetch' => ['post'],
                     'delete-announcement' => ['post'],
+                    'logout' => ['post'],
+                    'more-announcement' => ['post'],
+                    'more-board' => ['post'],
+                    'mail-check' => ['post'],
+                    'pull' => ['post'],
+                    'sbar' => ['post'],
+                    'write-announcement' => ['post'],
+                    'write-board' => ['post']
                 ],
             ],
         ];
@@ -79,81 +85,6 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
-    }
-
-    public function actionImpact(){
-        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-
-            $announcement = DataCenter::announcement();
-
-            $list_modal =  UiListView::widget([
-                       'dataProvider' => $announcement,
-                       'options' => ['class' => 'ui divided relaxed items', 'style' => 'padding: 0;'],
-                       'layout' => '{items}',
-                        'itemView' => function($model){
-
-                            if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInDays() < 5){
-                                $timestamp = DataHelper::carbonDateDiff($model->created_at);
-                            }else {
-                                $timestamp = '';
-                            }
-
-                            return '<div class="ui top aligned content">
-                                        <div class="right floated">
-                                            <a id="#" class="anc-delete"><i class="remove icon" style="color: #767676;"></i></a>
-                                        </div>
-                                        <div class="description" style="margin-top: -2px;">'
-                                            . $model->content . 
-                                        '</div>
-                                        <div class="meta">
-                                            <div class="left aligned text">
-                                                <small>' . $timestamp . '</small>
-                                            </div>
-                                        </div>
-                                    </div>';
-                        },
-                    ]);
-
-            $list =  UiListView::widget([
-                       'dataProvider' => $announcement,
-                       'options' => ['class' => 'ui divided relaxed items', 'style' => 'padding: 0;'],
-                       'layout' => '{items}',
-                        'itemView' => function($model){
-                            $avatar = DataHelper::avatar();
-
-                            if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInDays() < 5){
-                                $timestamp = DataHelper::carbonDateDiff($model->created_at);
-                            }else {
-                                $timestamp = '';
-                            }
-
-                            return '<div class="ui mini image">'
-                                        . Html::img(!empty($model->postedBy->profile_image) ? implode('',[Yii::$app->request->baseUrl,'/uploads/users/',$model->postedBy->profile_image]) : $avatar, ['style' => 'background: #f7f7f7;']) .
-                                    '</div>
-                                    <div class="ui top aligned content">
-                                        <div class="description" style="margin-top: -2px;">' . Html::encode($model->content) . '</div>
-                                        <div class="meta">
-                                            <div class="left aligned text"><small>' . $timestamp . '</small></div>
-                                        </div>
-                                    </div>';
-
-                        },
-                    ]);
-
-            $content = Html::tag('div', $list, ['class' => 'ui divided relaxed items', 'style' => 'padding: 10px;']);
-            $wrapper = Html::tag('div', $content,['id' => 'anc-list','data-pjax-container' => '', 'data-pjax-push-state' => '', 'data-pjax-timeout' => 360000]);
-            
-            $content_modal = Html::tag('div', $list_modal, ['class' => 'ui divided relaxed items', 'style' => 'padding: 0 0 0 10px;']);
-            $wrapper_modal = Html::tag('div', $content_modal,['id' => 'anc-list-modal','data-pjax-container' => '', 'data-pjax-push-state' => '', 'data-pjax-timeout' => 360000]);
-            
-            $data = array(
-                        'announcement' => ['content' => $wrapper],
-                        'announcement-modal' => ['content' => $wrapper_modal],
-                    );
-            
-            return $data;
-        }
     }
 
     public function actionFetchAnnouncement($data){
@@ -205,22 +136,6 @@ class SiteController extends Controller
         }
     }
 
-    public function actionNewAnnouncement($data){
-        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-
-            $announcement = new Announcement();
-
-            $object = json_decode($data);
-            $announcement->content = $object->msg;
-            if(!empty(trim($announcement->content)) ){
-                $announcement->save();
-                return array('pjax' => true);
-            }
-
-        }
-    }
-
     public function actionDeleteAnnouncement($id){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -242,25 +157,139 @@ class SiteController extends Controller
             return array('val' => Yii::$app->session->get('sidebar'));
         }
     }
-    
 
-    public function actionWrite($data){
+    public function actionWriteAnnouncement($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
 
             $object = json_decode($data);
             $content = Html::encode($object->msg);
 
-            if(!empty(trim($object->msg))){
+            if(!empty(trim($object->msg)) ){
+                $announcement = new Announcement();
+                $announcement->content = $content;
+                $announcement->save();
+                if($announcement->save()){
+                    return array('announcementSave' => true);
+                }
+            }
+
+        }
+    }
+
+    public function actionWriteBoard($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $content = Html::encode($object->msg);
+
+            if(!empty(trim($object->msg)) ){
                 $board = new Board();
-                $board->posted_by = Yii::$app->user->identity->id;
                 $board->content = $content;
+                $board->posted_by = Yii::$app->user->identity->id;
                 $board->save();
+
+                if($board->save()){
+                    return array('boardSave' => true);
+                }
             }
         }    
     }  
 
-    public function actionFetch($data){
+//////////////////////////////////////////////////////////////////// PULL
+    public function actionMoreAnnouncement(){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $ttl_count = DataCenter::countAnnouncement();
+
+            if($ttl_count > (Yii::$app->session->get('announcementSize') + 10) ){
+                
+                $cur_size = Yii::$app->session->get('announcementSize');
+                $new_size = Yii::$app->session->set('announcementSize', ($cur_size + 10));
+                
+                $all = false;
+                $pjax = true;
+
+            }elseif($ttl_count < (Yii::$app->session->get('announcementSize') + 10) || $ttl_count === (Yii::$app->session->get('announcementSize') + 10) ){
+
+                Yii::$app->session->set('announcementSize', $ttl_count);
+                $all = true;
+                $pjax = false;
+
+            }else {
+
+                $cur_size = Yii::$app->session->get('announcementSize');
+                $new_size = Yii::$app->session->set('announcementSize', ($cur_size + 10));
+                $all = false;
+                $pjax = true;
+
+            }
+
+            $data = array('pjax' => $pjax, 'size' => Yii::$app->session->get('announcementSize'), 'all' => $all);
+
+            return $data;
+        }
+    }
+
+    public function actionMoreBoard(){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $ttl_count = DataCenter::countBoard();
+
+            if($ttl_count > (Yii::$app->session->get('boardSize') + 10) ){
+                
+                $cur_size = Yii::$app->session->get('boardSize');
+                $new_size = Yii::$app->session->set('boardSize', ($cur_size + 10));
+                
+                $all = false;
+                $pjax = true;
+
+            }elseif($ttl_count < (Yii::$app->session->get('boardSize') + 10) || $ttl_count === (Yii::$app->session->get('boardSize') + 10) ){
+
+                Yii::$app->session->set('boardSize', $ttl_count);
+                $all = true;
+                $pjax = false;
+
+            }else {
+
+                $cur_size = Yii::$app->session->get('boardSize');
+                $new_size = Yii::$app->session->set('boardSize', ($cur_size + 10));
+                $all = false;
+                $pjax = true;
+
+            }
+
+            $data = array('pjax' => $pjax, 'size' => Yii::$app->session->get('boardSize'), 'all' => $all);
+
+            return $data;
+        }
+    }
+    public function actionPull(){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            if(Yii::$app->session->get('announcementCount') !== DataCenter::countAnnouncement()){
+                $pjaxAnnouncement = true;
+                Yii::$app->session->set('announcementCount', DataCenter::countAnnouncement());
+            }else {
+                $pjaxAnnouncement = false;
+            }
+
+            if(Yii::$app->session->get('boardCount') !== DataCenter::countBoard()){
+                $data = array('pjaxBoard' => true, 'pjaxAnnouncement' => $pjaxAnnouncement);
+                Yii::$app->session->set('boardCount', DataCenter::countBoard());
+            }else {
+                $data = array('pjaxBoard' => false, 'pjaxAnnouncement' => $pjaxAnnouncement);
+            }
+
+            return $data;
+        }
+    }
+
+    public function actionFetch2($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
             
@@ -461,10 +490,18 @@ class SiteController extends Controller
 
         $model = $lwe ? new LoginForm(['scenario' => 'lwe']) : new LoginForm();
 
-        $sidebar = Yii::$app->session->set('sidebar', '');
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) 
         {
+            Yii::$app->session->set('announcementCount', DataCenter::countAnnouncement());
+            Yii::$app->session->set('announcementSize', 10);
+
+            Yii::$app->session->set('boardCount', DataCenter::countBoard());
+            Yii::$app->session->set('boardSize', 50);
+
+            Yii::$app->session->set('sidebar', '');
+            Yii::$app->session->set('loginTimestamp', time());
+
             return $this->redirect(Yii::$app->request->baseUrl . '/dashboard');
         }
         elseif($model->status === User::STATUS_INACTIVE)

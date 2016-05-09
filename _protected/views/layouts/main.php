@@ -12,7 +12,6 @@ use yii\widgets\Pjax;
 use yii\web\View;
 AppAsset::register($this);
 ?>
-<?php if(!Yii::$app->user->isGuest){$role = app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id);}?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -38,7 +37,7 @@ AppAsset::register($this);
     <?php
         if(Yii::$app->user->isGuest){
             echo $content;
-        } elseif($role === 'parent') {
+        } elseif(app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent') {
             include('header.php');
             include('alert.php');
             echo $content;
@@ -49,113 +48,45 @@ AppAsset::register($this);
             include('alert.php');
             echo $content;
             echo '</div>';
-            include('modal.php');
-            include('script.php');
+            include('announcement.php');
+            include('pull.php');
         }
     ?>
-    <?php 
-    $this->registerJs("
-        $('.ui.left.vertical.menu.sidebar').sidebar('setting', 'transition', 'push').sidebar('attach events', '#trigger-sidebar, #sb-btn2', 'toggle');
-    ");
-     ?>
+    <?php $this->registerJs("$('.ui.left.vertical.menu.sidebar').sidebar('setting', 'transition', 'push').sidebar('attach events', '#trigger-sidebar, #sb-btn2', 'toggle');");?>
     <?php $this->endBody() ?>
-    <?php 
-        $this->registerJs("
-            (function($){
-                $(window).load(function(){
-                    $('#announcement-modal.modal-body').mCustomScrollbar({
-                        autoHideScrollbar: true,
-                        contentTouchScroll: 25,
-                        documentTouchScroll: true,
-                        scrollInertia : 500,
-                        scrollButtons:{
-                            scrollbarPosition: 'outside',
-                            enable:true,
-                            theme: 'dark',
-                        },
-                        theme: 'dark-thick',
-                    });
-                    $('#announcement').mCustomScrollbar({
-                        autoHideScrollbar: true,
-                        contentTouchScroll: 25,
-                        documentTouchScroll: true,
-                        scrollInertia : 500,
-                        scrollButtons:{
-                            scrollbarPosition: 'outside',
-                            enable:true,
-                            theme: 'dark',
-                        },
-                        theme: 'dark-thick',
-                    });
-                    $('#sidebar-content').mCustomScrollbar({
-                        autoHideScrollbar: true,
-                        contentTouchScroll: 25,
-                        documentTouchScroll: true,
-                        scrollInertia : 500,
-                        scrollButtons:{
-                            scrollbarPosition: 'outside',
-                            enable:true,
-                            theme: 'dark',
-                        },
-                        theme: 'dark-thick',
-                    });
+    
+    <?php $this->registerJs("
+        (function($){
+            $(window).load(function(){
+                $('.datepicker').datepicker();
+                
+                $('#announcement-modal.modal-body').mCustomScrollbar({
+                    autoHideScrollbar: true,
+                    contentTouchScroll: 25,
+                    documentTouchScroll: true,
+                    scrollInertia : 500,
+                    scrollButtons:{
+                        scrollbarPosition: 'outside',
+                        enable:true,
+                        theme: 'dark',
+                    },
+                    theme: 'dark-thick',
                 });
-            })(jQuery);
-        ");
-    ?>
-<?php
-$baseUrl = json_encode(Yii::$app->request->baseUrl . '/site/announcement?data=');
-$upd = json_encode(DataCenter::countAnnouncement());
-$pjaxInt = json_encode(Yii::$app->params['announcementInterval']);
-$anc_pjax = <<< JS
-    $(window).load(function(){
-        var val;
-        var ini = true;
-
-        function pjax(){
-            $.pjax.reload({container:'#announcement-list'});
-        }
-
-        function getIni(data){
-            return ini;
-        }
-
-        function setIni(data){
-            ini = data;
-        }
-
-        function getUpd(){
-            if(ini){
-                return $upd;
-            }else {
-                return val;
-            }
-        }
-
-        setInterval(function(){
-            $.ajax({
-                type: 'POST',
-                url: $baseUrl + JSON.stringify({
-                        upd: getUpd(),
-                    }),
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function(data) {
-                    if(data.pjax){
-                        pjax();
-                        if(data.delta){
-                            val = data.upd;
-                            setIni(false);
-                        }
-                    }
-                }
+                $('#sidebar-content').mCustomScrollbar({
+                    autoHideScrollbar: true,
+                    contentTouchScroll: 25,
+                    documentTouchScroll: true,
+                    scrollInertia : 500,
+                    scrollButtons:{
+                        scrollbarPosition: 'outside',
+                        enable:true,
+                        theme: 'dark',
+                    },
+                    theme: 'dark-thick',
+                });
             });
-        }, $pjaxInt);
-    });
-JS;
-$this->registerJs($anc_pjax);
-?>
-    <script type="text/javascript" >$('.datepicker').datepicker();</script>
+        })(jQuery);
+    "); ?>
 </body>
 </html>
 <?php $this->endPage() ?>

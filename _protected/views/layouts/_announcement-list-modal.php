@@ -6,14 +6,12 @@ $avatar = DataHelper::avatar();
 ?>
 <div class="ui top aligned content">
 	<div class="right floated">
-		<a id="<?= $model->id ?>" class="anc-delete"><i class="remove icon" style="color: #767676;"></i></a>
+		<input data-key="<?= $model->id?>" type="checkbox" name="announcement-key">
 	</div>
 	<div class="description" style="margin-top: -2px;">
-		<?= Html::encode($model->content) ?>
+		<p><?= Html::encode($model->content) ?></p>
 	</div>
-	<?php if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInDays() < 5 ): ?>
-		<div class="meta">
-			<div class="left aligned text"><small><?= DataHelper::carbonDateDiff($model->created_at)?></small></div>
-		</div>
+	<?php if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInHours() <  5): ?>
+		<div class="date"><small><?= DataHelper::carbonDateDiff($model->created_at)?></small></div>
 	<?php endif ?>
 </div>

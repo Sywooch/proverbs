@@ -51,7 +51,7 @@ class AppAsset extends AssetBundle
         'js/jquery.mCustomScrollbar.concat.min.js',
         'js/bootstrap.min.js',
         'js/bootstrap-datepicker.js',
-        'js/collapsible.min.js',
+        //'js/collapsible.min.js',
         'js/semantic.min.js',
         'js/pva.js',
         'js/switchery.min.js',
