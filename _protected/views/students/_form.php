@@ -14,7 +14,9 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
     <div class="four wide rounded column">
         <div class="ui center aligned stackable cards">
             <div class="card">
-                <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+                <div class="image">
+                    <img src="<?= $img ?>" class="tiny image">
+                </div>
                 <div class="ui center aligned content">
                     <?= $model->isNewRecord ? '' : $form->field($model, 'id', ['inputTemplate' => '<label>ID#</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
                 </div>

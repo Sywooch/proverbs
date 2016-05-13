@@ -1,0 +1,48 @@
+Message-ID: <c4b9a09c133be9fe6353420961c9ddf1@localhost>
+Date: Thu, 12 May 2016 22:22:38 +0800
+Subject: Account activation for PVA Portal
+From: PVA Portal robot <support@proverbs.com>
+To: wolverine@wolverine.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="_=_swift_v4_1463062958_eeb664f4ae27cc4c6d9a121f73ddcb79_=_"
+
+
+--_=_swift_v4_1463062958_eeb664f4ae27cc4c6d9a121f73ddcb79_=_
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello wolverine,
+
+Follow this link to activate your account:
+
+Pleas=
+e, click here to activate your account.
+
+--_=_swift_v4_1463062958_eeb664f4ae27cc4c6d9a121f73ddcb79_=_
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/=
+xhtml">
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/ht=
+ml; charset=3DUTF-8" />
+    <title></title>
+    </head>
+<body>
+    =
+    Hello wolverine,
+
+Follow this link to activate your account:
+
+<=
+a href=3D"http://localhost/proverbs/site/activate-account?token=3D5XdAmE5Ba=
+6nGvdvepjawvOBYOGYZZNGp_1463062957">Please, click here to activate your acc=
+ount.</a>    </body>
+</html>
+
+
+--_=_swift_v4_1463062958_eeb664f4ae27cc4c6d9a121f73ddcb79_=_--

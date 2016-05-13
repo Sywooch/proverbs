@@ -1,7 +1,6 @@
 <?php 
 use app\rbac\models\AuthAssignment;
 use app\models\DataHelper;
-use yii\helpers\Html;
 ?>
 
 <?php 

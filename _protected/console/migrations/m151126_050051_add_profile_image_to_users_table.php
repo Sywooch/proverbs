@@ -14,15 +14,4 @@ class m151126_050051_add_profile_image_to_users_table extends Migration
     {
         $this->dropColumn('{{%user}}','profile_image');
     }
-
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }

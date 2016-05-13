@@ -54,7 +54,7 @@ AppAsset::register($this);
     ?>
     <?php $this->registerJs("$('.ui.left.vertical.menu.sidebar').sidebar('setting', 'transition', 'push').sidebar('attach events', '#trigger-sidebar, #sb-btn2', 'toggle');");?>
     <?php $this->endBody() ?>
-    
+    <?php $rst_url = json_encode(Yii::$app->request->baseUrl . '/site/reset') ?>
     <?php $this->registerJs("
         (function($){
             $(window).load(function(){

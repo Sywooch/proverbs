@@ -22,7 +22,6 @@ $(function() {
     		$('body').addClass('sidebar-narrow');
 			send.attr('placeholder','');
     	}
-
 	});
 
 });

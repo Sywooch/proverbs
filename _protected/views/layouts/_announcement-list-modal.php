@@ -11,7 +11,10 @@ $avatar = DataHelper::avatar();
 	<div class="description" style="margin-top: -2px;">
 		<p><?= Html::encode($model->content) ?></p>
 	</div>
-	<?php if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInHours() <  5): ?>
-		<div class="date"><small><?= DataHelper::carbonDateDiff($model->created_at)?></small></div>
-	<?php endif ?>
+	<div class="date">
+		<span><strong><?= $model->postedBy->username?></strong></span>&nbsp;&nbsp;
+		<?php if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInHours() <  5): ?>
+			<small><?= DataHelper::carbonDateDiff($model->created_at)?></small>
+		<?php endif ?>
+	</div>
 </div>

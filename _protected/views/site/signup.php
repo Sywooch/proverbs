@@ -18,16 +18,6 @@ $this->title = Yii::t('app', 'Sign Up');
             <div class="pva-form-login">
                 <div class="panel panel-default form-login">
                     <div class="panel-body">
-                        <p>
-                            <?php
-                                //var_dump(Yii::$app->session->id);
-                                if(empty($model->errors)){
-                                    //var_dump($model->errors);
-                                } else {
-                                    //var_dump($model->errors);
-                                }
-                            ?>
-                        </p>
                         <div id="user-check-img-wrap">
                             <img id="user-check-img" class="animated2" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/user-default.png'?>" alt="user" data-img="false">
                         </div>
@@ -61,6 +51,7 @@ $this->title = Yii::t('app', 'Sign Up');
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+<?= $this->render('/layouts/_toast')?>
 <?php
 $su = <<< JS
 $(document).ready(function(){

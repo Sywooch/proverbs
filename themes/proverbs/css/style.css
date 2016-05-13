@@ -124,7 +124,7 @@ a:hover, a:visited {
   max-width: 147px;
   background: #0B93F6;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 /* line 109, ../sass/style.scss */
 .bubble p {

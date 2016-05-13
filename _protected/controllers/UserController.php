@@ -136,6 +136,7 @@ class UserController extends AppController
      *
      * @throws NotFoundHttpException
      */
+
     public function actionUpdate($id)
     {
         // get role

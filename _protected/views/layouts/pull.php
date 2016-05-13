@@ -4,6 +4,8 @@ use app\models\Board;
 use app\models\DataCenter;
 ?>
 <?php
+$impact = json_encode(Yii::$app->session->get('impact'));
+$impact_url = json_encode(Yii::$app->request->baseUrl . '/site/impact');
 $pull_url = json_encode(Yii::$app->request->baseUrl . '/site/pull');
 
 $more_announcement_url = json_encode(Yii::$app->request->baseUrl . '/site/more-announcement');
@@ -12,7 +14,6 @@ $more_board_url = json_encode(Yii::$app->request->baseUrl . '/site/more-board');
 
 $push_announcement_url = json_encode(Yii::$app->request->baseUrl . '/site/write-announcement?data=');
 $push_board_url = json_encode(Yii::$app->request->baseUrl . '/site/write-board?data=');
-
 
 $boardInt = json_encode(Yii::$app->params['boardInterval']);
 
@@ -100,8 +101,8 @@ $pull = <<< JS
                 dataType: 'json',
                 success: function(data){  
                     console.log(data);
-                    $('#a_new_size').html(data.announcementSize);
                     if(data.pjax){
+                    	$('#a_new_size').html(data.announcementSize);
                     	$.pjax.reload({container:'#anc-list-modal'});
                 		setTimeout(function(){
 							view_more_announcement.removeClass('loading');
@@ -156,9 +157,26 @@ $pull = <<< JS
         	});
 		}
 
+		function impact(){
+			$.ajax({
+                type: 'POST',
+                url: $impact_url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(data){  
+                	console.log(data);
+                    if(data.unread){
+                        ann_badge.removeClass('hidden');
+                    }
+                },
+        	});
+		}
+
 		setInterval(function(){
 			pull();
 		}, 4900);
+
+        impact();
 	});
 })(jQuery);
 JS;

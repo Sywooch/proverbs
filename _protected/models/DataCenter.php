@@ -40,6 +40,36 @@ class DataCenter
 		return $count;
 	}
 
+	public function countRecentAnnouncement(){
+        $count = count(Announcement::find()->all());
+		
+		return $count;
+	}
+
+	public function lastAnnouncement(){
+		$announcement = Announcement::find()->orderBy(['id' => SORT_DESC])->one();
+
+        return $announcement;
+	}
+
+	public function lastLogin(){
+		
+		$user = User::findOne(Yii::$app->user->identity->id);
+
+		$data = $user->last_login;
+
+		return $data;
+	}
+
+	public function lastLogout(){
+
+		$user = User::findOne(Yii::$app->user->identity->id);
+
+		$data = $user->last_logout;
+
+		return $data;
+	}
+
 	public function recentAnnouncement($size){
         $searchModel = new AnnouncementSearch();
         $dataProvider = $searchModel->searchRecentAnnouncement($params = null, $size);
@@ -52,11 +82,5 @@ class DataCenter
         $dataProvider = $searchModel->searchRecentBoard($params = null, $size);
 
 		return $dataProvider;
-	}
-
-	public function countRecentAnnouncement(){
-        $count = count(Announcement::find()->all());
-		
-		return $count;
 	}
 }

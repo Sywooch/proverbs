@@ -42,6 +42,7 @@ class SiteController extends Controller
                     [
                         'actions' => [
                             'logout', 
+                            'impact', 
                             'sbar', 
                             'fetch',
                             'pull',
@@ -59,6 +60,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'cred-check' => ['post'],
+                    'impact' => ['post'],
                     'fetch' => ['post'],
                     'delete-announcement' => ['post'],
                     'logout' => ['post'],
@@ -85,6 +87,31 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function actionImpact(){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            Yii::$app->session->set('announcementSize', 10);
+            Yii::$app->session->set('boardSize', 50);
+
+            if(Yii::$app->session->get('impact') === 1){
+                $user = User::find()->where(['id' => Yii::$app->user->identity->id])->one();
+                $last = DataCenter::lastAnnouncement();
+
+                if($last->created_at > $user->last_logout && ($user->id !== $last->posted_by)){
+                    $unread = true;
+                }else {
+                    $unread = false;
+                }
+
+                return $data = array('unread' => $unread);
+                
+            }else {
+                return $data = array('unread' => false);
+            }
+        }
     }
 
     public function actionFetchAnnouncement($data){
@@ -271,6 +298,8 @@ class SiteController extends Controller
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
             
+            Yii::$app->session->set('impact', 0);
+
             if(Yii::$app->session->get('announcementCount') !== DataCenter::countAnnouncement()){
                 $pjaxAnnouncement = true;
                 Yii::$app->session->set('announcementCount', DataCenter::countAnnouncement());
@@ -491,16 +520,18 @@ class SiteController extends Controller
         $model = $lwe ? new LoginForm(['scenario' => 'lwe']) : new LoginForm();
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->login()) 
+        if ($model->load(Yii::$app->request->post()) && $model->login())
         {
+            $user = User::findOne(Yii::$app->user->identity->id);
+            $user->last_login = time();
+            $user->save();
+
             Yii::$app->session->set('announcementCount', DataCenter::countAnnouncement());
             Yii::$app->session->set('announcementSize', 10);
-
             Yii::$app->session->set('boardCount', DataCenter::countBoard());
             Yii::$app->session->set('boardSize', 50);
-
+            Yii::$app->session->set('impact', 1);
             Yii::$app->session->set('sidebar', '');
-            Yii::$app->session->set('loginTimestamp', time());
 
             return $this->redirect(Yii::$app->request->baseUrl . '/dashboard');
         }
@@ -520,6 +551,9 @@ class SiteController extends Controller
 
     public function actionLogout()
     {
+        $user = User::findOne(Yii::$app->user->identity->id);
+        $user->last_logout = time();
+        $user->save();
         Yii::$app->user->logout();
 
         return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/site/login');
@@ -591,7 +625,7 @@ class SiteController extends Controller
             }
             else
             {
-                Yii::$app->session->setFlash('error', 
+                Yii::$app->session->setFlash('error',
                     Yii::t('app', 'We couldn\'t sign you up, please contact us.'));
                 Yii::error('Signup failed! 
                     User '.Html::encode($user->username).' could not sign up.
@@ -607,11 +641,13 @@ class SiteController extends Controller
 
     private function signupWithActivation($model, $user)
     {
+        Yii::$app->session->setFlash('success', 'Test');
         if ($model->sendAccountActivationEmail($user))
         {
             Yii::$app->session->setFlash('success', 
                 Yii::t('app', 'Hello').' '. Html::encode(ucfirst($user->username)) . '. ' .
                 Yii::t('app', 'To be able to log in, you need to confirm your registration. Please check your email, we sent you a message.'));
+            return $this->refresh();
         }
         else 
         {
@@ -620,6 +656,7 @@ class SiteController extends Controller
             Yii::error('Oops, something went wrong. Signup failed! 
                 User '.Html::encode($user->username).' could not sign up.
                 Possible causes: verification email could not be sent.');
+            return $this->refresh();
         }
     }
 
