@@ -24,7 +24,7 @@ class AppController extends Controller
                         'roles' => ['parent'],
                     ],
                     [
-                        'controllers' => ['user'],
+                        'controllers' => ['user', 'upload'],
                         'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['dev', 'master', 'admin'],

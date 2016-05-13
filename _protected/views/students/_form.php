@@ -15,7 +15,16 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
         <div class="ui center aligned stackable cards">
             <div class="card">
                 <div class="image">
-                    <img src="<?= $img ?>" class="tiny image">
+                    <div id="image-upload-wrap">
+                        <div id="image-upload-button">
+                            <?= $form->field($model,'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
+                        </div>
+                    </div>
+                    <?php if(!empty($model->students_profile_image)) : ?>
+                        <?= Html::img(['/file','id'=>$model->students_profile_image]) ?>
+                    <?php else :?>
+                        <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+                    <?php endif ?>
                 </div>
                 <div class="ui center aligned content">
                     <?= $model->isNewRecord ? '' : $form->field($model, 'id', ['inputTemplate' => '<label>ID#</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>

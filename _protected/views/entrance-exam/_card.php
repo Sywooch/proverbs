@@ -1,18 +1,22 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-!empty($model->applicant['students_profile_image']) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->applicant['students_profile_image'] : $img = $avatar;
-!empty(trim($model->applicant['middle_name'])) ? $middle = ucfirst(substr($model->applicant['middle_name'], 0,1)).'.' : $middle = '';
+use app\models\DataHelper;
 ?>
 <?php Pjax::begin(['id' => 'entrance-exam-card', 'timeout' => 60000]); ?>
 <div class="ui center aligned stackable cards">
     <div class="card">
-        <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+        <div class="image">
+            <?php if(!empty($model->applicant['students_profile_image'])) : ?>
+                <?= Html::img(['/file','id'=>$model->applicant['students_profile_image']]) ?>
+            <?php else :?>
+                <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+            <?php endif ?>
+        </div>
         <div class="ui center aligned content">
             <label>ID# <strong><?= $model->applicant_id ?></strong></label>
             <div class="header">
-                <?= Html::a(implode(' ', [$model->applicant['first_name'], $middle, $model->applicant['last_name']]), ['applicant/view?id=' . $model->applicant_id], ['class' => '']) ?>
+                <?= Html::a(DataHelper::name($model->applicant['first_name'], $model->applicant['middle_name'], $model->applicant['last_name']), ['applicant/view?id=' . $model->applicant_id], ['class' => '']) ?>
             </div>
             <div class="meta">
             </div>

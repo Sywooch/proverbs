@@ -13,6 +13,7 @@ use app\models\GradeLevel;
 use app\models\Section;
 use app\models\SchoolYear;
 use app\models\Card;
+use app\models\DataHelper;
 
 $current_date = date('Y');
 $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
@@ -37,19 +38,19 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !$model->isNewRecord ? $img : $avatar,
-            'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->student->id, '</strong>']) : '&nbsp;',
-            'labelFor' => 'Enrollee ID',
+            'imageContent' => !empty($model->student->students_profile_image) ? ['/file', 'id' => $model->student->students_profile_image] : Yii::$app->params['avatar'],
+            'labelContent' => implode(' ', ['ID#', '<strong>', $student->id, '</strong>']),
+            'labelFor' => 'Student ID',
             'labelOptions' => '',
-            'headerContent' => !$model->isNewRecord ? implode(' ', [$model->student->first_name, $middle, $model->student->last_name]) : '&nbsp;',
+            'headerContent' => DataHelper::name($model->student->first_name, $model->student->middle_name, $model->student->last_name),
             'headerOptions' => '',
-            'metaContent' => !$model->isNewRecord ? implode('', ['\'', $model->student->nickname, '\'']) : '&nbsp',
+            'metaContent' => implode('', ['\'', $model->student->nickname, '\'']),
             'metaOptions' => '',
-            'leftFloatedContent' => !$model->isNewRecord ? $model->levelName : '&nbsp;',
+            'leftFloatedContent' => DataHelper::gradeLevel($model->student->grade_level_id),
             'leftFloatedFor' => 'Grade Level',
             'leftFloatedOptions' => '',
             'rightFloatedContent' => '',
-            'rightFloatedOptions' => !$model->isNewRecord ? $model->student->sped === 0 ? '' : 'hidden' : 'hidden'
+            'rightFloatedOptions' => $model->student->sped === 0 ? '' : 'hidden'
         ]) ?>
     </div>
     <div class="nine wide rounded column">

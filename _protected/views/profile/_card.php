@@ -2,13 +2,17 @@
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use app\models\DataHelper;
-$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-!empty($model->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->profile_image : $img = $avatar;
 ?>
 <?php Pjax::begin(['id' => 'profile-card', 'timeout' => 60000]); ?>
 <div class="ui center aligned stackable cards">
 	<div class="card">
-		<div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+		<div class="image">
+		<?php if(!empty($model->profile_image)) : ?>
+			<?= Html::img(['/file','id'=>$model->profile_image]) ?>
+		<?php else :?>
+			<?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+		<?php endif ?>
+		</div>
 		<div class="ui center aligned content">
 			<label><em><?= $model->email ?></em></label>
 			<div class="header">

@@ -8,6 +8,7 @@ use yii\helpers\ArrayHelper;
 use app\models\SchoolYear;
 use app\models\User;
 use app\models\Section;
+use mdm\upload\UploadBehavior;
 /*
 *	Direct Questions answerable by Yes or No
 *	Yes (0)
@@ -15,9 +16,16 @@ use app\models\Section;
 */
 class DataHelper
 {	
-	public function avatar(){
-		$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-		return $avatar;
+    public function avatar(){
+        $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+        
+        return $avatar;
+    }
+
+	public function image($id){
+		$user = User::findOne($id);
+
+		return $user;
 	}
 
     public function carbonDate($data) {        

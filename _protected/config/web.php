@@ -5,11 +5,14 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
-    'name' => 'PVA Portal',
+    'name' => 'AXIS',
     //'language' => 'en',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
+    ],
+    'controllerMap' => [
+        'file' => 'mdm\\upload\\FileController', // use to show or download file
     ],
     'components' => [
         'request' => [

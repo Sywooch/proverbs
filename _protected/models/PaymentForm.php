@@ -70,6 +70,15 @@ public function rules()
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
+            [
+                'class' => 'mdm\upload\UploadBehavior',
+                'attribute' => 'file', // required, use to receive input file
+                'savedAttribute' => 'profile_image', // optional, use to link model with saved file.
+                'uploadPath' => '@webroot/uploads/users', // saved directory. default to '@runtime/upload'
+                'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
+                'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
+            ],
+
         ];
     }
 

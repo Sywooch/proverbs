@@ -8,7 +8,13 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 <?php Pjax::begin(['id' => 'student-card', 'timeout' => 60000]); ?>
 <div class="ui center aligned stackable cards">
 	<div class="card">
-		<div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+        <div class="image">
+            <?php if(!empty($model->students_profile_image)) : ?>
+                <?= Html::img(['/file','id'=>$model->students_profile_image]) ?>
+            <?php else :?>
+                <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+            <?php endif ?>
+        </div>
 		<div class="ui center aligned content">
 			<label>ID# <strong><?= $model->id ?></strong></label>
 			<div class="header">

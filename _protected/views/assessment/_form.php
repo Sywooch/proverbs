@@ -39,7 +39,7 @@ if($model->isNewRecord){
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !$model->isNewRecord ? $img : $avatar,
+            'imageContent' => !$model->isNewRecord ? !empty($model->enrolled->student->students_profile_image) ? ['/file', 'id' => $model->enrolled->student->students_profile_image] : Yii::$app->params['avatar'] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
             'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->enrolled->student->id, '</strong>']) : '&nbsp;',
             'labelFor' => 'Applicant ID',
             'labelOptions' => '',

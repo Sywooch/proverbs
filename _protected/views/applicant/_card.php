@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use app\models\DataHelper;
 $avatar = Yii::$app->request->baseUrl . '/uploads/ui/user-blue.svg';
 !empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
 $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Female <i class="woman icon"></i>';
@@ -9,7 +10,13 @@ $model->gender === 0 ? $gender = 'Male <i class="man icon"></i>' : $gender = 'Fe
 <?php Pjax::begin(['id' => 'applicant-card', 'timeout' => 10000, 'enablePushState' => false]); ?>
 <div class="ui center aligned stackable cards">
     <div class="card">
-        <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+        <div class="image">
+            <?php if(!empty($model->students_profile_image)) : ?>
+                <?= Html::img(['/file','id'=>$model->students_profile_image]) ?>
+            <?php else :?>
+                <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+            <?php endif ?>
+        </div>
         <div class="ui center aligned content">
             <label>ID# <strong><?= $model->id ?></strong></label>
             <div class="header">

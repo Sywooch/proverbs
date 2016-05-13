@@ -3,15 +3,6 @@ use app\rbac\models\AuthItem;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\Options;
-
-$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-
-if($user->scenario !== 'create'){
-    !empty($user->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $user->profile_image : $img = $avatar;
-} else {
-    $img = $avatar;
-}
-
 ?>
 <p></p>
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
@@ -19,7 +10,18 @@ if($user->scenario !== 'create'){
     <div class="four wide rounded column">
         <div class="ui center aligned stackable cards">
             <div class="card">
-                <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+                <div class="image">
+                    <div id="image-upload-wrap">
+                        <div id="image-upload-button">
+                            <?= $form->field($user,'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
+                        </div>
+                    </div>
+                    <?php if(!empty($user->profile_image)) : ?>
+                        <?= Html::img(['/file','id'=>$user->profile_image]) ?>
+                    <?php else :?>
+                        <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+                    <?php endif ?>
+                </div>
                 <div class="ui center aligned content">
                     
                 </div>

@@ -6,7 +6,8 @@ use yii\jui\DatePicker;
 use nesbot\Carbon;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
-
+use yii\widgets\Pjax;
+use app\models\DataHelper;
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->profile_image : $img = $avatar;
 ?>
@@ -14,7 +15,38 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
-        <?= $this->render('_card', ['model' => $model]) ?>
+    <?php Pjax::begin(['id' => 'profile-card', 'timeout' => 60000]); ?>
+    <div class="ui center aligned stackable special cards">
+        <div class="card">
+            <div class="image">
+                <div id="image-upload-wrap">
+                    <div id="image-upload-button">
+                        <?= $form->field($model,'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
+                    </div>
+                </div>
+                <?php if(!empty($model->profile_image)) : ?>
+                    <?= Html::img(['/file','id'=>$model->profile_image]) ?>
+                <?php else :?>
+                    <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+                <?php endif ?>
+            </div>
+            <div class="ui center aligned content">
+                <label><em><?= $model->email ?></em></label>
+                <div class="header">
+                    <?= DataHelper::name($model->first_name, $model->middle_name, $model->last_name) ?>
+                    <p></p>
+                </div>
+                <div class="meta">
+                    <span id="meta-content"><?= implode('', ['\'', $model->username, '\'']) ?></span>
+                    <p></p>
+                </div>
+            </div>
+            <div class="extra center aligned content">
+                <label class="user-id"><span><?= ucfirst($model->role->item_name) ?></span></label>
+            </div>
+        </div>
+    </div>
+    <?php Pjax::end(); ?>
     </div>
     <div class="nine wide rounded column">
         <div class="ui rounded segment">

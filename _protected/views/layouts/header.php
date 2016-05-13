@@ -2,6 +2,10 @@
 use yii\helpers\Html;
 use app\models\Announcement;
 use app\models\UiListView;
+use app\models\User;
+use app\models\DataHelper;
+$imaage = DataHelper::image(Yii::$app->user->identity->id);
+$user = User::findOne(Yii::$app->user->identity->id);
 ?>
 <?= $this->render('loading') ?>
 <header style="z-index: 99;">
@@ -33,7 +37,7 @@ use app\models\UiListView;
                     Yii::$app->user->isGuest 
                         ? Yii::$app->request->baseUrl . Yii::$app->params['avatar'] 
                             : !empty(Yii::$app->user->identity->profile_image) 
-                                ? Yii::$app->request->baseUrl . '/uploads/users/' . Yii::$app->user->identity->profile_image 
+                                ? Yii::$app->request->baseUrl . Yii::$app->params['avatar']
                                     : Yii::$app->request->baseUrl . Yii::$app->params['avatar']
                 , ['id' => 'thumbnail', 'style' => 'background: #f7f7f7;', 'class' => 'ui right thumbnail image', 'alt' => Yii::$app->user->identity->username]) 
                     . Html::tag('span', Yii::$app->user->identity->username . '<i class="dropdown icon" style="color: white; margin: 0 5px;"></i>', ['style' => 'margin: auto 10px; color: white;'])

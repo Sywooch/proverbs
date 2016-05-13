@@ -96,9 +96,17 @@ class ProfileForm extends \yii\db\ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
+            [
+                'class' => 'mdm\upload\UploadBehavior',
+                'attribute' => 'file', // required, use to receive input file
+                'savedAttribute' => 'profile_image', // optional, use to link model with saved file.
+                'uploadPath' => '@webroot/uploads/users', // saved directory. default to '@runtime/upload'
+                'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
+                'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
+            ],
         ];
     }
-    
+
     public function formatDate($date){
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 

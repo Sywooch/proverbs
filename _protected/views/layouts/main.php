@@ -58,7 +58,7 @@ AppAsset::register($this);
     <?php $this->registerJs("
         (function($){
             $(window).load(function(){
-                $('.datepicker').datepicker();
+                //$('.datepicker').datepicker();
                 
                 $('#announcement-modal.modal-body').mCustomScrollbar({
                     autoHideScrollbar: true,

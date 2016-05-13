@@ -5,7 +5,10 @@ use app\models\DataHelper;
 $avatar = DataHelper::avatar();
 ?>
 <div class="ui mini avatar image">
-	<img src="<?= !empty($model->postedBy->profile_image) ? implode('', [Yii::$app->request->baseUrl, '/uploads/users/',$model->postedBy->profile_image]) : $avatar ?>" style="background: #f7f7f7;">
+	<img src="<?= !empty($model->postedBy->profile_image) ? 
+		//implode('', [Yii::$app->request->baseUrl, '/uploads/users/',$model->postedBy->profile_image]) : 
+		$avatar :
+		$avatar ?>" style="background: #f7f7f7;">
 </div>
 <div class="bottom aligned content" style="margin: 0;">
 	<div class="description" style="margin-top: 0;">

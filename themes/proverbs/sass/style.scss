@@ -1167,6 +1167,21 @@ select.form-control.pva-form-control{
     height: 32px;
     width: 32px;
 }
+///////////////////////// UPLOADS
+#image-upload-wrap {
+    position: absolute;
+    bottom: 0;
+    opacity: .5;
+    #image-upload-button {
+        padding: 0 10px; 
+        text-align: center; 
+        margin-bottom: -10px;
+    }
+    &:hover {
+        opacity: 1;
+    }
+}
+
 ///////////////////////// SWEETALERT
 .sweet-alert {
   padding: 10px;

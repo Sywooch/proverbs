@@ -49,7 +49,7 @@ return [
 
     'avatar' =>  '/uploads/ui/user-blue.svg',
 
-    'pjaxInterval' => 10000,
+    'pjaxInterval' => 100000,
 
     'fetchInterval' => 2000,
 

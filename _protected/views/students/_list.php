@@ -8,7 +8,11 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 
 <div class="right floated content"><?= Html::a('<i class="pencil icon"></i>', ['update?id=' . $model->id]) ?></div>
 <div class="ui tiny rounded image">
-	<img src="<?= $img ?>" style="background: #e9eaed;">
+	<?php if(!empty($model->students_profile_image)) : ?>
+		<?= Html::img(['/file','id'=>$model->students_profile_image]) ?>
+	<?php else :?>
+		<?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user']]) ?>
+	<?php endif ?>
 </div>
 <div class="content">
 	<label><strong><?= Html::a(implode(' ', ['ID#', $model->id]),['view', 'id' => $model->id],[]) ?></strong></label><br>

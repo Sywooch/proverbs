@@ -19,6 +19,7 @@ use Yii;
  */
 class UserController extends AppController
 {
+
     public function behaviors()
     {
         return [

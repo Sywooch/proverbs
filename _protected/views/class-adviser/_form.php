@@ -16,8 +16,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 $teachers = User::find()->joinWith('role')->where(['item_name' => 'teacher'])->orderBy(['last_name' => SORT_ASC])->all();
-$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-!empty($model->teacher->profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/users/' . $model->teacher->profile_image : $img = $avatar;
 
 if($model->isNewRecord){
     $this->title = 'New';
@@ -31,7 +29,7 @@ if($model->isNewRecord){
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !$model->isNewRecord ? $img : $avatar,
+            'imageContent' => !$model->isNewRecord ? !empty($model->teacher->profile_image) ? ['/file', 'id' => $model->teacher->profile_image] : Yii::$app->params['avatar'] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
             'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->teacher->id, '</strong>']) : '&nbsp;',
             'labelFor' => 'Applicant ID',
             'labelOptions' => '',

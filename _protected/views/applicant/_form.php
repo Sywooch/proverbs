@@ -18,7 +18,18 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
     <div class="four wide rounded column">
         <div class="ui center aligned stackable cards">
             <div class="card">
-                <div class="image"><img src="<?= $img ?>" class="tiny image"></div>
+                <div class="image">
+                    <div id="image-upload-wrap">
+                        <div id="image-upload-button">
+                            <?= $form->field($model,'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
+                        </div>
+                    </div>
+                    <?php if(!empty($model->students_profile_image)) : ?>
+                        <?= Html::img(['/file','id'=>$model->students_profile_image]) ?>
+                    <?php else :?>
+                        <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+                    <?php endif ?>
+                </div>
                 <div class="ui center aligned content">
                     <?= $model->isNewRecord ? '' : $form->field($model, 'id', ['inputTemplate' => '<label>ID#</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
                 </div>

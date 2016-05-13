@@ -4,14 +4,14 @@ use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 use app\models\Card;
 use app\models\DataHelper;
-$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+
 
 ?>
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !empty($student->students_profile_image) ? implode('',[Yii::$app->request->baseUrl, '/uploads/students/', $student->students_profile_image]) : $avatar,
+            'imageContent' => !empty($student->students_profile_image) ? ['/file', 'id' => $student->students_profile_image] : Yii::$app->params['avatar'],
             'labelContent' => implode(' ', ['ID#', '<strong>', $student->id, '</strong>']),
             'labelFor' => 'Student ID',
             'labelOptions' => '',

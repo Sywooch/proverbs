@@ -4,6 +4,7 @@ namespace app\models;
 use app\rbac\models\Role;
 use nenad\passwordStrength\StrengthValidator;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use Yii;
 
 /**
@@ -79,7 +80,21 @@ class User extends UserIdentity
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+            [
+                'class' => 'mdm\upload\UploadBehavior',
+                'attribute' => 'file', // required, use to receive input file
+                'savedAttribute' => 'profile_image', // optional, use to link model with saved file.
+                'uploadPath' => '@webroot/uploads/users', // saved directory. default to '@runtime/upload'
+                'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
+                'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
+            ],
         ];
     }
 
