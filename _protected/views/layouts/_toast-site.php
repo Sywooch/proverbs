@@ -1,5 +1,5 @@
 <?php
-$timeOut = Yii::$app->params['toastTimeout'];
+$timeOut = 60000;
 $success = Yii::$app->session->getFlash('success');
 if($success !== null){
 $timeOut = json_encode($timeOut);
@@ -34,7 +34,7 @@ $this->registerJs($toast);
 }
 ?>
 <?php
-$timeOut = Yii::$app->params['toastTimeout'];
+$timeOut = 60000;
 $success2 = Yii::$app->session->getFlash('success2');
 if($success2 !== null){
 $timeOut = json_encode($timeOut);
@@ -70,7 +70,7 @@ $this->registerJs($toast2);
 }
 ?>
 <?php
-$timeOut = Yii::$app->params['toastTimeout'];
+$timeOut = 60000;
 $error = Yii::$app->session->getFlash('error');
 if($error !== null){
 $timeOut = json_encode($timeOut);

@@ -32,7 +32,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'request-password-reset'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -616,6 +616,7 @@ class SiteController extends Controller
     {  
         $rna = Yii::$app->params['rna'];
         $model = $rna ? new SignupForm(['scenario' => 'rna']) : new SignupForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
             if ($user = $model->signup()) 
@@ -641,7 +642,6 @@ class SiteController extends Controller
 
     private function signupWithActivation($model, $user)
     {
-        Yii::$app->session->setFlash('success', 'Test');
         if ($model->sendAccountActivationEmail($user))
         {
             Yii::$app->session->setFlash('success', 

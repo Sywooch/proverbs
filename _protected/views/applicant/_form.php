@@ -21,7 +21,7 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                 <div class="image">
                     <div id="image-upload-wrap">
                         <div id="image-upload-button">
-                            <?= $form->field($model,'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
+                            <?= $form->field($model, 'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
                         </div>
                     </div>
                     <?php if(!empty($model->students_profile_image)) : ?>

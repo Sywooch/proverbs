@@ -11,11 +11,6 @@ use app\models\Options;
         <div class="ui center aligned stackable cards">
             <div class="card">
                 <div class="image">
-                    <div id="image-upload-wrap">
-                        <div id="image-upload-button">
-                            <?= $form->field($user,'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
-                        </div>
-                    </div>
                     <?php if(!empty($user->profile_image)) : ?>
                         <?= Html::img(['/file','id'=>$user->profile_image]) ?>
                     <?php else :?>

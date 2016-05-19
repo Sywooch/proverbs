@@ -24,7 +24,8 @@
         "kartik-v/yii2-label-inplace": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
         "kartik-v/yii2-field-range": "*",
-        "yii2mod/yii2-sweet-alert": "*",
+        "mdmsoft/yii2-upload-file": "~1.2",
+        "yiisoft/yii2-imagine": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

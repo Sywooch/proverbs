@@ -47,6 +47,10 @@ $(document).ready(function(){
 	var bkv = $bkv;
 	var ttlv = $ttlv;
 	var balv = $balv;
+	
+	$('input').blur(function(){
+		calcBtn.click();
+	});
 
 	function getPercentage(){
 		return $('#assessmentform-percentage_value option:selected').val();
@@ -107,10 +111,12 @@ $(document).ready(function(){
 
     function changeState(elem){
         if(parseInt(elem.defaultValue) === 1){
+    		//calcBtn.click();
             elem.checked = false;
             $(elem).attr('checked', false);
             elem.previousElementSibling.defaultValue = 1;
         } else {
+    		//calcBtn.click();
             elem.checked = true;
             $(elem).attr('checked', true);
             elem.previousElementSibling.defaultValue = 0;
@@ -155,6 +161,8 @@ $(document).ready(function(){
         	var switchery = new Switchery(html, {size: 'small', speed: '0.2s'});
             
             elems[i].onchange = function() { 
+				
+
                 if(this.checked){
                     this.defaultValue = 0;
 					changeState(this);
@@ -163,10 +171,13 @@ $(document).ready(function(){
                     	e1();
                     	e4();
                     	pv.html(getPercentage());
+                    	calcBtn.click();
                     }else if($(this).attr('id') === $(sw2).attr('id')){
                     	e2();
+                    	calcBtn.click();
                     }else {
                     	e3();
+                    	calcBtn.click();
                     }
 
                 } else {
@@ -177,10 +188,13 @@ $(document).ready(function(){
                     	d1();
                     	d4();
                     	pv.html(getPercentage());
+                    	calcBtn.click();
                     }else if($(this).attr('id') === $(sw2).attr('id')){
                     	d2();
+                    	calcBtn.click();
                     }else {
                     	d3();
+                    	calcBtn.click();
                     }
                 }
             };
@@ -192,10 +206,39 @@ $(document).ready(function(){
 
         for (i ; i < elems.length; i++) {
             elems[i].onchange = function() { 
+
                 if(this.checked){
                     this.defaultValue = 0;
-                }else {
+					changeState(this);
+
+                    if($(this).attr('id') === $(sw1).attr('id')){
+                    	e1();
+                    	e4();
+                    	pv.html(getPercentage());
+                    	calcBtn.click();
+                    }else if($(this).attr('id') === $(sw2).attr('id')){
+                    	e2();
+                    	calcBtn.click();
+                    }else {
+                    	e3();
+                    	calcBtn.click();
+                    }
+                } else {
                     this.defaultValue = 1;
+					changeState(this);
+
+                    if($(this).attr('id') === $(sw1).attr('id')){
+                    	d1();
+                    	d4();
+                    	pv.html(getPercentage());
+                    	calcBtn.click();
+                    }else if($(this).attr('id') === $(sw2).attr('id')){
+                    	d2();
+                    	calcBtn.click();
+                    }else {
+                    	d3();
+                    	calcBtn.click();
+                    }
                 }
             };
         }

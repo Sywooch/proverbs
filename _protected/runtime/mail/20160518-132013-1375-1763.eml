@@ -1,0 +1,49 @@
+Message-ID: <d9b48449333896601ec7a7f950a2085c@localhost>
+Date: Wed, 18 May 2016 13:20:13 +0800
+Subject: Password reset for AXIS
+From: AXIS robot <support@proverbs.com>
+To: charlie@charlie.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="_=_swift_v4_1463548813_155028d611f8967f88427bcc55bc5904_=_"
+
+
+--_=_swift_v4_1463548813_155028d611f8967f88427bcc55bc5904_=_
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello charlie,
+
+Follow this link to reset your password:
+
+Please, c=
+lick here to reset your password.
+
+--_=_swift_v4_1463548813_155028d611f8967f88427bcc55bc5904_=_
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns=3D"http://www.w3.org/1999/=
+xhtml">
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/ht=
+ml; charset=3DUTF-8" />
+    <title></title>
+    </head>
+<body>
+    =
+   =20
+Hello charlie,
+
+Follow this link to reset your password:
+
+<a=
+ href=3D"http://localhost/proverbs/site/reset-password?token=3DjtNsU7QimLMh=
+kN309qMq86j0LhuOl2PB_1463548813">Please, click here to reset your password.=
+</a>    </body>
+</html>
+
+
+--_=_swift_v4_1463548813_155028d611f8967f88427bcc55bc5904_=_--

@@ -9,15 +9,12 @@ use yii\widgets\DetailView;
 $this->title = $model->section_name;
 ?>
 <div class="ui two column stackable grid">
-    <div class="four wide column">
-        <div class="column">
-            <?= $this->render('_card', ['model' => $model]) ?>
-        </div>
-    </div>
     <div class="nine wide column">
         <div class="column">
             <?= $this->render('_detail', ['model' => $model]) ?>
         </div>
+    </div>
+    <div class="four wide column">
     </div>
     <div class="three wide column">
         <div class="column">

@@ -38,19 +38,19 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !empty($model->student->students_profile_image) ? ['/file', 'id' => $model->student->students_profile_image] : Yii::$app->params['avatar'],
-            'labelContent' => implode(' ', ['ID#', '<strong>', $student->id, '</strong>']),
+            'imageContent' => !$model->isNewRecord ? !empty($model->student->students_profile_image) ? ['/file', 'id' => $model->student->students_profile_image] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
+            'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $student->id, '</strong>']) : '&nbsp;',
             'labelFor' => 'Student ID',
             'labelOptions' => '',
-            'headerContent' => DataHelper::name($model->student->first_name, $model->student->middle_name, $model->student->last_name),
+            'headerContent' => !$model->isNewRecord ? DataHelper::name($model->student->first_name, $model->student->middle_name, $model->student->last_name) : '&nbsp;',
             'headerOptions' => '',
-            'metaContent' => implode('', ['\'', $model->student->nickname, '\'']),
+            'metaContent' => !$model->isNewRecord ? implode('', ['\'', $model->student->nickname, '\'']) : '&nbsp;',
             'metaOptions' => '',
-            'leftFloatedContent' => DataHelper::gradeLevel($model->student->grade_level_id),
+            'leftFloatedContent' => !$model->isNewRecord ? DataHelper::gradeLevel($model->student->grade_level_id) : '&nbsp;',
             'leftFloatedFor' => 'Grade Level',
             'leftFloatedOptions' => '',
             'rightFloatedContent' => '',
-            'rightFloatedOptions' => $model->student->sped === 0 ? '' : 'hidden'
+            'rightFloatedOptions' => !$model->isNewRecord ? $model->student->sped === 0 ? '' : 'hidden' : 'hidden'
         ]) ?>
     </div>
     <div class="nine wide rounded column">
@@ -106,6 +106,7 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
 
                                                 if(data.img !== 'empty'){
                                                     $('.tiny.image').attr('src', data.img);
+                                                    console.log(data.img);
                                                 }else {
                                                     $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
                                                 }

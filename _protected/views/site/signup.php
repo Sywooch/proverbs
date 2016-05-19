@@ -18,10 +18,13 @@ $this->title = Yii::t('app', 'Sign Up');
             <div class="pva-form-login">
                 <div class="panel panel-default form-login">
                     <div class="panel-body">
-                        <div id="user-check-img-wrap">
-                            <img id="user-check-img" class="animated2" src="<?= Yii::$app->request->baseUrl . '/uploads/ui/user-default.png'?>" alt="user" data-img="false">
+                        <div class="ui divided items" style="text-align: center; margin: auto;">
+                            <div class="item">
+                                <div class="ui small image proverbs" style="text-align: center; margin: auto;">
+                                    <?= Html::img(Yii::$app->params['logo'], ['id' => 'proverbs-logo']) ?>
+                                </div>
+                            </div>
                         </div>
-                        <p></p>
                         <span id="span-login-nav"><i id="back" class="fa fa-arrow-left fa-one-point-five i-back-btn invisible slide-in-right"></i></span>
                         <p></p>
                         <div id="check-email">
@@ -78,11 +81,11 @@ $(document).ready(function(){
 
     btn.click(function(){
         if(btn.attr('type') === 'button'){
-            slideLeft();
-            changeBtnType(data='submit', text='SUBMIT');
-            sb = true;
-        } else {
-
+            if($('#input-username-check').val() !== ''){
+                slideLeft();
+                changeBtnType(data='submit', text='SUBMIT');
+                sb = true;
+            }
         }
     });
 

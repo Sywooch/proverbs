@@ -17,6 +17,8 @@ use yii\filters\AccessControl;
 use yii\web\Response;
 use app\models\GradeLevel;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
 /**
  * EnrollController implements the CRUD actions for EnrolledForm model.
  */
@@ -53,6 +55,14 @@ class EnrollController extends Controller
                     'gradeLevel' => ['post'],
                     'pjax' => ['post'],
                 ],
+            ],
+            [
+                'class' => 'mdm\upload\UploadBehavior',
+                'attribute' => 'file', // required, use to receive input file
+                'savedAttribute' => 'students_profile_image', // optional, use to link model with saved file.
+                'uploadPath' => '@webroot/uploads/students', // saved directory. default to '@runtime/upload'
+                'autoSave' => true, // when true then uploaded file will be save before ActiveRecord::save()
+                'autoDelete' => true, // when true then uploaded file will deleted before ActiveRecord::delete()
             ],
         ];
     }
@@ -173,7 +183,8 @@ class EnrollController extends Controller
             $bday = \Carbon\Carbon::create($y, $m, $d)->toFormattedDateString();
 
             if(!empty($student->students_profile_image)){
-                $img = Yii::$app->request->baseUrl . '/uploads/students/' . $student->students_profile_image;
+                $img = Url::to(['/file', 'id'=>$student->students_profile_image]);
+                //$img = Url::to('');
             }else {
                 $img = 'empty';
             }
@@ -181,7 +192,7 @@ class EnrollController extends Controller
             !empty(trim($student->middle_name)) ? $middle = ucfirst(substr($student->middle_name, 0,1)).'.' : $middle = '';
 
             $data = array(
-                    'sid'=> $student->id, 
+                    'sid'=> $student->id,
                     'act'=> (int) $student->status,
                     'name' =>  implode(' ', [$student->first_name, $middle, $student->last_name]),
                     'nick' => ucfirst('\'' . $student->nickname . '\''),

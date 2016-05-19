@@ -4,7 +4,12 @@ use app\rbac\models\AuthAssignment;
 use app\models\DataCenter;
 ?>
 <div class="sidebar smooth">
-    <div id="sidebar-offset"></div>
+    <div id="sidebar-offset">
+        <div></div>
+        <div id="sb-btn1" class="sidebar-toggle-menu">
+            <span><a id="trigger-sidebar"><i class="chevron right icon"></i></a></span>
+        </div>
+    </div>
     <div id="sidebar-content">
         <?= $this->render('board') ?>
     </div>

@@ -7,7 +7,7 @@ use app\models\DataHelper;
 use app\models\Options;
 
 
-$avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
+$avatar = Yii::$app->params['avatar'];
 !$model->isNewRecord ? !empty($model->enrolled->student->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->enrolled->student->students_profile_image : $img = $avatar : '';
 !$model->isNewRecord ? !empty(trim($model->enrolled->student->middle_name)) ? $middle = ucfirst(substr($model->enrolled->student->middle_name, 0,1)).'.' : $middle = '' : '';
 !$model->isNewRecord ? $this->title = implode(' ', [$model->enrolled->student->first_name, $middle, $model->enrolled->student->last_name]) : 'New';
@@ -39,7 +39,9 @@ if($model->isNewRecord){
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !$model->isNewRecord ? !empty($model->enrolled->student->students_profile_image) ? ['/file', 'id' => $model->enrolled->student->students_profile_image] : Yii::$app->params['avatar'] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
+            'imageContent' => !$model->isNewRecord ? 
+                !empty($model->enrolled->student->students_profile_image) ? ['/file', 'id' => $model->enrolled->student->students_profile_image] : implode('',[Yii::$app->request->baseUrl, Yii::$app->params['avatar']])
+                        : implode('',[Yii::$app->request->baseUrl, Yii::$app->params['avatar']]),
             'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->enrolled->student->id, '</strong>']) : '&nbsp;',
             'labelFor' => 'Applicant ID',
             'labelOptions' => '',
@@ -201,14 +203,16 @@ if($model->isNewRecord){
                     </table>
                     <?= $form->field($model, 'total_assessed', ['inputTemplate' => '<label><strong>Total Assessed</strong></label>{input}','inputOptions' => [] ])->label(false)->textInput(['style' => 'text-align: right;' , 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
                     <p></p>
-                    <button id="calc" class="ui fluid huge orange button" type="button" style="font-size: 12px; margin-bottom: 5px;">Calculate</button>
+                    <button id="calc" class="ui fluid huge orange button hidden" type="button" style="font-size: 12px; margin-bottom: 5px;">Calculate</button>
                 </div>
             </div>
             <div class="ui segments">
                 <div class="ui center aligned segment">
                     <div class="row">
                         <div class="col-lg-4 col-mg-4 col-sm-12"></div>
-                        <div class="col-lg-4 col-mg-4 col-sm-12"><?= $form->field($model, 'balance', ['inputTemplate' => '<label for="BALANCE"><strong>BALANCE</strong></label>{input}','inputOptions' => [] ])->label(false)->textInput(['style' => 'text-align: right; font-size: 12px;' , 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
+                        <div class="col-lg-4 col-mg-4 col-sm-12">
+                            <?= !$model->isNewRecord ? implode(' ', ['<label><strong>Balance</strong></label>','Php', number_format($model->balance, 2)]) : $form->field($model, 'balance', ['inputTemplate' => '<label for="BALANCE"><strong>BALANCE</strong></label>{input}','inputOptions' => [] ])->label(false)->textInput(['style' => 'text-align: right; font-size: 12px;' , 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                        </div>
                         <div class="col-lg-4 col-mg-4 col-sm-12"></div>
                     </div>
                 </div>

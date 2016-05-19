@@ -64,4 +64,7 @@ return [
     'toastTimeout' => 5000,
     
     'pjaxTimeout' => 360000,
+
+    //////////////////////////
+    'logo' => '/proverbs/uploads/logo/logo-svg.svg',
 ];

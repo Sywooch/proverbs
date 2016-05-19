@@ -71,25 +71,56 @@ a {
         box-shadow: 0 0 5px 2px rgba(0,0,0,0.05);
 }
 #sidebar-offset {
-    min-height: 84px;
+    min-height: 136px;
     width: 100%;
     padding: 0;
     margin: 0;
+    text-align: right;
+    div:first-child {
+        min-height: 82px;
+    }
+    .sidebar-toggle-menu {
+        background: white;
+        width: 100%;
+        height: 54px;
+        span {
+            background: orange;
+            position: relative;
+            right: 0;
+            top: 18px;
+            height: 100%;
+            width: 100%;
+            min-width: 54px !important;
+            width: 54px !important;
+            cursor: pointer;
+            border-left: 1px solid rgba(34,36,38,.15);
+            padding: 18px 19px 19px 19px;
+            margin: 0;
+            a {
+                min-width: 54px !important;
+                width: 54px !important;
+                height: 54px;
+                color: #333;
+                &:hover {
+                    color: #555;
+                }
+            }
+        }
+    }
 }
 #sidebar-content {
     background: #fff;
     -ms-overflow-y: hidden;
     overflow-y: hidden;
     overflow-x: hidden;
-    height: 75%;
+    height: 70%;
     margin: 0;
     padding: 0;
     border-top: 1px solid rgba(34,36,38,.15);
 }
 #sidebar-write {
     width: 100%;
-    height: 20% !important;
-    min-height: 50% !important;
+    height: 15% !important;
     border-top: 1px solid rgba(34,36,38,.15);
     background: transparent;
     padding: 8px 8px 0px 8px;
@@ -164,12 +195,8 @@ textarea {
     display: table-cell;
     vertical-align: middle;
     background: darken($default-gray, 10%);
-    //background: $softgrey;
     margin: auto;
     text-align: center;
-    //background: #44abce;
-    //background: #007fd5;
-    //background: url('../images/desktop.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
          -o-background-size: cover;
             background-size: cover;
@@ -1168,6 +1195,9 @@ select.form-control.pva-form-control{
     width: 32px;
 }
 ///////////////////////// UPLOADS
+.switchery.switcher-small {
+    background: red;
+}
 #image-upload-wrap {
     position: absolute;
     bottom: 0;
@@ -1190,6 +1220,12 @@ select.form-control.pva-form-control{
   font-size: 18px;
 }
 ///////////////////////// UI
+#proverbs-logo {
+    width: auto;
+}
+.ui.big.image.proverbs {
+    height: 100px;
+}
 .notify.announcement {
     position: absolute;
     top: 18px;
@@ -1213,10 +1249,6 @@ select.form-control.pva-form-control{
 .ui.top.fixed.huge.inverted.menu {
     min-height: 56px;
     max-height: 54px;
-}
-.ui.link.item.sidebar-toggle-menu {
-    min-width: 54px; 
-    padding-top: 18px;
 }
 .alert-success.alert.fade.in{
     display: none;
@@ -1423,10 +1455,6 @@ select.form-control.pva-form-control{
     #sb-btn1 {
         visibility: hidden;
         display: none;
-    }
-    #sidebar-offset {
-        min-height: 128px;
-        //border-bottom: 1px solid rgba(34,36,38,.15);
     }
     #bm.item>.image{
         max-width: 35px !important;

@@ -30,7 +30,7 @@ AppAsset::register($this);
     <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
     <?php $this->head() ?>
 </head>
-<body <?= Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/site/signup' || Yii::$app->request->url === '/proverbs/login' || Yii::$app->request->url === '/proverbs/signup' ? 'style="display:table;"' : '';?> class="<?= Yii::$app->session->get('sidebar') ?>">
+<body <?= Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/site/signup' || Yii::$app->request->url === '/proverbs/site/request-password-reset' ? 'style="display:table; overflow-y: hidden;"' : '';?> class="<?= Yii::$app->session->get('sidebar') ?>">
     <?php $this->beginBody() ?>
         <?php if(Yii::$app->request->url === '/proverbs/site/login' || Yii::$app->request->url === '/proverbs/login'){include('alert.php');}?>
         </div>
@@ -42,10 +42,10 @@ AppAsset::register($this);
             include('alert.php');
             echo $content;
         } else { //MAIN
+            include('alert.php');
             include('header.php');
             include('sidebar.php');
             echo '<div id="st" class="page-content smooth"><p></p>';
-            include('alert.php');
             echo $content;
             echo '</div>';
             include('announcement.php');

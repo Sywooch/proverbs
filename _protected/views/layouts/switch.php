@@ -26,7 +26,7 @@ $(document).ready(function(){
         elems.forEach(function(html) {
             syncValue(elems[i]);
             changeState(elems[i]);
-            var switchery = new Switchery(html, {size: 'small', speed: '0.2s'});
+            var switchery = new Switchery(html, {size: 'small', speed: '0.2s', secondaryColor : '#fC73d0'});
 
             elems[i].onchange = function() { 
                 if(this.checked){
@@ -46,7 +46,7 @@ $(document).ready(function(){
         for (i ; i < elems.length; i++) {
             syncValue(elems[i]);
             changeState(elems[i]);
-            var switchery = new Switchery(elems[i], {size: 'small', speed: '0.2s'});
+            var switchery = new Switchery(elems[i], {size: 'small', speed: '0.2s', secondaryColor : '#fC73d0'});
 
             elems[i].onchange = function() { 
                 if(this.checked){

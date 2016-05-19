@@ -1,5 +1,6 @@
 <?php 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use app\models\Announcement;
 use app\models\UiListView;
 use app\models\User;
@@ -17,15 +18,8 @@ $user = User::findOne(Yii::$app->user->identity->id);
         </div>
     </div>
     <div class="ui top fixed huge inverted menu">
-        <div id="sb-btn1" class="ui link item sidebar-toggle-menu">
-            <a id="trigger-sidebar"><i class="icon-menu" style="color: #fff;"></i></a>
-        </div>
         <div class="ui link item">
-            <span>
-                <a href="<?= Yii::$app->request->baseUrl ?>">
-                    <img src="<?= Yii::$app->request->baseUrl . '/uploads/logo/proverbs.svg' ?>" alt="Proverbs" class="ui mini avatar image">
-                </a>
-            </span>
+            <span><a href="<?= Yii::$app->request->baseUrl ?>"><img src="<?= Yii::$app->params['logo'] ?>" alt="Proverbs" class="ui mini avatar image"></a></span>
         </div>
         <div class="right floated small menu">
             <div id="new-announcement" class="ui link item" data-toggle="modal" data-target="#ann_modal">
@@ -37,7 +31,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
                     Yii::$app->user->isGuest 
                         ? Yii::$app->request->baseUrl . Yii::$app->params['avatar'] 
                             : !empty(Yii::$app->user->identity->profile_image) 
-                                ? Yii::$app->request->baseUrl . Yii::$app->params['avatar']
+                                ? Url::to(['/file', 'id' => Yii::$app->user->identity->profile_image])
                                     : Yii::$app->request->baseUrl . Yii::$app->params['avatar']
                 , ['id' => 'thumbnail', 'style' => 'background: #f7f7f7;', 'class' => 'ui right thumbnail image', 'alt' => Yii::$app->user->identity->username]) 
                     . Html::tag('span', Yii::$app->user->identity->username . '<i class="dropdown icon" style="color: white; margin: 0 5px;"></i>', ['style' => 'margin: auto 10px; color: white;'])
