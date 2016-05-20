@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Response;
+use yii\imagine\Image;
+use app\models\File;
 
 /**
  * StudentsController implements the CRUD actions for StudentForm model.
@@ -128,15 +130,35 @@ class StudentsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $temp = $model->students_profile_image;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             Yii::$app->session->setFlash('success', 'Saved successfully');
+
+            if($temp !== $model->students_profile_image){
+                $this->generateThumbnail($model->students_profile_image);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
+        }
+    }
+
+    public function generateThumbnail($file)
+    {
+        //MAKE A THUMBNAIL COPY
+        $image = File::findImage($file)->toArray()['filename'];
+        if(file_exists($image)){
+            $dir = explode('students\\', File::findImage($file)->toArray()['filename'])[1];
+            $folder = explode('\\', $dir);
+            $file_name = explode('.', $folder[1])[0];
+            $extension = explode('.', $folder[1])[1];
+            mkdir(Yii::getAlias('@webroot/uploads/thumbnails/' . $folder[0]) );
+            Image::thumbnail($image, 64, 64)->save(Yii::getAlias('@webroot/uploads/thumbnails/' . $folder[0] . '/' . $file_name . '.' . $extension), ['quality' => 100]);
         }
     }
 
@@ -148,7 +170,9 @@ class StudentsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $student = $this->findModel($id);
+        $student->status = 100;
+        $student->save();
 
         Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);

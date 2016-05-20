@@ -7,7 +7,7 @@ $avatar = DataHelper::avatar();
 ?>
 <div class="ui mini avatar image">
 	<img src="<?= !empty($model->postedBy->profile_image) ? 
-		Url::to(['/file', 'id' => $model->postedBy->profile_image]) : $avatar ?>" style="background: #f7f7f7;">
+		Url::to(['/uthumbnail', 'id' => $model->postedBy->profile_image]) : $avatar ?>" style="background: #f7f7f7;">
 </div>
 <div class="bottom aligned content" style="margin: 0;">
 	<div class="description" style="margin-top: 0;">

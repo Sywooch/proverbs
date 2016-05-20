@@ -10,7 +10,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 <div class="ui tiny rounded image">
     <div class="image">
         <?php if(!empty($model->applicant['students_profile_image'])) : ?>
-            <?= Html::img(['/file','id'=> $model->applicant['students_profile_image']]) ?>
+            <?= Html::img(['/thumbnail','id'=> $model->applicant['students_profile_image']]) ?>
         <?php else :?>
             <?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
         <?php endif ?>

@@ -3,11 +3,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
-use yii\imagine\Image;
 use app\models\Board;
 use app\models\DataCenter;
 use app\models\SchoolYear;
 use yii\bootstrap\Alert;
+use yii\imagine\Image;
+use app\models\File;
+
 $this->title = 'Dashboard';
 ?>
 <div class="page-header">
@@ -17,13 +19,5 @@ $this->title = 'Dashboard';
 </div>
 <br>
 <div class="ui fluid segment">
-	<?php
-		//echo Html::img();
-		//$thumb = new Image();
-		//$thumb->open(Url::to(['/file', 'id' => Yii::$app->user->identity->profile_image]));    
-		// //$thumb->resizeImage(32,32,Imagick::FILTER_LANCZOS,1);
-		// // $thumb->writeImage('mythumb.gif');
-		// // $thumb->clear();
-		// // $thumb->destroy();
-	?>
+
 </div>

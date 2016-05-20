@@ -12,7 +12,9 @@ $config = [
     'modules' => [
     ],
     'controllerMap' => [
-        'file' => 'mdm\\upload\\FileController', // use to show or download file
+        'file' => 'mdm\\upload\\FileController',
+        'thumbnail' => 'app\\models\\Thumbnail',
+        'uthumbnail' => 'app\\models\\UserThumbnail',
     ],
     'components' => [
         'request' => [

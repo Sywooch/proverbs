@@ -12,6 +12,7 @@ class StudentForm extends \yii\db\ActiveRecord
     const STATUS_INACTIVE = 1;
     const STATUS_ACTIVE = 0;
     const STATUS_NULL = null;
+    const STATUS_DELETED = 100;
     const GENDER_MALE = 0;
     const GENDER_FEMALE = 1;
     const STATUS_PENDING = 1;

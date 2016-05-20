@@ -11,14 +11,7 @@ $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 <p></p>
 <?php $form = ActiveForm::begin(); ?>
 <div class="ui three column stackable grid">
-    <div class="four wide rounded column">
-        <div class="ui center aligned stackable cards">
-            <div class="card">
-                <div class="image"><img src="<?= Yii::$app->request->baseUrl . '/uploads/ui/section-bg.jpg' ?>" alt="bg" class="tiny image"></div>
-            </div>
-        </div>
-    </div>
-    <div class="nine wide rounded column">
+    <div class="twelve wide rounded column">
     <div class="panel panel-default rounded-edge">
         <div class="panel-body">
             <div class="row">

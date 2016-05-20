@@ -75,7 +75,7 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                                                 }
                                             }
                                         });
-                                },function(){
+                                }, function(){
                                     if($('#auto-suggest').val() === ''){
                                         $('#header-label').html('&nbsp;');
                                         $('#header-content').html('&nbsp;');

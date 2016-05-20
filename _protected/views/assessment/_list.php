@@ -7,7 +7,7 @@ use app\models\DataHelper;
 <div class="right floated content"><?= Html::a('<i class="pencil icon"></i>', ['update', 'id' => $model->id]) ?></div>
 <div class="ui tiny rounded image">
 	<?php if(!empty($model->enrolled->student->students_profile_image)) : ?>
-		<?= Html::img(['/file','id'=>$model->enrolled->student->students_profile_image]) ?>
+		<?= Html::img(['/thumbnail','id'=>$model->enrolled->student->students_profile_image]) ?>
 	<?php else :?>
 		<?= Html::img([Yii::$app->params['avatar'], ['alt' => 'user']]) ?>
 	<?php endif ?>

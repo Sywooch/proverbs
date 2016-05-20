@@ -11,6 +11,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\imagine\Image;
+use app\models\File;
 /**
  * ProfileController implements the CRUD actions for ProfileForm model.
  */
@@ -111,10 +113,16 @@ class ProfileController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $temp = $model->profile_image;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            
+
             Yii::$app->session->setFlash('success', 'Saved successfully');
+            
+            if($temp !== $model->profile_image){
+                $this->generateThumbnail($model->profile_image);
+            }
+
             return $this->redirect('index');
         } else {
             return $this->render('update', [
@@ -123,17 +131,18 @@ class ProfileController extends Controller
         }
     }
 
-    /**
-     * Deletes an existing ProfileForm model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    public function generateThumbnail($file)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect('index');
+        //MAKE A THUMBNAIL COPY
+        $image = File::findImage($file)->toArray()['filename'];
+        if(file_exists($image)){
+            $dir = explode('users\\', File::findImage($file)->toArray()['filename'])[1];
+            $folder = explode('\\', $dir);
+            $file_name = explode('.', $folder[1])[0];
+            $extension = explode('.', $folder[1])[1];
+            mkdir(Yii::getAlias('@webroot/uploads/thumbnails/' . $folder[0]) );
+            Image::thumbnail($image, 64, 64)->save(Yii::getAlias('@webroot/uploads/thumbnails/' . $folder[0] . '/' . $file_name . '.' . $extension), ['quality' => 100]);
+        }
     }
 
     /**

@@ -73,36 +73,40 @@ a {
 #sidebar-offset {
     min-height: 136px;
     width: 100%;
-    padding: 0;
-    margin: 0;
+    padding: auto;
+    margin: auto;
     text-align: right;
+    background: white;
     div:first-child {
         min-height: 82px;
     }
-    .sidebar-toggle-menu {
-        background: white;
-        width: 100%;
+    div:last-child {
+        width: 53px;
         height: 54px;
-        span {
-            background: orange;
-            position: relative;
-            right: 0;
-            top: 18px;
-            height: 100%;
-            width: 100%;
-            min-width: 54px !important;
-            width: 54px !important;
-            cursor: pointer;
-            border-left: 1px solid rgba(34,36,38,.15);
-            padding: 18px 19px 19px 19px;
-            margin: 0;
-            a {
-                min-width: 54px !important;
-                width: 54px !important;
-                height: 54px;
-                color: #333;
-                &:hover {
-                    color: #555;
+        padding-top: 18px;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+            background: #f7f7f7;
+        }
+        .sidebar-toggle-menu {
+            height: 54px;
+            span {
+                height: 100%;
+                min-width: 100% !important;
+                cursor: pointer;
+                padding: 18px auto 19px auto;
+                margin: 0;
+                -webkit-border-radius: 100%;
+                        border-radius: 100%;
+                a {
+                    min-width: 54px !important;
+                    width: 54px !important;
+                    height: 54px;
+                    color: #333;
+                    &:hover {
+                        color: #555;
+                    }
                 }
             }
         }

@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Response;
+use yii\imagine\Image;
+use app\models\File;
 /**
  * ApplicantController implements the CRUD actions for ApplicantForm model.
  */
@@ -143,10 +145,16 @@ class ApplicantController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $temp = $model->students_profile_image;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             Yii::$app->session->setFlash('success', 'Saved successfully');
+
+            if($temp !== $model->students_profile_image){
+                $this->generateThumbnail($model->students_profile_image);
+            }
+
             if((int) $model->status === 1){
                 return $this->redirect('index');
             } elseif((int) $model->status === 2) {
@@ -159,6 +167,19 @@ class ApplicantController extends Controller
         }
     }
 
+    public function generateThumbnail($file)
+    {
+        //MAKE A THUMBNAIL COPY
+        $image = File::findImage($file)->toArray()['filename'];
+        if(file_exists($image)){
+            $dir = explode('students\\', File::findImage($file)->toArray()['filename'])[1];
+            $folder = explode('\\', $dir);
+            $file_name = explode('.', $folder[1])[0];
+            $extension = explode('.', $folder[1])[1];
+            mkdir(Yii::getAlias('@webroot/uploads/thumbnails/' . $folder[0]) );
+            Image::thumbnail($image, 64, 64)->save(Yii::getAlias('@webroot/uploads/thumbnails/' . $folder[0] . '/' . $file_name . '.' . $extension), ['quality' => 100]);
+        }
+    }
     /**
      * Deletes an existing ApplicantForm model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

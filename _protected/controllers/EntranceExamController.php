@@ -14,8 +14,10 @@ use yii\filters\AccessControl;
 use yii\web\Response;
 use app\models\GradeLevel;
 use yii\helpers\ArrayHelper;
+use yii\helpers\url;
 use app\rbac\models\AuthAssignment;
 use yii\widgets\Alert;
+use app\models\File;
 /**
  * EntranceExamController implements the CRUD actions for EntranceExamForm model.
  */
@@ -141,7 +143,7 @@ class EntranceExamController extends Controller
             $bday = \Carbon\Carbon::create($y, $m, $d)->toFormattedDateString();
 
             if(!empty($applicant->students_profile_image)){
-                $img = Yii::$app->request->baseUrl . '/uploads/students/' . $applicant->students_profile_image;
+                $img = Url::to(['/file', 'id' => $applicant->students_profile_image]);
             }else {
                 $img = 'empty';
             }
