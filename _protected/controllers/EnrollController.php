@@ -32,14 +32,17 @@ class EnrollController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update','pjax', 'grade-level', 'card'],
                         'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'pjax', 'section', 'grade-level', 'card'],
+                        'actions' => ['index' , 'view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['staff'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
                     ],
                 ],
             ],

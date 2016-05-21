@@ -60,7 +60,7 @@ if($model->isNewRecord){
                             'language' => 'en',
                             'options' => ['id' => 'auto-suggest','placeholder' => 'Select Teacher'],
                             'pluginOptions' => [
-                                'allowClear' => true
+                                'allowClear' => true,
                             ],
                         ])->label(false) ?>
                 </div>

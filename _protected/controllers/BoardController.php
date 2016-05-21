@@ -15,35 +15,19 @@ use yii\filters\AccessControl;
  */
 class BoardController extends Controller
 {
-    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset'] // depends
-        );
-    }
-
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['dev', 'master', 'admin'],
                     ],
                 ],
             ],

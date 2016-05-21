@@ -2,58 +2,49 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
+use app\models\UiListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AssignedFormSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Assigned Forms';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Assign Subject';
 ?>
-<div class="assigned-form-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Assigned Form', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            'sy_id',
-            'grade_level_id',
-            'teacher_id',
-            'section_id',
-            'subject_id',
-
-            ['class' => 'yii\grid\ActionColumn',
-                    'header' => "Options",
-                    'template' => '{view} {update} {delete}',
-                    'options' => ['style' => 'width: 150px; text-align: center; margin: auto;'],
-                    'buttons' => [
-                        'view' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'View', 
-                                'class'=>'fa fa-user fa-2x']);
-                        },
-                        'update' => function ($url, $model, $key) {
-                            return Html::a('', $url, ['title'=>'Update', 
-                                'class'=>'fa fa-edit fa-2x']);
-                        },
-                        'delete' => function ($url, $model, $key) {
-                            return Html::a('', $url, 
-                                ['title'=>'Delete Applicant', 
-                                    'class'=>'fa fa-times fa-2x fa-remove text-centered',
-                                    'data' => [
-                                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                                        'method' => 'post']
-                ]);
-                    }
-                ]
-                ],
-        ],
-    ]); ?>
-
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="twelve wide rounded column">
+        <div class="ui raised segment">
+            <div class="ui black ribbon label" style="margin-left: -2px;">
+                <h4>Assigned Subject</h4>
+            </div>
+            <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
+            <p></p>
+            <?php Pjax::begin(['id' => 'assignsubject-list', 'timeout' => 60000]); ?>
+                <?= UiListView::widget([
+                   'dataProvider' => $dataProvider,
+                    'itemView' => '_list',
+                ]); ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+    <div class="four wide column">
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
+    </div>
 </div>
+<?= $this->render('/layouts/_toast')?>
+<?php
+$pjax = <<< JS
+$(document).ready(function(){
+    setInterval(function(){
+        $.pjax.reload({
+            container:'#assignsubject-list',
+            success: function(){
+                $('ul.pagination > li.active > a').click()
+            }
+        });
+    }, 10000);
+});
+JS;
+$this->registerJs($pjax);
+?>

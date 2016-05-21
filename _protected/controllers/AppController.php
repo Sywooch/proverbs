@@ -16,21 +16,23 @@ class AppController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['index'],
                 'rules' => [
+                    // deny all POST requests
                     [
-                        'controllers' => ['user'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'allow' => false,
-                        'roles' => ['parent'],
+                        'verbs' => ['POST']
                     ],
+                    // allow authenticated users
                     [
-                        'controllers' => ['user', 'upload'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'controllers' => ['profile'],
+                        'actions' => ['index', 'update'],
                         'allow' => true,
-                        'roles' => ['dev', 'master', 'admin'],
+                        'roles' => ['@'],
                     ],
+                    // everything else is denied
                 ],
-            ],  
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

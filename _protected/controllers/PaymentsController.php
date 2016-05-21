@@ -26,12 +26,20 @@ class PaymentsController extends Controller
                 'only' => ['index' , 'create', 'view', 'update', 'new'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
                         'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
+                        'actions' => ['index','create', 'update', 'view'],
+                        'allow' => true,
+                        'roles' => ['cashier'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
+                    ],
+                    [
+                        'actions' => ['new'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

@@ -47,7 +47,7 @@ class ProfileForm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'email', 'first_name', 'middle_name', 'last_name', 'gender', 'address'], 'required'],
+            [['username', 'email'], 'required'],
             [['phone', 'mobile', 'gender','created_at', 'updated_at'], 'integer'],
             [['birth_date'], 'safe'],
             [['username', 'email', 'address', 'notes'], 'string', 'max' => 255],

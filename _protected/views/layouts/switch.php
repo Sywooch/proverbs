@@ -26,7 +26,7 @@ $(document).ready(function(){
         elems.forEach(function(html) {
             syncValue(elems[i]);
             changeState(elems[i]);
-            var switchery = new Switchery(html, {size: 'small', speed: '0.2s', secondaryColor : '#fC73d0'});
+            var switchery = new Switchery(html, {size: 'small', speed: '0.2s'});
 
             elems[i].onchange = function() { 
                 if(this.checked){

@@ -22,9 +22,8 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	    		'attribute' => 'sy_id',
 	    		'value' => DataHelper::schoolYear($model->sy_id)
 	    	],
-	    	'teacher_id',
 	    	[
-	    		'attribute' => 'teacher.first_name',
+	    		'attribute' => 'teacher_id',
 	    		'value' => DataHelper::name($model->teacher->first_name, $model->teacher->middle_name, $model->teacher->last_name)
 	    	],
 	    	[

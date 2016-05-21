@@ -30,12 +30,25 @@ class EntranceExamController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update','pjax', 'grade-level', 'card'],
                         'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'delete', 'pjax', 'section', 'grade-level', 'card', 'permission'],
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['principal'],
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'create', 'update'],
+                        'allow' => true,
+                        'roles' => ['cashier'],
+                    ],
+                    [
+                        'actions' => ['index', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

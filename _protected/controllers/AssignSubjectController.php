@@ -12,25 +12,13 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  * AssignSubjectController implements the CRUD actions for AssignedForm model.
  */
 class AssignSubjectController extends Controller
 {
-    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }
-
     public function behaviors()
     {
         return [
@@ -39,12 +27,15 @@ class AssignSubjectController extends Controller
                 'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,10 +47,28 @@ class AssignSubjectController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'lists' => ['post'],
+                    'pjax' => ['post'],
                     'section' => ['post'],
                 ],
             ],
         ];
+    }
+
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $u = $this->findModel($object->uid);
+
+            if($u->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $u->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+            return $data;
+        }
     }
 
     public function actionSection($id)

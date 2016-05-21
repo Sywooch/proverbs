@@ -32,9 +32,13 @@ class ClassAdviserController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'new', 'pjax'],
+                        'actions' => ['index' , 'view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['staff'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
                     ],
                 ],
             ],

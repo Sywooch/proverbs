@@ -23,13 +23,20 @@ class SubjectController extends Controller
                 'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
+                    ],
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['principal', 'teacher'],
+                    ],
+                    [
+                        'allow' => false,
                         'roles' => ['@'],
                     ],
                 ],

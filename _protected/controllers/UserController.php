@@ -27,8 +27,16 @@ class UserController extends AppController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'controllers' => ['user'],
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'pjax'],
+                        'allow' => false,
+                        'roles' => ['parent','staff', 'principal', 'teacher', 'cashier'],
+                    ],
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
+                    ],
+                    [
+                        'actions' => ['pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

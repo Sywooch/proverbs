@@ -25,12 +25,6 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 			</div>
 		    <div class="meta"><span id="meta-content"><?= implode('', ['\'', $model->teacher->username, '\'']) ?></span></div>
 		</div>
-		<div class="extra content">
-			<span class="left floated">
-				<label style="color: #555; font-weight: 600;"><?= DataHelper::gradeLevel($model->grade_level_id) ?><p style="color: rgba(0,0,0,.4);"><span style="font-size: 11px;">
-				<?= DataHelper::schoolYear($model->sy_id) ?></span><br/>Adviser</p></label>
-			</span>
-		</div>
 	</div>
 </div>
 <?php Pjax::end(); ?>

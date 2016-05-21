@@ -119,6 +119,7 @@ class DataHelper
                 Html::a('Entrance Exam', implode('/',[Yii::$app->request->baseUrl, 'entrance-exam']), ['class' => Yii::$app->controller->id === 'entrance-exam' ? 'link item active' : 'link item']),
                 Html::a('Section', implode('/',[Yii::$app->request->baseUrl, 'section']), ['class' => Yii::$app->controller->id === 'section' ? 'link item active' : 'link item']),
                 Html::a('Class Adviser', implode('/',[Yii::$app->request->baseUrl, 'class-adviser']), ['class' => Yii::$app->controller->id === 'class-adviser' ? 'link item active' : 'link item']),
+                Html::a('Assign Subject', implode('/',[Yii::$app->request->baseUrl, 'assign-subject']), ['class' => Yii::$app->controller->id === 'assign-subject' ? 'link item active' : 'link item']),
             ]);
             break;
 
@@ -192,9 +193,11 @@ class DataHelper
                 Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
                 Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
                 Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
-                Html::a('Payments', implode('/',[Yii::$app->request->baseUrl, 'payments']), ['class' => Yii::$app->controller->id === 'payments' ? 'link item active' : 'link item']),
                 Html::a('Enrollee', implode('/',[Yii::$app->request->baseUrl, 'enroll']), ['class' => Yii::$app->controller->id === 'enroll' ? 'link item active' : 'link item']),
+                Html::a('Entrance Exam', implode('/',[Yii::$app->request->baseUrl, 'entrance-exam']), ['class' => Yii::$app->controller->id === 'entrance-exam' ? 'link item active' : 'link item']),
+                Html::a('Section', implode('/',[Yii::$app->request->baseUrl, 'section']), ['class' => Yii::$app->controller->id === 'section' ? 'link item active' : 'link item']),
                 Html::a('Class Adviser', implode('/',[Yii::$app->request->baseUrl, 'class-adviser']), ['class' => Yii::$app->controller->id === 'class-adviser' ? 'link item active' : 'link item']),
+                Html::a('Assigned Teacher', implode('/',[Yii::$app->request->baseUrl, 'assign-subject']), ['class' => Yii::$app->controller->id === 'assign-subject' ? 'link item active' : 'link item']),
             ]);
             break;
 

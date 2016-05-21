@@ -17,25 +17,11 @@ use app\models\File;
  */
 class ApplicantController extends Controller
 {
-/*    public $jsFile;
-
-    public function init() {
-        parent::init();
-
-        $this->jsFile = '@app/views/' . $this->id . '/ajax.js';
-        Yii::$app->assetManager->publish($this->jsFile);
-        $this->getView()->registerJsFile(
-            Yii::$app->assetManager->getPublishedUrl($this->jsFile),
-            ['yii\web\YiiAsset']
-        );
-    }*/
-
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                //'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
                         'actions' => ['index' , 'create', 'view', 'update'],
@@ -43,9 +29,18 @@ class ApplicantController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'pjax'],
+                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['staff'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['dev', 'master', 'admin'],
+                    ],
+                    [
+                        'actions' => ['pjax'],
+                        'allow' => true,
+                        'roles' => ['@']
                     ],
                 ],
             ],

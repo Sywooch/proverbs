@@ -13,6 +13,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\imagine\Image;
 use app\models\File;
+use app\rbac\models\AuthAssignment;
 /**
  * ProfileController implements the CRUD actions for ProfileForm model.
  */
@@ -26,7 +27,7 @@ class ProfileController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'pjax'],
+                        'actions' => ['index' , 'view', 'update', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -123,11 +124,15 @@ class ProfileController extends Controller
                 $this->generateThumbnail($model->profile_image);
             }
 
-            return $this->redirect('index');
-        } else {
+            return $this->redirect(Yii::$app->request->baseUrl . '/profile');
+
+        } elseif(Yii::$app->user->identity->id === (int) $id) {
+
             return $this->render('update', [
                 'model' => $model,
             ]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 

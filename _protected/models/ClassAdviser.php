@@ -51,10 +51,10 @@ class ClassAdviser extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'section_id' => 'Section ID',
-            'teacher_id' => 'Teacher ID',
-            'grade_level_id' => 'Grade Level ID',
-            'sy_id' => 'Sy ID',
+            'section_id' => 'Section',
+            'teacher_id' => 'Teacher',
+            'grade_level_id' => 'Grade Level',
+            'sy_id' => 'School Year',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

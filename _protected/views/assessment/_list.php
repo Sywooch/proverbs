@@ -3,7 +3,6 @@ use yii\helpers\Html;
 use app\models\DataHelper;
 !empty(trim($model->enrolled->student->middle_name)) ? $middle = ucfirst(substr($model->enrolled->student->middle_name, 0,1)).'.' : $middle = '';
 ?>
-
 <div class="right floated content"><?= Html::a('<i class="pencil icon"></i>', ['update', 'id' => $model->id]) ?></div>
 <div class="ui tiny rounded image">
 	<?php if(!empty($model->enrolled->student->students_profile_image)) : ?>
