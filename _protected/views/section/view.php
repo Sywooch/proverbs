@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->section_name;
 ?>
 <div class="ui two column stackable grid">
-    <div class="twelve wide column">
+    <div class="thirteen wide column">
         <div class="column">
             <?= $this->render('_detail', ['model' => $model]) ?>
         </div>
@@ -31,3 +31,5 @@ $this->title = $model->section_name;
         </div>
     </div>
 </div>
+<?= $this->render('_pjax', ['model' => $model]) ?>
+<?= $this->render('/layouts/_toast')?>

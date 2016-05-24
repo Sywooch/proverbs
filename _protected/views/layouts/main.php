@@ -44,7 +44,13 @@ AppAsset::register($this);
         } else { //MAIN
             include('alert.php');
             include('header.php');
-            include('sidebar.php');
+            
+            if(Yii::$app->controller->id !== 'board'){
+                include('sidebar.php');
+            } else {
+                include('board-messages.php');
+            }
+            
             echo '<div id="st" class="page-content smooth"><p></p>';
             echo $content;
             echo '</div>';

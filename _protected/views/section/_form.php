@@ -7,7 +7,6 @@ use yii\helpers\ArrayHelper;
 $grade_level = GradeLevel::find()->all();
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
 ?>
-
 <p></p>
 <?php $form = ActiveForm::begin(); ?>
 <div class="ui three column stackable grid">

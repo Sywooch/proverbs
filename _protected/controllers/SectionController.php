@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\GradeLevel;
 use yii\helpers\ArrayHelper;
+use yii\web\Response;
 /**
  * SectionController implements the CRUD actions for Section model.
  */
@@ -31,7 +32,7 @@ class SectionController extends Controller
                         'roles' => ['dev', 'master', 'admin'],
                     ],
                     [
-                        'actions' => ['index', 'view'],
+                        'actions' => ['index', 'view', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -43,11 +44,29 @@ class SectionController extends Controller
                     'delete' => ['post'],
                     'fetch' => ['post'],
                     'push' => ['post'],
+                    'pjax' => ['post'],
                 ],
             ],
         ];
     }
 
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $u = $this->findModel($object->uid);
+
+            if($u->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $u->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
     /**
      * Lists all Section models.
      * @return mixed
@@ -90,6 +109,7 @@ class SectionController extends Controller
         $model = new Section();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -109,6 +129,7 @@ class SectionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -126,7 +147,7 @@ class SectionController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
 

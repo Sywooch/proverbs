@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 /**
  * SchoolYearController implements the CRUD actions for SchoolYear model.
  */
@@ -32,17 +33,42 @@ class SchoolYearController extends Controller
                         'allow' => true,
                         'roles' => ['dev', 'master', 'admin'],
                     ],
+                    [
+                        'actions' => ['pjax'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'pjax' => ['POST'],
                 ],
             ],
         ];
     }
 
+
+
+    public function actionPjax($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            $object = json_decode($data);
+            $u = $this->findModel($object->uid);
+
+            if($u->updated_at !== $object->upd){
+                $data = array('pjax' => true, 'delta' => true, 'upd' => $u->updated_at);
+            }else {
+                $data = array('pjax' => false, 'delta' => false, 'upd' => $object->upd);
+            }
+
+
+            return $data;
+        }
+    }
     /**
      * Lists all SchoolYear models.
      * @return mixed
@@ -80,6 +106,7 @@ class SchoolYearController extends Controller
         $model = new SchoolYear();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -99,6 +126,7 @@ class SchoolYearController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Saved successfully');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -116,7 +144,7 @@ class SchoolYearController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
 

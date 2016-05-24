@@ -1,39 +1,34 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use app\models\UiListView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LearningAreaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Learning Areas';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Learning Area';
 ?>
-<div class="learning-area-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Learning Area', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'grade_level_id',
-            'subject_id',
-            'sequence',
-            'semester',
-            // 'revision',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+<p></p>
+<div class="ui two column stackable grid">
+    <div class="twelve wide rounded column">
+        <div class="ui raised segment">
+            <div class="ui black ribbon label" style="margin-left: -2px;">
+                <h4>Learning Area</h4>
+            </div>
+            <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
+            <p></p>
+            <?php Pjax::begin(['id' => 'section-list', 'timeout' => 10000, 'enablePushState' => false]); ?>
+                <?= UiListView::widget([
+                       'dataProvider' => $dataProvider,
+                        'itemView' => '_list',
+                    ]); ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+    <div class="four wide rounded column">
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
+    </div>
 </div>
+<?= $this->render('/layouts/_toast')?>

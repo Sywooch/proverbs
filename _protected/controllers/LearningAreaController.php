@@ -27,7 +27,7 @@ class LearningAreaController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['dev', 'master', 'admin'],
+                        'roles' => ['dev'],
                     ],
                     [
                         'actions' => ['index', 'view'],

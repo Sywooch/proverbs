@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "learning_area".
@@ -34,10 +37,38 @@ class LearningArea extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'subject_id'], 'required'],
-            [['id', 'grade_level_id', 'subject_id', 'sequence', 'semester', 'revision'], 'integer']
+            [['id', 'grade_level_id', 'subject_id', 'sequence', 'semester', 'revision', 'created_at', 'updated_at'], 'integer']
         ];
     }
 
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            } else {
+                $this->touch('updated_at');
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * @inheritdoc
      */
@@ -51,6 +82,8 @@ class LearningArea extends \yii\db\ActiveRecord
             'sequence' => 'Sequence',
             'semester' => 'Semester',
             'revision' => 'Revision',
+            'created_at' => 'Created At',
+            'updated_at' => 'Upated At',
         ];
     }
 

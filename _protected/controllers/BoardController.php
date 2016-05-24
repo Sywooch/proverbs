@@ -27,7 +27,7 @@ class BoardController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['dev', 'master', 'admin'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -49,7 +49,7 @@ class BoardController extends Controller
     public function actionIndex()
     {
         $searchModel = new BoardSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchBoard(Yii::$app->request->queryParams);
 
         $board = new Board();
         $board->posted_by = Yii::$app->user->id;

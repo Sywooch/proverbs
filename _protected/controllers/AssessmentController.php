@@ -34,7 +34,6 @@ class AssessmentController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'new', 'pjax'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

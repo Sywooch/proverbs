@@ -2,7 +2,11 @@
 
 namespace app\models;
 
+
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "section".
@@ -47,7 +51,7 @@ class Section extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'grade_level_id'], 'integer'],
+            [['id', 'grade_level_id', 'created_at', 'updated_at'], 'integer'],
             [['section_name'], 'string', 'max' => 20],
             [['section_name'], 'required']
         ];
@@ -63,10 +67,40 @@ class Section extends \yii\db\ActiveRecord
             'section_name' => 'Section Name',
             'section.section_name' => 'Section',
             'grade_level_id' => 'Grade Level',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
             //'grade_level.name' => 'Grade Level',
         ];
     }
 
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            } else {
+                $this->touch('updated_at');
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

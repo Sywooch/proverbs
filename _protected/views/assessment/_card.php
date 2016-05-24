@@ -15,7 +15,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
             <?php if(!empty($model->enrolled->student->students_profile_image)) : ?>
                 <?= Html::img(Url::to(['/file','id'=>$model->enrolled->student->students_profile_image])) ?>
             <?php else :?>
-                <?= Html::img([Yii::$app->request->baseUrl . Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']]) ?>
+                <?= Html::img(Yii::$app->request->baseUrl . '' . Yii::$app->params['avatar'], ['alt' => 'user', 'class' => 'tiny image']) ?>
             <?php endif ?>
         </div>
 		<div class="ui center aligned content">

@@ -27,3 +27,4 @@ $this->title = Yii::t('app', 'Section');
         <?= $this->render('_search', ['model' => $searchModel]) ?>
     </div>
 </div>
+<?= $this->render('/layouts/_toast')?>

@@ -83,6 +83,22 @@ class Options
 				}
 				break;
 
+			case 'school-year':
+				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
+					$button3 = '';
+				}else {
+					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+				}
+				break;
+
+			case 'section':
+				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
+					$button3 = '';
+				}else {
+					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+				}
+				break;
+
 			case 'profile':
 				$button3 = '';
 
