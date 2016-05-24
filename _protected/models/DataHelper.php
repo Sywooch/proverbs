@@ -120,6 +120,7 @@ class DataHelper
                 Html::a('Section', implode('/',[Yii::$app->request->baseUrl, 'section']), ['class' => Yii::$app->controller->id === 'section' ? 'link item active' : 'link item']),
                 Html::a('Class Adviser', implode('/',[Yii::$app->request->baseUrl, 'class-adviser']), ['class' => Yii::$app->controller->id === 'class-adviser' ? 'link item active' : 'link item']),
                 Html::a('Assign Subject', implode('/',[Yii::$app->request->baseUrl, 'assign-subject']), ['class' => Yii::$app->controller->id === 'assign-subject' ? 'link item active' : 'link item']),
+                //Html::a('Request Data Access', implode('/',[Yii::$app->request->baseUrl, 'request-data']) , ['class' => Yii::$app->controller->id === 'request-data' ? 'link item active' : 'link item']),
             ]);
             break;
 
@@ -202,7 +203,9 @@ class DataHelper
             break;
 
             default:
-            $data = implode('',[]);
+            $data = implode('',[
+                Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+            ]);
             break;
         }
 

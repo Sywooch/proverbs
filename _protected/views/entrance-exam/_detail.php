@@ -22,8 +22,14 @@ $this->title = implode(' ', [$model->applicant['first_name'], $middle, $model->a
     		'reading_skills',
     		'science',
     		'comprehension',
-    		'remarks',
-    		'recommendations',
+            [
+                'attribute' => 'remarks',
+                'value' => $model->getRemarks($model->remarks)
+            ],
+    		[
+                'attribute' => 'recommendations',
+                'value' => $model->getRecommendations($model->recommendations)
+            ],
             'created_at:date',
     		'updated_at:date',
     	]

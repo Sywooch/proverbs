@@ -6,6 +6,7 @@ use app\models\Announcement;
 use app\models\AnnouncementSearch;
 use app\models\Board;
 use app\models\BoardSearch;
+use app\models\GlobalSettings;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -44,6 +45,12 @@ class DataCenter
         $count = count(Announcement::find()->all());
 		
 		return $count;
+	}
+
+	public function dataAccessRequest(){
+		$data = GlobalSettings::find()->select('data_access_request')->one()['data_access_request'];
+		
+		return $data;
 	}
 
 	public function lastAnnouncement(){

@@ -45,7 +45,12 @@ class EntranceExamForm extends \yii\db\ActiveRecord
     const L111 = 111;
     const L120 = 120;
     const L121 = 121;
-    
+    const PASSED = 0;
+    const FAILED = 1;
+    const PROMOTED = 0;
+    const RETAINED = 1;
+    const FOR_EVALUATION = 10;
+
     public static function tableName()
     {
         return 'entrance_exam';
@@ -101,6 +106,29 @@ class EntranceExamForm extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getRemarks($data){
+        if($data === self::PASSED){
+            $data = 'Passed';
+        }elseif($data === self::FAILED) {
+            $data = 'Failed';
+        }else {
+            $data = 'For Evaluation';
+        }
+
+        return $data;
+    }
+
+    public function getRecommendations($data){
+        if($data === self::PROMOTED){
+            $data = 'Passed';
+        }elseif($data === self::RETAINED) {
+            $data = 'Failed';
+        }else {
+            $data = 'For Evaluation';
+        }
+
+        return $data;
+    }
 
     public function getLevelList()
     {

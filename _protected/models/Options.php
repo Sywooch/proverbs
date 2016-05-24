@@ -118,8 +118,20 @@ class Options
 	}
 
 	public function generateUpdate($options){
+		switch (Yii::$app->controller->id) {
+			case 'entrance-exam':
+				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'principal'){
+					$button1 = Html::button('Save', ['type' => 'submit','class' => 'ui link fluid huge primary button']);
+				}else {
+					$button1 = '';
+				}
+				break;
 
-		$button1 = Html::button('Save', ['type' => 'submit','class' => 'ui link fluid huge primary button']);
+			default:
+				$button1 = Html::button('Save', ['type' => 'submit','class' => 'ui link fluid huge primary button']);
+				break;
+		}
+
 
 		$button2 = Html::a('View', ['view', 'id' => $options['id']], ['class' => 'ui link fluid huge teal button']);
 		

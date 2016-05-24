@@ -40,7 +40,9 @@ AppAsset::register($this);
         } elseif(app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent') {
             include('header.php');
             include('alert.php');
+            echo '<div class="ui container">';
             echo $content;
+            echo '</div>';
         } else { //MAIN
             include('alert.php');
             include('header.php');

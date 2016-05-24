@@ -12,6 +12,7 @@ use app\models\LoginForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
+use app\models\RequestDataAccess;
 use app\models\User;
 use app\models\UiListView;
 use app\rbac\models\AuthAssignment;
@@ -54,6 +55,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['request-access'],
+                        'allow' => true,
+                        'roles' => ['parent']
+                    ]
                 ],
             ],
             'verbs' => [
@@ -69,6 +75,7 @@ class SiteController extends Controller
                     'mail-check' => ['post'],
                     'pull' => ['post'],
                     'sbar' => ['post'],
+                    'request-access' => ['post'],
                     'write-announcement' => ['post'],
                     'write-board' => ['post']
                 ],
@@ -87,6 +94,36 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function actionRequestAccess($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $object = json_decode($data);
+
+            if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent'){
+                $request = new RequestDataAccess();
+                if(!RequestDataAccess::find()->where(['user_id' => Yii::$app->user->identity->id])->andWhere(['student_id' => $object->sid])->exists() ){
+                    $request->student_id = $object->sid;
+                    $request->user_id = Yii::$app->user->identity->id;
+                    $request->save();
+
+                    $data = array(
+                        'sent' => true,
+                        'saved' => true
+                    );
+                }else{
+
+                    $data = array(
+                        'sent' => true,
+                        'saved' => false
+                    );
+                }
+
+                return $data;
+            }
+        }
     }
 
     public function actionImpact(){

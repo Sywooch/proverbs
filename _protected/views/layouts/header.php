@@ -5,11 +5,13 @@ use app\models\Announcement;
 use app\models\UiListView;
 use app\models\User;
 use app\models\DataHelper;
+use app\rbac\models\AuthAssignment;
 $imaage = DataHelper::image(Yii::$app->user->identity->id);
 $user = User::findOne(Yii::$app->user->identity->id);
 ?>
 <?= $this->render('loading') ?>
 <header style="z-index: 99;">
+    <?php if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'parent') :  ?>
     <div id="nav-menu" class="ui top fixed secondary pointing menu">
         <?= $this->render('menu') ?>
         <div id="nav-menu-dropdown">
@@ -17,6 +19,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
             </select>
         </div>
     </div>
+    <?php endif ?>
         <div class="ui top fixed huge inverted menu">
             <div class="ui link item">
                 <span><a href="<?= Yii::$app->request->baseUrl ?>"><img src="<?= Yii::$app->params['logo'] ?>" alt="Proverbs" class="ui mini avatar image"></a></span>
@@ -38,6 +41,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
                     , ['id' => 'thumbnail', 'style' => 'background: #f7f7f7;', 'class' => 'ui right thumbnail image', 'alt' => Yii::$app->user->identity->username])
                         . Html::tag('span', Yii::$app->user->identity->username . '<i class="dropdown icon" style="color: white; margin: 0 5px;"></i>', ['style' => 'margin: auto 10px; color: white;'])
                     ?>
+                    
                     <div class="menu" style="min-width: 180px; margin-right: 5px; margin-top: 0; border-radius: 0;">
                         <a class="link item" href="<?= Yii::$app->request->baseUrl . '/dashboard' ?>">Dashboard<i class="right floated dashboard icon"></i></a>
                         <a class="link item" href="<?= Yii::$app->request->baseUrl . '/profile' ?>">Profile<i class="right floated user icon"></i></a>
@@ -48,7 +52,19 @@ $user = User::findOne(Yii::$app->user->identity->id);
             </div>
         </div>
 </header>
-<div id="nav-offset"></div>
+<?= AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'parent' ? 
+    Html::tag('div','', ['id' => 'nav-offset']) : Html::tag('div','', ['style' => 'min-height: 56px;']) 
+?>
+<?php if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent') :  ?>
+    <div class="ui fluid container" style="background: white;">
+        <div class="ui container">
+            <div class="ui secondary menu" style="padding: 5px 0;">
+                <?= Html::a('Dashboard',['/dashboard'],['class' => Yii::$app->controller->id === 'dashboard' ? 'active item' : 'item']) ?>
+                <?= Html::a('Profile',['/profile'],['class' => Yii::$app->controller->id === 'profile' ? 'active item' : 'item']) ?>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
 <?php $this->registerJs("
     (function($){
         $(window).load(function(){
@@ -57,6 +73,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
                 transition: 'slide down',
             });
 
+            var menu2 = $('#nav-menu2 > a');
             var menu = $('#nav-menu > a');
             var dlist = $('#nav-menu-dropdown > select');
             var selected;

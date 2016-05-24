@@ -111,12 +111,12 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
             <div class="ui divider"></div>
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12">
-                    <?= $form->field($model, 'remarks', ['inputTemplate' => '<label for="Remarks">Remarks</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                    <?= $form->field($model, 'remarks', ['inputTemplate' => '<label for="Remarks">Remarks</label>{input}', 'inputOptions' => [] ])->dropDownList([10 => 'For Evaluation', 0 => 'Passed', 1 => 'Failed'],['class' => 'form-control pva-form-control'])->label(false) ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12">
-                    <?= $form->field($model, 'recommendations', ['inputTemplate' => '<label for="Recommendations">Recommendations</label>{input}', 'inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                    <?= $form->field($model, 'recommendations', ['inputTemplate' => '<label for="Recommendations">Recommendations</label>{input}', 'inputOptions' => [] ])->dropDownList([10 => 'For Evaluation', 0 => 'Promoted', 1 => 'Retained'],['class' => 'form-control pva-form-control'])->label(false) ?>
                 </div>
             </div>
         </div>
