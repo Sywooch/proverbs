@@ -26,12 +26,10 @@ class AssessmentController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update', 'new'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'new'],
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
                         'allow' => true,

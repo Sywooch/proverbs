@@ -1441,12 +1441,23 @@ select.form-control.pva-form-control{
     visibility: visible;
     display: block;
 }
+#parent-menu-wrap {
+    width: 100%;
+    background: white; 
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(34,36,38,.15);
+}
+#nav-menu-parent {
+    a {
+        font-size: 14px;
+    }
+}
 @media (max-width: 991px) {
     #nav-menu-dropdown {
         visibility: visible;
         display: block;
     }
-    #nav-menu {
+    #nav-menu,#nav-menu-parent {
         height: 54px;
         a {
             visibility: hidden;

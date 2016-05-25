@@ -24,9 +24,11 @@ use app\models\DataHelper;
 				<p></p>
 			</div>
 		</div>
-		<div class="extra center aligned content">
-			<label class="user-id"><span><?= ucfirst($model->role->item_name) ?></span></label>
-		</div>
+		<?php if(app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'parent') : ?>
+            <div class="extra center aligned content">
+                <label class="user-id"><span><?= ucfirst($model->role->item_name) ?></span></label>
+            </div>
+        <?php endif ?>
 	</div>
 </div>
 <?php Pjax::end(); ?>

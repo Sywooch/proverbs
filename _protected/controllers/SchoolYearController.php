@@ -23,11 +23,10 @@ class SchoolYearController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update', 'new'],
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
                         'allow' => true,

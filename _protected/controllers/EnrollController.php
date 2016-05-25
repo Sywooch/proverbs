@@ -33,7 +33,7 @@ class EnrollController extends Controller
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
                         'actions' => ['index' , 'view'],

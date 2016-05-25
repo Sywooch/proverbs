@@ -204,7 +204,9 @@ class DataHelper
 
             default:
             $data = implode('',[
-                Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'item active' : 'item']),
+                Html::a('Profile', implode('/',[Yii::$app->request->baseUrl, 'profile']) , ['class' => Yii::$app->controller->id === 'profile' ? 'item active' : 'item']),
+                Html::a('Portal', implode('/',[Yii::$app->request->baseUrl, 'portal']) , ['class' => Yii::$app->controller->id === 'portal' ? 'item active' : 'item']),
             ]);
             break;
         }

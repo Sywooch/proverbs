@@ -31,7 +31,7 @@ class EntranceExamController extends Controller
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
                         'allow' => true,
@@ -43,7 +43,7 @@ class EntranceExamController extends Controller
                         'roles' => ['principal'],
                     ],
                     [
-                        'actions' => ['index', 'view', 'create', 'update'],
+                        'actions' => ['index', 'view', 'create'],
                         'allow' => true,
                         'roles' => ['cashier'],
                     ],

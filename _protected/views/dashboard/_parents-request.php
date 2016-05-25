@@ -4,10 +4,17 @@ use app\models\DataCenter;
 ?>
 <div class="ui fluid vertical menu">
     <div class="item">
-        <div class="header"><span><i class="ui big icon options"></i></span></div>
+        <div class="header">
+			<div class="page-header">
+				<div class="page-title">
+					<h3 style="margin: 0; padding: 0;">Hi <?= ucfirst(Yii::$app->user->identity->username)?>!</h3>
+				</div>
+			</div>
+    	</div>
     </div>
     <div class="item">
-    	<h5>Request Data Access</h5>
+    	<div style="font-size: 16px;">Request Data Access</div>
+		<br>
 		<p><input id="req_form" type="text" name="student_id" placeholder="Student ID#" class="form-control pva-form-control"></p>
 		<p>
 			<?php if(DataCenter::dataAccessRequest() === 0) : ?>

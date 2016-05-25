@@ -25,7 +25,7 @@ class SectionController extends Controller
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
                         'allow' => true,

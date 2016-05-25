@@ -56,11 +56,14 @@ $user = User::findOne(Yii::$app->user->identity->id);
     Html::tag('div','', ['id' => 'nav-offset']) : Html::tag('div','', ['style' => 'min-height: 56px;']) 
 ?>
 <?php if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent') :  ?>
-    <div class="ui fluid container" style="background: white;">
+    <div id="parent-menu-wrap">
         <div class="ui container">
-            <div class="ui secondary menu" style="padding: 5px 0;">
-                <?= Html::a('Dashboard',['/dashboard'],['class' => Yii::$app->controller->id === 'dashboard' ? 'active item' : 'item']) ?>
-                <?= Html::a('Profile',['/profile'],['class' => Yii::$app->controller->id === 'profile' ? 'active item' : 'item']) ?>
+            <div id="nav-menu-parent" class="ui secondary menu" style="padding: 5px 0;">
+                <?= $this->render('menu') ?>
+                <div id="nav-menu-dropdown">
+                    <select class="form-control pva-form-control">
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -73,13 +76,18 @@ $user = User::findOne(Yii::$app->user->identity->id);
                 transition: 'slide down',
             });
 
-            var menu2 = $('#nav-menu2 > a');
             var menu = $('#nav-menu > a');
+            var menu2 = $('#nav-menu-parent > a');
             var dlist = $('#nav-menu-dropdown > select');
             var selected;
 
             $(menu).each(function(index, value){
                 $(value).attr('class') === 'link item active' ? selected = 'selected' : selected = '';
+                $(dlist).append('<option value=\"' + $(value).attr('href') + '\" ' + selected + '>' + $(value).text() + '</option>');
+            });
+
+            $(menu2).each(function(index, value){
+                $(value).attr('class') === 'item active' ? selected = 'selected' : selected = '';
                 $(dlist).append('<option value=\"' + $(value).attr('href') + '\" ' + selected + '>' + $(value).text() + '</option>');
             });
             

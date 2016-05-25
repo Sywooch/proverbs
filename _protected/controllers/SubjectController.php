@@ -20,11 +20,10 @@ class SubjectController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update'],
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
                         'allow' => true,

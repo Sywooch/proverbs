@@ -20,17 +20,14 @@ class TuitionController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update', 'new'],
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['dev', 'master', 'admin'],
                     ],
                 ],
             ],

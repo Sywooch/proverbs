@@ -23,11 +23,10 @@ class PaymentsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index' , 'create', 'view', 'update', 'new'],
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?'],
+                        'roles' => ['?', 'parent'],
                     ],
                     [
                         'actions' => ['index','create', 'update', 'view'],
