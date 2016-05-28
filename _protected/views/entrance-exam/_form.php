@@ -20,7 +20,7 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !$model->isNewRecord ? !empty($model->applicant->students_profile_image) ? ['/file', 'id' => $model->applicant->students_profile_image] : Yii::$app->params['avatar'] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
+            'imageContent' => !$model->isNewRecord ? !empty($model->applicant->students_profile_image) ? ['/file', 'id' => $model->applicant->students_profile_image] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
             'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->applicant_id, '</strong>']) : '&nbsp;',
             'labelFor' => 'Applicant ID',
             'labelOptions' => '',

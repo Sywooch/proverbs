@@ -21,11 +21,11 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	    			'attribute' => 'assessment_id',
 	    			'value' => DataHelper::checkIfEmpty($model->assessment_id, $model->assessment_id, 'NA')
     			],
-	    		[ 
+	    		[
 	    			'attribute' => 'student_id',
 	    			'value' => DataHelper::name($model->student->first_name, $model->student->middle_name, $model->student->last_name)
 	    		],
-	    		[ 
+	    		[
 	    			'attribute' => 'transaction',
 	    			'value' => DataHelper::transaction($model->transaction)
 	    		],

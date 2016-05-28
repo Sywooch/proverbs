@@ -15,10 +15,10 @@ use mdm\upload\UploadBehavior;
 *	No  (1)
 */
 class DataHelper
-{	
+{
     public function avatar(){
         $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-        
+
         return $avatar;
     }
 
@@ -28,7 +28,7 @@ class DataHelper
 		return $user;
 	}
 
-    public function carbonDate($data) {        
+    public function carbonDate($data) {
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->toFormattedDateString();
     }
@@ -58,7 +58,7 @@ class DataHelper
 
         return $data;
     }
-    
+
 	public function gender($data){
 		$data === 0 ? $data = 'Male' : $data = 'Female';
 		return $data;
@@ -184,12 +184,13 @@ class DataHelper
                 Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
                 Html::a('Enrollee', implode('/',[Yii::$app->request->baseUrl, 'enroll']), ['class' => Yii::$app->controller->id === 'enroll' ? 'link item active' : 'link item']),
                 Html::a('Entrance Exam', implode('/',[Yii::$app->request->baseUrl, 'entrance-exam']), ['class' => Yii::$app->controller->id === 'entrance-exam' ? 'link item active' : 'link item']),
+                Html::a('Payment', implode('/',[Yii::$app->request->baseUrl, 'payments']), ['class' => Yii::$app->controller->id === 'payments' ? 'link item active' : 'link item']),
                 Html::a('Section', implode('/',[Yii::$app->request->baseUrl, 'section']), ['class' => Yii::$app->controller->id === 'section' ? 'link item active' : 'link item']),
             ]);
             break;
 
             case 'staff':
-            
+
             $data = implode('',[
                 Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
                 Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
@@ -213,10 +214,10 @@ class DataHelper
 
         return $data;
     }
-    
+
     public function name($first, $middle, $last){
     	!empty(trim($middle)) ? $middle = ucfirst(substr($middle, 0,1)) . '.' : $middle = '';
-    	
+
     	$data = implode(' ', [$first, $middle, $last]);
 
     	return $data;
@@ -236,7 +237,7 @@ class DataHelper
 
     public function roundOff($data, $places){
     	$data = number_format($data, $places);
-    	
+
     	return $data;
     }
 
@@ -266,6 +267,26 @@ class DataHelper
 
     public function transaction($data){
     	$data === 1 ? $data = 'Cash' : $data = 'Card';
+
+    	return $data;
+    }
+
+    public function paymentDescription($data){
+    	switch ($data) {
+    	  case 0:
+    	    $data = 'Tuition Fee';
+    	    break;
+    	  case 1:
+    	    $data = 'Enrollment Fee';
+    	    break;
+    	  case 2:
+    	    $data = 'Entrance Fee';
+    	    break;
+
+    	  default:
+    	    $data = 'Others';
+    	    break;
+    	}
 
     	return $data;
     }

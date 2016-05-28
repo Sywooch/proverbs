@@ -12,6 +12,7 @@ use yii\db\Expression;
  * @property string $id
  * @property string $student_id
  * @property string $assessment_id
+ * @property string $payment_description
  * @property double $paid_amount
  * @property integer $transaction
  * @property integer $created_at
@@ -36,7 +37,7 @@ class PaymentForm extends \yii\db\ActiveRecord
 public function rules()
     {
         return [
-            [['student_id', 'assessment_id', 'transaction', 'created_at', 'updated_at'], 'integer'],
+            [['student_id', 'assessment_id', 'payment_description', 'transaction', 'created_at', 'updated_at'], 'integer'],
             [['paid_amount'], 'number'],
             [['paid_amount', 'student_id'], 'required'],
             [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentForm::className(), 'targetAttribute' => ['student_id' => 'id']],
@@ -54,6 +55,7 @@ public function rules()
             'student_id' => 'Student',
             'paid_amount' => 'Amount',
             'assessment_id' => 'Assessment ID',
+            'payment_description' => 'Description',
             'transaction' => 'Transaction',
             'created_at' => 'Date of Payment',
             'updated_at' => 'Updated At',
@@ -107,7 +109,7 @@ public function rules()
         } else {
             return 'Card';
         }
-    }    
+    }
 
     public function getTransactionType()
     {
@@ -127,7 +129,7 @@ public function rules()
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->toFormattedDateString();
     }
 
-    public function getUpdatedAt($data) {        
+    public function getUpdatedAt($data) {
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
     }

@@ -18,7 +18,7 @@ class PaymentFormSearch extends PaymentForm
     public function rules()
     {
         return [
-            [['id', 'student_id', 'transaction', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'student_id', 'payment_description', 'transaction', 'created_at', 'updated_at'], 'integer'],
             [['paid_amount'], 'number'],
         ];
     }
@@ -30,7 +30,7 @@ class PaymentFormSearch extends PaymentForm
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
-    } 
+    }
 
     public function searchPayment($params)
     {
@@ -64,6 +64,7 @@ class PaymentFormSearch extends PaymentForm
         $query->andFilterWhere([
             'id' => $this->id,
             'student_id' => $this->student_id,
+            'payment_description' => $this->payment_description,
             'transaction' => $this->transaction,
             'paid_amount' => $this->paid_amount
         ]);

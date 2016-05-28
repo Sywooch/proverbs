@@ -5,6 +5,7 @@ use yii\jui\DatePicker;
 use app\models\GradeLevel;
 use app\models\Card;
 use yii\helpers\ArrayHelper;
+use app\rbac\models\AuthAssignment;
 
 $grade_level = GradeLevel::find()->all();
 $listData = ArrayHelper::map($grade_level, 'id' , 'name');
@@ -20,9 +21,11 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
             <div class="card">
                 <div class="image">
                     <div id="image-upload-wrap">
+                        <?php if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'principal') : ?>
                         <div id="image-upload-button">
                             <?= $form->field($model, 'file')->fileInput(['id' => 'file-upload-btn', 'class' => '', 'style' => 'color: #fff;'])->label(false); ?>
                         </div>
+                      <?php endif ?>
                     </div>
                     <?php if(!empty($model->students_profile_image)) : ?>
                         <?= Html::img(['/file','id'=>$model->students_profile_image]) ?>
@@ -90,11 +93,11 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                 <div class="ui tab segment hidden" data-tab="second">
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'fathers_name', ['inputTemplate' => '<label>Father\'s Name</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
-                    </div>                    
+                    </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_phone', ['inputTemplate' => '<label>Landline</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'fathers_mobile', ['inputTemplate' => '<label>Mobile</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
-                    </div>                    
+                    </div>
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'fathers_email', ['inputTemplate' => '<label>Email</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
                     </div>
@@ -109,11 +112,11 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                     <div class="row"><div class="col-lg-12"><div class="ui divider"></div></div></div>
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'mothers_name', ['inputTemplate' => '<label>Mother\'s Name</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
-                    </div>                    
+                    </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_phone', ['inputTemplate' => '<label>Landline</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
                         <div class="col-lg-4 col-md-4 col-sm-12"><?= $form->field($model, 'mothers_mobile', ['inputTemplate' => '<label>Mobile</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
-                    </div>                    
+                    </div>
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-12"><?= $form->field($model, 'mothers_email', ['inputTemplate' => '<label>Email</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?></div>
                     </div>

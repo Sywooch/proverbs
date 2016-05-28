@@ -1,4 +1,4 @@
-<?php 
+<?php
 use app\models\Card;
 use app\models\DataHelper;
 use app\models\StudentForm;
@@ -41,7 +41,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
             <div class="ui two column stackable grid">
                 <div class="eight wide column">
                     <?= $model->isNewRecord ? $form->field($model, 'student_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Student</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control', ] ])->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->where(['!=', 'status', 2])->all(),'id', function($model){
+                        'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
                             return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
                         }),
                         'language' => 'en',
@@ -82,10 +82,14 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                     }
                 ?>
                 <div class="eight wide column">
+
                     <?php if($model->isNewRecord ){
                             echo $form->field($model, 'paid_amount', ['inputTemplate' => '<label for="">Amount</label>{input}','inputOptions' => [] ])->label(false)->textInput(['id' => 'pa', 'class' => 'form-control pva-form-control', 'style' => 'text-align: right;', 'placeholder' => '0.00'], ['maxlength' => true]);
                         }
                     ?>
+                </div>
+                <div class="eight wide column">
+                  <?= $form->field($model, 'payment_description', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Description</label>{input}</div>'])->dropDownList([0 => 'Tuition Fee', 1 => 'Enrollment Fee', 2 => 'Entrance Exam', 3 => 'Others'], ['class' => 'form-control pva-form-control'])->label(false) ?>
                 </div>
             </div>
         </div>

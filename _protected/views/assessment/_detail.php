@@ -75,7 +75,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 			for ($i=0; $i < count($payments); $i++) {
 				echo implode('',[
 					'<div class="ui two stackable grid">',
-						'<div class="eight wide column">', 
+						'<div class="eight wide column">',
 							'<label><strong>',
 								DataHelper::carbonDate($payments[$i]->created_at),
 							'</strong></label>',
@@ -85,6 +85,10 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 							    'model' => $payments[$i],
 							    'options' => ['class' => 'ui fixed basic payment-history table'],
 							    'attributes' => [
+							    	[
+							    		'attribute' => 'payment_description',
+							    		'value' => DataHelper::paymentDescription($payments[$i]->payment_description)
+							    	],
 							    	[
 							    		'attribute' => 'transaction',
 							    		'value' => DataHelper::transaction($payments[$i]->transaction)

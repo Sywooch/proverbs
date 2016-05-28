@@ -68,7 +68,7 @@ class AssessmentController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    { //assessment->enrolled->student
         return $this->render('view', [
             'model' => $this->findModel($id),
             'payments' => $this->findPayments($id),
@@ -84,7 +84,7 @@ class AssessmentController extends Controller
 
         $model = new AssessmentForm();
         throw new NotFoundHttpException('The requested page does not exist.');
-        
+
         /*if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -118,7 +118,7 @@ class AssessmentController extends Controller
             }
 
             //$tuition_detail = Tuition::find()->where(['grade_level_id' => $grade_level_id])->orderBy(['id' => SORT_DESC])->all();
-            
+
             if ($model->load(Yii::$app->request->post()) && $model->save() ){
 
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -166,7 +166,7 @@ class AssessmentController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        
+
         Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
@@ -175,7 +175,7 @@ class AssessmentController extends Controller
     public function actionPjax($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $u = $this->findModel($object->uid);
 
@@ -214,7 +214,6 @@ class AssessmentController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
 
     protected function findPayments($id)
     {

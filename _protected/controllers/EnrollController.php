@@ -41,6 +41,11 @@ class EnrollController extends Controller
                         'roles' => ['staff'],
                     ],
                     [
+                        'actions' => ['index' , 'view', 'create', 'update', 'new'],
+                        'allow' => true,
+                        'roles' => ['cashier'],
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['dev', 'master', 'admin'],
                     ],
@@ -119,7 +124,7 @@ class EnrollController extends Controller
                 'express' => $express,
             ]);
         }
-    }   
+    }
 
     public function actionView($id)
     {
@@ -131,7 +136,7 @@ class EnrollController extends Controller
     public function actionPjax($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $student = $this->findModel($object->uid);
 
@@ -170,9 +175,9 @@ class EnrollController extends Controller
     public function actionCard($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
-            
+
             $id = $object->sid;
             $student = $this->findStudent($id);
             $sped = (int) $student->sped;
@@ -191,7 +196,7 @@ class EnrollController extends Controller
             }else {
                 $img = 'empty';
             }
-            
+
             !empty(trim($student->middle_name)) ? $middle = ucfirst(substr($student->middle_name, 0,1)).'.' : $middle = '';
 
             $data = array(
@@ -213,7 +218,7 @@ class EnrollController extends Controller
     public function actionGradeLevel($id)
     {
         $student = StudentForm::find()->where(['id' => $id])->all();
-        
+
         foreach ($student as $item) {
             return $item->grade_level_id;
         }
@@ -260,10 +265,10 @@ class EnrollController extends Controller
      * @return mixed
      */
     public function actionDelete($id)
-    {        
+    {
         $this->findModel($id)->delete();
         $this->deleteAssessment($id);
-        
+
         Yii::$app->session->setFlash('success', 'Deleted successfully');
         return $this->redirect(['index']);
     }
@@ -313,7 +318,7 @@ class EnrollController extends Controller
     }
 
     protected function findLatestSy()
-    {   
+    {
         $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
 
         return $school_year[0]->sy;

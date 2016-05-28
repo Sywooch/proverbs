@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php
-$this->render('_js-update', ['student' => $student]);
-$this->render('_js-section');
+//$this->render('_js-update', ['student' => $student]);
+//$this->render('_js-section');
 $this->render('switch');
 ?>

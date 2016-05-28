@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
@@ -11,7 +11,7 @@ use app\models\DataHelper;
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !empty($student->students_profile_image) ? ['/file', 'id' => $student->students_profile_image] : Yii::$app->params['avatar'],
+            'imageContent' => !empty($student->students_profile_image) ? ['/file', 'id' => $student->students_profile_image] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
             'labelContent' => implode(' ', ['ID#', '<strong>', $student->id, '</strong>']),
             'labelFor' => 'Student ID',
             'labelOptions' => '',
@@ -89,7 +89,7 @@ use app\models\DataHelper;
                 </div>
                 <div class="item">
                     <p></p>
-                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>                    
+                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
                     <p></p>
                     <?= Html::a(Yii::t('app', 'Cancel'),['/payments'], ['class' => 'ui link fluid huge grey button']) ?>
             </div>

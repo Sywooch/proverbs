@@ -24,7 +24,6 @@ class ApplicantController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => false,
                         'roles' => ['?'],
                     ],
@@ -32,6 +31,16 @@ class ApplicantController extends Controller
                         'actions' => ['index' , 'create', 'view', 'update'],
                         'allow' => true,
                         'roles' => ['staff'],
+                    ],
+                    [
+                        'actions' => ['index' , 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['principal'],
+                    ],
+                    [
+                        'actions' => ['index' , 'view'],
+                        'allow' => true,
+                        'roles' => ['cashier'],
                     ],
                     [
                         'allow' => true,
@@ -87,7 +96,7 @@ class ApplicantController extends Controller
     public function actionPjax($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $applicant = $this->findModel($object->uid);
 
@@ -119,7 +128,7 @@ class ApplicantController extends Controller
         $parsed = $py.$pm.$pd.$ph.$pi.$ps;
         $model->id = $parsed;
         $model->status = 2;
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             Yii::$app->session->setFlash('success', 'New applicant successfully created!');
@@ -136,7 +145,7 @@ class ApplicantController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
-     */ 
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
