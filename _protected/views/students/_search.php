@@ -24,7 +24,7 @@ use yii\bootstrap\ActiveForm;
     </div>
     <div class="item">
         <div class="collapse" id="student-filters-more">
-            <p></p>
+            <br>
             <?= $form->field($model, 'nickname', ['inputTemplate' => '<label for="Nickname">Nickname</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
             <?= $form->field($model, 'gender', ['inputTemplate' => '<label for="Gender">Gender</label>{input}'])->dropDownList($model->genderList, ['class' => 'form-control pva-form-control'])->label(false) ?>
             <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label for="Grade Level">Grade Level</label>{input}'])->dropDownList($model->levelList, ['class' => 'form-control pva-form-control'])->label(false) ?>

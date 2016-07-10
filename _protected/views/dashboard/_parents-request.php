@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use app\models\DataCenter;
 ?>
@@ -15,7 +15,7 @@ use app\models\DataCenter;
     <div class="item">
     	<div style="font-size: 16px;">Request Data Access</div>
 		<br>
-		<p><input id="req_form" type="text" name="student_id" placeholder="Student ID#" class="form-control pva-form-control"></p>
+		<p><input id="req_form" type="text" name="request_text" placeholder="Student ID#" class="form-control pva-form-control"></p>
 		<p>
 			<?php if(DataCenter::dataAccessRequest() === 0) : ?>
 				<?= Html::button('Send Request',['id' => 'req_access', 'class' => 'ui fluid big positive button'])?>
@@ -28,7 +28,7 @@ use app\models\DataCenter;
     	<?php  ?>
     </div>
 </div>
-<?php 
+<?php
 $request_url = json_encode(Yii::$app->request->baseUrl . '/site/request-access?data=');
 $request = <<< JS
 (function($){
@@ -54,7 +54,7 @@ $request = <<< JS
 		            		req_btn.html('Send Request');
 		            		req_form.val('');
 		            	},2500);
-		        	}	            	
+		        	}
 					console.log(data);
 	            },
             });

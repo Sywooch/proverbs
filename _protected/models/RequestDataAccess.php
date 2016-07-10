@@ -7,12 +7,14 @@ use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
+use app\models\StudentForm;
 /**
  * This is the model class for table "request".
  *
  * @property integer $id
  * @property integer $user_id
  * @property string $student_id
+ * @property string $request_text
  * @property integer $request_status
  * @property integer $created_at
  * @property integer $updated_at
@@ -36,8 +38,10 @@ class RequestDataAccess extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
+            [['request_text'], 'string', 'max' => 45],
             [['user_id', 'student_id', 'request_status', 'created_at', 'updated_at'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['student_id'], 'exist', 'skipOnError' => true, 'targetClass' => StudentForm::className(), 'targetAttribute' => ['student_id' => 'id']],
         ];
     }
 
@@ -50,6 +54,7 @@ class RequestDataAccess extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'student_id' => 'Student ID',
+            'request_text' => 'Request Text',
             'request_status' => 'Request Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -90,5 +95,13 @@ class RequestDataAccess extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStudent()
+    {
+        return $this->hasOne(StudentForm::className(), ['id' => 'student_id']);
     }
 }

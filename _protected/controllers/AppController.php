@@ -25,7 +25,7 @@ class AppController extends Controller
                     ],
                     // allow authenticated users
                     [
-                        'controllers' => ['profile'],
+                        'controllers' => ['profile', 'requirements'],
                         'actions' => ['index', 'update'],
                         'allow' => true,
                         'roles' => ['@'],

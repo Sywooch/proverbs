@@ -16,55 +16,54 @@ use mdm\upload\UploadBehavior;
 */
 class DataHelper
 {
-    public function avatar(){
+    public static function avatar(){
         $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-
         return $avatar;
     }
 
-	public function image($id){
+	public static function image($id){
 		$user = User::findOne($id);
 
 		return $user;
 	}
 
-    public function carbonDate($data) {
+    public static function carbonDate($data) {
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->toFormattedDateString();
     }
 
-    public function carbonDateDiff($data) {
+    public static function carbonDateDiff($data) {
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
     }
 
-    public function checkIfEmpty($data, $yes, $no){
+    public static function checkIfEmpty($data, $yes, $no){
         (!empty($data) || $data !== null ) ? $data = $yes : $data = $no;
         return $data;
     }
 
-    public function direct($data){
+    public static function direct($data){
         $data === 0 ? $data = 'Yes' : $data = 'No';
         return $data;
     }
 
-    public function directSpecial($data, $yes, $no){
+    public static function directSpecial($data, $yes, $no){
         $data === 0 ? $data = $yes : $data = $no;
         return $data;
     }
 
-    public function enrolleeStatus($data){
+    public static function enrolleeStatus($data){
         $data === 1 ? $data = 'Pending' : $data = 'Enrolled';
 
         return $data;
     }
 
-	public function gender($data){
+	public static function gender($data){
 		$data === 0 ? $data = 'Male' : $data = 'Female';
 		return $data;
 	}
 
-    public function gradeLevel($data)
+    public static function gradeLevel($data)
     {
         if($data === 121){
             return 'Grade 11 2nd Semester';
@@ -105,11 +104,12 @@ class DataHelper
         }
     }
 
-    public function menu($role){
+    public static function menu($role){
         switch ($role) {
             case 'dev':
             $data = implode('',[
                 Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Request',implode('/',[Yii::$app->request->baseUrl, 'request']), ['class' => Yii::$app->controller->id === 'request' ? 'link item active' : 'link item']),
                 Html::a('Users',implode('/',[Yii::$app->request->baseUrl, 'user']), ['class' => Yii::$app->controller->id === 'user' ? 'link item active' : 'link item']),
                 Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
                 Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
@@ -127,6 +127,7 @@ class DataHelper
             case 'master':
             $data = implode('',[
                 Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Request',implode('/',[Yii::$app->request->baseUrl, 'request']), ['class' => Yii::$app->controller->id === 'request' ? 'link item active' : 'link item']),
                 Html::a('Users',implode('/',[Yii::$app->request->baseUrl, 'user']), ['class' => Yii::$app->controller->id === 'user' ? 'link item active' : 'link item']),
                 Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
                 Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
@@ -142,6 +143,7 @@ class DataHelper
             case 'admin':
             $data = implode('',[
                 Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Request',implode('/',[Yii::$app->request->baseUrl, 'request']), ['class' => Yii::$app->controller->id === 'request' ? 'link item active' : 'link item']),
                 Html::a('Users',implode('/',[Yii::$app->request->baseUrl, 'user']), ['class' => Yii::$app->controller->id === 'user' ? 'link item active' : 'link item']),
                 Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
                 Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
@@ -215,7 +217,7 @@ class DataHelper
         return $data;
     }
 
-    public function name($first, $middle, $last){
+    public static function name($first, $middle, $last){
     	!empty(trim($middle)) ? $middle = ucfirst(substr($middle, 0,1)) . '.' : $middle = '';
 
     	$data = implode(' ', [$first, $middle, $last]);
@@ -223,7 +225,19 @@ class DataHelper
     	return $data;
     }
 
-    public function userStatus($data){
+    public static function profileImage($data){
+        $user = User::findOne($data);
+
+        return $user->profile_image;
+    }
+
+    public static function username($data){
+        $user = User::findOne($data);
+
+        return $user->username;
+    }
+
+    public static function userStatus($data){
     	if($data === 1){
     		$data = 'Inactive';
     	}elseif($data === 0){
@@ -235,25 +249,48 @@ class DataHelper
     	return $data;
     }
 
-    public function roundOff($data, $places){
+    public static function requestStatus($data){
+        $status = null;
+    	switch ($data) {
+            case 1 :
+                $status = 'Processing';
+                break;
+
+    	    case 2 :
+    	        $status = 'Approved';
+    	        break;
+
+    	    case 3 :
+    	        $status = 'Denied';
+    	        break;
+
+    	    default:
+    	        $status = 'Deleted';
+    	        break;
+    	}
+
+    	return $status;
+    }
+
+    public static function roundOff($data, $places){
     	$data = number_format($data, $places);
 
     	return $data;
     }
 
-    public function schoolYear($data){
+    public static function schoolYear($data){
     	$data = SchoolYear::find()->where(['id' => $data])->one();
 
     	return $data->sy;
     }
 
-    public function section($data){
+    public static function section($data){
     	$data = Section::find()->where(['id' => $data])->one();
 
     	return $data->section_name;
     }
 
-    public function siblingDiscount(){
+    public static function siblingDiscount(){
     	$data = array(
     		0 => '0',
     		5 => '5% Discount',
@@ -265,13 +302,13 @@ class DataHelper
     	return $data;
     }
 
-    public function transaction($data){
+    public static function transaction($data){
     	$data === 1 ? $data = 'Cash' : $data = 'Card';
 
     	return $data;
     }
 
-    public function paymentDescription($data){
+    public static function paymentDescription($data){
     	switch ($data) {
     	  case 0:
     	    $data = 'Tuition Fee';

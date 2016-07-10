@@ -12,6 +12,7 @@ use app\models\LoginForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
+use app\models\StudentForm;
 use app\models\RequestDataAccess;
 use app\models\User;
 use app\models\UiListView;
@@ -42,12 +43,12 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => [
-                            'logout', 
-                            'impact', 
-                            'sbar', 
+                            'logout',
+                            'impact',
+                            'sbar',
                             'fetch',
                             'pull',
-                            'write-announcement', 
+                            'write-announcement',
                             'write-board',
                             'more-announcement',
                             'more-board',
@@ -59,7 +60,12 @@ class SiteController extends Controller
                         'actions' => ['request-access'],
                         'allow' => true,
                         'roles' => ['parent']
-                    ]
+                    ],
+                    [
+                      'actions' => ['requirements'],
+                      'allow' => true,
+                      'roles' => ['dev']
+                    ],
                 ],
             ],
             'verbs' => [
@@ -105,7 +111,8 @@ class SiteController extends Controller
             if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent'){
                 $request = new RequestDataAccess();
                 if(!RequestDataAccess::find()->where(['user_id' => Yii::$app->user->identity->id])->andWhere(['student_id' => $object->sid])->exists() ){
-                    $request->student_id = $object->sid;
+
+                    $request->request_text = $object->sid;
                     $request->user_id = Yii::$app->user->identity->id;
                     $request->save();
 
@@ -144,7 +151,7 @@ class SiteController extends Controller
                 }
 
                 return $data = array('unread' => $unread);
-                
+
             }else {
                 return $data = array('unread' => false);
             }
@@ -177,8 +184,8 @@ class SiteController extends Controller
                                             <div class="right floated">
                                                 <a id="#" class="anc-delete"><i class="remove icon" style="color: #767676;"></i></a>
                                             </div>
-                                            <div class="description" style="margin-top: -2px;">' 
-                                                . $model->content . 
+                                            <div class="description" style="margin-top: -2px;">'
+                                                . $model->content .
                                             '</div>
                                             <div class="meta">
                                                 <div class="left aligned text">
@@ -192,10 +199,10 @@ class SiteController extends Controller
                 $begin = Html::tag('div','',['id' => 'anc-list-modal','data-pjax-container' => '', 'data-pjax-push-state' => '', 'data-pjax-timeout' => 360000]);
                 $end = '</div>';
                 $content = Html::tag('div', $list, ['class' => 'ui divided relaxed items', 'style' => 'padding: 0 10px;']);
-                
+
                 $data = array('begin' => $begin, 'content' => $content, 'end' => $end);
             }
-            
+
             return $data;
         }
     }
@@ -212,12 +219,12 @@ class SiteController extends Controller
     public function actionSbar($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $data = json_decode($data);
             $val = $data->val;
-            
+
             $val === 1 ? Yii::$app->session['sidebar'] = '' : Yii::$app->session['sidebar'] = 'sidebar-narrow';
-            
+
             return array('val' => Yii::$app->session->get('sidebar'));
         }
     }
@@ -244,7 +251,7 @@ class SiteController extends Controller
     public function actionWriteBoard($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $content = Html::encode($object->msg);
 
@@ -258,8 +265,8 @@ class SiteController extends Controller
                     return array('boardSave' => true);
                 }
             }
-        }    
-    }  
+        }
+    }
 
 //////////////////////////////////////////////////////////////////// PULL
     public function actionMoreAnnouncement(){
@@ -269,10 +276,10 @@ class SiteController extends Controller
             $ttl_count = DataCenter::countAnnouncement();
 
             if($ttl_count > (Yii::$app->session->get('announcementSize') + 10) ){
-                
+
                 $cur_size = Yii::$app->session->get('announcementSize');
                 $new_size = Yii::$app->session->set('announcementSize', ($cur_size + 10));
-                
+
                 $all = false;
                 $pjax = true;
 
@@ -304,10 +311,10 @@ class SiteController extends Controller
             $ttl_count = DataCenter::countBoard();
 
             if($ttl_count > (Yii::$app->session->get('boardSize') + 10) ){
-                
+
                 $cur_size = Yii::$app->session->get('boardSize');
                 $new_size = Yii::$app->session->set('boardSize', ($cur_size + 10));
-                
+
                 $all = false;
                 $pjax = true;
 
@@ -334,7 +341,7 @@ class SiteController extends Controller
     public function actionPull(){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             Yii::$app->session->set('impact', 0);
 
             if(Yii::$app->session->get('announcementCount') !== DataCenter::countAnnouncement()){
@@ -358,7 +365,7 @@ class SiteController extends Controller
     public function actionFetch2($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $student = $this->findModel($object->uid);
 
@@ -376,7 +383,7 @@ class SiteController extends Controller
     public function actionPjax($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $student = $this->findModel($object->uid);
 
@@ -422,7 +429,7 @@ class SiteController extends Controller
             } else {
                 if(!empty(strpos($email, '@'))){
                     $query = User::find()->where(['email' => $email])->all();
-                    
+
                     if(!empty($query) && $email === $query[0]['email']){
 
                         if(!empty($query[0]['profile_image']) || $query[0]['profile_image'] !== null){
@@ -437,7 +444,7 @@ class SiteController extends Controller
                             return $object;
                         }
 
-                    } else{ 
+                    } else{
                         $object = (object) array('code' => 404, 'attempt' => $attempt);
 
                         return $object;
@@ -455,10 +462,10 @@ class SiteController extends Controller
         if(Yii::$app->request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-            $object = json_decode($data);        
+            $object = json_decode($data);
 
             if( empty(trim($object->username)) && empty(trim($object->email)) ){
-                $data = 
+                $data =
                     [
                         'usn' => 'null',
                         'email' => 'null',
@@ -468,7 +475,7 @@ class SiteController extends Controller
 
                 return $data;
             } elseif( empty(trim($object->username)) ){
-                $data = 
+                $data =
                     [
                         'usn' => 'null',
                         'email' => 'null',
@@ -478,7 +485,7 @@ class SiteController extends Controller
 
                 return $data;
             } elseif( empty(trim($object->email)) ){
-                $data = 
+                $data =
                     [
                         'usn' => $object->username,
                         'email' => 'null',
@@ -493,7 +500,7 @@ class SiteController extends Controller
     public function actionAnnouncement($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $current_count = DataCenter::countAnnouncement();
 
@@ -508,8 +515,8 @@ class SiteController extends Controller
     }
 
     public function actionIndex()
-    {   
-        if (Yii::$app->user->isGuest) 
+    {
+        if (Yii::$app->user->isGuest)
             return $this->redirect('site/login');
 
         return $this->redirect(Yii::$app->request->hostInfo . Yii::$app->request->baseUrl . '/dashboard');
@@ -525,20 +532,20 @@ class SiteController extends Controller
     {
         $model = new ContactForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) 
+        if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
-            if ($model->contact(Yii::$app->params['adminEmail'])) 
+            if ($model->contact(Yii::$app->params['adminEmail']))
             {
-                Yii::$app->session->setFlash('success', 
+                Yii::$app->session->setFlash('success',
                     Yii::t('app', 'Thank you for contacting us. We will respond to you as soon as possible.'));
-            } 
-            else 
+            }
+            else
             {
                 Yii::$app->session->setFlash('error', Yii::t('app', 'There was an error sending email.'));
             }
 
             return $this->refresh();
-        } 
+        }
 
         return $this->render('contact', [
             'model' => $model,
@@ -547,7 +554,7 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) 
+        if (!Yii::$app->user->isGuest)
         {
             return $this->goHome();
         }
@@ -576,7 +583,7 @@ class SiteController extends Controller
         {
             Yii::$app->session->setFlash('error', 'You have to activate your account first. Please check your email.');
             return $this->refresh();
-        }    
+        }
         // ACOUNT ACTIVATED WITH ERRORS
         else
         {
@@ -600,18 +607,18 @@ class SiteController extends Controller
     {
         $model = new PasswordResetRequestForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) 
+        if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
-            if ($model->sendEmail()) 
+            if ($model->sendEmail())
             {
-                Yii::$app->session->setFlash('success', 
+                Yii::$app->session->setFlash('success',
                     Yii::t('app', 'Check your email for further instructions.'));
 
                 return $this->goHome();
-            } 
-            else 
+            }
+            else
             {
-                Yii::$app->session->setFlash('error', 
+                Yii::$app->session->setFlash('error',
                     Yii::t('app', 'Sorry, we are unable to reset password for email provided.'));
             }
         }
@@ -625,17 +632,17 @@ class SiteController extends Controller
 
     public function actionResetPassword($token)
     {
-        try 
+        try
         {
             $model = new ResetPasswordForm($token);
-        } 
-        catch (InvalidParamException $e) 
+        }
+        catch (InvalidParamException $e)
         {
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        if ($model->load(Yii::$app->request->post()) 
-            && $model->validate() && $model->resetPassword()) 
+        if ($model->load(Yii::$app->request->post())
+            && $model->validate() && $model->resetPassword())
         {
             Yii::$app->session->setFlash('success', Yii::t('app', 'New password was saved.'));
 
@@ -646,51 +653,51 @@ class SiteController extends Controller
             return $this->render('resetPassword', [
                 'model' => $model,
             ]);
-        }       
-    }    
+        }
+    }
 
     public function actionSignup()
-    {  
+    {
         $rna = Yii::$app->params['rna'];
         $model = $rna ? new SignupForm(['scenario' => 'rna']) : new SignupForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
-            if ($user = $model->signup()) 
+            if ($user = $model->signup())
             {
                 $this->signupWithActivation($model, $user);
-                return $this->redirect('login');       
+                return $this->redirect('login');
             }
             else
             {
                 Yii::$app->session->setFlash('error',
                     Yii::t('app', 'We couldn\'t sign you up, please contact us.'));
-                Yii::error('Signup failed! 
+                Yii::error('Signup failed!
                     User '.Html::encode($user->username).' could not sign up.
                     Possible causes: something strange happened while saving user in database.');
                 return $this->refresh();
             }
         }
-                
+
         return $this->render('signup', [
             'model' => $model,
-        ]);     
+        ]);
     }
 
     private function signupWithActivation($model, $user)
     {
         if ($model->sendAccountActivationEmail($user))
         {
-            Yii::$app->session->setFlash('success', 
+            Yii::$app->session->setFlash('success',
                 Yii::t('app', 'Hello').' '. Html::encode(ucfirst($user->username)) . '. ' .
                 Yii::t('app', 'To be able to log in, you need to confirm your registration. Please check your email, we sent you a message.'));
             return $this->refresh();
         }
-        else 
+        else
         {
-            Yii::$app->session->setFlash('error', 
+            Yii::$app->session->setFlash('error',
                 Yii::t('app', 'We couldn\'t send you account activation email, please contact us.'));
-            Yii::error('Oops, something went wrong. Signup failed! 
+            Yii::error('Oops, something went wrong. Signup failed!
                 User '.Html::encode($user->username).' could not sign up.
                 Possible causes: verification email could not be sent.');
             return $this->refresh();
@@ -699,24 +706,24 @@ class SiteController extends Controller
 
     public function actionActivateAccount($token)
     {
-        try 
+        try
         {
             $user = new AccountActivation($token);
-        } 
-        catch (InvalidParamException $e) 
+        }
+        catch (InvalidParamException $e)
         {
             throw new BadRequestHttpException($e->getMessage());
         }
-        if ($user->activateAccount()) 
+        if ($user->activateAccount())
         {
-            Yii::$app->session->setFlash('success', 
+            Yii::$app->session->setFlash('success',
                 Yii::t('app', 'Account activated successfully! You can now log in.').' '.
                 Yii::t('app', 'Thank you').' '. Html::encode(ucfirst($user->username)).' '.
                 Yii::t('app', 'for joining us!'));
         }
         else
         {
-            Yii::$app->session->setFlash('error', 
+            Yii::$app->session->setFlash('error',
                 Html::encode($user->username).
                 Yii::t('app', 'Your account could not be activated, please contact us!'));
         }
@@ -732,4 +739,3 @@ class SiteController extends Controller
         }
     }
 }
-

@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace app\models;
 
 use Yii;
@@ -8,13 +8,13 @@ use app\rbac\models\AuthAssignment;
 
 class Options
 {
-	/*  
+	/*
 	<?= Options::render($options = [
 			'scenario' => Yii::
 			'id' => $model->id
     ]) ?>
     */
-	
+
 	public function generateCreate($options){
 
 		$button1 = Html::button('Add', ['type' => 'submit', 'class' => 'ui link fluid huge primary button']);
@@ -23,7 +23,7 @@ class Options
 
 		$item = Html::tag('div', implode('<p></p>',[$button1, $button2]),['class' => 'item']);
 
-		$template = Html::tag('div', '<div class="ui fluid huge label item"><span>Options</span></div>' . $item,['class' => ['ui fluid vertical menu']]);
+		$template = Html::tag('div', '<div class="ui fluid huge label item"><span>Options</span></div>' . $item, ['class' => ['ui fluid vertical menu']]);
 
 		return $template;
 	}
@@ -33,7 +33,7 @@ class Options
 		$button1 = Html::a('New', ['create'], ['class' => 'ui link fluid huge primary button']);
 
 		$button2 = Html::a('Edit', ['update', 'id' => $options['id']], ['class' => 'ui link fluid huge teal button']);
-		
+
 		switch (Yii::$app->controller->id) {
 			case 'applicant':
 				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
@@ -103,7 +103,17 @@ class Options
 				$button3 = '';
 
 				break;
-			
+
+			case 'request':
+				$button1 = Html::a('New', ['create'], ['class' => 'ui disabled link fluid huge primary button']);
+				
+				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
+					$button3 = '';
+				}else {
+					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+				}
+				break;
+
 			default:
 				$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				break;
@@ -134,7 +144,7 @@ class Options
 
 
 		$button2 = Html::a('View', ['view', 'id' => $options['id']], ['class' => 'ui link fluid huge teal button']);
-		
+
 		$button3 = Html::a('Cancel', ['/' . Yii::$app->controller->id], ['class' => 'ui link fluid huge grey button']);
 
 		$item = Html::tag('div', implode('<p></p>',[$button1, $button2, $button3]),['class' => 'item']);
@@ -149,7 +159,11 @@ class Options
 		if($options['scenario'] === 'create'){
 			return self::generateCreate($options);
 		}elseif($options['scenario'] === 'view'){
-			return self::generateView($options);
+			if(Yii::$app->controller->id === 'request'){
+				return self::generateView($options);
+			}else {
+				return self::generateView($options);
+			}
 		}elseif($options['scenario'] === 'update'){
 			return self::generateUpdate($options);
 		}

@@ -3,8 +3,8 @@ use app\models\Options;
 use yii\helpers\Html;
 $this->title = implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
 ?>
-<p></p>
-<div class="ui two column stackable grid">  
+<br>
+<div class="ui two column stackable grid">
     <div class="four wide column">
         <div class="column">
             <?= $this->render('_card', ['model' => $model]) ?>

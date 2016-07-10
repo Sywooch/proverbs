@@ -56,9 +56,9 @@ if($model->isNewRecord){
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <?= $form->field($model, 'teacher_id')->widget(Select2::classname(), [
-                            'data' => ArrayHelper::map(User::find()->joinWith('role')->where(['item_name' => 'teacher'])->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);}),
+                            'data' => ArrayHelper::map(app\models\StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);}),
                             'language' => 'en',
-                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Teacher'],
+                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student'],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
@@ -94,7 +94,7 @@ if($model->isNewRecord){
     </div>
 </div>
 <?php ActiveForm::end(); ?>
-<?php 
+<?php
 $this->registerJs("
     $('.datepicker').datepicker();
 ");
