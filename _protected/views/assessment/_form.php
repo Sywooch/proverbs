@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -12,7 +12,7 @@ $avatar = Yii::$app->params['avatar'];
 !$model->isNewRecord ? !empty(trim($model->enrolled->student->middle_name)) ? $middle = ucfirst(substr($model->enrolled->student->middle_name, 0,1)).'.' : $middle = '' : '';
 !$model->isNewRecord ? $this->title = implode(' ', [$model->enrolled->student->first_name, $middle, $model->enrolled->student->last_name]) : 'New';
 
-$has_sibling = json_encode($model->enrolled->student->student_has_sibling_enrolled); 
+$has_sibling = json_encode($model->enrolled->student->student_has_sibling_enrolled);
 $enrollment = json_encode($model->tuition->enrollment);
 $admission = json_encode($model->tuition->admission);
 $tuition_fee = json_encode($model->tuition->tuition_fee);
@@ -34,12 +34,12 @@ if($model->isNewRecord){
 }
 
 ?>
-<p></p>
+<br>
 <?php $form = ActiveForm::begin(); ?>
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
-            'imageContent' => !$model->isNewRecord ? 
+            'imageContent' => !$model->isNewRecord ?
                 !empty($model->enrolled->student->students_profile_image) ? ['/file', 'id' => $model->enrolled->student->students_profile_image] : implode('',[Yii::$app->request->baseUrl, Yii::$app->params['avatar']])
                         : implode('',[Yii::$app->request->baseUrl, Yii::$app->params['avatar']]),
             'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->enrolled->student->id, '</strong>']) : '&nbsp;',
@@ -71,7 +71,7 @@ if($model->isNewRecord){
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div style="text-align: right;">
-                                <p></p>
+                                <br>
                                 <p><?= $tuition_fee ?></p>
                                 <small>x</small> <span id="pv">0</span>%
                             </div>
@@ -202,7 +202,7 @@ if($model->isNewRecord){
                         </tbody>
                     </table>
                     <?= $form->field($model, 'total_assessed', ['inputTemplate' => '<label><strong>Total Assessed</strong></label>{input}','inputOptions' => [] ])->label(false)->textInput(['style' => 'text-align: right;' , 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
-                    <p></p>
+                    <br>
                     <button id="calc" class="ui fluid huge orange button hidden" type="button" style="font-size: 12px; margin-bottom: 5px;">Calculate</button>
                 </div>
             </div>

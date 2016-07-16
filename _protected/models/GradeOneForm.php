@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\EnrolledForm;
 /**
  * This is the model class for table "grade".
  *
@@ -72,6 +72,30 @@ class GradeOneForm extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+            if($this->isNewRecord){
+                $this->core_value_1 = 0;
+                $this->core_value_2 = 0;
+                $this->core_value_3 = 0;
+                $this->core_value_4 = 0;
+                $this->subject_1 = 0;
+                $this->subject_2 = 0;
+                $this->subject_3 = 0;
+                $this->subject_4 = 0;
+                $this->subject_5 = 0;
+                $this->subject_6 = 0;
+                $this->subject_7 = 0;
+                $this->subject_8 = 0;
+            }else {
+
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

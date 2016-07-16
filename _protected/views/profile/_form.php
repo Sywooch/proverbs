@@ -79,7 +79,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
             </div>
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-12">
-                
+
                 </div>
             </div>
             <div class="row">

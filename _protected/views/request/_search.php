@@ -18,7 +18,7 @@ use yii\bootstrap\ActiveForm;
         <br>
         <?= $form->field($model, 'id', ['inputTemplate' => '<label for="ID">ID</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
         <?= $form->field($model, 'request_text', ['inputTemplate' => '<label for="Request Details">Request Details</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->label(false) ?>
-        <?= $form->field($model, 'request_status', ['inputTemplate' => '<label>Request Status</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(['' => '', '1' => 'Processing', '2' => 'Approved', '3' => 'Denied', '4' => 'Deleted'], ['selected' => $model->request_status])->label(false) ?>
+        <?= $form->field($model, 'request_status', ['inputTemplate' => '<label>Request Status</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(['' => '', '1' => 'Processing', '2' => 'Approved', '3' => 'Denied'], ['selected' => $model->request_status])->label(false) ?>
     </div>
 </div>
 <?php ActiveForm::end(); ?>

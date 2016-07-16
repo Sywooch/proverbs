@@ -41,3 +41,4 @@ use yii\widgets\Pjax;
     </div>
 <?php Pjax::end(); ?>
 </div>
+<?= $this->render('/layouts/_toast')?>

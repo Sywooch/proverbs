@@ -8,7 +8,7 @@ use app\models\DataRequestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\rbac\models\AuthAssignment;
 /**
  * RequestController implements the CRUD actions for DataRequest model.
  */
@@ -36,7 +36,7 @@ class RequestController extends Controller
     public function actionIndex()
     {
         $searchModel = new DataRequestSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchRequest(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -61,18 +61,18 @@ class RequestController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new DataRequest();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+    // public function actionCreate()
+    // {
+    //     $model = new DataRequest();
+    //
+    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //         return $this->redirect(['view', 'id' => $model->id]);
+    //     } else {
+    //         return $this->render('create', [
+    //             'model' => $model,
+    //         ]);
+    //     }
+    // }
 
     /**
      * Updates an existing DataRequest model.
@@ -85,6 +85,8 @@ class RequestController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Saved successfully');
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -101,9 +103,16 @@ class RequestController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'dev' || AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'master' || AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'admin'){
 
-        return $this->redirect(['index']);
+            $request = $this->findModel($id);
+            $request->request_status = 4;
+            $request->save();
+
+            Yii::$app->session->setFlash('success', 'Deleted successfully');
+            return $this->redirect(['index']);
+        }
+
     }
 
     /**

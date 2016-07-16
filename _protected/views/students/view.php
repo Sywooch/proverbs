@@ -31,4 +31,3 @@ $this->title = implode(' ', [$model->first_name, $model->middle_name, $model->la
     </div>
 </div>
 <?= $this->render('_pjax', ['model' => $model]) ?>
-<?= $this->render('/layouts/_toast')?>

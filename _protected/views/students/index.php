@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 
 $this->title = 'Students';
 ?>
-<p></p>
+<br>
 <div class="ui two column stackable grid">
     <div class="twelve wide rounded column">
         <div class="ui raised segment">

@@ -68,4 +68,36 @@ class DataRequestSearch extends DataRequest
 
         return $dataProvider;
     }
+
+    public function searchRequest($params)
+    {
+        $query = DataRequest::find()->where(['!=', 'request_status', 4 ]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'student_id' => $this->student_id,
+            'request_status' => $this->request_status,
+            'request_status' => $this->request_status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ]);
+        //$query->andFilterWhere(['request_status', '!=', 4]);
+
+        return $dataProvider;
+    }
 }

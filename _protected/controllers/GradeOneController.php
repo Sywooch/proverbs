@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\GradeOneForm;
+use app\rbac\models\AuthAssignment;
+use app\models\EnrolledForm;
 use app\models\GradeOneFormSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -58,17 +60,52 @@ class GradeOneController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($eid)
     {
-        $model = new GradeOneForm();
+        // if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'principal' ||
+        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'teacher' ||
+        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff' ||
+        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'cashier' ||
+        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent'
+        // ){
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (($enrolled = EnrolledForm::findOne($eid)) !== null) {
+            $model = new GradeOneForm();
+            $exist = GradeOneForm::find()->where(['enrolled_id' => $eid])->exists();
+            //CHECK IF RECORD EXIST
+            //
+            $model->grade_protection = 1;
+            $model->enrolled_id = $eid;
+            $model->grading_period = 1;
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                //CREATE FOUR GRADINGS
+                for($i = 2; $i < 5; $i++){
+                    $grade = new GradeOneForm();
+                    $grade->grade_protection = 1;
+                    $grade->enrolled_id = $eid;
+                    $grade->grading_period = $i;
+                    $grade->save();
+                }
+                //die(var_dump($_POST));
+
+                Yii::$app->session->setFlash('success', 'New grade successfully created!');
+
+                //return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect('index');
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'enrolled' => $enrolled,
+                    'exist' => $exist
+                ]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
     }
 
     /**

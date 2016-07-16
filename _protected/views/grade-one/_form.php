@@ -1,55 +1,56 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
+use app\models\Card;
+use app\models\Options;
+use app\models\DataHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GradeOneForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<?php $form = ActiveForm::begin(); ?>
+    <div class="ui three column stackable grid">
+        <div class="four wide rounded column">
+            <?= Card::render($options = [
+                'imageContent' => !$model->isNewRecord ?
+                    !empty($enrolled->student->students_profile_image) ? ['/file', 'id' => $enrolled->student->students_profile_image] : implode('',[Yii::$app->request->baseUrl, Yii::$app->params['avatar']])
+                            : implode('',[Yii::$app->request->baseUrl, Yii::$app->params['avatar']]),
+                'labelContent' => implode(' ', ['ID#', '<strong>', $enrolled->student->id, '</strong>']),
+                'labelFor' => 'Applicant ID',
+                'labelOptions' => '',
+                'headerContent' => DataHelper::name($enrolled->student->first_name, $enrolled->student->middle_name, $enrolled->student->last_name),
+                'headerOptions' => '',
+                'metaContent' => implode('', ['\'', $enrolled->student->nickname, '\'']),
+                'metaOptions' => '',
+                'leftFloatedContent' => DataHelper::gradeLevel($enrolled->student->grade_level_id),
+                'leftFloatedFor' => '',
+                'leftFloatedOptions' => '',
+                'rightFloatedContent' => '',
+                'rightFloatedOptions' => $enrolled->student->sped === 0 ? '' : 'hidden'
+            ]) ?>
+        </div>
+        <div class="nine wide rounded column">
+            <div class="ui segment">
+                <?php if($exist): ?>
+                    <label for="exist">Record already exist!</label>
+                <?php else: ?>
+                    <?= $this->render('_table'); ?>
+                <?php endif ?>
+            </div>
+        </div>
+        <div class="three wide rounded column">
+            <div class="column">
+                <?php if($exist): ?>
+                    <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'exist' => $exist]); ?>
+                <?php else: ?>
+                    <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'exist' => $exist]); ?>
+                <?php endif ?>
+            </div>
+        </div>
 
-<div class="grade-one-form-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'grade_protection')->textInput() ?>
-
-    <?= $form->field($model, 'enrolled_id')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'grading_period')->textInput() ?>
-
-    <?= $form->field($model, 'core_value_1')->textInput() ?>
-
-    <?= $form->field($model, 'core_value_2')->textInput() ?>
-
-    <?= $form->field($model, 'core_value_3')->textInput() ?>
-
-    <?= $form->field($model, 'core_value_4')->textInput() ?>
-
-    <?= $form->field($model, 'subject_1')->textInput() ?>
-
-    <?= $form->field($model, 'subject_2')->textInput() ?>
-
-    <?= $form->field($model, 'subject_3')->textInput() ?>
-
-    <?= $form->field($model, 'subject_4')->textInput() ?>
-
-    <?= $form->field($model, 'subject_5')->textInput() ?>
-
-    <?= $form->field($model, 'subject_6')->textInput() ?>
-
-    <?= $form->field($model, 'subject_7')->textInput() ?>
-
-    <?= $form->field($model, 'subject_8')->textInput() ?>
-
-    <?= $form->field($model, 'subject_9')->textInput() ?>
-
-    <?= $form->field($model, 'subject_10')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>
+<?php ActiveForm::end(); ?>
+<?php $this->render('switch'); ?>
+<?= $this->render('/layouts/_toast', ['model' => $model])?>

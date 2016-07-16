@@ -22,3 +22,4 @@ $this->title = $model->username;
     </div>
 </div>
 <?= $this->render('_pjax', ['model' => $model]) ?>
+<?= $this->render('/layouts/_toast')?>

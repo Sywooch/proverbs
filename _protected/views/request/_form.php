@@ -39,12 +39,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                         <div class="extra content">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-
+                                    Parent
                                 </div>
                             </div>
                         </div>
@@ -75,7 +70,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <?= $form->field($model, 'request_status', ['inputTemplate' => '<label>Request Status</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(['1' => 'Processing', '2' => 'Approved', '3' => 'Denied', '4' => 'Deleted'])->label(false) ?>
+                            <?= $form->field($model, 'request_status', ['inputTemplate' => '<label>Request Status</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(['1' => 'Processing', '2' => 'Approved', '3' => 'Denied'])->label(false) ?>
                         </div>
                     </div>
                 </div>

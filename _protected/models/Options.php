@@ -21,7 +21,20 @@ class Options
 
 		$button2 = Html::a('Cancel', ['/' . Yii::$app->controller->id], ['class' => 'ui link fluid huge grey button']);
 
-		$item = Html::tag('div', implode('<p></p>',[$button1, $button2]),['class' => 'item']);
+		$item = Html::tag('div', implode('<br>',[$button1, $button2]),['class' => 'item']);
+
+		$template = Html::tag('div', '<div class="ui fluid huge label item"><span>Options</span></div>' . $item, ['class' => ['ui fluid vertical menu']]);
+
+		return $template;
+	}
+
+	public function generateCreateDisabled($options){
+
+		$button1 = Html::button('Add', ['type' => 'submit', 'class' => 'ui link disabled fluid huge primary button']);
+
+		$button2 = Html::a('Cancel', ['/' . Yii::$app->controller->id], ['class' => 'ui link fluid huge grey button']);
+
+		$item = Html::tag('div', implode('<br>',[$button1, $button2]),['class' => 'item']);
 
 		$template = Html::tag('div', '<div class="ui fluid huge label item"><span>Options</span></div>' . $item, ['class' => ['ui fluid vertical menu']]);
 
@@ -100,17 +113,37 @@ class Options
 				break;
 
 			case 'profile':
+
+				$button3 = '';
+
+				break;
+
+			case 'grade-one':
 				$button3 = '';
 
 				break;
 
 			case 'request':
 				$button1 = Html::a('New', ['create'], ['class' => 'ui disabled link fluid huge primary button']);
-				
-				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
+
+				if(
+					AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'principal' ||
+					AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'teacher' ||
+					AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'cashier' ||
+					AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'
+				){
 					$button3 = '';
 				}else {
-					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+					//$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+					$button3 = Html::a('Delete', ['delete', 'id' => $options['id']] ,
+									[
+										'id' => 'delete',
+										'class' => 'ui link fluid huge grey button',
+										'data' => [
+											'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+											'method' => 'post',
+										]
+									]);
 				}
 				break;
 
@@ -157,7 +190,11 @@ class Options
 	public function render($options){
 
 		if($options['scenario'] === 'create'){
-			return self::generateCreate($options);
+			if($options['exist'] === true){
+				return self::generateCreateDisabled($options);
+			}else {
+				return self::generateCreate($options);
+			}
 		}elseif($options['scenario'] === 'view'){
 			if(Yii::$app->controller->id === 'request'){
 				return self::generateView($options);

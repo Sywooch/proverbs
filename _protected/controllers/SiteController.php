@@ -110,6 +110,7 @@ class SiteController extends Controller
 
             if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent'){
                 $request = new RequestDataAccess();
+
                 if(!RequestDataAccess::find()->where(['user_id' => Yii::$app->user->identity->id])->andWhere(['student_id' => $object->sid])->exists() ){
 
                     $request->request_text = $object->sid;

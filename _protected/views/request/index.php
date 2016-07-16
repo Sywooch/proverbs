@@ -15,7 +15,7 @@ $this->title = 'Data Requests';
                     <h4>Requests</h4>
                 </div>
                 <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
-                <p></p>
+                <br>
                 <?php Pjax::begin(['id' => 'student-list', 'timeout' => 60000]); ?>
                     <?= UiListView::widget([
                        'dataProvider' => $dataProvider,
@@ -29,3 +29,4 @@ $this->title = 'Data Requests';
         </div>
     </div>
 </div>
+<?= $this->render('/layouts/_toast')?>
