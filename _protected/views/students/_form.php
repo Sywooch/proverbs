@@ -209,10 +209,10 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                 </div>
                 <div class="item">
                     <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
-                    <p></p>
+                    <br>
                     <?php if(!$model->isNewRecord): ?>
                     <?= Html::a(Yii::t('app', 'View'),['view', 'id' => $model->id], ['class' => 'ui link fluid huge teal button']) ?>
-                    <p></p>
+                    <br>
                     <?php endif ?>
                     <?= Html::a(Yii::t('app', 'Cancel'),['/students'], ['class' => 'ui link fluid huge grey button']) ?>
                 </div>

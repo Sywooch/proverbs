@@ -4,7 +4,7 @@ use yii\helpers\Html;
 $this->title = implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
 ?>
 <br>
-<div class="ui two column stackable grid">
+<div class="ui three column stackable grid">
     <div class="four wide column">
         <div class="column">
             <?= $this->render('_card', ['model' => $model]) ?>

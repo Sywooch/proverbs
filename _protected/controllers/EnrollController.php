@@ -10,6 +10,9 @@ use app\models\Tuition;
 use app\models\StudentForm;
 use app\models\Section;
 use app\models\SchoolYear;
+
+use app\models\GradeOneForm;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -160,9 +163,30 @@ class EnrollController extends Controller
         $model = new EnrolledForm();
         $model->enrollment_status = 1;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save() ) {
 
             Yii::$app->session->setFlash('success', 'New enrollee successfully created!');
+
+            switch ($model->grade_level_id) {
+                case 10:
+                    //CREATE FOUR GRADINGS
+                    for($i = 1; $i < 5; $i++){
+                        $grade = new GradeOneForm();
+                        $grade->grade_protection = 1;
+                        $grade->enrolled_id = $model->id;
+                        $grade->grading_period = $i;
+                        $grade->save();
+                    }
+
+                    break;
+
+                default:
+                    die('adfadf');
+                    break;
+            }
+
+            Yii::$app->session->setFlash('success', 'New grade form successfully created!');
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

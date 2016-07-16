@@ -48,10 +48,12 @@ class GradeOneController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($eid, $grading)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findGrade($eid, $grading),
+            'eid' => $eid,
+            'grading' => $grading
         ]);
     }
 
@@ -114,15 +116,19 @@ class GradeOneController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($eid, $grading)
     {
-        $model = $this->findModel($id);
+        $model = $this->findGrade($eid, $grading);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            Yii::$app->session->setFlash('success', 'Saved successfully');
+            return $this->redirect(['view', 'eid' => $eid, 'grading' => $grading]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'eid' => $eid,
+                'grading' => $grading,
             ]);
         }
     }
@@ -135,7 +141,7 @@ class GradeOneController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -150,6 +156,15 @@ class GradeOneController extends Controller
     protected function findModel($id)
     {
         if (($model = GradeOneForm::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findGrade($eid, $grading)
+    {
+        if (($model = GradeOneForm::find()->where(['enrolled_id' => $eid])->andWhere(['grading_period' => $grading])->one() ) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

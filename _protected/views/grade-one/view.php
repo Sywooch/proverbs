@@ -2,51 +2,36 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\Options;
 /* @var $this yii\web\View */
 /* @var $model app\models\GradeOneForm */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Grade One Forms', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="grade-one-form-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'grade_protection',
-            'enrolled_id',
-            'grading_period',
-            'core_value_1',
-            'core_value_2',
-            'core_value_3',
-            'core_value_4',
-            'subject_1',
-            'subject_2',
-            'subject_3',
-            'subject_4',
-            'subject_5',
-            'subject_6',
-            'subject_7',
-            'subject_8',
-            'subject_9',
-            'subject_10',
-        ],
-    ]) ?>
-
+<div class="ui three column stackable grid">
+    <div class="four wide column">
+        <div class="column">
+            <?= $this->render('_card', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="nine wide column">
+        <div class="column">
+            <?= $this->render('_detail', ['model' => $model]) ?>
+        </div>
+    </div>
+    <div class="three wide column">
+        <div class="column">
+            <div class="ui fluid vertical menu">
+                <div class="ui fluid huge label item">
+                    <span>Options</span>
+                </div>
+                <div class="item">
+                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+                    <br>
+                    <?= Html::a(Yii::t('app', 'Edit'),['update', 'eid' => $eid, 'grading' => $grading], ['class' => 'ui link fluid huge teal button']) ?>
+                    <br>
+                    <?= Html::a(Yii::t('app', 'Cancel'),['/students'], ['class' => 'ui link fluid huge grey button']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
