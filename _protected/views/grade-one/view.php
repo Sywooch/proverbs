@@ -7,15 +7,16 @@ use app\models\Options;
 /* @var $model app\models\GradeOneForm */
 
 ?>
+<br>
 <div class="ui three column stackable grid">
     <div class="four wide column">
         <div class="column">
-            <?= $this->render('_card', ['model' => $model]) ?>
+            <?= $this->render('_card', ['models' => $models]) ?>
         </div>
     </div>
     <div class="nine wide column">
         <div class="column">
-            <?= $this->render('_detail', ['model' => $model]) ?>
+            <?= $this->render('_detail', ['models' => $models]) ?>
         </div>
     </div>
     <div class="three wide column">
@@ -25,13 +26,12 @@ use app\models\Options;
                     <span>Options</span>
                 </div>
                 <div class="item">
-                    <?= Html::submitButton($model->isNewRecord ? 'Add' : 'Save' , ['class' => 'ui link fluid huge primary submit button', 'style' => 'color: white;']) ?>
+                    <?= Html::a(Yii::t('app', 'Edit'),['update', 'eid' => $eid], ['class' => 'ui link fluid huge teal button']) ?>
                     <br>
-                    <?= Html::a(Yii::t('app', 'Edit'),['update', 'eid' => $eid, 'grading' => $grading], ['class' => 'ui link fluid huge teal button']) ?>
-                    <br>
-                    <?= Html::a(Yii::t('app', 'Cancel'),['/students'], ['class' => 'ui link fluid huge grey button']) ?>
+                    <?= Html::a(Yii::t('app', 'Cancel'),['/grade-one'], ['class' => 'ui link fluid huge grey button']) ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<?= $this->render('/layouts/_toast', ['models' => $models])?>

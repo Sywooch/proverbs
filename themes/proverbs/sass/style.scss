@@ -220,7 +220,7 @@ textarea {
     background: white;
     &:focus {
         -webkit-box-shadow: none;
-                box-shadow: none;       
+                box-shadow: none;
     }
     &:blur {
         background: white;
@@ -589,13 +589,13 @@ span#t {
 .pagination {
     margin: 10px 0;
 }
-.message-index, 
+.message-index,
 .announcement-index,
 .enrollment-form-index,
-.applicant-form-index, 
-.cashier-form-index, 
-.student-form-index, 
-.entrance-exam-form-index, 
+.applicant-form-index,
+.cashier-form-index,
+.student-form-index,
+.entrance-exam-form-index,
 .payment-form-index,
 .teacher-form-index,
 .user-form-index,
@@ -629,7 +629,7 @@ span#t {
     height: 45px;
 }
 .select2-container.select2-container--krajee.select2-container--open{
-    
+
 }
 .select2-search__field {
     padding-left: -15px;
@@ -749,7 +749,7 @@ small.separator {
             padding: 0;
             line-height: 200%;
         }
-        
+
     }
     ul li:last-child {
         height: auto;
@@ -791,7 +791,7 @@ small.other-separator {
 #write-board-send {
     display: block;
     -webkit-border-radius: 2px;
-               border-radius: 2px;   
+               border-radius: 2px;
 }
 #toggle-board-menu {
     position: fixed;
@@ -819,7 +819,7 @@ small.other-separator {
             -ms-transition: all ease .5s 0s;
              -o-transition: all ease .5s 0s;
                 transition: all ease .5s 0s;
-        i {            
+        i {
             color: white;
         }
     }
@@ -944,7 +944,7 @@ small.other-separator {
     width: 100%;
 }
 .applicant-form-create {
-    margin: 0;    
+    margin: 0;
 }
 .progress {
     margin-bottom: 15px;
@@ -954,7 +954,7 @@ small.other-separator {
     padding: 0 5px;
 }
 .fa-one-point-five {
-    font-size: 18px;    
+    font-size: 18px;
 }
 .fa-group-addon-field {
     font-size: 18px;
@@ -1207,8 +1207,8 @@ select.form-control.pva-form-control{
     bottom: 0;
     opacity: .5;
     #image-upload-button {
-        padding: 0 10px; 
-        text-align: center; 
+        padding: 0 10px;
+        text-align: center;
         margin-bottom: -10px;
     }
     &:hover {
@@ -1264,13 +1264,13 @@ select.form-control.pva-form-control{
     td:last-child {
         text-align: right;
         span#td-payment {
-            
+
         }
     }
 }
 .payment-history tbody > tr{
     td:first-child {
-        
+
     }
     td:last-child {
         text-align: right;
@@ -1443,7 +1443,7 @@ select.form-control.pva-form-control{
 }
 #parent-menu-wrap {
     width: 100%;
-    background: white; 
+    background: white;
     margin-bottom: 10px;
     border-bottom: 1px solid rgba(34,36,38,.15);
 }
@@ -1452,6 +1452,17 @@ select.form-control.pva-form-control{
         font-size: 14px;
     }
 }
+table tbody#grade-one-tbody {
+    tr {
+        max-height: 30px;
+        height: 30px;
+        > td {
+            vertical-align: top;
+            padding: 5px 5px 0 5px;
+        }
+    }
+}
+
 @media (max-width: 991px) {
     #nav-menu-dropdown {
         visibility: visible;

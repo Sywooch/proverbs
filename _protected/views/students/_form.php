@@ -9,7 +9,7 @@ use app\rbac\models\AuthAssignment;
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 !empty($model->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->students_profile_image : $img = $avatar;
 ?>
-<p></p>
+<br>
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">

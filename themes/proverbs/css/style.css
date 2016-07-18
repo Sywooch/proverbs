@@ -1860,35 +1860,46 @@ select.form-control.pva-form-control {
   font-size: 14px;
 }
 
+/* line 1456, ../sass/style.scss */
+table tbody#grade-one-tbody tr {
+  max-height: 30px;
+  height: 30px;
+}
+/* line 1459, ../sass/style.scss */
+table tbody#grade-one-tbody tr > td {
+  vertical-align: top;
+  padding: 5px 5px 0 5px;
+}
+
 @media (max-width: 991px) {
-  /* line 1456, ../sass/style.scss */
+  /* line 1467, ../sass/style.scss */
   #nav-menu-dropdown {
     visibility: visible;
     display: block;
   }
 
-  /* line 1460, ../sass/style.scss */
+  /* line 1471, ../sass/style.scss */
   #nav-menu, #nav-menu-parent {
     height: 54px;
   }
-  /* line 1462, ../sass/style.scss */
+  /* line 1473, ../sass/style.scss */
   #nav-menu a, #nav-menu-parent a {
     visibility: hidden;
     display: none;
   }
 
-  /* line 1467, ../sass/style.scss */
+  /* line 1478, ../sass/style.scss */
   #nav-offset {
     min-height: 118px;
   }
 
-  /* line 1470, ../sass/style.scss */
+  /* line 1481, ../sass/style.scss */
   #sb-btn1 {
     visibility: hidden;
     display: none;
   }
 
-  /* line 1474, ../sass/style.scss */
+  /* line 1485, ../sass/style.scss */
   #bm.item > .image {
     max-width: 35px !important;
     display: none;

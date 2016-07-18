@@ -1,51 +1,28 @@
 <?php
-
 use yii\helpers\Html;
-use yii\grid\GridView;
-
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\GradeOneFormSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Grade One Forms';
-$this->params['breadcrumbs'][] = $this->title;
+use app\models\UiListView;
+use yii\widgets\Pjax;
+$this->title = "Grade One";
 ?>
-<div class="grade-one-form-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Grade One Form', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'grade_protection',
-            'enrolled_id',
-            'grading_period',
-            'core_value_1',
-            // 'core_value_2',
-            // 'core_value_3',
-            // 'core_value_4',
-            // 'subject_1',
-            // 'subject_2',
-            // 'subject_3',
-            // 'subject_4',
-            // 'subject_5',
-            // 'subject_6',
-            // 'subject_7',
-            // 'subject_8',
-            // 'subject_9',
-            // 'subject_10',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+<br>
+<div class="ui two column stackable grid">
+    <div class="twelve wide rounded column">
+        <div class="ui raised segment">
+            <div class="ui black ribbon label" style="margin-left: -2px;">
+                <h1>Grade One</h1>
+            </div>
+            <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
+            <p></p>
+            <?php Pjax::begin(['id' => 'grade-one-list', 'timeout' => 60000]); ?>
+                <?= UiListView::widget([
+                   'dataProvider' => $dataProvider,
+                    'itemView' => '_list',
+                ]); ?>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+    <div class="four wide column">
+        <?php // $this->render('_search', ['model' => $searchModel]) ?>
+    </div>
 </div>
+<?= $this->render('/layouts/_toast')?>

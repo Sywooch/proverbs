@@ -10,6 +10,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
+        
     ],
     'controllerMap' => [
         'file' => 'mdm\\upload\\FileController',
@@ -18,7 +19,7 @@ $config = [
     ],
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) 
+            // !!! insert a secret key in the following (if it is empty)
             // - this is required by cookie validation
             'cookieValidationKey' => 'DlIFTbNe6URpWok9Wr0TLX9e2mIhChgh',
         ],
@@ -27,7 +28,7 @@ $config = [
             'nullDisplay' => '',
             //'dateFormat' => 'php:m/d/Y',
         ],
-        // you can set your theme here 
+        // you can set your theme here
         // - template comes with: 'default', 'slate', 'spacelab' and 'cerulean'
         'view' => [
             'theme' => [
@@ -119,7 +120,7 @@ $config = [
     ],
     'params' => $params,
 
-    // set allias for our uploads folder 
+    // set allias for our uploads folder
     // @appRoot alias is definded in config/bootstrap.php file
     'aliases' => [
         '@uploads' => '@appRoot/uploads'

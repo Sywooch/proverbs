@@ -11,26 +11,123 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<div class="ui inverted dimmer">
 	    <div class="ui massive text loader"></div>
 	</div>
-    <?= UiTable::widget([
-	    'model' => $model,
-	    'options' => ['class' => 'ui fixed very basic table'],
-        'attributes' => [
-            'id',
-            'enrolled_id',
-            'grade_protection',
-            'subject_1',
-            'subject_2',
-            'subject_3',
-            'subject_4',
-            'subject_5',
-            'subject_6',
-            'subject_7',
-            'subject_8',
-            'core_value_1',
-            'core_value_2',
-            'core_value_3',
-            'core_value_4',
-        ],
-    ])?>
+	<table class="ui celled striped small table">
+		<thead>
+			<tr>
+				<th>&nbsp;</th>
+				<th class="center aligned">First</th>
+				<th class="center aligned">Second</th>
+				<th class="center aligned">Third</th>
+				<th class="center aligned">Fourth</th>
+				<th class="center aligned">Average</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>English</td>
+				<?php foreach($models as $model): ?>
+					<?php if($model['subject_1'] === 0): ?>
+						<td class="center aligned">&nbsp;</td>
+					<?php else: ?>
+						<td class="center aligned"><?= $model['subject_1'] ?></td>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Math</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['subject_2'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Science</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['subject_3'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Civics</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['subject_4'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Christian Education</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['subject_5'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>MTB</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['subject_6'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>MAPEH</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['subject_7'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Filipino</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['subject_8'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Makadiyos</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['core_value_1'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Makatao</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['core_value_2'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Makakalikasan</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['core_value_3'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Makabansa</td>
+				<?php foreach($models as $model): ?>
+				<td class="center aligned"><?= $model['core_value_4'] ?></td>
+				<?php endforeach; ?>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+		</tbody>
+	</table>
     <?php Pjax::end(); ?>
 </div>

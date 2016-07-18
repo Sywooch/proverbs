@@ -5,16 +5,17 @@ namespace app\models;
 use Yii;
 use yii\web\NotFoundHttpException;
 use mdm\upload\FileController;
+use yii\filters\AccessControl;
 
 /**
  * Use to show or download uploaded file. Add configuration to your application
- * 
+ *
  * ~~~
  * 'controllerMap' => [
  *     'file' => 'mdm\upload\FileController',
  * ],
  * ~~~
- * 
+ *
  * Then you can show your file in url `Url::to(['/file','id'=>$file_id])`,
  * and download file in url `Url::to(['/file/download','id'=>$file_id])`
  *
@@ -25,6 +26,22 @@ class UserThumbnail extends FileController
 {
     public $defaultAction = 'show';
 
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['uthumbnail'],
+                'rules' => [
+                    [
+                        'actions' => ['uthumbnail'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
     /**
      * Show file
      * @param integer $id

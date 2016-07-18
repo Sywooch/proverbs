@@ -1,10 +1,10 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use app\models\UiListView;
 use yii\widgets\Pjax;
 $this->title = "Class Adviser";
 ?>
-<p></p>
+<br>
 <div class="ui two column stackable grid">
     <div class="twelve wide rounded column">
         <div class="ui raised segment">

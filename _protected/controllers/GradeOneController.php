@@ -8,8 +8,13 @@ use app\rbac\models\AuthAssignment;
 use app\models\EnrolledForm;
 use app\models\GradeOneFormSearch;
 use yii\web\Controller;
+use \yii\base\Model;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\imagine\Image;
+use app\models\File;
 
 /**
  * GradeOneController implements the CRUD actions for GradeOneForm model.
@@ -19,6 +24,20 @@ class GradeOneController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'roles' => ['?', 'parent'],
+                    ],
+                    [
+                        'actions' => ['index' , 'create', 'view', 'update', 'pjax'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,7 +54,7 @@ class GradeOneController extends Controller
     public function actionIndex()
     {
         $searchModel = new GradeOneFormSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchGradeOne(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -48,12 +67,11 @@ class GradeOneController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionView($eid, $grading)
+    public function actionView($eid)
     {
         return $this->render('view', [
-            'model' => $this->findGrade($eid, $grading),
+            'models' => $this->findGrade($eid),
             'eid' => $eid,
-            'grading' => $grading
         ]);
     }
 
@@ -64,50 +82,7 @@ class GradeOneController extends Controller
      */
     public function actionCreate($eid)
     {
-        // if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'principal' ||
-        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'teacher' ||
-        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff' ||
-        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'cashier' ||
-        //     AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent'
-        // ){
-        //     throw new NotFoundHttpException('The requested page does not exist.');
-        // }
-
-        if (($enrolled = EnrolledForm::findOne($eid)) !== null) {
-            $model = new GradeOneForm();
-            $exist = GradeOneForm::find()->where(['enrolled_id' => $eid])->exists();
-            //CHECK IF RECORD EXIST
-            //
-            $model->grade_protection = 1;
-            $model->enrolled_id = $eid;
-            $model->grading_period = 1;
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                //CREATE FOUR GRADINGS
-                for($i = 2; $i < 5; $i++){
-                    $grade = new GradeOneForm();
-                    $grade->grade_protection = 1;
-                    $grade->enrolled_id = $eid;
-                    $grade->grading_period = $i;
-                    $grade->save();
-                }
-                //die(var_dump($_POST));
-
-                Yii::$app->session->setFlash('success', 'New grade successfully created!');
-
-                //return $this->redirect(['view', 'id' => $model->id]);
-                return $this->redirect('index');
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                    'enrolled' => $enrolled,
-                    'exist' => $exist
-                ]);
-            }
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-
+        throw new ForbiddenHttpException("Error Processing Request", 403, null);
     }
 
     /**
@@ -116,19 +91,28 @@ class GradeOneController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($eid, $grading)
+    public function actionUpdate($eid)
     {
-        $model = $this->findGrade($eid, $grading);
+        $models = $this::findGrade($eid);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            Yii::$app->session->setFlash('success', 'Saved successfully');
-            return $this->redirect(['view', 'eid' => $eid, 'grading' => $grading]);
+        if (Model::loadMultiple($models, Yii::$app->request->post()) && Model::validateMultiple($models)) {
+            $count = 0;
+            foreach ($models as $model) {
+               // populate and save records for each model
+                if ($model->save()) {
+                    // do something here after saving
+                    $count++;
+                }
+            }
+            Yii::$app->session->setFlash('success', 'Grade saved successfully!');
+            return $this->render('view', [
+                'models' => $models,
+                'eid' => $eid
+            ]);
         } else {
             return $this->render('update', [
-                'model' => $model,
-                'eid' => $eid,
-                'grading' => $grading,
+                'models' => $models,
+                'eid' => $eid
             ]);
         }
     }
@@ -162,9 +146,9 @@ class GradeOneController extends Controller
         }
     }
 
-    protected function findGrade($eid, $grading)
+    protected function findGrade($eid)
     {
-        if (($model = GradeOneForm::find()->where(['enrolled_id' => $eid])->andWhere(['grading_period' => $grading])->one() ) !== null) {
+        if (($model = GradeOneForm::find()->where(['enrolled_id' => $eid])->all() ) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
