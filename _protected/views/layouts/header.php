@@ -4,7 +4,9 @@ use yii\helpers\Url;
 use app\models\Announcement;
 use app\models\UiListView;
 use app\models\User;
+use yii\widgets\Pjax;
 use app\models\DataHelper;
+use app\models\DataCenter;
 use app\rbac\models\AuthAssignment;
 $imaage = DataHelper::image(Yii::$app->user->identity->id);
 $user = User::findOne(Yii::$app->user->identity->id);
@@ -26,9 +28,14 @@ $user = User::findOne(Yii::$app->user->identity->id);
             </div>
             <div class="right floated small menu">
                 <?php if(!Yii::$app->user->isGuest && app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'parent' ): ?>
-                <div id="new-announcement" class="ui link item" data-toggle="modal" data-target="#ann_modal">
+                <!-- <div id="new-announcement" class="ui link item" data-toggle="modal" data-target="#ann_modal">
                     <i class="icon-flag"></i>
                     <div class="notify announcement hidden"></div>
+                </div> -->
+                <div id="new-announcement" class="ui top pointing dropdown item">
+                    <i class="icon-flag"></i>
+                    <div class="notify announcement hidden"></div>
+                    <?= $this->render('announcement') ?>
                 </div>
                 <?php endif ?>
                 <div class="ui link top pointing dropdown item">

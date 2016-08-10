@@ -15,7 +15,7 @@ $this->title = Yii::t('app', 'Users');
             </div>
             <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
             <p></p>
-            <?php Pjax::begin(['id' => 'user-list', 'timeout' => 60000]); ?>
+            <?php Pjax::begin(['id' => 'user-list']); ?>
                 <?= UiListView::widget([
                    'dataProvider' => $dataProvider,
                     'itemView' => '_list',

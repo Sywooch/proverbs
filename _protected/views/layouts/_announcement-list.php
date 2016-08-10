@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use app\models\DataHelper;
@@ -11,7 +11,7 @@ $avatar = DataHelper::avatar();
 	<div class="description" style="margin-top: -2px;">
 		<p><?= Html::encode($model->content) ?></p>
 	</div>
-	<div class="date">
+	<div class="date date-announcement">
 		<span><strong><?= $model->postedBy->username?></strong></span>&nbsp;&nbsp;
 		<?php if(\Carbon\Carbon::createFromTimestamp($model->created_at, 'Asia/Manila')->diffInHours() <  5): ?>
 			<small><?= DataHelper::carbonDateDiff($model->created_at)?></small>
