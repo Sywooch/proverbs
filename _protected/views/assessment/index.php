@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use app\models\UiListView;
 use yii\widgets\Pjax;
@@ -29,14 +29,14 @@ $this->title = "Assessment";
 <?php
 $pjax = <<< JS
 $(document).ready(function(){
-    setInterval(function(){
-        $.pjax.reload({
-            container:'#assessment-list',
-            success: function(){
-                $('ul.pagination > li.active > a').click()
-            }
-        });
-    }, 10000);
+    // setInterval(function(){
+    //     $.pjax.reload({
+    //         container:'#assessment-list',
+    //         success: function(){
+    //             $('ul.pagination > li.active > a').click()
+    //         }
+    //     });
+    // }, 10000);
 });
 JS;
 $this->registerJs($pjax);

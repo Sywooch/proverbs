@@ -31,6 +31,10 @@ class DataHelper
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->toFormattedDateString();
     }
+    public static function carbonDateTime($data) {
+
+        return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->toDateTimeString();
+    }
 
     public static function carbonDateDiff($data) {
 
@@ -159,6 +163,7 @@ class DataHelper
             case 'principal':
             $data = implode('',[
                 Html::a('Dashboard', implode('/',[Yii::$app->request->baseUrl, 'dashboard']) , ['class' => Yii::$app->controller->id === 'dashboard' ? 'link item active' : 'link item']),
+                Html::a('Profile', implode('/',[Yii::$app->request->baseUrl, 'profile']) , ['class' => Yii::$app->controller->id === 'profile' ? 'link item active' : 'link item']),
                 Html::a('Students', implode('/',[Yii::$app->request->baseUrl, 'students']), ['class' => Yii::$app->controller->id === 'students' ? 'link item active' : 'link item']),
                 Html::a('Applicants', implode('/',[Yii::$app->request->baseUrl, 'applicant']), ['class' => Yii::$app->controller->id === 'applicant' ? 'link item active' : 'link item']),
                 Html::a('Enrollee', implode('/',[Yii::$app->request->baseUrl, 'enroll']), ['class' => Yii::$app->controller->id === 'enroll' ? 'link item active' : 'link item']),

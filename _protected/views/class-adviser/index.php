@@ -30,14 +30,14 @@ $this->title = "Class Adviser";
 $pjaxInt = Yii::$app->params['pjaxInterval'];
 $pjax = <<< JS
 $(document).ready(function(){
-    setInterval(function(){
-        $.pjax.reload({
-            container:'#class-adviser-list',
-            success: function(){
-                $('ul.pagination > li.active > a').click()
-            }
-        });
-    }, $pjaxInt);
+    // setInterval(function(){
+    //     $.pjax.reload({
+    //         container:'#class-adviser-list',
+    //         success: function(){
+    //             $('ul.pagination > li.active > a').click()
+    //         }
+    //     });
+    // }, $pjaxInt);
 });
 JS;
 $this->registerJs($pjax);

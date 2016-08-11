@@ -18,7 +18,7 @@ use app\models\Options;
                     <?php endif ?>
                 </div>
                 <div class="ui center aligned content">
-                    
+
                 </div>
                 <div class="extra content">
                     <div class="row">
@@ -35,40 +35,40 @@ use app\models\Options;
     </div>
     <div class="nine wide rounded column">
         <div class="ui rounded segment">
-                <?= !$user->isNewRecord ? Html::tag('label',implode('', [implode('-', array_map('ucfirst', explode('-', Yii::$app->controller->id))),'# ', $user->id]), ['class' => 'ui fluid big label']) : '' ?>
-                <br><br>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <?= $form->field($user, 'status', ['inputTemplate' => '<label for="Status" style="font-weight: 600; color: #555;">Status</label>{input}'])->dropDownList($user->statusList, ['class' => 'form-control pva-form-control'])->label(false) ?>
-                    </div>
+            <?= !$user->isNewRecord ? Html::tag('label',implode('', [implode('-', array_map('ucfirst', explode('-', Yii::$app->controller->id))),'# ', $user->id]), ['class' => 'ui fluid big label']) : '' ?>
+            <br><br>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <?= $form->field($user, 'status', ['inputTemplate' => '<label for="Status" style="font-weight: 600; color: #555;">Status</label>{input}'])->dropDownList($user->statusList, ['class' => 'form-control pva-form-control'])->label(false) ?>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <?= $form->field($user, 'username', ['inputTemplate' => '<label>Username</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <?= $form->field($user, 'username', ['inputTemplate' => '<label>Username</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12">
-                        <?= $form->field($user, 'email', ['inputTemplate' => '<label>Email</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <?= $form->field($user, 'email', ['inputTemplate' => '<label>Email</label>{input}','inputOptions' => [] ])->label(false)->textInput(['class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12">
-                        <?php if ($user->scenario === 'create'): ?>
-                            <?= $form->field($user, 'password', ['inputTemplate' => '<label>Password</label>{input}','inputOptions' => [] ])->label(false)->textInput(['id' => 'user-password', 'type' => 'password', 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
-                            <div class="pull-left"><label for="Show/Hide">Show Password</label></div><div class="pull-right"><input type="checkbox" class="js-switch" title="Show/Hide" value="1"></div>
-                            <br>
-                        <?php else: ?>
-                            <?= $form->field($user, 'password', ['inputTemplate' => '<label>Password</label>{input}','inputOptions' => [] ])->label(false)->textInput(['id' => 'user-password', 'type' => 'password', 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>                            
-                            <label><em>Enter a new password (if you wish to change)</em></label>
-                        <?php endif ?>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <?php if ($user->scenario === 'create'): ?>
+                        <?= $form->field($user, 'password', ['inputTemplate' => '<label>Password</label>{input}','inputOptions' => [] ])->label(false)->textInput(['id' => 'user-password', 'type' => 'password', 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                        <div class="pull-left"><label for="Show/Hide">Show Password</label></div><div class="pull-right"><input type="checkbox" class="js-switch" title="Show/Hide" value="1"></div>
+                        <br>
+                    <?php else: ?>
+                        <?= $form->field($user, 'password', ['inputTemplate' => '<label>Password</label>{input}','inputOptions' => [] ])->label(false)->textInput(['id' => 'user-password', 'type' => 'password', 'class' => 'form-control pva-form-control'], ['maxlength' => true]) ?>
+                        <label><em>Enter a new password (if you wish to change)</em></label>
+                    <?php endif ?>
                 </div>
+            </div>
         </div>
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'id' => $user->id]); ?>
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'id' => $user->id, 'exist' => false]); ?>
         </div>
     </div>
 </div>

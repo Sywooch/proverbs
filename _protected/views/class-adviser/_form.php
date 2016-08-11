@@ -56,9 +56,21 @@ if($model->isNewRecord){
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <?= $form->field($model, 'teacher_id')->widget(Select2::classname(), [
-                            'data' => ArrayHelper::map(app\models\StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);}),
+                            'data' => ArrayHelper::map(app\models\User::find()
+                                        ->joinWith('role')
+                                        ->where(['item_name' => 'teacher'])
+                                        ->orderBy(['first_name' => SORT_ASC])
+                                        ->all(), 'id',
+                                            function($model){
+                                                if($model->first_name === ''){
+                                                    return $model->username;
+                                                }else {
+                                                    return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
+                                                }
+                                            }
+                                        ),
                             'language' => 'en',
-                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student'],
+                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Teacher'],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
@@ -67,7 +79,8 @@ if($model->isNewRecord){
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12">
-                    <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(ArrayHelper::map(GradeLevel::find()->all(), 'id' , 'name'), [
+                    <?= $form->field($model, 'grade_level_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])
+                        ->dropDownList(ArrayHelper::map(GradeLevel::find()->all(), 'id' , 'name'), [
                         'onchange' => "
                             $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#classadviserform-grade_level_id').val()), function(data){
                                 $('#classadviserform-section_id').find('option').remove();
@@ -89,7 +102,7 @@ if($model->isNewRecord){
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <?= Options::render(['scenario' => Yii::$app->controller->action->id,'id' => $model->id]); ?>
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id, 'id' => $model->id, 'exist' => false]); ?>
         </div>
     </div>
 </div>

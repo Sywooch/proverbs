@@ -29,7 +29,7 @@ class AssessmentController extends Controller
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?', 'parent'],
+                        'roles' => ['?', 'parent','principal'],
                     ],
                     [
                         'allow' => true,

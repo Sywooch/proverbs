@@ -43,14 +43,14 @@ $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
 $pjaxInterval = json_encode(Yii::$app->params['pjaxInterval']);
 $pjax = <<< JS
 $(document).ready(function(){
-    setInterval(function(){
-        $.pjax.reload({
-            container:'#enroll-list',
-            success: function(){
-                $('ul.pagination > li.active > a').click()
-            }
-        });
-    }, $pjaxInterval);
+    // setInterval(function(){
+    //     $.pjax.reload({
+    //         container:'#enroll-list',
+    //         success: function(){
+    //             $('ul.pagination > li.active > a').click()
+    //         }
+    //     });
+    // }, $pjaxInterval);
 });
 JS;
 $this->registerJs($pjax);

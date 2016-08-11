@@ -15,7 +15,7 @@ $this->title = Yii::t('app', 'Users');
             </div>
             <div class="pull-right"><?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?></div>
             <p></p>
-            <?php Pjax::begin(['id' => 'user-list']); ?>
+            <?php Pjax::begin(['id' => 'user-list', 'timeout' => 60000]); ?>
                 <?= UiListView::widget([
                    'dataProvider' => $dataProvider,
                     'itemView' => '_list',
@@ -32,14 +32,14 @@ $this->title = Yii::t('app', 'Users');
 $pjaxInterval = json_encode(Yii::$app->params['pjaxInterval']);
 $pjax = <<< JS
 $(document).ready(function(){
-    setInterval(function(){
-        $.pjax.reload({
-            container:'#user-list',
-            success: function(){
-                $('ul.pagination > li.active > a').click()
-            }
-        });
-    }, $pjaxInterval);
+    // setInterval(function(){
+    //     $.pjax.reload({
+    //         container:'#user-list',
+    //         success: function(){
+    //             $('ul.pagination > li.active > a').click()
+    //         }
+    //     });
+    // }, $pjaxInterval);
 });
 JS;
 $this->registerJs($pjax);

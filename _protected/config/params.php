@@ -18,7 +18,7 @@ return [
      *
      * If set to true users will have to login using email/password combo.
      */
-    'lwe' => true, 
+    'lwe' => true,
 
     /**
      * Force Strong Password.
@@ -33,10 +33,10 @@ return [
     'user.passwordResetTokenExpire' => 3600,
 
     'brd' => false, //DEFAULT BOARD MESSAGE SETTINGS
-    
+
     'sbr' => false, //DEFAULT SIDEBAR SETTINGS
 
-    'adminEmail' => 'admin@proverbs.com', 
+    'adminEmail' => 'admin@proverbs.com',
 
     /**
      * Not used in template.
@@ -49,20 +49,20 @@ return [
 
     'avatar' =>  '/uploads/ui/user-blue.svg',
 
-    'pjaxInterval' => 5000, //100000,
+    'pjaxInterval' => 60000, //100000,
 
     'fetchInterval' => 2000,
 
     'announcementInterval' => 60000,
 
     'boardInterval' => 50100,
-    
+
     'day' => '-1 day',
 
     'hour' => '-1 hour',
 
     'toastTimeout' => 5000,
-    
+
     'pjaxTimeout' => 360000,
 
     //////////////////////////

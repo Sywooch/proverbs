@@ -11,7 +11,7 @@ $this->title = 'Page Not Found';
 <br>
 <div class="ui fluid container">
     <div class="ui center align text">
-        <h1 class="ui header">Error 404</h1>
-        <h2 class="ui header">This page doesn't exist.</h2>
+        <h1 class="ui header">Oops! Something went wrong.</h1>
+        <h2 class="ui header">This page doesn't exist or you may not have sufficient permission to access this page.</h2>
     </div>
 </div>

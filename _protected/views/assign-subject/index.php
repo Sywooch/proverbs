@@ -36,14 +36,14 @@ $this->title = 'Assign Subject';
 <?php
 $pjax = <<< JS
 $(document).ready(function(){
-    setInterval(function(){
-        $.pjax.reload({
-            container:'#assignsubject-list',
-            success: function(){
-                $('ul.pagination > li.active > a').click()
-            }
-        });
-    }, 10000);
+    // setInterval(function(){
+    //     $.pjax.reload({
+    //         container:'#assignsubject-list',
+    //         success: function(){
+    //             $('ul.pagination > li.active > a').click()
+    //         }
+    //     });
+    // }, 10000);
 });
 JS;
 $this->registerJs($pjax);

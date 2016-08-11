@@ -12,6 +12,8 @@ use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\imagine\Image;
 use app\models\File;
+use app\models\RequestDataAccess;
+use app\rbac\models\AuthAssignment;
 
 /**
  * StudentsController implements the CRUD actions for StudentForm model.
@@ -26,12 +28,22 @@ class StudentsController extends Controller
                 'rules' => [
                     [
                         'allow' => false,
-                        'roles' => ['?', 'parent'],
+                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index' , 'create', 'view', 'update', 'pjax'],
+                        'actions' => ['view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['parent'],
+                    ],
+                    [
+                        'actions' => ['index' , 'view'],
+                        'allow' => true,
+                        'roles' => ['principal', 'cashier', 'staff']
+                    ],
+                    [
+                        'actions' => ['index' , 'view', 'update', 'create'],
+                        'allow' => true,
+                        'roles' => ['principal', 'cashier', 'staff', 'dev','master', 'admin']
                     ],
                 ],
             ],
@@ -69,9 +81,22 @@ class StudentsController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(!Yii::$app->user->isGuest && \app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'parent' ) {
+            $request = RequestDataAccess::find()->where(['user_id' => Yii::$app->user->identity->id])->andWhere(['request_status' => 2])->one();
+
+            if(!empty($request)){
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+            }else {
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
+        }else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+
     }
 
     /**

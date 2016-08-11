@@ -123,7 +123,7 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
     </div>
     <div class="three wide rounded column">
         <div class="column">
-            <?= Options::render(['scenario' => Yii::$app->controller->action->id,'id' => $model->id]); ?>
+            <?= Options::render(['scenario' => Yii::$app->controller->action->id,'id' => $model->id, 'exist' => false]); ?>
         </div>
     </div>
 </div>

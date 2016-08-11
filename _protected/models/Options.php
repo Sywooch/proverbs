@@ -113,7 +113,7 @@ class Options
 				break;
 
 			case 'profile':
-
+				$button1 = '';
 				$button3 = '';
 
 				break;

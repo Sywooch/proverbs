@@ -28,17 +28,13 @@ $user = User::findOne(Yii::$app->user->identity->id);
             </div>
             <div class="right floated small menu">
                 <?php if(!Yii::$app->user->isGuest && app\rbac\models\AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'parent' ): ?>
-                <!-- <div id="new-announcement" class="ui link item" data-toggle="modal" data-target="#ann_modal">
-                    <i class="icon-flag"></i>
-                    <div class="notify announcement hidden"></div>
-                </div> -->
                 <div id="new-announcement" class="ui top pointing dropdown item">
                     <i class="icon-flag"></i>
                     <div class="notify announcement hidden"></div>
                     <?= $this->render('announcement') ?>
                 </div>
                 <?php endif ?>
-                <div class="ui link top pointing dropdown item">
+                <div class="ui link dropdown item">
                     <?= Html::img(
                         Yii::$app->user->isGuest
                             ? Yii::$app->request->baseUrl . Yii::$app->params['avatar']
@@ -52,7 +48,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
                     <div class="menu" style="min-width: 180px; margin-right: 5px; margin-top: 0; border-radius: 0;">
                         <a class="link item" href="<?= Yii::$app->request->baseUrl . '/dashboard' ?>">Dashboard<i class="right floated dashboard icon"></i></a>
                         <a class="link item" href="<?= Yii::$app->request->baseUrl . '/profile' ?>">Profile<i class="right floated user icon"></i></a>
-                        <a class="link item" href="<?= Yii::$app->request->baseUrl . '/settings' ?>">Settings<i class="right floated settings icon"></i></a>
+                        <!-- <a class="link item" href="<?php //Yii::$app->request->baseUrl . '/settings' ?>">Settings<i class="right floated settings icon"></i></a> -->
                         <a class="link item" href="<?= Yii::$app->request->baseUrl . '/site/logout' ?>" style="border-top: 1px solid #e9e9e9;" data-method='post'>Signout<i class="right floated sign out icon"></i></a>
                     </div>
                 </div>
@@ -79,7 +75,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
     (function($){
         $(window).load(function(){
 
-            $('.ui.pointing.dropdown.item').dropdown({
+            $('.ui.dropdown.item').dropdown({
                 transition: 'slide down',
             });
 

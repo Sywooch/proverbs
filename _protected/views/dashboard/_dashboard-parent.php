@@ -9,7 +9,7 @@ $this->title = 'Dashboard';
 <div class="ui two column stackable grid">
     <div class="twelve wide rounded column">
         <div class="ui raised segment">
-            adfadf
+            
         </div>
     </div>
     <div class="four wide column">

@@ -32,7 +32,12 @@ class ClassAdviserController extends Controller
                     [
                         'actions' => ['index' , 'view'],
                         'allow' => true,
-                        'roles' => ['staff'],
+                        'roles' => ['staff','principal'],
+                    ],
+                    [
+                        'actions' => ['index', 'create' , 'view', 'update'],
+                        'allow' => true,
+                        'roles' => ['principal'],
                     ],
                     [
                         'allow' => true,
@@ -87,7 +92,7 @@ class ClassAdviserController extends Controller
     public function actionSection($id)
     {
         $section = Section::find()->where(['grade_level_id' => $id])/*->orderBy(['section_name', SORT_ASC])*/->all();
-        
+
         foreach ($section as $item) {
             echo '<option value="' . $item->id . '">' . $item->section_name . '</option>';
         }
@@ -96,7 +101,7 @@ class ClassAdviserController extends Controller
     public function actionPjax($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $u = $this->findModel($object->uid);
 
@@ -122,7 +127,7 @@ class ClassAdviserController extends Controller
 
        if($model->load(Yii::$app->request->post())){
             //CHECK FOR DUPLICATE ALL SAME ATTRIBUTE VALUES
-            if(ClassAdviserForm::find()->where([ 'teacher_id' => $model->teacher_id])->where([ 'grade_level_id' => $model->grade_level_id])->andWhere(['sy_id' => $model->sy_id])->exists()){
+            if(ClassAdviser::find()->where([ 'teacher_id' => $model->teacher_id])->where([ 'grade_level_id' => $model->grade_level_id])->andWhere(['sy_id' => $model->sy_id])->exists()){
                 //BACK TO FORM
                 return $this->render('create', [
                     'model' => $model,
@@ -154,7 +159,7 @@ class ClassAdviserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           
+
            Yii::$app->session->setFlash('success', 'Saved successfully');
            return $this->redirect(['view', 'id' => $model->id]);
         } else {

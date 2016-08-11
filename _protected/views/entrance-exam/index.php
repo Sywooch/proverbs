@@ -19,7 +19,7 @@ $this->title = 'Entrance Exams';
                 UiListView::widget([
                    'dataProvider' => $dataProvider,
                     'itemView' => '_list',
-                ]);    
+                ]);
             ?>
             <?php Pjax::end(); ?>
         </div>
@@ -33,14 +33,14 @@ $this->title = 'Entrance Exams';
 $pjaxInterval = json_encode(Yii::$app->params['pjaxInterval']);
 $pjax = <<< JS
 $(document).ready(function(){
-    setInterval(function(){
-        $.pjax.reload({
-            container:'#entrance-exam-list',
-            success: function(){
-                $('ul.pagination > li.active > a').click()
-            }
-        });
-    }, $pjaxInterval);
+    // setInterval(function(){
+    //     $.pjax.reload({
+    //         container:'#entrance-exam-list',
+    //         success: function(){
+    //             $('ul.pagination > li.active > a').click()
+    //         }
+    //     });
+    // }, $pjaxInterval);
 });
 JS;
 $this->registerJs($pjax);

@@ -41,7 +41,7 @@ class EnrollController extends Controller
                     [
                         'actions' => ['index' , 'view'],
                         'allow' => true,
-                        'roles' => ['staff'],
+                        'roles' => ['staff', 'principal'],
                     ],
                     [
                         'actions' => ['index' , 'view', 'create', 'update', 'new'],
@@ -181,7 +181,7 @@ class EnrollController extends Controller
                     break;
 
                 default:
-                    die('adfadf');
+                    //die('adfadf');
                     break;
             }
 
