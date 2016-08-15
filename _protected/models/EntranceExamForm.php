@@ -107,27 +107,23 @@ class EntranceExamForm extends \yii\db\ActiveRecord
     }
 
     public function getRemarks($data){
-        if($data === self::PASSED){
-            $data = 'Passed';
-        }elseif($data === self::FAILED) {
-            $data = 'Failed';
+        if($data === (string) self::PASSED) {
+            return 'Passed';
+        }elseif($data === (string) self::FAILED){
+            return 'Failed';
         }else {
-            $data = 'For Evaluation';
+            return 'For Evaluation';
         }
-
-        return $data;
     }
 
     public function getRecommendations($data){
-        if($data === self::PROMOTED){
-            $data = 'Passed';
-        }elseif($data === self::RETAINED) {
-            $data = 'Failed';
+        if($data === (string) self::PROMOTED){
+            return 'Promoted';
+        }elseif($data === (string) self::RETAINED) {
+            return 'Retained';
         }else {
-            $data = 'For Evaluation';
+            return 'For Evaluation';
         }
-
-        return $data;
     }
 
     public function getLevelList()
@@ -152,7 +148,7 @@ class EntranceExamForm extends \yii\db\ActiveRecord
             self::L120 => 'Grade 12 1st Sem',
             self::L121 => 'Grade 12 2nd Sem',
         ];
-        
+
         return $levelArray;
     }
     /**
@@ -162,29 +158,29 @@ class EntranceExamForm extends \yii\db\ActiveRecord
     {
         return $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
     }
-    
+
     public function getApplicantFirstName($id)
     {
         $student = $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
-        
+
         return $student['first_name'];
     }
 
     public function getApplicantMiddleName($id)
     {
         $student = $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
-        
+
         return $student['middle_name'];
     }
 
     public function getApplicantLastName($id)
     {
         $student = $this->hasOne(StudentForm::className(), ['id' => 'applicant_id']);
-        
+
         return $student['last_name'];
     }
 
-    public function getUpdatedAt($data) {        
+    public function getUpdatedAt($data) {
 
         return \Carbon\Carbon::createFromTimestamp($data, 'Asia/Manila')->diffForHumans();
     }

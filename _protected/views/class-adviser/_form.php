@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 $teachers = User::find()->joinWith('role')->where(['item_name' => 'teacher'])->orderBy(['last_name' => SORT_ASC])->all();
+$card_url = json_encode(Yii::$app->request->baseUrl . '/site/tcard?data=');
 
 if($model->isNewRecord){
     $this->title = 'New';
@@ -24,14 +25,14 @@ if($model->isNewRecord){
 }
 
 ?>
-<p></p>
+<br>
 <?php $form = ActiveForm::begin(['class' => 'ui loading form']); ?>
 <div class="ui three column stackable grid">
     <div class="four wide rounded column">
         <?= Card::render($options = [
             'imageContent' => !$model->isNewRecord ? !empty($model->teacher->profile_image) ? ['/file', 'id' => $model->teacher->profile_image] : Yii::$app->params['avatar'] : Yii::$app->request->baseUrl . Yii::$app->params['avatar'],
             'labelContent' => !$model->isNewRecord ? implode(' ', ['ID#', '<strong>', $model->teacher->id, '</strong>']) : '&nbsp;',
-            'labelFor' => 'Applicant ID',
+            'labelFor' => 'Teacher ID',
             'labelOptions' => '',
             'headerContent' => !$model->isNewRecord ? DataHelper::name($model->teacher->first_name, $model->teacher->middle_name, $model->teacher->last_name) : '&nbsp;',
             'headerOptions' => '',
@@ -74,6 +75,39 @@ if($model->isNewRecord){
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
+                            'pluginEvents' => [
+                                'change' => "
+                                    function(){
+                                        if($('#auto-suggest').val() === ''){
+                                            console.log('empty');
+                                            $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                            $('#header-label').html('&nbsp;');
+                                            $('#header-content').html('&nbsp;');
+                                            $('#meta-content').html('&nbsp;');
+                                            $('#left-content').html('&nbsp;');
+                                            $('#right-content').addClass('hidden');
+                                        }else {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: $card_url + JSON.stringify({uid:$('#auto-suggest').val(),}),
+                                                contentType: 'application/json; charset=utf-8',
+                                                dataType: 'json',
+                                                success: function(data){
+                                                    $('#header-label').html('<em>' + data.email + '</em>');
+                                                    $('#header-content').html(data.name);
+                                                    $('#meta-content').html(data.username);
+
+                                                    if(data.img !== 'empty'){
+                                                        $('.tiny.image').attr('src', data.img);
+                                                    }else {
+                                                        $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                ",
+                            ],
                         ])->label(false) ?>
                 </div>
             </div>
@@ -95,7 +129,7 @@ if($model->isNewRecord){
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12">
-                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Grade Level</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(ArrayHelper::map(Section::find()->all(), 'id' , 'section_name'), ['id', 'section_name'])->label(false) ?>
+                    <?= $form->field($model, 'section_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Section</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control'] ])->dropDownList(ArrayHelper::map(Section::find()->all(), 'id' , 'section_name'), ['id', 'section_name'])->label(false) ?>
                 </div>
             </div>
         </div>

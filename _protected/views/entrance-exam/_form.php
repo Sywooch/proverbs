@@ -111,7 +111,15 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
             <div class="ui divider"></div>
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12">
-                    <?= $form->field($model, 'remarks', ['inputTemplate' => '<label for="Remarks">Remarks</label>{input}', 'inputOptions' => [] ])->dropDownList([10 => 'For Evaluation', 0 => 'Passed', 1 => 'Failed'],['class' => 'form-control pva-form-control'])->label(false) ?>
+                    <?php
+                    $remarks = [
+                        ['value' => 10, 'desc' => 'For Evaluation'],
+                        ['value' => 0, 'desc' => 'Passed'],
+                        ['value' => 1, 'desc' => 'Failed']];
+                    ?>
+                    <?= $form->field($model, 'remarks', ['inputTemplate' => '<label for="Remarks">Remarks</label>{input}', 'inputOptions' => [] ])
+                    ->dropDownList(ArrayHelper::map($remarks, 'value', 'desc'), ['class' => 'form-control pva-form-control'])
+                    ->label(false) ?>
                 </div>
             </div>
             <div class="row">

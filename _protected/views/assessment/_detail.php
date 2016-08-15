@@ -69,7 +69,11 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<div class="ui inverted dimmer">
 	    <div class="ui massive text loader"></div>
 	</div>
-	<?= Html::a('New Payment',['/payments/new', 'sid' => $model->enrolled->student->id, 'aid' =>$model->id],['class' => 'ui right floated big basic button'])?>
+	<?php if(count($payments) > 0): ?>
+		<?= Html::a('New Payment',['/payments/new', 'sid' => $model->enrolled->student->id, 'aid' =>$model->id],['class' => 'ui right floated big basic button'])?>
+	<?php else: ?>
+		<?= Html::a('Pay Enrolment Fee',['/payments/new', 'sid' => $model->enrolled->student->id, 'aid' =>$model->id, 'type' => 1],['class' => 'ui right floated big basic button'])?>
+	<?php endif ?>
 	<?php
 		if(count($payments) > 0){
 			for ($i=0; $i < count($payments); $i++) {

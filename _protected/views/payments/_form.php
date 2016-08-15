@@ -8,7 +8,8 @@ use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
-!$model->isNewRecord ? !empty($model->student->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/uploads/students/' . $model->student->students_profile_image : $img = $avatar : '';
+!$model->isNewRecord ? !empty($model->student->students_profile_image) ? $img = Yii::$app->request->baseUrl . '/file?id=' . $model->student->students_profile_image : $img = $avatar : '';
+$card_url = json_encode(Yii::$app->request->baseUrl . '/site/card?data=');
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -40,18 +41,55 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
             </div>
             <div class="ui two column stackable grid">
                 <div class="eight wide column">
-                    <?= $model->isNewRecord ? $form->field($model, 'student_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Student</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control', ] ])->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
-                            return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
-                        }),
-                        'language' => 'en',
-                        'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student', 'class' => 'form-control pva-form-control',],
-                        'size' => 'md',
-                        'pluginOptions' => [
-                            'allowClear' => true
+                    <?= $model->isNewRecord ? $form->field($model, 'student_id', ['inputTemplate' => '<label style="padding: 0; color: #555; font-weight: 600;">Student</label>{input}', 'inputOptions' => ['class' => 'form-control pva-form-control', ] ])
+                        ->widget(Select2::classname(), [
+                            'data' => ArrayHelper::map(StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(),'id', function($model){
+                                return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
+                            }),
+                            'language' => 'en',
+                            'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student', 'class' => 'form-control pva-form-control'],
+                            'size' => 'md',
+                            'pluginOptions' => [
+                                'allowClear' => true
                         ],
                         'pluginEvents' => [
+                            'change' => "
+                                function(){
+                                    if($('#auto-suggest').val() === ''){
+                                        console.log('empty');
+                                        $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                        $('#header-label').html('&nbsp;');
+                                        $('#header-content').html('&nbsp;');
+                                        $('#meta-content').html('&nbsp;');
+                                        $('#left-content').html('&nbsp;');
+                                        $('#right-content').addClass('hidden');
+                                    }else {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: $card_url + JSON.stringify({sid:$('#auto-suggest').val(),}),
+                                            contentType: 'application/json; charset=utf-8',
+                                            dataType: 'json',
+                                            success: function(data){
 
+                                                $('#header-label').html('ID# ' + '<strong>' + data.sid + '</strong>');
+                                                $('#header-content').html(data.name);
+                                                $('#meta-content').html(data.nick);
+                                                $('#left-content').html(data.level);
+
+                                                if(data.spd === 0){
+                                                    $('#right-content').removeClass('hidden');
+                                                }
+
+                                                if(data.img !== 'empty'){
+                                                    $('.tiny.image').attr('src', data.img);
+                                                }else {
+                                                    $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            ",
                         ],
                     ])->label(false) : ''; ?>
                 </div>
@@ -89,7 +127,7 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                     ?>
                 </div>
                 <div class="eight wide column">
-                  <?= $form->field($model, 'payment_description', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Description</label>{input}</div>'])->dropDownList([0 => 'Tuition Fee', 1 => 'Enrollment Fee', 2 => 'Entrance Exam', 3 => 'Others'], ['class' => 'form-control pva-form-control'])->label(false) ?>
+                  <?= $form->field($model, 'payment_description', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Description</label>{input}</div>'])->dropDownList([0 => 'Tuition Fee', 2 => 'Entrance Exam', 3 => 'Others'], ['class' => 'form-control pva-form-control'])->label(false) ?>
                 </div>
             </div>
         </div>

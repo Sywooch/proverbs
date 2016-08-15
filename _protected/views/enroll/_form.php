@@ -15,6 +15,7 @@ use app\models\SchoolYear;
 use app\models\Card;
 use app\models\DataHelper;
 
+$card_url = json_encode(Yii::$app->request->baseUrl . '/site/card?data=');
 $current_date = date('Y');
 $school_year = SchoolYear::find()->orderBy(['id' => SORT_DESC])->all();
 $section = Section::find()->all();
@@ -86,54 +87,50 @@ $model->isNewRecord ? $this->title = 'New' : $this->title = implode(' ', [$model
                         ],
                         'pluginEvents' => [
                             'change' => "
-                                run = function(){
+                                function(){
+                                    if($('#auto-suggest').val() === ''){
+                                        console.log('empty');
+                                        $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
+                                        $('#header-label').html('&nbsp;');
+                                        $('#header-content').html('&nbsp;');
+                                        $('#meta-content').html('&nbsp;');
+                                        $('#left-content').html('&nbsp;');
+                                        $('#right-content').addClass('hidden');
+                                    }else {
                                         $.ajax({
                                             type: 'POST',
-                                            url: 'card?data=' + JSON.stringify({
-                                                    sid: $('#auto-suggest').val(),
-                                                }),
+                                            url: $card_url + JSON.stringify({sid:$('#auto-suggest').val(),}),
                                             contentType: 'application/json; charset=utf-8',
                                             dataType: 'json',
-                                            success: function(data) {
+                                            success: function(data){
+
                                                 $('#header-label').html('ID# ' + '<strong>' + data.sid + '</strong>');
                                                 $('#header-content').html(data.name);
                                                 $('#meta-content').html(data.nick);
                                                 $('#left-content').html(data.level);
 
-                                                if(parseInt(data.spd) === 0){
+                                                if(data.spd === 0){
                                                     $('#right-content').removeClass('hidden');
                                                 }
 
                                                 if(data.img !== 'empty'){
                                                     $('.tiny.image').attr('src', data.img);
-                                                    console.log(data.img);
                                                 }else {
                                                     $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
                                                 }
 
+                                                $.post('". Yii::$app->urlManager->createUrl('enroll/grade-level?id=') . "'+parseInt($('#auto-suggest').val()), function(data){
+                                                    $('select#enrolledform-grade_level_id').val(data);
+                                                    $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
+                                                        $('#enrolledform-section_id').find('option').remove();
+                                                        $('#enrolledform-section_id').each(function(){
+                                                            $(this).append(data);
+                                                        });
+                                                    });
+                                                });
                                             }
                                         });
-                                },
-                                function(){
-                                    if($('#auto-suggest').val() === ''){
-                                        $('#header-label').html('&nbsp;');
-                                        $('#header-content').html('&nbsp;');
-                                        $('#meta-content').html('&nbsp;');
-                                        $('#left-content').html('&nbsp;');
-                                        $('.tiny.image').attr('src', '/proverbs/uploads/ui/user-blue.svg');
-                                        $('#right-content').addClass('hidden');
-                                    }else {
-                                        run();
                                     }
-                                    $.post('". Yii::$app->urlManager->createUrl('enroll/grade-level?id=') . "'+parseInt($('#auto-suggest').val()), function(data){
-                                        $('select#enrolledform-grade_level_id').val(data);
-                                        $.post('". Yii::$app->urlManager->createUrl('enroll/section?id=') . "'+parseInt($('#enrolledform-grade_level_id').val()), function(data){
-                                            $('#enrolledform-section_id').find('option').remove();
-                                            $('#enrolledform-section_id').each(function(){
-                                                $(this).append(data);
-                                            });
-                                        });
-                                    });
                                 }
                             ",
                         ],

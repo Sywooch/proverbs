@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use app\models\AssessmentForm;
 /**
  * This is the model class for table "payment".
  *
@@ -141,6 +142,6 @@ public function rules()
 
     public function getAssessment()
     {
-        return $this->hasOne(Assessment::className(), ['id' => 'assessment_id']);
+        return $this->hasOne(AssessmentForm::className(), ['id' => 'assessment_id']);
     }
 }

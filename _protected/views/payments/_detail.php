@@ -12,6 +12,13 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<div class="ui inverted dimmer">
 	    <div class="ui massive text loader"></div>
 	</div>
+	<?php if(DataHelper::checkIfEmpty($model->assessment_id, $model->assessment_id, 'NA') === 'NA'): ?>
+		<div class="detail-button-wrap">&nbsp;</div>
+	<?php else: ?>
+		<div class="detail-button-wrap">
+			<a class="ui right floated big basic button" href="/proverbs/assessment/view?id=<?=$model->assessment_id?>">View Assessment</a>
+		</div>
+	<?php endif ?>
 	<?= UiTable::widget([
 	    'model' => $model,
 	    'options' => ['class' => 'ui fixed very basic table'],

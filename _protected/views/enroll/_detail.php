@@ -12,8 +12,10 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 	<div class="ui inverted dimmer">
 	    <div class="ui massive text loader"></div>
 	</div>
-	<?= Html::a('New Payment',['/payments/new', 'sid' => $model->student->id, 'aid' => $assessment['id']],['class' => 'ui right floated big basic button'])?>
-	<?= Html::a('View Assessment',['/assessment/view', 'id' => $assessment['id']],['class' => 'ui right floated big basic button'])?>
+	<?php if(count($payments) === 0): ?>
+		<?= Html::a('Pay Enrolment Fee',['/payments/new', 'sid' => $model->student->id, 'aid' => $assessment->id, 'type' => 1],['class' => 'ui right floated big basic button'])?>
+	<?php endif ?>
+	<?= Html::a('View Assessment',['/assessment/view', 'id' => $assessment->id],['class' => 'ui right floated big basic button'])?>
 	<br><br>
 	<?= UiTable::widget([
 	    'model' => $model,

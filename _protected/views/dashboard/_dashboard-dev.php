@@ -10,6 +10,8 @@ use app\models\SchoolYear;
 use yii\bootstrap\Alert;
 use yii\imagine\Image;
 use app\models\File;
+use app\models\User;
+use app\models\DataStats;
 
 $this->title = 'Dashboard';
 ?>

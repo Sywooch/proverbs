@@ -20,7 +20,7 @@ use app\models\DataCenter;
 <?php
 if(!Yii::$app->user->isGuest){
     $host = json_encode(Yii::$app->request->baseUrl . '/site/sbar?data=');
-    
+
     if(empty(Yii::$app->session['sidebar'])){
     	$sbar = json_encode(1);
     }else {
@@ -32,7 +32,7 @@ $sidebar = <<< JS
         $(window).load(function(){
             var sidebar = $('#sb-btn1');
             var sbar;
-            
+
             if(parseInt($sbar) === 0){
                 setSbar(0);
             } else {

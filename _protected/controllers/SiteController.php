@@ -8,6 +8,7 @@ use app\models\BoardSearch;
 use app\models\ContactForm;
 use app\models\DataCenter;
 use app\models\DataHelper;
+use app\models\File;
 use app\models\LoginForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
@@ -48,6 +49,9 @@ class SiteController extends Controller
                             'sbar',
                             'fetch',
                             'pull',
+                            'card',
+                            'tcard',
+                            'section',
                             'write-announcement',
                             'write-board',
                             'more-announcement',
@@ -83,7 +87,10 @@ class SiteController extends Controller
                     'sbar' => ['post'],
                     'request-access' => ['post'],
                     'write-announcement' => ['post'],
-                    'write-board' => ['post']
+                    'write-board' => ['post'],
+                    'card' => ['post'],
+                    'tcard' => ['post'],
+                    'section' => ['post'],
                 ],
             ],
         ];
@@ -705,6 +712,93 @@ class SiteController extends Controller
         }
     }
 
+    public function actionCard($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $object = json_decode($data);
+
+            $id = $object->sid;
+            $student = $this->findStudent($id);
+            $sped = (int) $student->sped;
+            $level = $student->gradeLevel->name;
+            $bdate = $student->birth_date;
+            $date = strtotime($bdate);
+            $y = date('Y', $date);
+            $m = date('m', $date);
+            $d = date('d', $date);
+            $age = \Carbon\Carbon::createFromDate($y, $m, $d)->age;
+            $bday = \Carbon\Carbon::create($y, $m, $d)->toFormattedDateString();
+
+            if(!empty($student->students_profile_image)){
+                $img = Yii::$app->request->baseUrl . '/file?id=' . $student->students_profile_image;
+            }else {
+                $img = 'empty';
+            }
+
+            !empty(trim($student->middle_name)) ? $middle = ucfirst(substr($student->middle_name, 0,1)).'.' : $middle = '';
+
+            $data = array(
+                    'sid'=> $student->id,
+                    'act'=> (int) $student->status,
+                    'name' =>  implode(' ', [$student->first_name, $middle, $student->last_name]),
+                    'nick' => ucfirst('\'' . $student->nickname . '\''),
+                    'bday' => $bday,
+                    'age' => $age,
+                    'level' => $level,
+                    'spd' => $sped,
+                    'img' => $img,
+                );
+
+            return $data;
+        }
+    }
+
+    public function actionTcard($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $object = json_decode($data);
+
+            $id = $object->uid;
+            $teacher = $this->findTeacher($id);
+
+            if(!empty($teacher->profile_image)){
+                $img = Yii::$app->request->baseUrl . '/file?id=' . $teacher->profile_image;
+            }else {
+                $img = 'empty';
+            }
+
+            $data = array(
+                    'uid'=> $teacher->id,
+                    'email'=> $teacher->email,
+                    'name' =>  DataHelper::name($teacher->first_name, $teacher->middle_name, $teacher->last_name),
+                    'username' => ucfirst('\'' . $teacher->username . '\''),
+                    'img' => $img,
+                );
+
+            return $data;
+        }
+    }
+
+    public function actionSection($data){
+        if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $object = json_decode($data);
+
+            $id = $object->sid;
+
+            !empty(trim($student->middle_name)) ? $middle = ucfirst(substr($student->middle_name, 0,1)).'.' : $middle = '';
+
+            $data = array(
+                    'sid'=> $student->id,
+                );
+
+            return $data;
+        }
+    }
+
     public function actionActivateAccount($token)
     {
         try
@@ -735,6 +829,23 @@ class SiteController extends Controller
     {
         if (($model = Announcement::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findStudent($id)
+    {
+        if (($student = StudentForm::findOne($id)) !== null) {
+            return $student;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    protected function findTeacher($id)
+    {
+        if (($teacher = User::find()->joinWith('role')->where(['item_name' => 'teacher'])->andWhere(['id' => $id])->one()) !== null) {
+            return $teacher;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

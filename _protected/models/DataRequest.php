@@ -20,6 +20,9 @@ use app\models\StudentForm;
  */
 class DataRequest extends \yii\db\ActiveRecord
 {
+    const PROCESSING = 'Processing';
+    const APPROVED = 'Approved';
+    const DENIED = 'Denied';
     /**
      * @inheritdoc
      */
@@ -77,6 +80,8 @@ class DataRequest extends \yii\db\ActiveRecord
      */
     public function getStudentDetails($data)
     {
+        if(empty($data))return '';
+
         $student = StudentForm::findOne($data);
         return implode(' ', [$student->first_name, $student->middle_name, $student->last_name . ',', 'ID#' . $student->id]);
     }
@@ -84,5 +89,16 @@ class DataRequest extends \yii\db\ActiveRecord
     public function getStudent()
     {
         return $this->hasOne(StudentForm::className(), ['id' => 'student_id']);
+    }
+
+    public function getStatus($data)
+    {
+        if($data === 1){
+            return self::PROCESSING;
+        }elseif ($data === 2) {
+            return self::APPROVED;
+        }else {
+            return self::DENIED;
+        }
     }
 }

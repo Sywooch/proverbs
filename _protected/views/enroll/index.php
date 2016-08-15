@@ -19,10 +19,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Enroll', 'url' => ['index']];
     <div class="twelve wide rounded column">
         <div class="ui raised segment">
             <div class="ui black ribbon label" style="margin-left: -2px;">
-                <h4>Enrollee</h4>
+                <h4>Enroll</h4>
             </div>
             <div class="pull-right">
-                <?php // Html::a('View Assessment',['/assessment/view', 'id' => $assessment['id']],['class' => 'ui right floated huge basic button'])?>
                 <?= Html::a('<i class="icon plus"></i>',['create'],['class' => 'ui large green icon button']) ?>
             </div>
             <p></p>

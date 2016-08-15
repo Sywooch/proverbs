@@ -29,7 +29,10 @@ use app\models\DataHelper;
     <div class="nine wide rounded column">
         <div class="ui rounded segment">
             <div class="ui two column stackable grid">
-                <div class="eight wide column"><?= $form->field($model, 'transaction', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Card</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->transaction])->label(false) ?></div>
+                <div class="eight wide column">
+                    <?= $form->field($model, 'transaction', ['inputTemplate' => '<div style="margin-top: 0;"><label style="padding: 0; color: #555; font-weight: 600;">Card</label><div class="pull-right">{input}</div></div>'])->checkbox($options = ['class' => 'js-switch', 'data-switchery' => true, 'value' => $model->isNewRecord ? 1 : $model->transaction])->label(false) ?>
+                </div>
+                <div class="eight wide column"></div>
             </div>
             <div class="ui two column stackable grid">
                 <div class="four wide column">

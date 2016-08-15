@@ -8,6 +8,7 @@ use app\models\EnrolledFormSearch;
 use app\models\AssessmentForm;
 use app\models\Tuition;
 use app\models\StudentForm;
+use app\models\PaymentForm;
 use app\models\Section;
 use app\models\SchoolYear;
 
@@ -133,6 +134,7 @@ class EnrollController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'assessment' => $this->findAssessment($this->findModel($id)->id),
         ]);
     }
 
@@ -181,7 +183,7 @@ class EnrollController extends Controller
                     break;
 
                 default:
-                    //die('adfadf');
+
                     break;
             }
 

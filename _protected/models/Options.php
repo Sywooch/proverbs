@@ -47,6 +47,8 @@ class Options
 
 		$button2 = Html::a('Edit', ['update', 'id' => $options['id']], ['class' => 'ui link fluid huge teal button']);
 
+		$button = '';
+
 		switch (Yii::$app->controller->id) {
 			case 'applicant':
 				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
@@ -54,6 +56,11 @@ class Options
 				}else {
 					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				}
+				break;
+			case 'assessment':
+				$button1 = '';
+				$button3 = '';
+
 				break;
 
 			case 'assign-subject':
@@ -68,7 +75,8 @@ class Options
 				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
 					$button3 = '';
 				}else {
-					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+					$button3 = '';
+					//$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				}
 				break;
 
@@ -76,7 +84,8 @@ class Options
 				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
 					$button3 = '';
 				}else {
-					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+					$button3 = '';
+					//$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				}
 				break;
 
@@ -84,7 +93,8 @@ class Options
 				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
 					$button3 = '';
 				}else {
-					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+					$button3 = '';
+					//$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				}
 				break;
 
@@ -92,7 +102,8 @@ class Options
 				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
 					$button3 = '';
 				}else {
-					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+					$button3 = '';
+					//$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				}
 				break;
 
@@ -124,7 +135,7 @@ class Options
 				break;
 
 			case 'request':
-				$button1 = Html::a('New', ['create'], ['class' => 'ui disabled link fluid huge primary button']);
+				$button1 = '';
 
 				if(
 					AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'principal' ||
@@ -147,6 +158,10 @@ class Options
 				}
 				break;
 
+			case 'user':
+				$button3 = '';
+
+				break;
 			default:
 				$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				break;

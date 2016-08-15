@@ -76,6 +76,10 @@ a {
     height: 100vh;
     z-index: 9999;
 }
+.detail-button-wrap {
+    min-height: 33px;
+    width: 100%;
+}
 //NAVIGATION & SIDEBAR
 .smooth {
     -webkit-transition: all ease 500ms 0s;

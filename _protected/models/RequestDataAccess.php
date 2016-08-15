@@ -104,4 +104,9 @@ class RequestDataAccess extends \yii\db\ActiveRecord
     {
         return $this->hasOne(StudentForm::className(), ['id' => 'student_id']);
     }
+
+    public function test()
+    {
+        return 'yep';
+    }
 }

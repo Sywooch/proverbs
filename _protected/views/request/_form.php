@@ -55,10 +55,11 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <?= $form->field($model, 'student_id', ['inputTemplate' => '<label>Student</label>{input}', 'inputOptions' => [] ])->widget(Select2::classname(), [
+                            <?= $form->field($model, 'student_id', ['inputTemplate' => '<label>Student</label>{input}', 'inputOptions' => [] ])
+                                ->widget(Select2::classname(), [
                                 'data' => ArrayHelper::map(app\models\StudentForm::find()->orderBy(['first_name' => SORT_ASC])->all(), 'id',
                                     function($model){
-                                        return implode(' ', [$model->first_name, $model->middle_name, $model->last_name]);
+                                        return implode(' ', ['#' . $model->id, ': ', $model->first_name, $model->middle_name, $model->last_name]);
                                     }),
                                 'language' => 'en',
                                 'options' => ['id' => 'auto-suggest','placeholder' => 'Select Student'],

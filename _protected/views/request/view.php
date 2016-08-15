@@ -27,6 +27,10 @@ use yii\widgets\Pjax;
                             'attribute' => 'student_id',
                             'value' => $model->getStudentDetails($model->student_id)
                         ],
+                        [
+                            'attribute' => 'request_status',
+                            'value' => $model->getStatus($model->request_status)
+                        ],
             			'created_at:date',
             			'updated_at:date',
             		],

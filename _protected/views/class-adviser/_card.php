@@ -25,6 +25,16 @@ $avatar = Yii::$app->request->baseUrl . Yii::$app->params['avatar'];
 			</div>
 		    <div class="meta"><span id="meta-content"><?= implode('', ['\'', $model->teacher->username, '\'']) ?></span></div>
 		</div>
+		<div class="extra content">
+			<span class="left floated">
+				<label id="left-content" class="" style="color: #555; font-weight: 600;" for="">&nbsp;</label>
+			</span>
+			<span class="right floated" data-rating="1">
+				<div id="right-content" class="ui star rating hidden">
+					<div class="icon active" style="font-size: 16px;"></div>
+				</div>
+			</span>
+		</div>
 	</div>
 </div>
 <?php Pjax::end(); ?>
