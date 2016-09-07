@@ -1,3 +1,5 @@
+.gitignore
+
 # yii console command
 /yii
 
@@ -6,11 +8,6 @@
 
 # netbeans project files
 nbproject
-
-# zend studio for eclipse project files
-.buildpath
-.project
-.settings
 
 # windows thumbnail cache
 Thumbs.db
@@ -26,8 +23,9 @@ composer.phar
 
 # phpunit itself is not needed
 phpunit.phar
+
 # local phpunit config
 /phpunit.xml
-themes/.sass-cache/75fcaf1b4852ceb732871195e41567cc2a7d8997/D%058/xampp/htdocs/proverbs/themes/proverbs/sass/_dashboard.scssc
 themes/.sass-cache/
 _protected/runtime/session/
+_protected/runtime/logs/
