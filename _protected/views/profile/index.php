@@ -9,11 +9,11 @@ use yii\widgets\DetailView;
 $this->title =  ucfirst($model->username);
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<p></p>
+<br>
 <div class="ui two column stackable grid">
     <div class="four wide column">
         <div class="column">
-            <?= $this->render('_card', ['model' => $model]) ?> 
+            <?= $this->render('_card', ['model' => $model]) ?>
         </div>
     </div>
     <div class="nine wide column">

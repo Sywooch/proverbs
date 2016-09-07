@@ -111,7 +111,8 @@ class Options
 				if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) === 'staff'){
 					$button3 = '';
 				}else {
-					$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
+					$button3 = '';
+					//$button3 = Html::button('Delete', ['id' => 'delete', 'class' => 'ui link fluid huge grey button']);
 				}
 				break;
 

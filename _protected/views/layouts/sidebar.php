@@ -3,11 +3,12 @@ use yii\helpers\Html;
 use app\rbac\models\AuthAssignment;
 use app\models\DataCenter;
 ?>
-<div class="sidebar smooth">
+<aside class="sidebar smooth">
     <div id="sidebar-offset">
-        <div></div>
         <div id="sb-btn1" class="sidebar-toggle-menu">
-            <span><a id="trigger-sidebar"><i class="chevron right icon"></i></a></span>
+            <a id="trigger-sidebar">
+                <i class="chevron right icon"></i>
+            </a>
         </div>
     </div>
     <div id="sidebar-content">
@@ -16,7 +17,7 @@ use app\models\DataCenter;
     <div id="sidebar-write">
         <?= Html::textarea('', null, ['id' => 'send', 'type' => 'textarea', 'placeholder' => 'Write something...', 'class' => 'form-control pva-form-control', 'maxlength' => 255, 'rows' => 3]) ?>
     </div>
-</div>
+</aside>
 <?php
 if(!Yii::$app->user->isGuest){
     $host = json_encode(Yii::$app->request->baseUrl . '/site/sbar?data=');

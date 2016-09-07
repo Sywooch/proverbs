@@ -2,6 +2,9 @@
 @import "variables";
 @import "fonts";
 @import "mixins";
+@import "dashboard";
+@import "stat";
+@import "grid";
 
 body {
     min-width: 320px;
@@ -104,13 +107,10 @@ a {
 #sidebar-offset {
     min-height: 136px;
     width: 100%;
-    padding: auto;
+    padding-top: 82px;
     margin: auto;
     text-align: right;
     background: white;
-    div:first-child {
-        min-height: 82px;
-    }
     div:last-child {
         width: 53px;
         height: 54px;

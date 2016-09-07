@@ -1,0 +1,110 @@
+.grid {
+    display: inline-block;
+    width: 100%;
+
+    &-inner {
+        font-size: 0;
+        letter-spacing: 0;
+    }
+
+    &-item {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    //MODIFIER
+    &-col2 {
+        .grid-item {
+            width: 50%;
+        }
+    }
+    &-col3 {
+        .grid-item {
+            width: 33.3333%;
+        }
+    }
+    &-col4 {
+        .grid-item {
+            width: 25%;
+        }
+    }
+    &-col5 {
+        .grid-item {
+            width: 20%;
+        }
+    }
+    &-col6 {
+        .grid-item {
+            width: 16.6666%;
+        }
+    }
+
+    // @media all and (max-width: $break-medium) {
+    //
+    //     &.l-grid-md-col1 {
+    //         .l-grid-item {
+    //             width: 100%;
+    //         }
+    //     }
+    //     &.l-grid-md-col2 {
+    //         .l-grid-item {
+    //             width: 50%;
+    //         }
+    //     }
+    //     &.l-grid-md-col3 {
+    //         .l-grid-item {
+    //             width: 33.3333%;
+    //         }
+    //     }
+    //     &.l-grid-md-col4 {
+    //         .l-grid-item {
+    //             width: 25%;
+    //         }
+    //     }
+    //     &.l-grid-md-col5 {
+    //         .l-grid-item {
+    //             width: 20%;
+    //         }
+    //     }
+    //     &.l-grid-md-col6 {
+    //         .l-grid-item {
+    //             width: 16.6666%;
+    //         }
+    //     }
+    // }
+    //
+    // /* Break point small */
+    // @media all and (max-width: $break-small) {
+    //
+    //     &.l-grid-sm-col1 {
+    //         .l-grid-item {
+    //             width: 100%;
+    //         }
+    //     }
+    //     &.l-grid-sm-col2 {
+    //         .l-grid-item {
+    //             width: 50%;
+    //         }
+    //     }
+    //     &.l-grid-sm-col3 {
+    //         .l-grid-item {
+    //             width: 33.3333%;
+    //         }
+    //     }
+    //     &.l-grid-sm-col4 {
+    //         .l-grid-item {
+    //             width: 25%;
+    //         }
+    //     }
+    //     &.l-grid-sm-col5 {
+    //         .l-grid-item {
+    //             width: 20%;
+    //         }
+    //     }
+    //     &.l-grid-sm-col6 {
+    //         .l-grid-item {
+    //             width: 16.6666%;
+    //         }
+    //     }
+    // }
+}

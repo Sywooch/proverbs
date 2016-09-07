@@ -14,13 +14,13 @@ $user = User::findOne(Yii::$app->user->identity->id);
 <?= $this->render('loading') ?>
 <header style="z-index: 99;">
     <?php if(AuthAssignment::getAssignment(Yii::$app->user->identity->id) !== 'parent') :  ?>
-    <div id="nav-menu" class="ui top fixed secondary pointing menu">
+    <nav id="nav-menu" class="ui top fixed secondary pointing menu">
         <?= $this->render('menu') ?>
-        <div id="nav-menu-dropdown">
+        <ul id="nav-menu-dropdown">
             <select class="form-control pva-form-control">
             </select>
-        </div>
-    </div>
+        </ul>
+    </nav>
     <?php endif ?>
         <div class="ui top fixed huge inverted menu">
             <div class="ui link item">

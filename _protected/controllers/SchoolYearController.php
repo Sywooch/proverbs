@@ -30,7 +30,7 @@ class SchoolYearController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['dev', 'master', 'admin'],
+                        'roles' => ['dev', 'master', 'admin', 'principal'],
                     ],
                     [
                         'actions' => ['pjax'],
@@ -54,7 +54,7 @@ class SchoolYearController extends Controller
     public function actionPjax($data){
         if(Yii::$app->request->isAjax && !Yii::$app->user->isGuest){
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             $object = json_decode($data);
             $u = $this->findModel($object->uid);
 
